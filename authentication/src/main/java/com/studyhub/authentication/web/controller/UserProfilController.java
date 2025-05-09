@@ -1,9 +1,13 @@
 package com.studyhub.authentication.web.controller;
 
+import com.studyhub.authentication.model.AppUser;
 import com.studyhub.authentication.service.AccountDeletionException;
 import com.studyhub.authentication.service.AccountService;
 import com.studyhub.authentication.web.SetNotificationSubscriptionRequest;
 import com.studyhub.jwt.JWTService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +30,7 @@ public class UserProfilController {
 		model.addAttribute("user", accountService.findByUsername(username));
 		return "profil";
 	}
+
 
 	@GetMapping("/delete-account")
 	public String deleteAccount() {

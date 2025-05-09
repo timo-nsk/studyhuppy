@@ -49,6 +49,7 @@ public class SecurityConfig {
 								"/api/get-db-health",
 								"/api/v1/get-semester",
 								"/api/v1/get-users-notification",
+								"/api/v1/get-user-data",
 								"/actuator/**",
 								"/fragments",
 								"/styles/**",

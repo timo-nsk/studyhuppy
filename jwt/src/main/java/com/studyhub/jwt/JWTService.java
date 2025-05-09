@@ -70,6 +70,11 @@ public class JWTService {
 		return extractClaim(token, Claims::getExpiration);
 	}
 
+	public String extractTokenFromHeader(String header) {
+		// Header-Format: "Authorization: Bearer <JWT-TOKEN>"
+		return header.substring(7);
+	}
+
 	/**
 	public List<GrantedAuthority> getAuthoritiesFromToken(String token) {
 		Claims claims = extractAllClaims(token);
