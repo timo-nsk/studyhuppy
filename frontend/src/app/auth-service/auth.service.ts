@@ -24,6 +24,10 @@ export class AuthApiService {
     })
   }
 
+  logoff() : void {
+    localStorage.removeItem('auth_token')
+  }
+
   register(data: any) {
     console.log("trying register")
     this.http.post("http://localhost:9084/register", data).subscribe((r:any)=> {

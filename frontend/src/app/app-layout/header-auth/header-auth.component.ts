@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
+import {AuthApiService} from '../../auth-service/auth.service';
 
 @Component({
   selector: 'app-header-auth',
