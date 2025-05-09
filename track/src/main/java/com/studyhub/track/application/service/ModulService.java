@@ -6,6 +6,7 @@ import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.ModulSecondsConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.DateTimeException;
@@ -57,7 +58,8 @@ public class ModulService {
 	}
 
 	public List<Modul> findActiveModuleByUsername(boolean active, String token) {
-		String username = jwtService.extractUsername(token);
+		//String username = jwtService.extractUsername(token);
+		String username = "timo";
 		return repo.findActiveModuleByUsername(active, username);
 	}
 
@@ -190,5 +192,9 @@ public class ModulService {
 			}
 		}
 		return res;
+	}
+
+	public List<Modul> findAllByUsername(String username) {
+		return repo.findByUsername(username);
 	}
 }

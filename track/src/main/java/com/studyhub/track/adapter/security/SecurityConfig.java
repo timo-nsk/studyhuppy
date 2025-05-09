@@ -35,11 +35,7 @@ public class SecurityConfig {
 				.authorizeHttpRequests(auth -> auth
 						//TODO: nur das System soll darauf zugang haben -> Api Key
 						.requestMatchers(
-								"/api/module-name",
-								"/api/module-map",
-								"/api/get-db-health",
-								"/api/data-klausur-reminding",
-								"/api/get-seconds",
+								"/api/**",
 								"/statistics/api/stats",
 								"/actuator/**",
 								"/create-semester").permitAll()

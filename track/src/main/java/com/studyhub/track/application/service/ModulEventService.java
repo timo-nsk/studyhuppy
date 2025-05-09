@@ -24,7 +24,7 @@ public class ModulEventService {
 
 	public void saveEvent(ModulUpdateRequest request, String token) {
 		if (request.secondsLearnedThisSession() < 1) return;
-		ModulGelerntEvent event = ModulGelerntEvent.initEvent(UUID.fromString(request.fachId()), request.secondsLearnedThisSession(), jwtService.extractUsername(token));
+		ModulGelerntEvent event = ModulGelerntEvent.initEvent(UUID.fromString(request.fachId()), request.secondsLearnedThisSession(), "timo");
 		modulGelerntEvent.save(event);
 	}
 

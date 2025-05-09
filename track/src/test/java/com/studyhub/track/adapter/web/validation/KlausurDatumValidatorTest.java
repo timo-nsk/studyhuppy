@@ -100,16 +100,6 @@ public class KlausurDatumValidatorTest {
 				, null
 				, null
 				, null
-				, null
-				, null
-				, null
-				, null
-				, null
-				, null
-				, null
-				, null
-				, null
-				, null
 				, null);
 	}
 }

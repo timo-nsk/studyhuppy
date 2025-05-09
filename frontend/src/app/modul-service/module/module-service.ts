@@ -7,7 +7,7 @@ import {Observable } from 'rxjs';
   providedIn: 'root' // macht den Service global verfügbar
 })
 export class ModuleService {
-  private MODUL_BASE_API = 'http://localhost:8080/api';
+  private MODUL_BASE_API = 'http://localhost:9080/api';
 
   constructor(private http: HttpClient) {}
 
