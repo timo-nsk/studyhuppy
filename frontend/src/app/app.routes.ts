@@ -9,6 +9,7 @@ import {AppLayoutComponent} from './app-layout/app-layout.component';
 import {authGuard} from './guard/auth.guard';
 import {RegisterServiceComponent} from './auth-service/register-service/register-service.component';
 import {PwServiceComponent} from './auth-service/pw-service/pw-service.component';
+import {UserProfileComponent} from './user-profile/user-profile.component';
 
 export const routes: Routes = [
   {
@@ -27,7 +28,13 @@ export const routes: Routes = [
     path: '',
     component: AppLayoutComponent,
     children:
-      [{
+      [
+        {
+          path: 'profil',
+          component: UserProfileComponent,
+          canActivate: [authGuard]
+        },
+        {
         path: 'module',
         component: ModulServiceComponent,
         canActivate: [authGuard],
