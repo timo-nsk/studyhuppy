@@ -1,0 +1,32 @@
+#login-container {
+    margin-top: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-form-container {
+    background-color: rgb(247, 247, 247);
+    border-style: none;
+    border-radius: 10px;
+    width: 350px;
+}
+
+#login-form {
+    padding: 10px 10px 10px 10px;
+}
+
+#login-form-btn-grp {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    margin: 10px 10px 10px 10px;
+}
+
+#login-form-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    align-items: center;
+}

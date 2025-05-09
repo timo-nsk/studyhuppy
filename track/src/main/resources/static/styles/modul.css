@@ -1,0 +1,63 @@
+.modul-titel-link {
+    font-size: 22px;
+    color: rgb(9, 21, 64);
+}
+
+#modul-ansicht-box {
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+#modul-flex-container {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+    flex-direction: row !important;
+}
+
+.modul-flex-item {
+    width: calc(33.33% - 20px) !important;
+    margin: 10px !important;
+    box-sizing: border-box !important;
+}
+
+
+
+#new-modul-form {
+    width: 500px;
+    background-color: #fcfcfd;
+    padding: 10px;
+    border-radius: 10px;
+    border-style: none;
+}
+
+#new-modul-form-box {
+    display: flex;
+    justify-content: space-around;
+}
+
+#bar {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 80px;
+}
+
+.stop {
+    background-color: rgb(255, 138, 138);
+}
+
+.stop:hover {
+    background-color: rgb(247, 114, 114);
+}
+
+.play {
+    background-color: lightgray;
+}
+
+.play:hover {
+    background-color: gray;
+}
+
+#button-icon {
+    padding-top: 5px;
+}

@@ -1,0 +1,24 @@
+#website-logo {
+  font-family: "Zain", serif;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 70px;
+  color: rgb(9, 21, 64);
+  height: 50pxpx;
+}
+
+#main-view-container {
+  background-color: rgb(248, 249, 250);
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(9, 21, 64);
+  margin-top: 0;
+}
+
+#footer-nav {
+  margin-bottom: 0;
+}

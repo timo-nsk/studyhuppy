@@ -1,0 +1,35 @@
+<app-header-auth></app-header-auth>
+
+<div id="login-container">
+  <div id="login-form-container" class="shd">
+    <form id="login-form" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+
+      <div id="login-form-header">
+        <h3 class="m-accent-font">Login</h3>
+      </div>
+      <div>
+        <label class="form-label" for="username">Benutzername:</label>
+        <input id="username" class="form-control m-accent-font" type="text" formControlName="username">
+        <span class="text-danger"
+              *ngIf="loginForm.controls['username'].errors?.['required'] && loginForm.controls['username'].touched">
+              Geben Sie Ihren Benutzernamen ein
+      </span>
+      </div>
+
+      <div>
+        <label class="form-label" for="password">Passwort:</label>
+        <input id="password" class="form-control m-accent-font" type="password" formControlName="password">
+        <span class="text-danger"
+              *ngIf="loginForm.controls['password'].errors?.['required'] && loginForm.controls['password'].touched">
+                Geben Sie Ihr Passwort <a id="forgot-pw-a" class="fs-25" [routerLink]="'/reset-pw'">Passwort vergessen?</a>
+        </span>
+      </div>
+
+      <div id="login-form-btn-grp">
+        <button class="sh-btn" type="submit">anmelden</button>
+        <a class="std-link m-accent-font" [routerLink]="'/register'">registrieren</a>
+      </div>
+    </form>
+  </div>
+</div>
+

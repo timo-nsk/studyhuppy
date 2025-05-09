@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Studyhub</h1>
+
+    <p>Einige deiner Stapel haben fällige Karten:</p>
+
+    <div>
+        <ul>
+            <li th:each="entry : ${futureResult}">
+                <p>
+                    <strong>
+                        <span th:text="${entry.key}"></span>
+                    </strong>
+                    -
+                    <span th:text="${entry.value}"></span>
+                    Karten
+                </p>
+            </li>
+        </ul>
+    </div>
+
+    <p>
+        Besuche <a th:href="@{http://localhost:8081/kartei-uebersicht}">Studyhub</a> um zu lernen.
+    </p>
+</body>
+</html>

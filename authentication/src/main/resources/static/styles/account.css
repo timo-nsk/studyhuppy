@@ -1,0 +1,16 @@
+#account-container {
+    margin-top: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#account-table-container {
+    padding: 10px 10px 10px 10px;
+    width: 700px;
+}
+
+.table {
+    margin-bottom: 0;
+}

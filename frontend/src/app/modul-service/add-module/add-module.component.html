@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="de" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Modul hinzufügen</title>
+</head>
+<body class="bg-lightgrey">
+<div id="new-modul-container">
+  <div id="form-container">
+    <form id="new-modul-form" [formGroup]="newModulForm" (ngSubmit)="onSubmit()">
+
+      <div class="mb-3">
+        <label for="modul-name" class="form-label m-accent-font fs-5 fw-bold">Modulname</label>
+        <input id="modul-name" class="form-control" type="text" formControlName="name">
+
+        <span class="text-danger"
+              *ngIf="newModulForm.controls['name'].errors?.['required'] && newModulForm.controls['name'].touched">
+              Geben Sie einen Namen ein
+        </span>
+      </div>
+      <div class="mb-3">
+        <label for="cp" class="form-label m-accent-font fs-5 fw-bold">Leistungspunkte</label>
+        <input id="cp" class="form-control" type="number" formControlName="creditPoints" min="0">
+        <span class="text-danger"
+              *ngIf="newModulForm.controls['creditPoints'].errors?.['min'] && newModulForm.controls['creditPoints'].touched">
+              Kreditpunkte müssen positiv sein
+        </span>
+
+        <span class="text-danger"
+              *ngIf="newModulForm.controls['creditPoints'].errors?.['required'] && newModulForm.controls['creditPoints'].touched">
+              Geben Sie Kreditpunkte ein
+        </span>
+      </div>
+
+      <div class="mb-3">
+        <label for="kontaktzeit" class="form-label m-accent-font fs-5 fw-bold">Kontaktzeit (Stunden)</label>
+        <input id="kontaktzeit" class="form-control" type="number" formControlName="kontaktzeitStunden" min="1">
+        <span class="text-danger"
+              *ngIf="newModulForm.controls['kontaktzeitStunden'].errors?.['required'] && newModulForm.controls['kontaktzeitStunden'].touched">
+              Bitte geben Sie die Kontaktzeitstuden an
+        </span>
+        <span class="text-danger"
+              *ngIf="newModulForm.controls['kontaktzeitStunden'].errors?.['min'] && newModulForm.controls['kontaktzeitStunden'].touched">
+              Stunden müssen mindestens '1' betragen
+        </span>
+      </div>
+
+      <div class="mb-3">
+        <label for="selbststudium" class="form-label m-accent-font fs-5 fw-bold">Selbststudium (Stunden)</label>
+        <input id="selbststudium" class="form-control" type="number" formControlName="selbststudiumStunden" min="1">
+        <span class="text-danger"
+              *ngIf="newModulForm.controls['selbststudiumStunden'].errors?.['required'] && newModulForm.controls['selbststudiumStunden'].touched">
+              Bitte geben Sie die Selbststudiumstunden an
+        </span>
+        <span class="text-danger"
+              *ngIf="newModulForm.controls['selbststudiumStunden'].errors?.['min'] && newModulForm.controls['selbststudiumStunden'].touched">
+              Stunden müssen mindestens '1' betragen
+        </span>
+      </div>
+
+      <div class="mb-3">
+        <label for="hk-date" class="form-label m-accent-font fs-5 fw-bold">Klausurdatum/-uhrzeit*</label>
+        <div id="klausur-input-container">
+          <input id="hk-date" class="form-control" type="date" formControlName="klausurDatum">
+          <input id="hk-time" class="form-control" type="time" formControlName="time">
+        </div>
+      </div>
+
+      <!-- LERNTAGE -->
+      <div class="mb-3">
+        <label id="lerntage-checkbox-label" for="lerntage-checkbox" class="m-accent-font fs-5 fw-bold">Lerntage festlegen*</label>
+        <input id="lerntage-checkbox" class="form-check-label" type="checkbox" (click)="toggleLerntageCheckbox()">
+      </div>
+      <div>
+        <div id="lerntage-container" *ngIf="lerntageCheckbox">
+          <table>
+            <thead>
+            <tr>
+              <th>
+                <div class="mb-3">
+                  <label class="flex" for="mondays-checkbox">Mo</label>
+                </div>
+              </th>
+              <th>
+                <div class="mb-3">
+                  <label class="flex" for="tuesdays-checkbox">Di</label>
+                </div>
+              </th>
+              <th>
+                <div class="mb-3">
+                  <label class="flex" for="wednesdays-checkbox">Mi</label>
+                </div>
+              </th>
+              <th>
+                <div class="mb-3">
+                  <label class="flex" for="thursdays-checkbox">Do</label>
+                </div>
+              </th>
+              <th>
+                <div class="mb-3">
+                  <label class="flex" for="fridays-checkbox">Fr</label>
+                </div>
+              </th>
+              <th>
+                <div class="mb-3">
+                  <label class="flex" for="saturdays-checkbox">Sa</label>
+                </div>
+              </th>
+              <th>
+                <div class="mb-3">
+                  <label class="flex" for="sundays-checkbox">So</label>
+                </div>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>
+                <div class="mb-3">
+                  <input id="mondays-checkbox" class="form-check-label lerntag-cb" type="checkbox" formControlName="mondays">
+                </div>
+              </td>
+              <td>
+                <div class="mb-3">
+                  <input id="tuesdays-checkbox" class="form-check-label lerntag-cb" type="checkbox" formControlName="tuesdays">
+                </div>
+              </td>
+              <td>
+                <div class="mb-3">
+                  <input id="wednesdays-checkbox" class="form-check-label lerntag-cb" type="checkbox" formControlName="wednesdays">
+                </div>
+              </td>
+              <td>
+                <div class="mb-3">
+                  <input id="thursdays-checkbox" class="form-check-label lerntag-cb" type="checkbox" formControlName="thursdays">
+                </div>
+              </td>
+              <td>
+                <div class="mb-3">
+                  <input id="fridays-checkbox" class="form-check-label lerntag-cb" type="checkbox" formControlName="fridays">
+                </div>
+              </td>
+              <td>
+                <div class="mb-3">
+                  <input id="saturdays-checkbox" class="form-check-label lerntag-cb" type="checkbox" formControlName="saturdays">
+                </div>
+              </td>
+              <td>
+                <div class="mb-3">
+                  <input id="sundays-checkbox" class="form-check-label lerntag-cb" type="checkbox" formControlName="sundays">
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- STAPELERSTELLUNG
+      <div>
+        <div>
+          <label for="stapel-checkbox">Mit neuem Karteikarten-Stapel</label>
+          <input id="stapel-checkbox" type="checkbox" name="stapelCheckbox">
+        </div>
+        <div id="new-stapel">
+          <label for="stapel-name" class="form-label">Stapelname:</label>
+          <input type="text" id="stapel-name" name="stapelName">
+          <label for="stapel-beschreibung" class="form-label">Beschreibung:</label>
+          <textarea id="stapel-beschreibung" name="beschreibung"></textarea>
+
+          <label for="lernstufen" class="form-label">Lernstufen:</label>
+          <input id="lernstufen" name="lernstufen">
+          </div>
+      </div>
+       -->
+
+      <!-- SEMESTER TODO: Semester-Inputs erstellen
+      <div>
+        <div>
+          <label for="semester-checkbox">Semester hinzufügen</label>
+          <input id="semester-checkbox" type="checkbox" name="semesterCheckbox">
+        </div>
+        <div>
+        </div>
+      </div>
+      -->
+
+      <button type="submit" class="btn btn-primary" [disabled]="!newModulForm.valid">hinzufügen</button>
+
+      <div id="info-container" class="mt-3">
+        <p id="info-p" class="m-accent-font">* kann später eingestellt werden</p>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+  document.getElementById("stapel-checkbox").addEventListener("change", function() {
+    const stapelDiv = document.getElementById("new-stapel");
+    stapelDiv.style.display = this.checked ? "block" : "none";
+  });
+</script>
+</body>
+</html>

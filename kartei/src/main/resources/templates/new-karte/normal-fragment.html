@@ -1,0 +1,26 @@
+<html>
+<div th:fragment="normal-choice" id="new-karte-normal-form-box">
+  <form id="new-karte-normal-form" class="shd" method="post" th:action="@{/create-karteikarte-normal/{karteiSetId}(karteiSetId=${karteiSetId})}">
+    <div class="mb-3">
+      <label for="new-frage" class="form-label">Frage:</label>
+      <textarea id="new-frage" class="form-control d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2" style="--bs-focus-ring-color: rgba(229, 209, 208, .40)" th:field="*{frage}" rows="2"></textarea>
+      <small class="danger" th:if="${#fields.hasErrors('frage')}" th:errors="*{frage}">Frage Error</small>
+    </div>
+
+    <div class="mb-3">
+      <label for="new-antwort" class="form-label">Antwort:</label>
+      <textarea id="new-antwort" class="form-control d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2" style="--bs-focus-ring-color: rgba(229, 209, 208, .40)" th:field="*{antwort}" rows="3"></textarea>
+      <small class="danger" th:if="${#fields.hasErrors('antwort')}" th:errors="*{antwort}">Antwort Error</small>
+    </div>
+    <div class="mb-3">
+      <label for="new-notiz" class="form-label">Notiz:</label>
+      <textarea id="new-notiz" class="form-control d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2" style="--bs-focus-ring-color: rgba(229, 209, 208, .40)" name="notiz" rows="1"></textarea>
+    </div>
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary">hinzufügen</button>
+    </div>
+
+    <input type="hidden" name="frageTyp" value="NORMAL">
+  </form>
+</div>
+</html>

@@ -1,0 +1,111 @@
+body {
+  background-color: rgb(248, 249, 250);
+}
+
+#statistic-ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#link-back {
+  margin-left: 5%;
+  margin-top: 20px;
+  margin-bottom: 80px;
+}
+
+#logged-in-as {
+  margin-bottom: 0px;
+  font-size: 20px;
+}
+
+.shd {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.fs-25 {
+  font-size: 25px;
+}
+
+.danger {
+  color: red;
+  font-size: 15px;
+}
+
+h2 {
+  margin-bottom: 0px;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  border-bottom-style: solid;
+  border-width: 3px;
+  border-color: rgb(16, 45, 92);
+}
+
+.hr {
+  background-color: black;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin: 10px;
+}
+
+#error {
+  color: #f55f5f;
+}
+
+
+textarea {
+  font-size: 30px;
+  padding: 10px
+}
+
+.flex-container {
+  display: flex;
+}
+
+.flex-15 {
+  flex: 15;
+}
+
+.flex-1 {
+  flex: 1;
+  text-align: center;
+  padding-top: 3px;
+}
+
+button {
+  all: unset;
+  display: inline-block;
+}
+
+#main-view-container {
+  display: flex;
+  min-height: 50vh;
+}
+
+#sh-logo {
+  margin-bottom: 25px;
+  margin-right: 10px;
+  fill: rgb(9, 21, 64);
+}
+
+html {
+  height: 100%;
+}
+
+#website-logo {
+  font-family: "Zain", serif;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 70px;
+  color: rgb(9, 21, 64);
+  height: 50pxpx;
+}

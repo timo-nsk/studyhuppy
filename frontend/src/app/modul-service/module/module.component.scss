@@ -1,0 +1,81 @@
+p {
+  margin-bottom: 0;
+}
+
+#modul-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.modul-card {
+  flex: 0 0 calc(22.5% - 10px);
+  background-color: rgb(16, 45, 92);
+  height: 125px;
+  margin: 8px 8px 8px 18px;
+  padding: 8px 8px 8px 8px;
+  border-style: none;
+  border-radius: 10px;
+}
+
+#btn-container {
+  display: flex;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.shd {
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.fs-20 {
+  font-size: 1.35rem;
+}
+
+.wht-font {
+  color: white;
+}
+
+.m-accent-font {
+  color: rgb(16, 45, 92);
+}
+
+.std-link {
+  text-decoration: none;
+
+  display: inline-block;
+  font-weight: normal;
+  font-size: 16px;
+  font-family: system-ui; /* verwende immer dieselbe Schriftart */
+  text-shadow: 0 0 0 transparent; /* optischer Platzhalter für bold */
+  transition: color 0.2s ease;
+}
+
+.std-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: bold
+}
+
+.play-button {
+  border-color: white;
+}
+
+.stop-button {
+  background-color: rgb(250, 105, 82);
+}
+
+.btn {
+  width: 50px;
+}
+
+.play:hover {
+  border-color: white;
+  background-color: rgb(70, 102, 153);
+}
+
+.stop:hover {
+  background-color: red;
+}
+

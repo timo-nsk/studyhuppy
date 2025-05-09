@@ -1,0 +1,103 @@
+#kartei-übersicht-container {
+    display: flex;
+    justify-content: center;
+}
+
+#kartei-übersicht-header {
+    display: flex;
+    justify-content: flex-start;
+    width: 55%;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+#add-set {
+    font-size: 20px;
+    color: rgb(9, 21, 64);
+}
+
+#add-set:hover {
+    font-size: 20px;
+    color: rgba(5, 173, 72, 0.65);
+}
+
+#kartei-set-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#kartei-set-kachel-set-name {
+    color: rgb(9, 21, 64);
+    text-decoration: none;
+}
+
+#kartei-set-kachel-set-name:hover {
+    cursor: pointer;
+}
+
+#kartei-set-kachel-set-name:hover {
+    color: rgb(79, 93, 143);
+    text-decoration: underline; !important
+}
+
+
+#kartei-set-kachel-option {
+    font-size: 25px;
+    color: rgb(9, 21, 64);
+    height: 20px;
+}
+
+#kartei-set-kachel-option:hover {
+    color: rgb(79, 93, 143);
+}
+
+
+
+#kartei-set-info-kachel {
+    display: flex;
+    justify-content: space-between;
+    width: 55%; !important
+    align-items: center;
+}
+
+#kartei-set-info-kachel:hover {
+    transform: scale(1.01);
+}
+
+.kartei-set-info-actions {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+#neue-karten {
+    color: rgba(28, 85, 217, 0.65);
+}
+
+#fällige-karten {
+    color: rgba(5, 173, 72, 0.65);
+}
+
+#letnen-btn-container {
+    background-color: rgb(9, 21, 64);
+    width: 100px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-style: none;
+    border-radius: 15px;
+}
+
+#lernen-btn {
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+#vorrausichtliche-zeit-label {
+    font-size: 13px;
+}
+
+

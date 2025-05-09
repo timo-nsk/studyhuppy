@@ -1,0 +1,34 @@
+<app-header-main></app-header-main>
+
+<div id="main-view-container">
+  <div id="side-navbar-container">
+    <nav>
+      <table class="table">
+        <tbody>
+        <tr>
+          <td>
+            <a class="navbar-link" [routerLink]="'module'">Module</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a class="navbar-link" [routerLink]="'/kartei'">Kartei</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a class="navbar-link">Statistik</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a class="navbar-link">Einstellungen</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </nav>
+  </div>
+  <router-outlet></router-outlet>
+</div>
+<app-footer></app-footer>

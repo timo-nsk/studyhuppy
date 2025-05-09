@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: authentication
+  datasource:
+    password: ${DB_PASS}
+    username: ${DB_USER}
+    url: jdbc:postgresql://localhost:6436/users
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+server:
+  port: 9084
+jwt:
+  secret: ${JWT_SECRET}
+  role:
+    admin:
+      username: 'timo'
+logging:
+  level:
+    org:
+      springframework:
+        web:
+        client:

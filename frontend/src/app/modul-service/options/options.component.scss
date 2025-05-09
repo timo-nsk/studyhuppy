@@ -1,0 +1,42 @@
+.inp {
+  height: 38px;
+  padding: 0;
+}
+
+#option-add-klausur-date, #option-btn-group {
+  display: flex;
+  flex-direction: row;
+  width: 300px;
+  gap: 5px;
+}
+
+#option-add-time {
+  display: flex;
+  flex-direction: row;
+  width: 300px;
+  gap: 5px;
+  justify-content: start;
+}
+
+#time-inp {
+  width: 50px;
+}
+
+.option-btn {
+  width: 120px;
+  height: 38px;
+  background-color: rgb(16, 45, 92);;
+  color: white;
+}
+.option-btn:hover {
+  background-color: rgb(47, 84, 145);
+  color: white;
+}
+
+td {
+  padding: 5px 50px 5px 5px;
+}
+
+ th {
+   padding: 5px 50px 5px 5px;
+ }

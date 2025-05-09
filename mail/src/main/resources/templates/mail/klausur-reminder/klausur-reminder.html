@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Studyhub</h1>
+
+<p>Hi <span th:text="${username}"></span>,</p>
+<span>du hast für deine aktiven Module noch kein Klausur-Datum eingetragen:</span>
+
+<div>
+    <ul>
+        <li th:each="m : ${module}">
+            <p><span th:text="${m}"></span></p>
+        </li>
+    </ul>
+</div>
+
+<p>Vergiss nicht, deine Klausurtermine einzutragen. So kannst du deine Lernzeit optimal anpassen!</p>
+</body>
+</html>

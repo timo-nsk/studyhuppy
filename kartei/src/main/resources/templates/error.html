@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Karteikarten</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/general.css}">
+    <link rel="stylesheet" href="/static/styles/error.css" th:href="@{/styles/error.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+<header th:replace="~{fragments :: header}"></header>
+<div id="error-container" class="alert alert-light fs-25 shd" role="alert">
+    <h2>Fehler aufgereten: <span th:text="${httpStatus ?: 'Keine Http-Status vorhanden,'}"></span> <span th:text="${reason ?: 'Keine Begründung vorhanden.'}"></span></h2>
+    <p id="error" th:text="${errorMessage}"></p>
+    <a th:href="@{/kartei-uebersicht}"
+       class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">zurück zur Übersicht</a>
+</div>
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>
