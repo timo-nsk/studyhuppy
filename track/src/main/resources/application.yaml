@@ -4,7 +4,7 @@ spring:
   datasource:
     password: ${DB_PASS}
     username: ${DB_USER}
-    url: jdbc:postgresql://localhost:6433/tracker
+    url: jdbc:postgresql://localhost:6433/modul
   security:
     oauth2:
       client:

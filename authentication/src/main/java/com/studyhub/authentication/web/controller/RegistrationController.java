@@ -1,57 +1,32 @@
 package com.studyhub.authentication.web.controller;
 
-import com.studyhub.authentication.service.AuthenticationService;
-import com.studyhub.authentication.web.LoginRequest;
-import com.studyhub.authentication.web.NewUserRegistrationException;
-import com.studyhub.authentication.web.RegisterForm;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import com.studyhub.authentication.service.RegistrationService;
+import com.studyhub.authentication.web.RegisterForm;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestBody;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class RegistrationController {
 
 	private final RegistrationService registrationService;
-	private final AuthenticationService authenticationService;
 
-	public RegistrationController(RegistrationService registrationService, AuthenticationService authenticationService) {
+	public RegistrationController(RegistrationService registrationService) {
 		this.registrationService = registrationService;
-		this.authenticationService = authenticationService;
 	}
 
-	@GetMapping("/register")
-	public String register(RegisterForm registerForm) {
-		return "register";
-	}
-
-	@PostMapping("/register/new-user")
-	public String registerNewUser(@Valid RegisterForm registerForm,
-	                              BindingResult bindingResult,
-	                              RedirectAttributes redirectAttributes,
-	                              HttpServletResponse response) {
-
-		if (bindingResult.hasErrors()) return "register";
-
-		redirectAttributes.addFlashAttribute("registerForm", registerForm);
-
+	@PostMapping("/register")
+	public ResponseEntity<Map<String, Object>> registerNewUser(@RequestBody RegisterForm registerForm) {
 		boolean success = registrationService.register(registerForm.toAppUser());
 
-		if (success) {
-			String token = authenticationService.verify(new LoginRequest(registerForm.username(), registerForm.password()));
-			authenticationService.createAuthTokenCookie(response, token);
-			return "/getting-started";
-		} else {
-			throw new NewUserRegistrationException("could not register new user");
-		}
-	}
+		Map<String, Object> response = new HashMap<>();
+		response.put("success", success);
 
-	@GetMapping("/agb")
-	public String agb() {
-		return "agb";
+		if (success) return ResponseEntity.ok(response);
+		else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 	}
 }
