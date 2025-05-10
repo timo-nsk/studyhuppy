@@ -1,3 +1,21 @@
 <app-header-auth></app-header-auth>
 
-Passwort zurücksetzen
+<div>
+  <p>Wenn sie ihr Passwort vergessen haben, können Sie es hier zurücksetzen.</p>
+  <p>Geben Sie die E-Mail-Adresse ein, die Sie bei der Registrierung angegeben haben und folgen Sie den Anweisungen der E-Mail.</p>
+</div>
+<div>
+  <form [formGroup]="pwResetForm" (ngSubmit)="sendPwResetRequest()">
+    <label for="mail" class="form-label">E-Mail-Adresse:</label>
+    <input id="mail" class="form-control"  type="email" formControlName="mail">
+    <span class="text-danger"
+          *ngIf="pwResetForm.controls['mail'].errors?.['required'] && pwResetForm.controls['mail'].touched">
+                Geben Sie Ihre E-Mail-Adresse ein
+    </span>
+    <span class="text-danger"
+          *ngIf="pwResetForm.controls['mail'].errors?.['email'] && pwResetForm.controls['mail'].touched">
+                Geben Sie ein gültige E-Mail-Adresse ein
+    </span>
+    <button type="submit">Passwort zurücksetzen</button>
+  </form>
+</div>

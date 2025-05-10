@@ -2,6 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {inject, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {routes} from '../app.routes';
+import {HeaderService} from '../header.service';
 
 @Injectable({
   providedIn: "root"
@@ -38,5 +39,9 @@ export class AuthApiService {
         this.router.navigateByUrl("register")
       }
     })
+  }
+
+  pwReset(data: any) {
+    this.http.post("http://localhost:9084/password-reset", data).subscribe()
   }
 }

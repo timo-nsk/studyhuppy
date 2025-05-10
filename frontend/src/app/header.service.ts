@@ -7,8 +7,9 @@ import {Injectable} from '@angular/core';
 export class HeaderService {
 
   createAuthHeader() : HttpHeaders {
+    let token = localStorage.getItem("auth_token")
     return new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem("auth_token")}`,
+      'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
   }
