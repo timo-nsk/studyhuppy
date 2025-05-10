@@ -6,11 +6,15 @@
       <tr>
         <th>Username</th>
         <td>{{userData.username}}</td>
+        <td></td>
       </tr>
       <tr>
         <th>E-Mail</th>
         <td>
           <p>{{userData.mail}}</p>
+        </td>
+        <td>
+          <a class="btn btn-outline-primary">ändern</a>
         </td>
       </tr>
       <tr>
@@ -21,16 +25,19 @@
             <input (change)="toggleEmailSubscription()"  class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" [checked]="userData.notificationSubscription">
           </div>
         </td>
-      </tr>
-      <tr>
-        <th>Passwort</th>
-        <td>
-          <a th:href="@{/change-pass}">ändern...</a>
-        </td>
+        <td></td>
       </tr>
       <tr>
         <th>Fachsemester</th>
         <td>{{userData.semester}}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>
+          <a href="#" class="btn btn-outline-primary">Passwort ändern</a>
+        </td>
+        <td></td>
+        <td></td>
       </tr>
       <tr>
         <td>
@@ -38,6 +45,7 @@
             Konto löschen
           </a>
         </td>
+        <td></td>
         <td></td>
       </tr>
       </tbody>
