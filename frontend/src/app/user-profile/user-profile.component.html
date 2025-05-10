@@ -5,16 +5,12 @@
       <tbody>
       <tr>
         <th>Username</th>
-        <td th:text="${user.getUsername()}">Peter</td>
+        <td>{{userData.username}}</td>
       </tr>
       <tr>
         <th>E-Mail</th>
         <td>
-          <p th:text="${user.getMail()}">
-                <span>
-                    <a>ändern...</a>
-                </span>
-          </p>
+          <p>{{userData.mail}}</p>
         </td>
       </tr>
       <tr>
@@ -31,6 +27,10 @@
         <td>
           <a th:href="@{/change-pass}">ändern...</a>
         </td>
+      </tr>
+      <tr>
+        <th>Fachsemester</th>
+        <td>{{userData.semester}}</td>
       </tr>
       <tr>
         <td>
