@@ -20,6 +20,7 @@ export class UserProfileComponent implements OnInit{
 
   showEmailChangeForm : boolean = false
   showPassChangeForm : boolean = false
+  showAssertDeletionBox : boolean = false
 
   changePassFail = false
 
@@ -99,5 +100,14 @@ export class UserProfileComponent implements OnInit{
 
   togglePasswordChangeForm() {
     this.showPassChangeForm = !this.showPassChangeForm
+  }
+
+  toggleAssertDeletionBox() {
+    this.showAssertDeletionBox = true;
+  }
+
+  deleteAccount() {
+    const data = this.userData.userId
+    this.userService.deleteAccount(data)
   }
 }

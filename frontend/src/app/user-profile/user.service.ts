@@ -39,4 +39,20 @@ export class UserApiService {
     const headers = this.headerService.createAuthHeader()
     return this.http.put<any>("http://localhost:9084/change-password", data, { headers, observe : 'response'});
   }
+
+  deleteAccount(data: any) {
+    const headers = this.headerService.createAuthHeader()
+
+    this.http.request('DELETE', 'http://localhost:9084/api/v1/delete-account', {
+      headers,
+      body: data
+    }).subscribe({
+      next: (response) => {
+        console.log('Account deleted successfully', response);
+      },
+      error: (err) => {
+        console.error('Error deleting account', err);
+      }
+    });
+  }
 }

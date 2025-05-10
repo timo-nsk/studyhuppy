@@ -74,11 +74,13 @@
       </tr>
       <tr>
         <td>
-          <a th:href="@{/delete-account}" class="btn btn-outline-danger">
+          <a class="btn btn-outline-danger" (click)="toggleAssertDeletionBox()">
             Konto löschen
           </a>
         </td>
-        <td></td>
+        <td *ngIf="showAssertDeletionBox">
+          <a class="btn btn-warning" (click)="deleteAccount()">Ja, Konto endgültig löschen</a>
+        </td>
         <td></td>
       </tr>
       </tbody>
