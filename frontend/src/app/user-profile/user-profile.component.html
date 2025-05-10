@@ -14,8 +14,20 @@
           <p>{{userData.mail}}</p>
         </td>
         <td>
-          <a class="btn btn-outline-primary">ändern</a>
+          <a class="btn btn-outline-primary" (click)="toggleEmailChangeForm()">ändern</a>
         </td>
+        <div *ngIf="showEmailChangeForm">
+          <form [formGroup]="emailChangeForm" (ngSubmit)="putNewEmail()">
+            <input formControlName="newMail" placeholder="neue E-Mail-Adresse...">
+            <button type="submit">abschicken</button>
+          </form>
+          <span *ngif="changeSuccess">
+            E-Mail-Adresse erfolgreich geändert!
+          </span>
+          <span class="text-danger" *ngif="changeFail">
+            E-Mail-Adresse konnte nicht geändert werden!
+          </span>
+        </div>
       </tr>
       <tr>
         <th>E-Mail Benachrichtigungen</th>

@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Observable, Subscription} from 'rxjs';
 import {User} from './user';
 import {HeaderAuthComponent} from '../app-layout/header-auth/header-auth.component';
@@ -28,5 +28,10 @@ export class UserApiService {
 
     return this.http.put<User>(this.BASE_API_URL + "/update-notification-subscription",payload, { headers })
       .subscribe();
+  }
+
+  putNewEmail(data: any): Observable<HttpResponse<any>> {
+    const header = this.headerService.createAuthHeader()
+    return this.http.put<any>(this.BASE_API_URL + "/change-mail", data);
   }
 }
