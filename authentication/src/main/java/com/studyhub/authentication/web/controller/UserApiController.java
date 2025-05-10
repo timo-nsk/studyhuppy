@@ -38,6 +38,7 @@ public class UserApiController {
 
 	@GetMapping("/get-user-data")
 	public ResponseEntity<UserDto> getUserData(HttpServletRequest request) {
+		System.out.println("ping");
 		String authHeader = request.getHeader("Authorization");
 		if (authHeader != null && authHeader.startsWith("Bearer ")) {
 			String authToken = jwtService.extractTokenFromHeader(authHeader);
