@@ -3,13 +3,15 @@ import {HeaderAuthComponent} from '../../app-layout/header-auth/header-auth.comp
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {AuthApiService} from '../auth.service';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-pw-service',
   imports: [
     HeaderAuthComponent,
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    RouterLink
   ],
   templateUrl: './pw-service.component.html',
   standalone: true,
