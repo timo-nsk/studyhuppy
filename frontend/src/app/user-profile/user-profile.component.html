@@ -20,8 +20,13 @@
               <input formControlName="newMail" placeholder="neue E-Mail-Adresse...">
               <button type="submit">abschicken</button>
             </form>
-            <span class="text-danger" *ngif="changeMailFail">
-              E-Mail-Adresse konnte nicht geändert werden!
+            <span class="text-danger"
+                  *ngIf="emailChangeForm.controls['newMail'].errors?.['required'] && emailChangeForm.controls['newMail'].touched">
+                  Geben Sie eine E-Mail-Adresse ein
+            </span>
+            <span class="text-danger"
+                  *ngIf="emailChangeForm.controls['newMail'].errors?.['email'] && emailChangeForm.controls['newMail'].touched">
+                  Geben Sie eine gültige E-Mail-Adresse ein
             </span>
           </div>
         </td>
@@ -80,5 +85,3 @@
     </table>
   </div>
 </div>
-<script src="/js/notification-toggler.js"></script>
-<script src="/js/get-notification-subscription.js"></script>

@@ -1,7 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {CommonModule, NgIf} from '@angular/common';
 import {UserApiService} from './user.service';
-import {User} from './user';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
@@ -22,13 +21,10 @@ export class UserProfileComponent implements OnInit{
   showEmailChangeForm : boolean = false
   showPassChangeForm : boolean = false
 
-  changeMailSuccess = false
-  changeMailFail = false
-  changePassSuccess = false
   changePassFail = false
 
   emailChangeForm : FormGroup = new FormGroup({
-    userId: new FormControl(null, Validators.required),
+    userId: new FormControl(""),
     newMail: new FormControl(null, [Validators.required, Validators.email])
   })
 
@@ -66,19 +62,18 @@ export class UserProfileComponent implements OnInit{
   }
 
   putNewEmail() {
+    if(this.emailChangeForm.invalid) {
+      this.emailChangeForm.markAsTouched()
+      return
+    }
+
     this.emailChangeForm.patchValue({ userId: this.userData.userId})
     const data = this.emailChangeForm.value
     this.userService.putNewEmail(data).subscribe({
       next: (response) => {
-        console.log("changed mail")
-        this.changeMailFail = false
         this.snackbar.open("E-Mail-Adresse erfolgreich geändert!", "close", {
           duration: 4000
         })
-      },
-      error: (error) => {
-        console.log("could not change pw")
-        this.changeMailFail = true
       }
     })
   }
