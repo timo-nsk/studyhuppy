@@ -107,11 +107,12 @@ public class AppUserRepositoryTest {
 	@Test
 	@DisplayName("Das Passwort eines Users wird erfolgreich geändert")
 	void test_8() {
+		String userId = "f8a72b1c-9d3e-4a5f-8b09-1c2d3e4f5a67";
 		String newPassword = "12345";
-		AppUser appUser = new AppUser(null, UUID.randomUUID(), "susi@gmail.com", "susi89", "68465465", true, true, 1);
+		AppUser appUser = new AppUser(null, UUID.fromString(userId), "susi@gmail.com", "susi89", "68465465", true, true, 1);
 		appUserRepository.save(appUser);
 
-		appUserRepository.updatePassword(newPassword, "susi89");
+		appUserRepository.updatePassword(newPassword, UUID.fromString(userId));
 
 		AppUser foundAppUser = appUserRepository.findByUsername("susi89");
 		assertThat(foundAppUser.getPassword()).isEqualTo(newPassword);
@@ -140,5 +141,16 @@ public class AppUserRepositoryTest {
 
 		AppUser changedMailAppUser = appUserRepository.findByUsername("susi89");
 		assertThat(changedMailAppUser.getMail()).isEqualTo(newMail);
+	}
+
+	@Test
+	@DisplayName("Ein User kann anhand seiner User-Id gefunden werden")
+	void test_11() {
+		UUID userId = UUID.fromString("f8a72b1c-9d3e-4a5f-8b09-1c2d3e4f5a67");
+		AppUser appUser = new AppUser(null, userId, "susi@gmail.com", "susi89", "68465465", true, true, 3);
+		appUserRepository.save(appUser);
+
+		AppUser foundUser = appUserRepository.findByUserId(userId);
+		assertThat(foundUser.getUserId()).isEqualTo(userId);
 	}
 }

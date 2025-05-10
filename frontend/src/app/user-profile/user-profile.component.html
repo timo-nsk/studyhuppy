@@ -15,19 +15,16 @@
         </td>
         <td>
           <a class="btn btn-outline-primary" (click)="toggleEmailChangeForm()">ändern</a>
+          <div *ngIf="showEmailChangeForm">
+            <form [formGroup]="emailChangeForm" (ngSubmit)="putNewEmail()">
+              <input formControlName="newMail" placeholder="neue E-Mail-Adresse...">
+              <button type="submit">abschicken</button>
+            </form>
+            <span class="text-danger" *ngif="changeMailFail">
+              E-Mail-Adresse konnte nicht geändert werden!
+            </span>
+          </div>
         </td>
-        <div *ngIf="showEmailChangeForm">
-          <form [formGroup]="emailChangeForm" (ngSubmit)="putNewEmail()">
-            <input formControlName="newMail" placeholder="neue E-Mail-Adresse...">
-            <button type="submit">abschicken</button>
-          </form>
-          <span *ngif="changeSuccess">
-            E-Mail-Adresse erfolgreich geändert!
-          </span>
-          <span class="text-danger" *ngif="changeFail">
-            E-Mail-Adresse konnte nicht geändert werden!
-          </span>
-        </div>
       </tr>
       <tr>
         <th>E-Mail Benachrichtigungen</th>
@@ -46,9 +43,28 @@
       </tr>
       <tr>
         <td>
-          <a href="#" class="btn btn-outline-primary">Passwort ändern</a>
+          <a class="btn btn-outline-primary" (click)="togglePasswordChangeForm()">Passwort ändern</a>
         </td>
-        <td></td>
+        <td>
+          <div *ngIf="showPassChangeForm">
+            <form [formGroup]="changePassForm" (ngSubmit)="putNewPass()">
+              <div>
+                <label for="old-pw" class="form-label">Altes Passwort</label>
+                <input id="old-pw" class="form-control" type="password" formControlName="oldPw">
+              </div>
+              <div>
+                <label for="new-pw" class="form-label">Neues Passwort</label>
+                <input id="new-pw" class="form-control" type="password" formControlName="newPw">
+                <span *ngIf="changePassFail">
+                  Passwort konnte nicht geändert werden!
+                </span>
+              </div>
+              <div>
+                <button type="submit" class="btn btn-outline-primary"> abschicken</button>
+              </div>
+            </form>
+          </div>
+        </td>
         <td></td>
       </tr>
       <tr>

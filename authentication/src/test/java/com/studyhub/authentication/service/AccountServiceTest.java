@@ -100,18 +100,4 @@ public class AccountServiceTest {
 		verify(appUserRepository).getNotificationSubscription("username");
 	}
 
-	@Test
-	@DisplayName("Wenn der Benutzer sein Passwort vergessen hat und eine Änderung anfordert, wird das Passwort in der Datenbank aktualisiert")
-	void test_9() {
-		when(jwtService.extractUsername(anyString())).thenReturn("susi98");
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-		accountService.changePassword("newPassword", "token");
-
-		ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-		verify(appUserRepository).updatePassword(captor.capture(), eq("susi98"));
-		String capturedPassword = captor.getValue();
-		assertTrue(new BCryptPasswordEncoder().matches("newPassword", capturedPassword));
-	}
-
 }

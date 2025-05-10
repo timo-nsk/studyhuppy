@@ -3,10 +3,11 @@ import {CommonModule, NgIf} from '@angular/common';
 import {UserApiService} from './user.service';
 import {User} from './user';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [CommonModule, ReactiveFormsModule, NgIf],
+  imports: [CommonModule, ReactiveFormsModule, NgIf, MatSnackBarModule],
   templateUrl: './user-profile.component.html',
   standalone: true,
   styleUrl: './user-profile.component.scss'
@@ -16,15 +17,25 @@ export class UserProfileComponent implements OnInit{
   userData : any;
 
   userService  = inject(UserApiService)
+  snackbar : MatSnackBar = inject(MatSnackBar)
 
   showEmailChangeForm : boolean = false
+  showPassChangeForm : boolean = false
 
-  changeSuccess = false
-  changeFail = false
+  changeMailSuccess = false
+  changeMailFail = false
+  changePassSuccess = false
+  changePassFail = false
 
   emailChangeForm : FormGroup = new FormGroup({
     userId: new FormControl(null, Validators.required),
     newMail: new FormControl(null, [Validators.required, Validators.email])
+  })
+
+  changePassForm : FormGroup = new FormGroup({
+    userId: new FormControl(null, Validators.required),
+    oldPw: new FormControl(null, [Validators.required, Validators.min(8)]),
+    newPw: new FormControl(null, [Validators.required, Validators.min(8)])
   })
 
   ngOnInit(): void {
@@ -60,12 +71,38 @@ export class UserProfileComponent implements OnInit{
     this.userService.putNewEmail(data).subscribe({
       next: (response) => {
         console.log("changed mail")
-        this.changeSuccess = true
+        this.changeMailFail = false
+        this.snackbar.open("E-Mail-Adresse erfolgreich geändert!", "close", {
+          duration: 4000
+        })
       },
       error: (error) => {
         console.log("could not change pw")
-        this.changeFail = true
+        this.changeMailFail = true
       }
     })
+  }
+
+  putNewPass() {
+    this.changePassForm.patchValue({ userId: this.userData.userId})
+    const data = this.changePassForm.value
+
+    this.userService.putNewPassword(data).subscribe({
+      next: (response) => {
+        console.log("changed password success")
+        this.changePassFail = false;
+        this.snackbar.open("Passwort erfolgreich geändert!", "close", {
+          duration: 4000
+        })
+      },
+      error: (error) => {
+        console.log("could not change password")
+        this.changePassFail = true;
+      }
+    })
+  }
+
+  togglePasswordChangeForm() {
+    this.showPassChangeForm = !this.showPassChangeForm
   }
 }

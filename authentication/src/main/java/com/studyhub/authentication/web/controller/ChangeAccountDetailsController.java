@@ -22,20 +22,15 @@ public class ChangeAccountDetailsController {
 		this.accountService = accountService;
 	}
 
-	@PostMapping("/change-pass")
-	public String tryChangePassword(@Valid ChangePasswordForm changePasswordForm,
-	                                BindingResult bindingResult,
-	                                RedirectAttributes redirectAttributes,
-	                                @CookieValue("auth_token") String token) {
-
-		if (bindingResult.hasErrors()) return "change-pass";
-
-
-		redirectAttributes.addFlashAttribute("changePasswordForm", changePasswordForm);
-
-		accountService.changePassword(changePasswordForm.newPassword(), token);
-
-		return "redirect:/profil";
+	@PutMapping("/change-password")
+	public ResponseEntity<Void> tryChangePassword(@RequestBody ChangePasswordForm req) {
+		System.out.println(req);
+		if(accountService.validPassword(req.oldPw(), req.userId())) {
+			accountService.changePassword(req.newPw(), req.userId());
+			return ResponseEntity.ok().build();
+		} else {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 
 	@PutMapping("/change-mail")

@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,12 +64,12 @@ public class AccountService {
 		return appUserRepository.findByUsername(username);
 	}
 
-	public void changePassword(String newPassword, String token) {
+	public void changePassword(String newPassword, String userId) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String encodedPassword = encoder.encode(newPassword);
-		String username = jwtService.extractUsername(token);
 
-		appUserRepository.updatePassword(encodedPassword, username);
+		appUserRepository.updatePassword(encodedPassword, UUID.fromString(userId));
+		log.info("user '%s' updates his/her password".formatted(userId));
 	}
 
 	public Integer findSemesterByUsername(String username) {
@@ -93,4 +92,11 @@ public class AccountService {
 	public void changeMail(EmailChangeRequest req) {
 		appUserRepository.updateMailByUserId(req.newMail(), UUID.fromString(req.userId()));
 	}
+
+	public boolean validPassword(String sendPw, String userId) {
+		AppUser appUser = appUserRepository.findByUserId(UUID.fromString(userId));
+		String retrievedPw = appUser.getPassword();
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
+        return encoder.matches(sendPw, retrievedPw);
+    }
 }

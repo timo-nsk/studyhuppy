@@ -32,9 +32,9 @@ public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
 	Boolean getNotificationSubscription(@Param("username") String username);
 
 	@Modifying
-	@Query("UPDATE users SET password = :encodedPassword WHERE username = :username")
+	@Query("UPDATE users SET password = :encodedPassword WHERE user_id = :userId")
 	void updatePassword(@Param("encodedPassword") String encodedPassword,
-	                    @Param("username") String username);
+	                    @Param("userId") UUID userId);
 
 	@Query("select 1")
 	Integer isUserDbHealthy();
@@ -46,4 +46,6 @@ public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
 	@Query("update users set mail = :newMail where user_id = :userId")
     void updateMailByUserId(@Param("newMail")String newMail,
 							@Param("userId") UUID userId);
+
+	AppUser findByUserId(UUID userId);
 }

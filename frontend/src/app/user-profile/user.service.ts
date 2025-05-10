@@ -34,4 +34,9 @@ export class UserApiService {
     const headers = this.headerService.createAuthHeader()
     return this.http.put<any>("http://localhost:9084/change-mail", data, { headers, observe: 'response' });
   }
+
+  putNewPassword(data: any) : Observable<HttpResponse<any>> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.put<any>("http://localhost:9084/change-password", data, { headers, observe : 'response'});
+  }
 }
