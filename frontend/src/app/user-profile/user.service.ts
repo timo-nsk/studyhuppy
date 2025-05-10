@@ -31,7 +31,7 @@ export class UserApiService {
   }
 
   putNewEmail(data: any): Observable<HttpResponse<any>> {
-    const header = this.headerService.createAuthHeader()
-    return this.http.put<any>(this.BASE_API_URL + "/change-mail", data);
+    const headers = this.headerService.createAuthHeader()
+    return this.http.put<any>("http://localhost:9084/change-mail", data, { headers, observe: 'response' });
   }
 }
