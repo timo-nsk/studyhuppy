@@ -1,12 +1,12 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgIf} from '@angular/common';
 import {UserApiService} from './user.service';
 import {User} from './user';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NgIf],
   templateUrl: './user-profile.component.html',
   standalone: true,
   styleUrl: './user-profile.component.scss'
@@ -23,6 +23,7 @@ export class UserProfileComponent implements OnInit{
   changeFail = false
 
   emailChangeForm : FormGroup = new FormGroup({
+    userId: new FormControl(null, Validators.required),
     newMail: new FormControl(null, [Validators.required, Validators.email])
   })
 
@@ -54,6 +55,7 @@ export class UserProfileComponent implements OnInit{
   }
 
   putNewEmail() {
+    this.emailChangeForm.patchValue({ userId: this.userData.userId})
     const data = this.emailChangeForm.value
     this.userService.putNewEmail(data).subscribe({
       next: (response) => {
