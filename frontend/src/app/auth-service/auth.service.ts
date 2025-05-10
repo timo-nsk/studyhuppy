@@ -13,7 +13,7 @@ export class AuthApiService {
 
   login(data : any) {
     console.log("trying login")
-    this.http.post("http://localhost:9084/login/auth", data).subscribe((r:any)=> {
+    this.http.post("http://localhost:9084/login", data).subscribe((r:any)=> {
       if(r.validated == false) {
         console.log("error valdiating credentials")
       } else {
@@ -29,7 +29,6 @@ export class AuthApiService {
   }
 
   register(data: any) {
-    console.log("trying register")
     this.http.post("http://localhost:9084/register", data).subscribe((r:any)=> {
       if(r.success) {
         console.log("registering complete")
