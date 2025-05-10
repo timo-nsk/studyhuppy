@@ -36,8 +36,7 @@ public class SecurityConfig {
 						.requestMatchers(
 								"/login",
 								"/register",
-								"/agb",
-								"/register")
+								"/agb")
 						.permitAll()
 						.anyRequest().authenticated())
 				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
