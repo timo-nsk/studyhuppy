@@ -83,4 +83,8 @@ public class AccountService {
 
 		return userMap;
 	}
+
+	public boolean emailExists(String email) {
+		return false;
+	}
 }

@@ -38,6 +38,7 @@ public class SecurityConfig {
 						.requestMatchers(
 								"/login",
 								"/register",
+								"/password-reset",
 								"/agb")
 						.permitAll()
 						.anyRequest().authenticated())
