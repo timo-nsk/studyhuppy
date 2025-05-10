@@ -4,6 +4,7 @@ import com.studyhub.authentication.model.AppUser;
 import com.studyhub.authentication.model.UserDto;
 import com.studyhub.authentication.model.UserMapper;
 import com.studyhub.authentication.service.AccountService;
+import com.studyhub.authentication.web.SetNotificationSubscriptionRequest;
 import com.studyhub.jwt.JWTService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,6 @@ public class UserApiController {
 
 	@GetMapping("/get-user-data")
 	public ResponseEntity<UserDto> getUserData(HttpServletRequest request) {
-		System.out.println("ping");
 		String authHeader = request.getHeader("Authorization");
 		if (authHeader != null && authHeader.startsWith("Bearer ")) {
 			String authToken = jwtService.extractTokenFromHeader(authHeader);
@@ -53,5 +53,12 @@ public class UserApiController {
 		}
 	}
 
-
+	@PutMapping("/update-notification-subscription")
+	public ResponseEntity<Void> editNotification(@RequestBody SetNotificationSubscriptionRequest payload, HttpServletRequest request) {
+		String header = request.getHeader("Authorization");
+		String token = jwtService.extractTokenFromHeader(header);
+		String username = jwtService.extractUsername(token);
+		accountService.editNotificationSubscription(payload.activate(), username);
+		return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+	}
 }

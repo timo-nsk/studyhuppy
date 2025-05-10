@@ -6,6 +6,7 @@ import com.studyhub.authentication.service.AccountService;
 import com.studyhub.authentication.web.SetNotificationSubscriptionRequest;
 import com.studyhub.jwt.JWTService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -51,14 +52,6 @@ public class UserProfilController {
 			}
 		}
 		return "redirect:/logout";
-	}
-
-	@PostMapping("/edit-notification")
-	public String editNotification(@RequestBody SetNotificationSubscriptionRequest request,
-	                               @CookieValue("auth_token") String token) {
-		String username = jwtService.extractUsername(token);
-		accountService.editNotificationSubscription(request.activate(), username);
-		return "redirect:/profil";
 	}
 
 	@GetMapping("/get-notification-subscription")

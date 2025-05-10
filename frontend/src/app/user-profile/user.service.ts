@@ -15,11 +15,18 @@ export class UserApiService {
   headerService = inject(HeaderService)
 
   getUserData(): Observable<User> {
-    const authToken: string | null = localStorage.getItem("auth_token");
-
     const headers = this.headerService.createAuthHeader()
 
     return this.http.get<User>(this.BASE_API_URL + "/get-user-data", { headers });
   }
 
+  updateNotificationSubscription(notificationSubscription : boolean) {
+    const headers = this.headerService.createAuthHeader()
+    const payload = JSON.stringify({
+      activate: notificationSubscription
+    });
+
+    return this.http.put<User>(this.BASE_API_URL + "/update-notification-subscription",payload, { headers })
+      .subscribe();
+  }
 }

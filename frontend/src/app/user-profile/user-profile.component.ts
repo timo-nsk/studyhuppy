@@ -30,7 +30,12 @@ export class UserProfileComponent implements OnInit{
         console.error('Fehler beim Laden:', err);
       }
     });
+  }
 
-    console.log(this.userData)
+  toggleEmailSubscription() {
+    console.log("vorher: " + this.userData.notificationSubscription)
+    this.userData.notificationSubscription = !this.userData.notificationSubscription
+    console.log("nacher: " + this.userData.notificationSubscription)
+    this.userService.updateNotificationSubscription(this.userData.notificationSubscription)
   }
 }

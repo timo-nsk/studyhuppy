@@ -52,6 +52,7 @@ public class AccountService {
 
 	public void editNotificationSubscription(Boolean activate, String username) {
 		appUserRepository.updateNotificationSubscription(activate, username);
+		log.info("updated notification subscription for user '%s' to '%s'".formatted(username, activate));
 	}
 
 	public Boolean getNotificationSubscription(String username) {
