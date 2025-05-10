@@ -38,21 +38,6 @@ public class UserProfilController {
 		return "delete-account";
 	}
 
-	@PostMapping("/delete-account")
-	public String finalyDeleteAccount(@CookieValue("auth_token") String token) {
-		String username = jwtService.extractUsername(token);
-		int maxTries = 3;
-
-		for (int i = 1; i <= maxTries; i++) {
-			boolean success = accountService.deleteAccount(username, i);
-			if(success) {
-				return "redirect:/logout";
-			} else if(i == maxTries) {
-				throw new AccountDeletionException("Account deletion failed");
-			}
-		}
-		return "redirect:/logout";
-	}
 
 	@GetMapping("/get-notification-subscription")
 	public @ResponseBody String getNotificationSubscription(@CookieValue("auth_token") String token) {

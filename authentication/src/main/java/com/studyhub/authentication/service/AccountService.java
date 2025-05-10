@@ -36,19 +36,15 @@ public class AccountService {
 
 	//NOTE: was passiert, wenn in nur einem system ein erfolg ist und wieder getried wird?
 	//TODO: die Requests an die Systeme implementieren
-	public boolean deleteAccount(String username, int tries) {
+	public boolean deleteAccount(UUID userId, int tries) {
 		boolean trackRequestSuccess = true; //trackRequestService.sendDeleteAllRequest(username);
 		boolean karteiRequestSuccess = true; //karteiRequestService.sendDeleteAllRequest(username);
-		appUserRepository.deleteByUsername(username);
+		appUserRepository.deleteByUserId(userId);
 
 		boolean success = trackRequestSuccess && karteiRequestSuccess;
 
-		if(success) {
-			log.info("User '%s' deleted from system (tries: %d)".formatted(username, tries));
-		} else {
-			log.error("User '%s' could not be deleted from system (tries: %d)".formatted(username, tries));
-		}
-		return success;
+        log.info("User '%s' deleted from system (tries: %d)".formatted(userId, tries));
+        return success;
 	}
 
 	public void editNotificationSubscription(Boolean activate, String username) {

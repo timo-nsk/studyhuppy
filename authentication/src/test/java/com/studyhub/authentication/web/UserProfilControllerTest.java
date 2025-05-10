@@ -96,37 +96,7 @@ public class UserProfilControllerTest {
 				.andExpect(redirectedUrl("/login"));
 	}
 
-	@Test
-	@DisplayName("Wenn ein Request zur Account-Löschung gemacht wird, wird der Account gelöscht und der Benutzer wird zur ausgelogt")
-	void test_5() throws Exception {
-		String token = "jwttoken";
-		String username = "susi4";
-		int tries = 1;
-		when(jwtService.extractUsername(token)).thenReturn(username);
-		when(accountService.deleteAccount(username, tries)).thenReturn(true);
-		mvc.perform(post("/delete-account")
-						.cookie(new Cookie("auth_token", token)))
-			.andExpect(status().is3xxRedirection())
-			.andExpect(redirectedUrl("/logout"));
 
-		verify(accountService, times(1)).deleteAccount(username, tries);
-	}
-
-	@Test
-	@DisplayName("Wenn ein Request zur Account-Löschung gemacht wird und der Lösch-Vorgang 3 mal fehlgeschlagen ist,w ird eine Exception geworfen")
-	void test_6() throws Exception {
-		String token = "jwttoken";
-		String username = "susi4";
-		int tries = 1;
-		when(jwtService.extractUsername(token)).thenReturn(username);
-		when(accountService.deleteAccount(username, tries)).thenReturn(false);
-		mvc.perform(post("/delete-account")
-						.cookie(new Cookie("auth_token", token)))
-				.andExpect(status().isInternalServerError())
-				.andExpect(view().name("error"));
-
-		verify(accountService, times(3)).deleteAccount(anyString(), anyInt());
-	}
 
 	@Test
 	@DisplayName("Ein POST-Request auf /edit-notification ist erfolgreich, leitet die Daten in den AccountService weiter und gibt die korrekte View zurück")

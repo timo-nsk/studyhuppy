@@ -3,6 +3,7 @@ package com.studyhub.authentication.web.controller;
 import com.studyhub.authentication.model.AppUser;
 import com.studyhub.authentication.model.UserDto;
 import com.studyhub.authentication.model.UserMapper;
+import com.studyhub.authentication.service.AccountDeletionException;
 import com.studyhub.authentication.service.AccountService;
 import com.studyhub.authentication.web.SetNotificationSubscriptionRequest;
 import com.studyhub.jwt.JWTService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/")
@@ -60,5 +62,21 @@ public class UserApiController {
 		String username = jwtService.extractUsername(token);
 		accountService.editNotificationSubscription(payload.activate(), username);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+	}
+
+	@DeleteMapping("/delete-account")
+	public ResponseEntity<Void> deleteAccount(@RequestBody String userId) {
+
+		int maxTries = 3;
+
+		for (int i = 1; i <= maxTries; i++) {
+			boolean success = accountService.deleteAccount(UUID.fromString(userId), i);
+			if(success) {
+				return ResponseEntity.noContent().build();
+			} else if(i == maxTries) {
+				return ResponseEntity.internalServerError().build();
+			}
+		}
+		return ResponseEntity.noContent().build();
 	}
 }

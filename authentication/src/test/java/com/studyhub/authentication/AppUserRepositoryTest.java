@@ -53,12 +53,13 @@ public class AppUserRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("Ein User wird anhand des usernames aus der Datenbank entfernt")
+	@DisplayName("Ein User wird anhand der User-Id aus der Datenbank entfernt")
 	void test_4() {
-		AppUser appUser = new AppUser(null, UUID.randomUUID(), "susi@gmail.com", "susi89", "1234", true, true, 1);
+		UUID uuid = UUID.randomUUID();
+		AppUser appUser = new AppUser(null, uuid, "susi@gmail.com", "susi89", "1234", true, true, 1);
 		appUserRepository.save(appUser);
 
-		appUserRepository.deleteByUsername("susi89");
+		appUserRepository.deleteByUserId(uuid);
 
 		AppUser foundAppUser = appUserRepository.findByUsername("susi89");
 		assertThat(foundAppUser).isNull();

@@ -20,8 +20,8 @@ public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
 	Integer findSemesterByUsername(@Param("username") String username);
 
 	@Modifying
-	@Query("DELETE FROM users WHERE username = :username")
-	void deleteByUsername(@Param("username") String username);
+	@Query("DELETE FROM users WHERE user_id = :userId")
+	void deleteByUserId(@Param("userId") UUID userId);
 
 	@Modifying
 	@Query("UPDATE users SET notification_subscription = :activate WHERE username = :username")
