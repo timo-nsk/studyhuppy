@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Repository
 public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
@@ -40,4 +41,9 @@ public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
 
 	@Query("select * from users where notification_subscription = true")
 	List<AppUser> getUsersWithNotificationOn();
+
+	@Modifying
+	@Query("update users set mail = :newMail where user_id = :userId")
+    void updateMailByUserId(@Param("newMail")String newMail,
+							@Param("userId") UUID userId);
 }

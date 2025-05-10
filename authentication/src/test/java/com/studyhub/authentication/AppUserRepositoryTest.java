@@ -126,6 +126,19 @@ public class AppUserRepositoryTest {
 		Integer semester = appUserRepository.findSemesterByUsername("susi89");
 
 		assertThat(semester).isEqualTo(3);
+	}
 
+	@Test
+	@DisplayName("E-Mail-Adresse eines Users kann erfolgreich geändert werden")
+	void test_10() {
+		String newMail = "newmail@gmail.com";
+		UUID userId = UUID.fromString("f8a72b1c-9d3e-4a5f-8b09-1c2d3e4f5a67");
+		AppUser appUser = new AppUser(null, userId, "susi@gmail.com", "susi89", "68465465", true, true, 3);
+		appUserRepository.save(appUser);
+
+		appUserRepository.updateMailByUserId(newMail, userId);
+
+		AppUser changedMailAppUser = appUserRepository.findByUsername("susi89");
+		assertThat(changedMailAppUser.getMail()).isEqualTo(newMail);
 	}
 }
