@@ -1,8 +1,9 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import {inject, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {routes} from '../app.routes';
 import {HeaderService} from '../header.service';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -41,7 +42,7 @@ export class AuthApiService {
     })
   }
 
-  pwReset(data: any) {
-    this.http.post("http://localhost:9084/password-reset", data).subscribe()
+  pwReset(data: any): Observable<HttpResponse<any>> {
+    return this.http.post("http://localhost:9084/password-reset", data, { observe: 'response' });
   }
 }

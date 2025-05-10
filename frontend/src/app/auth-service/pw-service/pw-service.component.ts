@@ -19,14 +19,35 @@ export class PwServiceComponent {
 
   authService = inject(AuthApiService)
 
+  emailNotFound : boolean = false;
+  emailFound : boolean = false;
+
   pwResetForm : FormGroup = new FormGroup({
     mail: new FormControl("", [Validators.required, Validators.email])
   })
 
   sendPwResetRequest() {
-    console.log("try password reset")
     const data = this.pwResetForm.value
-    console.log(data)
-    this.authService.pwReset(data)
+
+    if (this.pwResetForm.invalid) {
+      this.pwResetForm.markAllAsTouched();
+      return;
+    }
+    console.log("hiiiii")
+
+    this.authService.pwReset(data).subscribe({
+      next: (response) => {
+        this.emailFound = true;
+        this.emailNotFound = false;
+      },
+      error: (error) => {
+        if (error.status === 404) {
+          this.emailNotFound = true;
+          this.emailFound = false;
+        } else {
+          console.error("Ein Fehler ist aufgetreten:", error);
+        }
+      }
+    });
   }
 }

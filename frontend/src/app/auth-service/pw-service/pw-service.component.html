@@ -16,6 +16,12 @@
           *ngIf="pwResetForm.controls['mail'].errors?.['email'] && pwResetForm.controls['mail'].touched">
                 Geben Sie ein gültige E-Mail-Adresse ein
     </span>
+    <ng-container *ngIf="emailNotFound">
+      <p class="text-danger">Es wurde kein Account unter der eingegebenen E-Mail-Adresse gefunden</p>
+    </ng-container>
+    <ng-container *ngIf="emailFound">
+      <p>Sie erhalten in kürze eine Nachricht!</p>
+    </ng-container>
     <button type="submit">Passwort zurücksetzen</button>
   </form>
 </div>
