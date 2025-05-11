@@ -1,13 +1,15 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import { Modul} from './modul';
 import { HttpClient } from '@angular/common/http';
 import {Observable } from 'rxjs';
+import {HeaderService} from '../../header.service';
 
 @Injectable({
   providedIn: 'root' // macht den Service global verfügbar
 })
 export class ModuleService {
   private MODUL_BASE_API = 'http://localhost:9080/api';
+  headerService = inject(HeaderService)
 
   constructor(private http: HttpClient) {}
 
@@ -21,9 +23,8 @@ export class ModuleService {
   }
 
   getActiveModuleByUsername(): Observable<Modul[]> {
-    return this.http.get<Modul[]>(this.MODUL_BASE_API + '/get-active-modules', {
-      withCredentials: true // wichtig: damit später auth_token als Cookies gesendet wird!
-    });
+    const headers = this.headerService.createAuthHeader()
+    return this.http.get<Modul[]>(this.MODUL_BASE_API + '/get-active-modules', {headers});
   }
 
   getAllModulesByUsername(): Observable<Modul[]> {

@@ -47,7 +47,7 @@ public class SemesterForm {
 			// TODO: muss alles noch in dem request mitgeschickt werden
 			Kreditpunkte kreditpunkte = new Kreditpunkte(0,0,0);
 			Lerntage lerntage = new Lerntage(true, true, true, true, true, false, false, SemesterPhase.VORLESUNG);
-			Semester semester = new Semester(null, SemesterTyp.WINTERSEMESTER, vlBeginn, vlEnde, semesterBeginn, semesterEnde);
+			Semester semester = new Semester(null, 1, SemesterTyp.WINTERSEMESTER, vlBeginn, vlEnde, semesterBeginn, semesterEnde);
 			Modul modul = new Modul(UUID.randomUUID(), modulRequest.modulName(), 0, kreditpunkte, jwtService.extractUsername(token), true, semesterstufe, semester, null, lerntage);
 			m.add(modul);
 		}

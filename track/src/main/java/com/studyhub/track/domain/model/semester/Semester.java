@@ -1,16 +1,16 @@
 package com.studyhub.track.domain.model.semester;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Semester {
 	Integer modul;
+	Integer fachSemester;
 	SemesterTyp semesterTyp;
 	LocalDate vorlesungBeginn;
 	LocalDate vorlesungEnde;
