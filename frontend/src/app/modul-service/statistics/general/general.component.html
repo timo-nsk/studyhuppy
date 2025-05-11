@@ -23,16 +23,16 @@
       </div>
     </li>
     <li>
-      <p>Aktive Module: <span th:text="${NumberActiveModules ?: 'Keine Zeiten vorhanden'}">7</span></p>
+      <p>Aktive Module: <span>{{numberActiveModules}}</span></p>
     </li>
     <li>
-      <p>Deaktivierte Module: <span th:text="${NumberNotActiveModules ?: 'Keine Zeiten vorhanden'}">7</span></p>
+      <p>Deaktivierte Module: <span>{{numberNotActiveModules}}</span></p>
     </li>
     <li>
-      <p>Modul am meisten studiert: <span th:text="${MaxStudiedModul ?: 'Kein Modul vorhanden'}">Data Science</span></p>
+      <p>Modul am meisten studiert: <span>{{maxStudiedModul}}</span></p>
     </li>
     <li>
-      <p>Modul am wenigsten studiert: <span th:text="${MinStudiedModul ?: 'Kein Modul vorhanden'}">Mathe</span></p>
+      <p>Modul am wenigsten studiert: <span>{{minStudiedModul}}</span></p>
     </li>
     <!--
     <li>
