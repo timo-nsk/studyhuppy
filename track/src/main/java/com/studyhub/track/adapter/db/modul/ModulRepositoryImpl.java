@@ -98,13 +98,13 @@ public class ModulRepositoryImpl implements ModulRepository {
 	}
 
 	@Override
-	public Integer countActiveModules() {
-		return modulDao.countByActiveIsTrue();
+	public Integer countActiveModules(String username) {
+		return modulDao.countByActiveIsTrue(username);
 	}
 
 	@Override
-	public Integer countNotActiveModules() {
-		return modulDao.countByActiveIsFalse();
+	public Integer countNotActiveModules(String username) {
+		return modulDao.countByActiveIsFalse(username);
 	}
 
 	@Override

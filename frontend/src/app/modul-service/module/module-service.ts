@@ -28,9 +28,8 @@ export class ModuleService {
   }
 
   getAllModulesByUsername(): Observable<Modul[]> {
-    return this.http.get<Modul[]>(this.MODUL_BASE_API + '/get-all-by-username', {
-      withCredentials: true // wichtig: damit später auth_token als Cookies gesendet wird!
-    });
+    const headers = this.headerService.createAuthHeader()
+    return this.http.get<Modul[]>(this.MODUL_BASE_API + '/get-all-by-username', { headers });
   }
 
   async getSeconds(fachId: string): Promise<number> {

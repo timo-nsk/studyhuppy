@@ -14,8 +14,8 @@ export class GeneralComponent implements OnInit{
 
   totalStudyTime: string = '';
   totalStudyTimePerSemester: { key: number, value: number }[] = [];
-  numberActiveModules: number = 0;
-  numberNotActiveModules: number = 0;
+  numberActiveModules: string = '';
+  numberNotActiveModules: string = '';
   maxStudiedModul: string = '';
   minStudiedModul: string = '';
 

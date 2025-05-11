@@ -27,23 +27,43 @@ export class StatisticApiService {
       this.BASE_API_URL + "/get-total-study-time-per-semester", { headers});
   }
 
-  getNumberActiveModules() : Observable<number> {
+  getNumberActiveModules() : Observable<string> {
     const headers = this.headerService.createAuthHeader()
-    return this.http.get<number>(this.BASE_API_URL + "/get-number-active-module", {headers})
+    return this.http.get(this.BASE_API_URL + "/get-number-active-module",
+      {
+        headers: this.headerService.createAuthHeader(),
+        responseType: 'text'
+      }
+    );
   }
 
-  getNumberNotActiveModules() : Observable<number> {
+  getNumberNotActiveModules() : Observable<string> {
     const headers = this.headerService.createAuthHeader()
-    return this.http.get<number>(this.BASE_API_URL + "/get-number-not-active-module", {headers})
+    return this.http.get(this.BASE_API_URL + "/get-number-not-active-module",
+      {
+        headers: this.headerService.createAuthHeader(),
+        responseType: 'text'
+      }
+    );
   }
 
   getMaxStudiedModul() : Observable<string> {
     const headers = this.headerService.createAuthHeader()
-    return this.http.get<string>(this.BASE_API_URL + "/get-max-studied-modul", {headers})
+    return this.http.get(this.BASE_API_URL + "/get-max-studied-modul",
+      {
+        headers: this.headerService.createAuthHeader(),
+        responseType: 'text'
+      }
+    );
   }
 
   getMinStudiedModul() : Observable<string> {
     const headers = this.headerService.createAuthHeader()
-    return this.http.get<string>(this.BASE_API_URL + "/get-min-studied-modul", {headers})
+    return this.http.get(this.BASE_API_URL + "/get-min-studied-modul",
+      {
+        headers: this.headerService.createAuthHeader(),
+        responseType: 'text'
+      }
+    );
   }
 }

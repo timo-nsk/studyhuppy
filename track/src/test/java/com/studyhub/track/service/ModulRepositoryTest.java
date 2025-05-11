@@ -201,4 +201,22 @@ public class ModulRepositoryTest {
 		assertThat(foundKlausurDate).isEqualTo(null);
 	}
 
+	@Test
+	@DisplayName("Anzahl aktiver Module für einen User wird zurückgegeben")
+	@Sql("findall.sql")
+	void test_17() {
+		int anz = repository.countActiveModules("user123");
+
+		assertThat(anz).isEqualTo(1);
+	}
+
+	@Test
+	@DisplayName("Anzahl nicht aktiver Module für einen User wird zurückgegeben")
+	@Sql("findall.sql")
+	void test_18() {
+		int anz = repository.countNotActiveModules("peter4");
+
+		assertThat(anz).isEqualTo(3);
+	}
+
 }

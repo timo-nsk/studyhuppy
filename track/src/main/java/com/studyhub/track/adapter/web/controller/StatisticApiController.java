@@ -55,15 +55,19 @@ public class StatisticApiController {
 
 	@AngularApi
 	@GetMapping("/get-number-active-module")
-	public ResponseEntity<Void> getNumberActiveModule() {
-		System.out.println("ping2");
-		return null;
+	public ResponseEntity<String> getNumberActiveModule(HttpServletRequest request) {
+		String username = extractUsernameFromHeader(request);
+		String n = String.valueOf(modulService.countActiveModules(username));
+		System.out.println(n);
+		return ResponseEntity.ok(n);
 	}
 	@AngularApi
 	@GetMapping("/get-number-not-active-module")
-	public ResponseEntity<Void> getNumberNotActiveModule() {
-		System.out.println("ping3");
-		return null;
+	public ResponseEntity<String> getNumberNotActiveModule(HttpServletRequest request) {
+		String username = extractUsernameFromHeader(request);
+		String n = String.valueOf(modulService.countNotActiveModules(username));
+		System.out.println(n);
+		return ResponseEntity.ok(n);
 	}
 
 	@AngularApi
@@ -78,5 +82,11 @@ public class StatisticApiController {
 	public ResponseEntity<Void> getMinStudiedModul() {
 		System.out.println("ping5");
 		return null;
+	}
+
+	private String extractUsernameFromHeader(HttpServletRequest req) {
+		String header = req.getHeader("Authorization");
+		String token = jwtService.extractTokenFromHeader(header);
+		return jwtService.extractUsername(token);
 	}
 }

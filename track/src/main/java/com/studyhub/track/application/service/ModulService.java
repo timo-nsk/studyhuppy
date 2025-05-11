@@ -125,12 +125,12 @@ public class ModulService {
 		return res;
 	}
 
-	public Integer countActiveModules() {
-		return repo.countActiveModules();
+	public Integer countActiveModules(String username) {
+		return repo.countActiveModules(username);
 	}
 
-	public Object countNotActiveModules() {
-		return repo.countNotActiveModules();
+	public Object countNotActiveModules(String username) {
+		return repo.countNotActiveModules(username);
 	}
 
 	public String findModulWithMaxSeconds() {

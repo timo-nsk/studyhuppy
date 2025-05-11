@@ -15,9 +15,9 @@ public interface ModulRepository {
 	List<Modul> findByUsername(String username);
 	List<Modul> saveAll(List<Modul> modulList);
 	Integer getTotalStudyTime(String username);
-	Integer countActiveModules();
+	Integer countActiveModules(String username);
 	Integer findSecondsById(UUID fachId);
-	Integer countNotActiveModules();
+	Integer countNotActiveModules(String username);
 	String findByMinSeconds();
 	String findByMaxSeconds();
 	boolean isModulDbHealthy();
