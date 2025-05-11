@@ -44,6 +44,16 @@ public class StatisticApiController {
 	}
 
 	@AngularApi
+	@GetMapping("/get-total-study-time-per-semester")
+	public ResponseEntity<Map<Integer, Integer>> getTotalStudyTimePerSemester(HttpServletRequest request) {
+		String header = request.getHeader("Authorization");
+		String token = jwtService.extractTokenFromHeader(header);
+		String username = jwtService.extractUsername(token);
+		Map<Integer, Integer> res = modulService.getTotalStudyTimePerFachSemester(username);
+		return ResponseEntity.ok(res);
+	}
+
+	@AngularApi
 	@GetMapping("/get-number-active-module")
 	public ResponseEntity<Void> getNumberActiveModule() {
 		System.out.println("ping2");

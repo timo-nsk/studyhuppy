@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {StatisticApiService} from '../statistic.service';
+import {TimeFormatPipe} from '../../module/time-format.pipe';
+import {NgFor} from '@angular/common';
 
 @Component({
   selector: 'app-general',
-  imports: [],
+  imports: [TimeFormatPipe, NgFor],
   templateUrl: './general.component.html',
   standalone: true,
   styleUrl: './general.component.scss'
@@ -11,6 +13,7 @@ import {StatisticApiService} from '../statistic.service';
 export class GeneralComponent implements OnInit{
 
   totalStudyTime: string = '';
+  totalStudyTimePerSemester: { key: number, value: number }[] = [];
   numberActiveModules: number = 0;
   numberNotActiveModules: number = 0;
   maxStudiedModul: string = '';
@@ -20,9 +23,15 @@ export class GeneralComponent implements OnInit{
 
   ngOnInit(): void {
     this.service.getTotalStudyTime().subscribe(value => {
-      console.log
       this.totalStudyTime = value;
       console.log(this.totalStudyTime)
+    });
+
+    this.service.getTotalStudyTimeperSemester().subscribe(data => {
+      this.totalStudyTimePerSemester = Object.entries(data).map(([key, value]) => ({
+        key: Number(key),
+        value: value
+      }));
     });
 
     this.service.getNumberActiveModules().subscribe(value => {

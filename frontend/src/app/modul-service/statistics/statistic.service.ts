@@ -21,6 +21,12 @@ export class StatisticApiService {
     );
   }
 
+  getTotalStudyTimeperSemester(): Observable<{ [key: number]: number }> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.get<{ [key: number]: number }>(
+      this.BASE_API_URL + "/get-total-study-time-per-semester", { headers});
+  }
+
   getNumberActiveModules() : Observable<number> {
     const headers = this.headerService.createAuthHeader()
     return this.http.get<number>(this.BASE_API_URL + "/get-number-active-module", {headers})

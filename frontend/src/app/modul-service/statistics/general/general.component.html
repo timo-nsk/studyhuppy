@@ -4,6 +4,25 @@
       <p>Zeit studiert insgesamt: <span>{{totalStudyTime}}</span></p>
     </li>
     <li>
+      <div>
+        <p>Zeit studiert per Fachsemester</p>
+        <table>
+          <thead>
+          <tr>
+            <th>Fachsemester</th>
+            <th>Zeit</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let semester of totalStudyTimePerSemester">
+            <td>{{semester.key}}</td>
+            <td>{{semester.value | timeFormat }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </li>
+    <li>
       <p>Aktive Module: <span th:text="${NumberActiveModules ?: 'Keine Zeiten vorhanden'}">7</span></p>
     </li>
     <li>
