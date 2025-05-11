@@ -100,7 +100,7 @@ public class ModulTest {
 	@Test
 	@DisplayName("Wenn das Semester, in dem das Modul stattfindet keine Datum-Angaben für den Vorlesungsbeginn und -ende hat wird false zurückgegeben")
 	void test_8() {
-		Semester s = new Semester(1, SemesterTyp.WINTERSEMESTER, null, null, null, null);
+		Semester s = new Semester(1, 1, SemesterTyp.WINTERSEMESTER, null, null, null, null);
 		Modul m = new Modul(UUID.randomUUID(), "modul1",
 				10000,
 				null,
@@ -119,7 +119,7 @@ public class ModulTest {
 	@Test
 	@DisplayName("Wenn das Semester, in dem das Modul stattfindet keine Datum-Angaben für den Vorlesungsbeginn hat wird false zurückgegeben")
 	void test_9() {
-		Semester s = new Semester(1, SemesterTyp.WINTERSEMESTER, LocalDate.now(), null, null, null);
+		Semester s = new Semester(1, 1, SemesterTyp.WINTERSEMESTER, LocalDate.now(), null, null, null);
 		Modul m = new Modul(UUID.randomUUID(), "modul1",
 				10000,
 				null,
@@ -138,7 +138,7 @@ public class ModulTest {
 	@Test
 	@DisplayName("Wenn das Semester, in dem das Modul stattfindet keine Datum-Angaben für das Vorlesungsende hat wird false zurückgegeben")
 	void test_10() {
-		Semester s = new Semester(1, SemesterTyp.WINTERSEMESTER, null, LocalDate.now(), null, null);
+		Semester s = new Semester(1, 1, SemesterTyp.WINTERSEMESTER, null, LocalDate.now(), null, null);
 		Modul m = new Modul(UUID.randomUUID(), "modul1",
 				10000,
 				null,
@@ -157,7 +157,7 @@ public class ModulTest {
 	@Test
 	@DisplayName("Wenn das Semester, in dem das Modul stattfindet eine Datum-Angaben für den Vorlesungsbeginn und das Vorlesungende hat wird true zurückgegeben")
 	void test_11() {
-		Semester s = new Semester(1, SemesterTyp.WINTERSEMESTER, LocalDate.now(), LocalDate.now(), null, null);
+		Semester s = new Semester(1, 1, SemesterTyp.WINTERSEMESTER, LocalDate.now(), LocalDate.now(), null, null);
 		Modul m = new Modul(UUID.randomUUID(), "modul1",
 				10000,
 				null,

@@ -17,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.stream.IntStream;
 
 @Service
 public class ModulService {
@@ -97,6 +98,31 @@ public class ModulService {
 			return null;
 		}
 		return ModulSecondsConverter.convertToString(totalStudyTime);
+	}
+
+	public Map<Integer, Integer> getTotalStudyTimePerFachSemester(String username) {
+		List<Modul> allModule = repo.findByUsername(username);
+		Set<Integer> fachsemesterMap = new HashSet<>();
+		Map<Integer, Integer> res = new HashMap<>();
+
+		for (Modul modul : allModule) {
+			int fachsemester = modul.getSemesterstufe();
+			fachsemesterMap.add(fachsemester);
+		}
+
+		for (Integer thisFachsemester : fachsemesterMap) {
+			List<Modul> moduleWithThisFachsemester = allModule.stream()
+					.filter(e -> Objects.equals(e.getSemesterstufe(), thisFachsemester))
+					.toList();
+
+			int sumSecondsLearned = moduleWithThisFachsemester.stream()
+					.flatMapToInt(e -> IntStream.of(e.getSecondsLearned()))
+					.sum();
+
+			res.put(thisFachsemester, sumSecondsLearned);
+		}
+
+		return res;
 	}
 
 	public Integer countActiveModules() {

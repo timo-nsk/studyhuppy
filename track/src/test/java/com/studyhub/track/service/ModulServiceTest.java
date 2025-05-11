@@ -4,11 +4,14 @@ import com.studyhub.jwt.JWTService;
 import com.studyhub.track.application.service.ModulRepository;
 import com.studyhub.track.application.service.ModulService;
 import com.studyhub.track.application.service.TimeConverter;
+import com.studyhub.track.domain.model.ModulSecondsConverter;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.util.ModulMother;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.relational.core.sql.In;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
@@ -145,5 +148,20 @@ public class ModulServiceTest {
 		int diff = modulService.computeDayDifference(today, klausur);
 
 		assertThat(diff).isEqualTo(89);
+	}
+
+	@Test
+	@DisplayName("Für einen User wird die lernzeit pro Fachsemester als Map berechnet")
+	void test_14() {
+		List<Modul> modulList = ModulMother.modulListWithSemester();
+		Map<Integer, Integer> expectedMap = new HashMap<>();
+		expectedMap.put(3, 3000);
+		expectedMap.put(4, 1000);
+		expectedMap.put(5, 5000);
+		when(repo.findByUsername("peter")).thenReturn(modulList);
+
+		Map<Integer, Integer> actual = modulService.getTotalStudyTimePerFachSemester("peter");
+
+		assertThat(actual).isEqualTo(expectedMap);
 	}
 }

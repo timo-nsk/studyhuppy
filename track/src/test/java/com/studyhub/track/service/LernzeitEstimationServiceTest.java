@@ -40,7 +40,7 @@ public class LernzeitEstimationServiceTest {
 		int selbststudiumStunden = 210;
 		SemesterPhase phase = SemesterPhase.VORLESUNG;
 		LocalDate vorlesungBeginn = LocalDate.now();
-		Semester semester = new Semester(1, SemesterTyp.WINTERSEMESTER, vorlesungBeginn, vorlesungBeginn.plusDays(60), null, null);
+		Semester semester = new Semester(1, 1, SemesterTyp.WINTERSEMESTER, vorlesungBeginn, vorlesungBeginn.plusDays(60), null, null);
 		Lerntage lerntage = new Lerntage(true, true, true, true, true, false, false, phase);
 		Kreditpunkte cp = new Kreditpunkte(10, 90, selbststudiumStunden);
 		Modul m = new Modul(UUID.randomUUID(),
@@ -74,7 +74,7 @@ public class LernzeitEstimationServiceTest {
 		LocalDate vorlesungBeginn = LocalDate.now();
 		LocalDate vorlesungEnde = vorlesungBeginn.plusDays(60);
 		LocalDateTime klausurDate = LocalDateTime.of(vorlesungEnde.plusDays(14), LocalTime.of(10, 0));
-		Semester semester = new Semester(1, SemesterTyp.WINTERSEMESTER, vorlesungBeginn, vorlesungEnde, null, null);
+		Semester semester = new Semester(1, 1, SemesterTyp.WINTERSEMESTER, vorlesungBeginn, vorlesungEnde, null, null);
 		Lerntage lerntage = new Lerntage(true, true, true, true, true, false, false, phase);
 		Kreditpunkte cp = new Kreditpunkte(10, 90, selbststudiumStunden);
 		Modul m = new Modul(UUID.randomUUID(),
@@ -98,7 +98,7 @@ public class LernzeitEstimationServiceTest {
 	void test_3() {
 		int selbststudiumStunden = 210;
 		SemesterPhase phase = SemesterPhase.VORLESUNG;
-		Semester semester = new Semester(1, SemesterTyp.WINTERSEMESTER, null, null, null, null);
+		Semester semester = new Semester(1, 1, SemesterTyp.WINTERSEMESTER, null, null, null, null);
 		Lerntage lerntage = new Lerntage(true, true, true, true, true, false, false, phase);
 		Kreditpunkte cp = new Kreditpunkte(10, 90, selbststudiumStunden);
 		Modul m = new Modul(UUID.randomUUID(),
@@ -122,7 +122,7 @@ public class LernzeitEstimationServiceTest {
 	void test_4() {
 		int selbststudiumStunden = 210;
 		SemesterPhase phase = SemesterPhase.KLAUSUR;
-		Semester semester = new Semester(1, SemesterTyp.WINTERSEMESTER, LocalDate.now(), LocalDate.now().plusDays(60), null, null);
+		Semester semester = new Semester(1, 1, SemesterTyp.WINTERSEMESTER, LocalDate.now(), LocalDate.now().plusDays(60), null, null);
 		Lerntage lerntage = new Lerntage(true, true, true, true, true, false, false, phase);
 		Kreditpunkte cp = new Kreditpunkte(10, 90, selbststudiumStunden);
 		Modul m = new Modul(UUID.randomUUID(),
