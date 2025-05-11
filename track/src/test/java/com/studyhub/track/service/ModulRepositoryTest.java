@@ -118,12 +118,11 @@ public class ModulRepositoryTest {
 
 	@Test
 	@Sql("findall.sql")
-	@DisplayName("seconds aus allen Modulen wid korrekt summiert.")
+	@DisplayName("seconds aus allen Modulen eines Users wird korrekt summiert.")
 	void test_08() {
-		Integer sumSeconds = repository.getTotalStudyTime();
+		Integer sumSeconds = repository.getTotalStudyTime("peter4");
 
-		assertThat(sumSeconds).isEqualTo(100);
-		assertThat(sumSeconds).isNotEqualTo(99);
+		assertThat(sumSeconds).isEqualTo(80);
 	}
 
 	@Test

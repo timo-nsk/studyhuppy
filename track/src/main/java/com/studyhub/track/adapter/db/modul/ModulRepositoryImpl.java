@@ -93,8 +93,8 @@ public class ModulRepositoryImpl implements ModulRepository {
 	}
 
 	@Override
-	public Integer getTotalStudyTime() {
-		return modulDao.sumAllSeconds();
+	public Integer getTotalStudyTime(String username) {
+		return modulDao.sumAllSeconds(username);
 	}
 
 	@Override

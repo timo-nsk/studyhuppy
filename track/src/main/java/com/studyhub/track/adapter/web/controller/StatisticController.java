@@ -17,7 +17,7 @@ public class StatisticController {
 
 	@GetMapping("/overview")
 	public String statistics(Model model) {
-		model.addAttribute("totalStudyTime", modulService.getTotalStudyTime());
+		//model.addAttribute("totalStudyTime", modulService.getTotalStudyTime());
 		model.addAttribute("NumberActiveModules", modulService.countActiveModules());
 		model.addAttribute("NumberNotActiveModules", modulService.countNotActiveModules());
 		model.addAttribute("MaxStudiedModul", modulService.findModulWithMaxSeconds());

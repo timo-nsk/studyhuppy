@@ -11,9 +11,14 @@ export class StatisticApiService {
   http = inject(HttpClient)
   headerService = inject(HeaderService)
 
-  getTotalStudyTime() : Observable<number> {
-    const headers = this.headerService.createAuthHeader()
-    return this.http.get<number>(this.BASE_API_URL + "/get-total-study-time", {headers})
+  getTotalStudyTime(): Observable<string> {
+    return this.http.get(
+      this.BASE_API_URL + "/get-total-study-time",
+      {
+        headers: this.headerService.createAuthHeader(),
+        responseType: 'text'  // ✅ hier liegt die Lösung!
+      }
+    );
   }
 
   getNumberActiveModules() : Observable<number> {

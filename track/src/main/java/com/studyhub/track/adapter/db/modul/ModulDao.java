@@ -19,8 +19,8 @@ public interface ModulDao extends CrudRepository<ModulDto, Integer> {
 	Integer countByActiveIsTrue();
 	Integer countByActiveIsFalse();
 
-	@Query("select sum(seconds_learned) from modul")
-	Integer sumAllSeconds();
+	@Query("select sum(seconds_learned) from modul where username = :username")
+	Integer sumAllSeconds(@Param("username") String username);
 
 	@Modifying
 	@Transactional

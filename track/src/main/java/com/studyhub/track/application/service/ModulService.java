@@ -90,8 +90,8 @@ public class ModulService {
 		return repo.findByUuid(fachId).getName();
 	}
 
-	public String getTotalStudyTime() {
-		Integer totalStudyTime = repo.getTotalStudyTime();
+	public String getTotalStudyTimeForUser(String username) {
+		Integer totalStudyTime = repo.getTotalStudyTime(username);
 
 		if(totalStudyTime == null) {
 			return null;

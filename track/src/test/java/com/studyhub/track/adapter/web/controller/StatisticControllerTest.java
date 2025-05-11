@@ -54,7 +54,7 @@ public class StatisticControllerTest {
 	@DisplayName("/statistics/overview hat alle benötigten Attribute")
 	void test_04() throws Exception {
 		Modul m = initModul();
-		when(modulService.getTotalStudyTime()).thenReturn("00d 00h 00m 40s");
+		//when(modulService.getTotalStudyTime()).thenReturn("00d 00h 00m 40s");
 		when(modulService.countActiveModules()).thenReturn(2);
 		when(modulService.countNotActiveModules()).thenReturn(2);
 		when(modulService.findModulWithMaxSeconds()).thenReturn(m.getName());

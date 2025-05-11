@@ -1,10 +1,12 @@
 package com.studyhub.track.adapter.web.controller;
 
+import com.studyhub.jwt.JWTService;
 import com.studyhub.track.adapter.web.AngularApi;
 import com.studyhub.track.adapter.web.Api;
 import com.studyhub.track.application.service.ModulEventService;
 import com.studyhub.track.application.service.ModulService;
 import com.studyhub.track.application.service.ModulStat;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
@@ -17,11 +19,13 @@ public class StatisticApiController {
 
 	private final ModulEventService modulEventService;
 	private final ModulService modulService;
+	private final JWTService jwtService;
 
-	public StatisticApiController(ModulEventService modulEventService, ModulService modulService) {
+	public StatisticApiController(ModulEventService modulEventService, ModulService modulService, JWTService jwtService) {
 		this.modulEventService = modulEventService;
         this.modulService = modulService;
-    }
+		this.jwtService = jwtService;
+	}
 
 	@Api
 	@GetMapping("/api/stats")
@@ -31,9 +35,12 @@ public class StatisticApiController {
 
 	@AngularApi
 	@GetMapping("/get-total-study-time")
-	public ResponseEntity<Void> getTotalStudyTime() {
-		System.out.println("ping1");
-		return null;
+	public ResponseEntity<String> getTotalStudyTime(HttpServletRequest request) {
+		String header = request.getHeader("Authorization");
+		String token = jwtService.extractTokenFromHeader(header);
+		String username = jwtService.extractUsername(token);
+		String totalStudyTime = modulService.getTotalStudyTimeForUser(username);
+		return ResponseEntity.ok(totalStudyTime);
 	}
 
 	@AngularApi

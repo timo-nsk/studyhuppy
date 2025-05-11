@@ -10,7 +10,7 @@ import {StatisticApiService} from '../statistic.service';
 })
 export class GeneralComponent implements OnInit{
 
-  totalStudyTime: number = 0;
+  totalStudyTime: string = '';
   numberActiveModules: number = 0;
   numberNotActiveModules: number = 0;
   maxStudiedModul: string = '';
