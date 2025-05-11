@@ -20,23 +20,29 @@ export class GeneralComponent implements OnInit{
 
   ngOnInit(): void {
     this.service.getTotalStudyTime().subscribe(value => {
+      console.log
       this.totalStudyTime = value;
+      console.log(this.totalStudyTime)
     });
 
     this.service.getNumberActiveModules().subscribe(value => {
       this.numberActiveModules = value;
+      console.log(this.numberActiveModules)
     });
 
     this.service.getNumberNotActiveModules().subscribe(value => {
       this.numberNotActiveModules = value;
+      console.log(this.numberNotActiveModules)
     });
 
     this.service.getMaxStudiedModul().subscribe(value => {
       this.maxStudiedModul = value;
+      console.log((this.maxStudiedModul))
     });
 
     this.service.getMinStudiedModul().subscribe(value => {
       this.minStudiedModul = value;
+      console.log(this.minStudiedModul)
     });
   }
 
