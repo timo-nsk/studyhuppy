@@ -1,1 +1,17 @@
-<h1>Statistiken der Module</h1>
+<div id="chart-ansicht-container">
+  <div id="chart-ansicht-box">
+    <div class="chart-container shd">
+      <nav id="nav-statistic-charts" aria-label="...">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" [routerLink]="'general'">Allgemein</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" [routerLink]="'charts'">Charts</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

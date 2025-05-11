@@ -1,0 +1,27 @@
+<div>
+  <ul id="statistic-ul">
+    <li>
+      <p>Zeit studiert insgesamt: <span th:text="${totalStudyTime ?: 'Keine Zeiten vorhanden'}">330h</span></p>
+    </li>
+    <li>
+      <p>Aktive Module: <span th:text="${NumberActiveModules ?: 'Keine Zeiten vorhanden'}">7</span></p>
+    </li>
+    <li>
+      <p>Deaktivierte Module: <span th:text="${NumberNotActiveModules ?: 'Keine Zeiten vorhanden'}">7</span></p>
+    </li>
+    <li>
+      <p>Modul am meisten studiert: <span th:text="${MaxStudiedModul ?: 'Kein Modul vorhanden'}">Data Science</span></p>
+    </li>
+    <li>
+      <p>Modul am wenigsten studiert: <span th:text="${MinStudiedModul ?: 'Kein Modul vorhanden'}">Mathe</span></p>
+    </li>
+    <!--
+    <li>
+        <p>Täglich studiert: <span>~4,3h</span></p>
+    </li>
+    <li>
+        <p>Wöchentlich studiert: <span>~40,3h</span></p>
+    </li>
+    -->
+  </ul>
+</div>
