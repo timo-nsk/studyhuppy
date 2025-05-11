@@ -10,6 +10,8 @@ import {authGuard} from './guard/auth.guard';
 import {RegisterServiceComponent} from './auth-service/register-service/register-service.component';
 import {PwServiceComponent} from './auth-service/pw-service/pw-service.component';
 import {UserProfileComponent} from './user-profile/user-profile.component';
+import {GeneralComponent} from './modul-service/statistics/general/general.component';
+import {ChartsComponent} from './modul-service/statistics/charts/charts.component';
 
 export const routes: Routes = [
   {
@@ -56,7 +58,18 @@ export const routes: Routes = [
             {
               path: 'statistiken',
               component: StatisticsComponent,
-              canActivate: [authGuard]
+              canActivate: [authGuard],
+              children:
+                [
+                  {
+                    path: 'general',
+                    component: GeneralComponent
+                  },
+                  {
+                    path: 'charts',
+                    component: ChartsComponent
+                  }
+                ]
             }
           ]
       }]
