@@ -9,7 +9,7 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
   imports: [CommonModule, ReactiveFormsModule, NgIf, MatSnackBarModule],
   templateUrl: './user-profile.component.html',
   standalone: true,
-  styleUrl: './user-profile.component.scss'
+  styleUrls: ['./user-profile.component.scss', '../general.scss', '../button.scss', '../color.scss']
 })
 export class UserProfileComponent implements OnInit{
 
@@ -31,8 +31,8 @@ export class UserProfileComponent implements OnInit{
 
   changePassForm : FormGroup = new FormGroup({
     userId: new FormControl(null, Validators.required),
-    oldPw: new FormControl(null, [Validators.required, Validators.min(8)]),
-    newPw: new FormControl(null, [Validators.required, Validators.min(8)])
+    oldPw: new FormControl(null, [Validators.required, Validators.minLength(8)]),
+    newPw: new FormControl(null, [Validators.required, Validators.minLength(8)])
   })
 
   ngOnInit(): void {

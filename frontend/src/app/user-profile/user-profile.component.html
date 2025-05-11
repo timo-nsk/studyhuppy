@@ -1,24 +1,29 @@
-<div id="account-container">
-  <h2>Profil</h2>
+<div id="account-container" class="h-offset">
+
   <div id="account-table-container">
+    <h2>Benutzerinformation</h2>
     <table class="table">
       <tbody>
       <tr>
-        <th>Username</th>
-        <td>{{userData.username}}</td>
-        <td></td>
+        <th class="col-wd-200 m-accent-font">Username</th>
+        <td class="col-wd-300 td-border-l m-accent-font">{{userData.username}}</td>
       </tr>
       <tr>
-        <th>E-Mail</th>
-        <td>
+        <th class="col-wd-200">
+          <div class="th-div">
+            <p class="m-accent-font">E-Mail</p>
+            <a class="std-link width-n" (click)="toggleEmailChangeForm()">ändern</a>
+          </div>
+        </th>
+        <td class="col-wd-300 td-border-l m-accent-font">
           <p>{{userData.mail}}</p>
-        </td>
-        <td>
-          <a class="btn btn-outline-primary" (click)="toggleEmailChangeForm()">ändern</a>
           <div *ngIf="showEmailChangeForm">
+            <hr>
             <form [formGroup]="emailChangeForm" (ngSubmit)="putNewEmail()">
-              <input formControlName="newMail" placeholder="neue E-Mail-Adresse...">
-              <button type="submit">abschicken</button>
+              <div id="change-mail-form-goup" class="group-div">
+                <input class="form-control" formControlName="newMail" placeholder="neue E-Mail-Adresse...">
+                <button class="sh-btn" type="submit" style="width: 150px;">abschicken</button>
+              </div>
             </form>
             <span class="text-danger"
                   *ngIf="emailChangeForm.controls['newMail'].errors?.['required'] && emailChangeForm.controls['newMail'].touched">
@@ -28,60 +33,80 @@
                   *ngIf="emailChangeForm.controls['newMail'].errors?.['email'] && emailChangeForm.controls['newMail'].touched">
                   Geben Sie eine gültige E-Mail-Adresse ein
             </span>
+            <hr>
           </div>
         </td>
       </tr>
       <tr>
-        <th>E-Mail Benachrichtigungen</th>
-        <td>
+        <th class="col-wd-200 m-accent-font">E-Mail Benachrichtigungen</th>
+        <td class="col-wd-300 td-border-l m-accent-font">
           <div class="form-check form-switch">
             <label for="flexSwitchCheckChecked"></label>
             <input (change)="toggleEmailSubscription()"  class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" [checked]="userData.notificationSubscription">
           </div>
         </td>
-        <td></td>
       </tr>
       <tr>
-        <th>Fachsemester</th>
-        <td>{{userData.semester}}</td>
-        <td></td>
+        <th class="col-wd m-accent-font">Fachsemester</th>
+        <td class="col-wd-300 td-border-l m-accent-font">{{userData.semester}}</td>
       </tr>
       <tr>
-        <td>
-          <a class="btn btn-outline-primary" (click)="togglePasswordChangeForm()">Passwort ändern</a>
-        </td>
-        <td>
+        <th class="col-wd-200">
+          <div class="th-div">
+            <p class="m-accent-font">Passwort</p>
+            <a class="std-link width-n" (click)="togglePasswordChangeForm()">ändern</a>
+          </div>
+        </th>
+        <td class="col-wd-300 td-border-l">
           <div *ngIf="showPassChangeForm">
-            <form [formGroup]="changePassForm" (ngSubmit)="putNewPass()">
+            <hr>
+            <form id="change-pw-form" [formGroup]="changePassForm" (ngSubmit)="putNewPass()">
               <div>
-                <label for="old-pw" class="form-label">Altes Passwort</label>
+                <label for="old-pw" class="form-label m-accent-font fw-bold">Altes Passwort</label>
                 <input id="old-pw" class="form-control" type="password" formControlName="oldPw">
+                <span class="text-danger"
+                      *ngIf="changePassForm.controls['oldPw'].errors?.['required'] && changePassForm.controls['oldPw'].touched">
+                  Geben Sie Ihr altes Passwort ein
+                </span>
+                <span class="text-danger"
+                      *ngIf="changePassForm.controls['oldPw'].errors?.['minlength'] && changePassForm.controls['oldPw'].touched">
+                  Passwort muss mindestens 8 Zeichen lang sein
+                </span>
               </div>
               <div>
-                <label for="new-pw" class="form-label">Neues Passwort</label>
+                <label for="new-pw" class="form-label m-accent-font fw-bold">Neues Passwort</label>
                 <input id="new-pw" class="form-control" type="password" formControlName="newPw">
-                <span *ngIf="changePassFail">
+                <span class="text-danger"
+                      *ngIf="changePassForm.controls['newPw'].errors?.['required'] && changePassForm.controls['newPw'].touched">
+                  Geben Sie Ihr neues Passwort ein
+                </span>
+                <span class="text-danger"
+                      *ngIf="changePassForm.controls['newPw'].errors?.['minlength'] && changePassForm.controls['newPw'].touched">
+                  Passwort muss mindestens 8 Zeichen lang sein
+                </span>
+                <span class="text-danger" *ngIf="changePassFail">
                   Passwort konnte nicht geändert werden!
                 </span>
               </div>
               <div>
-                <button type="submit" class="btn btn-outline-primary"> abschicken</button>
+                <button type="submit" class="sh-btn" style="margin-top: 15px;"> abschicken</button>
               </div>
             </form>
+            <hr>
           </div>
         </td>
-        <td></td>
       </tr>
       <tr>
-        <td>
+        <td class="col-wd-200">
           <a class="btn btn-outline-danger" (click)="toggleAssertDeletionBox()">
             Konto löschen
           </a>
         </td>
-        <td *ngIf="showAssertDeletionBox">
-          <a class="btn btn-warning" (click)="deleteAccount()">Ja, Konto endgültig löschen</a>
+        <td class="col-wd-300 td-border-l">
+          <div *ngIf="showAssertDeletionBox">
+            <a class="btn btn-warning" (click)="deleteAccount()">Ja, Konto endgültig löschen</a>
+          </div>
         </td>
-        <td></td>
       </tr>
       </tbody>
     </table>
