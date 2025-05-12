@@ -133,8 +133,8 @@ public class ModulService {
 		return repo.countNotActiveModules(username);
 	}
 
-	public String findModulWithMaxSeconds() {
-		return repo.findByMaxSeconds();
+	public String findModulWithMaxSeconds(String username) {
+		return repo.findByMaxSeconds(username);
 	}
 
 	public String findModulWithMinSeconds() {

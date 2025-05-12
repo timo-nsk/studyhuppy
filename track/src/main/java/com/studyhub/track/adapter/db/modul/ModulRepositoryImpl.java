@@ -49,8 +49,8 @@ public class ModulRepositoryImpl implements ModulRepository {
 	}
 
 	@Override
-	public String findByMaxSeconds() {
-		Optional<String> modulName = modulDao.findMaxSeconds();
+	public String findByMaxSeconds(String username) {
+		Optional<String> modulName = modulDao.findMaxSeconds(username).stream().findFirst();
 		return modulName.orElse(null);
 	}
 

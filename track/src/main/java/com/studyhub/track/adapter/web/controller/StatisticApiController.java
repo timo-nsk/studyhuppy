@@ -72,9 +72,11 @@ public class StatisticApiController {
 
 	@AngularApi
 	@GetMapping("/get-max-studied-modul")
-	public ResponseEntity<Void> getMaxStudiedModul() {
+	public ResponseEntity<String> getMaxStudiedModul(HttpServletRequest request) {
+		String username = extractUsernameFromHeader(request);
+		String maxModul = modulService.findModulWithMaxSeconds(username);
 		System.out.println("ping4");
-		return null;
+		return ResponseEntity.ok(maxModul);
 	}
 
 	@AngularApi

@@ -138,7 +138,7 @@ public class ModulRepositoryTest {
 	@Sql("findall.sql")
 	@DisplayName("Modul mit den meisten seconds wird gefunden.")
 	void test_10() {
-		String modulMaxSeconds = repository.findByMaxSeconds();
+		String modulMaxSeconds = repository.findByMaxSeconds("peter4");
 
 		assertThat(modulMaxSeconds).isEqualTo("mod4");
 	}
@@ -156,7 +156,7 @@ public class ModulRepositoryTest {
 	@Sql("findall.sql")
 	@DisplayName("Wenn mehrere Module mit der gleichen Zeit am häufigsten gelernt wurden, wird lexikographisch das erste Modul gefunden.")
 	void test_12() {
-		String modulMaxSeconds = repository.findByMaxSeconds();
+		String modulMaxSeconds = repository.findByMaxSeconds("peter4");
 
 		assertThat(modulMaxSeconds).isEqualTo("mod4");
 	}

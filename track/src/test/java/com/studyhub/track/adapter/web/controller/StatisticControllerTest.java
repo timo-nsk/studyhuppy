@@ -57,8 +57,8 @@ public class StatisticControllerTest {
 		//when(modulService.getTotalStudyTime()).thenReturn("00d 00h 00m 40s");
 		//when(modulService.countActiveModules()).thenReturn(2);
 		//when(modulService.countNotActiveModules()).thenReturn(2);
-		when(modulService.findModulWithMaxSeconds()).thenReturn(m.getName());
-		when(modulService.findModulWithMinSeconds()).thenReturn(m.getName());
+		//when(modulService.findModulWithMaxSeconds()).thenReturn(m.getName());
+		//when(modulService.findModulWithMinSeconds()).thenReturn(m.getName());
 		mvc.perform(get("/statistics/overview"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("overview"))
