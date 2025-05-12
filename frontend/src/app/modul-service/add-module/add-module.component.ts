@@ -3,6 +3,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import { CommonModule } from '@angular/common';
 import {ModuleService} from '../module/module-service';
 import {HttpClient} from '@angular/common/http';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-module',
@@ -14,7 +15,7 @@ import {HttpClient} from '@angular/common/http';
 export class AddModuleComponent {
   lerntageCheckbox : boolean = false
 
-  constructor(private service : ModuleService, private http : HttpClient) {
+  constructor(private service : ModuleService, private http : HttpClient, private snackbar : MatSnackBar) {
   }
 
   newModulForm = this.initForm()
@@ -23,7 +24,19 @@ export class AddModuleComponent {
     const form = this.newModulForm.value
 
     if(this.checkKlausurFormData()) {
-      this.service.postFormData(form)
+      this.service.postFormData(form).subscribe({
+        next: () => {
+          this.snackbar.open("Modul erfolgreich erstellt", "dismiss", {
+            duration: 4000
+          })
+        },
+        error: (error) => {
+          console.log(error)
+          this.snackbar.open("Sie können keine weiteren Module erstellen", "dismiss", {
+            duration: 4000
+          })
+        }
+      })
     } else {
       console.log("nope")
     }

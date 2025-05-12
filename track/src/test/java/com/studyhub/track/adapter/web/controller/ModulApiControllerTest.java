@@ -1,35 +1,19 @@
 package com.studyhub.track.adapter.web.controller;
 
 import com.studyhub.jwt.JWTService;
-import com.studyhub.track.adapter.security.SecurityConfig;
-import com.studyhub.track.adapter.web.FachIdRequest;
 import com.studyhub.track.adapter.web.ModulForm;
 import com.studyhub.track.application.service.ModulEventService;
 import com.studyhub.track.application.service.ModulService;
 import com.studyhub.track.domain.model.modul.Modul;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.UUID;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @WebMvcTest(ModulApiController.class)
@@ -38,7 +22,7 @@ public class ModulApiControllerTest {
 	@Value("${maxModule}")
 	private int MAX_MODULE;
 
-	@MockitoBean  // Mock für Spring Beans (ModulService, JWTService, ModulEventService)
+	@MockitoBean
 	private ModulService modulService;
 
 	@MockitoBean
@@ -47,7 +31,7 @@ public class ModulApiControllerTest {
 	@MockitoBean
 	private ModulEventService modulEventService;
 
-	@Autowired  // Autowire den Controller, damit Spring den Controller für den Test bereitstellt
+	@Autowired
 	private ModulApiController modulApiController;
 
 	@Test

@@ -81,8 +81,9 @@ export class ModuleService {
     }
   }
 
-  postFormData(formData : any) : void {
-    this.http.post(this.MODUL_BASE_API + '/new-modul', formData)
+  postFormData(formData : any) : Observable<any> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.post(this.MODUL_BASE_API + '/new-modul', formData, {headers})
   }
 
   async doPost(payload: unknown, api: string): Promise<Response> {
