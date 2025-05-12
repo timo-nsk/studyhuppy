@@ -3,7 +3,8 @@ INSERT INTO modul (id, fach_id, name, seconds_learned, username, active, semeste
     (2546546, 'f47ac10b-58cc-4372-a567-0e12b2c3d479', 'mod2', 10,'user123', false, 1, '2025-03-23 14:30:00'),
     (3846846, 'f47ac10c-58cc-4372-a537-0e02b2c3d479', 'mod3', 20,'peter4', false, 1,'2025-03-23 14:30:00'),
     (4846846, 'f48ac10c-58cc-4372-a537-0e02b2c3d479', 'mod5', 30,'peter4', false, 1,null),
-    (5846846, 'f49ac10c-58cc-4372-a537-0e02b2c3d479', 'mod4', 30,'peter4', false, 1,null);
+    (5846846, 'f49ac10c-58cc-4372-a537-0e02b2c3d479', 'mod4', 30,'peter4', false, 1,null),
+    (6846846, 'f49bc10c-58cc-4372-a537-0e02b2c3d479', 'mod6', 10,'peter4', false, 1,null);
 
 INSERT INTO semester (modul, semester_typ,  vorlesung_beginn, vorlesung_ende, semester_beginn, semester_ende) VALUES
     (1654654, 'WINTERSEMESTER', '2024-10-01', '2025-01-31', '2024-10-01', '2025-04-30'),

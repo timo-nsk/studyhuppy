@@ -122,16 +122,16 @@ public class ModulRepositoryTest {
 	void test_08() {
 		Integer sumSeconds = repository.getTotalStudyTime("peter4");
 
-		assertThat(sumSeconds).isEqualTo(80);
+		assertThat(sumSeconds).isEqualTo(90);
 	}
 
 	@Test
 	@Sql("findall.sql")
 	@DisplayName("Modul mit den wenigsten seconds wird gefunden.")
 	void test_09() {
-		String modulmMinSeconds = repository.findByMinSeconds();
+		String modulmMinSeconds = repository.findByMinSeconds("peter4");
 
-		assertThat(modulmMinSeconds).isEqualTo("mod1");
+		assertThat(modulmMinSeconds).isEqualTo("mod6");
 	}
 
 	@Test
@@ -147,9 +147,9 @@ public class ModulRepositoryTest {
 	@Sql("findall.sql")
 	@DisplayName("Wenn mehrere Module mit der gleichen Zeit am wenigsten gelernt wurden, wird lexikographisch das erste Modul gefunden.")
 	void test_11() {
-		String modulMinSeconds = repository.findByMinSeconds();
+		String modulMinSeconds = repository.findByMinSeconds("peter4");
 
-		assertThat(modulMinSeconds).isEqualTo("mod1");
+		assertThat(modulMinSeconds).isEqualTo("mod6");
 	}
 
 	@Test
@@ -216,7 +216,7 @@ public class ModulRepositoryTest {
 	void test_18() {
 		int anz = repository.countNotActiveModules("peter4");
 
-		assertThat(anz).isEqualTo(3);
+		assertThat(anz).isEqualTo(4);
 	}
 
 }

@@ -18,7 +18,7 @@ public interface ModulRepository {
 	Integer countActiveModules(String username);
 	Integer findSecondsById(UUID fachId);
 	Integer countNotActiveModules(String username);
-	String findByMinSeconds();
+	String findByMinSeconds(String username);
 	String findByMaxSeconds(String username);
 	boolean isModulDbHealthy();
 	void deleteByUuid(UUID fachId);

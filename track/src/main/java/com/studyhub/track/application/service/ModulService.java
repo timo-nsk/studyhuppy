@@ -137,8 +137,8 @@ public class ModulService {
 		return repo.findByMaxSeconds(username);
 	}
 
-	public String findModulWithMinSeconds() {
-		return repo.findByMinSeconds();
+	public String findModulWithMinSeconds(String username) {
+		return repo.findByMinSeconds(username);
 	}
 
 	public Map<UUID, String> getModuleMap() {

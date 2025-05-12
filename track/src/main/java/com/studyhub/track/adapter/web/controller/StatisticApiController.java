@@ -81,9 +81,11 @@ public class StatisticApiController {
 
 	@AngularApi
 	@GetMapping("/get-min-studied-modul")
-	public ResponseEntity<Void> getMinStudiedModul() {
+	public ResponseEntity<String> getMinStudiedModul(HttpServletRequest request) {
+		String username = extractUsernameFromHeader(request);
+		String minModul = modulService.findModulWithMinSeconds(username);
 		System.out.println("ping5");
-		return null;
+		return ResponseEntity.ok(minModul);
 	}
 
 	private String extractUsernameFromHeader(HttpServletRequest req) {

@@ -55,8 +55,8 @@ public class ModulRepositoryImpl implements ModulRepository {
 	}
 
 	@Override
-	public String findByMinSeconds() {
-		Optional<String> modulName = modulDao.findMinSeconds();
+	public String findByMinSeconds(String username) {
+		Optional<String> modulName = modulDao.findMinSeconds(username).stream().findFirst();
 		return modulName.orElse(null);
 	}
 

@@ -52,8 +52,10 @@ public interface ModulDao extends CrudRepository<ModulDto, Integer> {
 	List<String> findMaxSeconds(@Param("username") String username);
 
 
-	@Query("select name from modul where seconds_learned = (select min(seconds_learned) from modul) order by name asc limit 1")
-	Optional<String> findMinSeconds();
+	@Query("SELECT m.name FROM Modul m WHERE m.username = :username AND m.seconds_learned = (" +
+			"SELECT MIN(m2.seconds_learned) FROM Modul m2 WHERE m2.username = :username" +
+			") ORDER BY m.name ASC")
+	List<String> findMinSeconds(@Param("username") String username);
 
 
 	@Query("select 1")
