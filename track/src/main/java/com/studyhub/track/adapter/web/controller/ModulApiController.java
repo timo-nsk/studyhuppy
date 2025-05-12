@@ -1,5 +1,6 @@
 package com.studyhub.track.adapter.web.controller;
 
+import com.studyhub.jwt.JWTService;
 import com.studyhub.track.adapter.db.modul.ModulDto;
 import com.studyhub.track.adapter.db.modul.ModulMapper;
 import com.studyhub.track.adapter.mail.KlausurReminderDto;
@@ -7,6 +8,8 @@ import com.studyhub.track.adapter.web.*;
 import com.studyhub.track.application.service.ModulEventService;
 import com.studyhub.track.application.service.ModulService;
 import com.studyhub.track.domain.model.modul.Modul;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +21,18 @@ import java.util.UUID;
 @RequestMapping("/api")
 public class ModulApiController {
 
+	@Value("${maxModule}")
+	private int MAX_MODULE;
+
 	private final ModulService modulService;
 	private final ModulEventService modulEventService;
+	private final JWTService jwtService;
 
-	public ModulApiController(ModulService service, ModulEventService modulEventService) {
+	public ModulApiController(ModulService service, ModulEventService modulEventService, JWTService jwtService) {
 		this.modulService = service;
 		this.modulEventService = modulEventService;
-	}
+        this.jwtService = jwtService;
+    }
 
 	@Api
 	@GetMapping("/modules")
@@ -89,7 +97,7 @@ public class ModulApiController {
 
 	@AngularApi
 	@PostMapping("/new-modul")
-	public ResponseEntity<Void> newModule(@RequestBody ModulForm modulForm) {
+	public ResponseEntity<Void> newModule(@RequestBody ModulForm modulForm, HttpServletRequest request) {
 		//int semester = authenticationService.getSemesterOfUser(jwtService.extractUsername("token"));
 		int semester = 6;
 		Modul modul = modulForm.newModulFromFormData(modulForm, semester);
@@ -102,8 +110,12 @@ public class ModulApiController {
 		 }
 		 **/
 
-		modulService.saveNewModul(modul);
-		return ResponseEntity.status(HttpStatus.CREATED).build();
+		if (modulService.modulCanBeCreated(jwtService.extractUsernameFromHeader(request), MAX_MODULE)) {
+			modulService.saveNewModul(modul);
+			return ResponseEntity.status(HttpStatus.CREATED).build();
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
 	}
 
 	@AngularApi

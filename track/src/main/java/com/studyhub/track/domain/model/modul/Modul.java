@@ -4,11 +4,14 @@ import com.studyhub.track.domain.model.AggregateRoot;
 import com.studyhub.track.domain.model.semester.Semester;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 import static com.studyhub.track.domain.model.ModulSecondsConverter.*;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @AggregateRoot
 @Data
 public class Modul {

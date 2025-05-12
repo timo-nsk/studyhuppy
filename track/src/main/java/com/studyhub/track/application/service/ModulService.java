@@ -4,8 +4,10 @@ import com.studyhub.jwt.JWTService;
 import com.studyhub.track.adapter.mail.KlausurReminderDto;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.ModulSecondsConverter;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -223,4 +225,9 @@ public class ModulService {
 	public List<Modul> findAllByUsername(String username) {
 		return repo.findByUsername(username);
 	}
+
+	public boolean modulCanBeCreated(String username, int limit) {
+		List<Modul> module = repo.findByUsername(username);
+        return module.size() < limit;
+    }
 }

@@ -9,6 +9,7 @@ import com.studyhub.track.domain.model.semester.SemesterTyp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,6 +49,16 @@ public class ModulMother {
 		Modul m5 = new Modul(UUID.randomUUID(), "m5", 500, DEFAULT_KREDITPUNKTE, "peter", true, 5, DEFAULT_SEMESTER, LocalDateTime.now(), DEFAULT_LERNTAGE);
 		Modul m6 = new Modul(UUID.randomUUID(), "m6", 4000, DEFAULT_KREDITPUNKTE, "peter", true, 5, DEFAULT_SEMESTER, LocalDateTime.now(), DEFAULT_LERNTAGE);
 		return List.of(m1, m2, m3, m4, m5, m6);
+	}
+
+	public static List<Modul> initListWithNEmptyModule(int N) {
+		List<Modul> modulList = new ArrayList<>();
+
+		for (int i = 0; i < N; i++) {
+			modulList.add(new Modul());
+		}
+
+		return modulList;
 	}
 
 }

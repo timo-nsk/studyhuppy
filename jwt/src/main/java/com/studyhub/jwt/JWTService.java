@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
+
 import javax.crypto.SecretKey;
 import java.util.*;
 import java.util.function.Function;
@@ -72,6 +74,12 @@ public class JWTService {
 	public String extractTokenFromHeader(String header) {
 		// Header-Format: "Authorization: Bearer <JWT-TOKEN>"
 		return header.substring(7);
+	}
+
+	public String extractUsernameFromHeader(HttpServletRequest req) {
+		String header = req.getHeader("Authorization");
+		String token = extractTokenFromHeader(header);
+		return extractUsername(token);
 	}
 
 	/**

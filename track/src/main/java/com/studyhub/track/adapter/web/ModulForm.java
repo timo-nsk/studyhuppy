@@ -10,9 +10,12 @@ import com.studyhub.track.domain.model.semester.Semester;
 import com.studyhub.track.domain.model.semester.SemesterPhase;
 import com.studyhub.track.domain.model.semester.SemesterTyp;
 import jakarta.validation.constraints.*;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
+
 
 public record ModulForm(
 		String name,

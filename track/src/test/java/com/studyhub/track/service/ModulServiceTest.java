@@ -164,4 +164,26 @@ public class ModulServiceTest {
 
 		assertThat(actual).isEqualTo(expectedMap);
 	}
+
+	@Test
+	@DisplayName("Wenn ein User nur 10 Module erstellen darf und aktuelle 9 erstellt hat, kann er ein weiteres Modul erstellen")
+	void test_15() {
+		List<Modul> modulList = ModulMother.initListWithNEmptyModule(9);
+		when(repo.findByUsername("peter")).thenReturn(modulList);
+
+		boolean allowed = modulService.modulCanBeCreated("peter", 10);
+
+		assertThat(allowed).isTrue();
+	}
+
+	@Test
+	@DisplayName("Wenn ein User nur 10 Module erstellen darf und aktuelle 10 erstellt hat, kann er kein weiteres Modul erstellen")
+	void test_16() {
+		List<Modul> modulList = ModulMother.initListWithNEmptyModule(10);
+		when(repo.findByUsername("peter")).thenReturn(modulList);
+
+		boolean allowed = modulService.modulCanBeCreated("peter", 10);
+
+		assertThat(allowed).isFalse();
+	}
 }
