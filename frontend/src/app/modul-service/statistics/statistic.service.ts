@@ -66,4 +66,9 @@ export class StatisticApiService {
       }
     );
   }
+
+  getChartLastDays() : Observable<{ [date: string]: { modulName: string; secondsLearned: string }[] }> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.get<{ [date: string]: { modulName: string; secondsLearned: string }[] }>(this.BASE_API_URL + "/chart", { headers })
+  }
 }
