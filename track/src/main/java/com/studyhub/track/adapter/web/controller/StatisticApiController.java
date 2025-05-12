@@ -27,10 +27,11 @@ public class StatisticApiController {
 		this.jwtService = jwtService;
 	}
 
-	@Api
-	@GetMapping("/api/stats")
-	public Map<LocalDate, List<ModulStat>> getStats(@CookieValue("auth_token") String token) {
-		return modulEventService.getStatisticsForRecentDays(7, token);
+	@AngularApi
+	@GetMapping("/chart")
+	public ResponseEntity<Map<LocalDate, List<ModulStat>>> getStats(HttpServletRequest request) {
+		String username = extractUsernameFromHeader(request);
+		return ResponseEntity.ok(modulEventService.getStatisticsForRecentDays(7, username));
 	}
 
 	@AngularApi
