@@ -36,9 +36,7 @@ public class StatisticApiController {
 	@AngularApi
 	@GetMapping("/get-total-study-time")
 	public ResponseEntity<String> getTotalStudyTime(HttpServletRequest request) {
-		String header = request.getHeader("Authorization");
-		String token = jwtService.extractTokenFromHeader(header);
-		String username = jwtService.extractUsername(token);
+		String username = extractUsernameFromHeader(request);
 		String totalStudyTime = modulService.getTotalStudyTimeForUser(username);
 		return ResponseEntity.ok(totalStudyTime);
 	}
@@ -46,9 +44,7 @@ public class StatisticApiController {
 	@AngularApi
 	@GetMapping("/get-total-study-time-per-semester")
 	public ResponseEntity<Map<Integer, Integer>> getTotalStudyTimePerSemester(HttpServletRequest request) {
-		String header = request.getHeader("Authorization");
-		String token = jwtService.extractTokenFromHeader(header);
-		String username = jwtService.extractUsername(token);
+		String username = extractUsernameFromHeader(request);
 		Map<Integer, Integer> res = modulService.getTotalStudyTimePerFachSemester(username);
 		return ResponseEntity.ok(res);
 	}
@@ -58,7 +54,6 @@ public class StatisticApiController {
 	public ResponseEntity<String> getNumberActiveModule(HttpServletRequest request) {
 		String username = extractUsernameFromHeader(request);
 		String n = String.valueOf(modulService.countActiveModules(username));
-		System.out.println(n);
 		return ResponseEntity.ok(n);
 	}
 	@AngularApi
@@ -66,7 +61,6 @@ public class StatisticApiController {
 	public ResponseEntity<String> getNumberNotActiveModule(HttpServletRequest request) {
 		String username = extractUsernameFromHeader(request);
 		String n = String.valueOf(modulService.countNotActiveModules(username));
-		System.out.println(n);
 		return ResponseEntity.ok(n);
 	}
 
@@ -75,7 +69,6 @@ public class StatisticApiController {
 	public ResponseEntity<String> getMaxStudiedModul(HttpServletRequest request) {
 		String username = extractUsernameFromHeader(request);
 		String maxModul = modulService.findModulWithMaxSeconds(username);
-		System.out.println("ping4");
 		return ResponseEntity.ok(maxModul);
 	}
 
@@ -84,7 +77,6 @@ public class StatisticApiController {
 	public ResponseEntity<String> getMinStudiedModul(HttpServletRequest request) {
 		String username = extractUsernameFromHeader(request);
 		String minModul = modulService.findModulWithMinSeconds(username);
-		System.out.println("ping5");
 		return ResponseEntity.ok(minModul);
 	}
 
