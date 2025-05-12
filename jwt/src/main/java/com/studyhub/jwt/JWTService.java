@@ -11,12 +11,11 @@ import java.util.stream.Collectors;
 
 public class JWTService {
 
-	//@Value("${jwt.secret}") -- der scheiß spackt immer rum beim RedirectEntryPoint
 	private String secretkey = "Lb4t5iJI3EOL2aEQupj+sppum/fvoq4A5/u2idDDst3rjbytIzzRHq2dyP2C+b/g8QpJiRP+tA4SO9qE+o5srg==";
 
 	public String generateToken(String username) {
 		Map<String, Object> claims = new HashMap<>();
-		long expirationTime = 24 * 60 * 60 * 1000;
+		long expirationTime = 7 * 24 * 60 * 60 * 1000;
 		return Jwts.builder()
 				.claims()
 				.add(claims)
