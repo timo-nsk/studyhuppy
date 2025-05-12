@@ -28,8 +28,7 @@ public class ModulEventService {
 		modulGelerntEvent.save(event);
 	}
 
-	public Map<LocalDate, List<ModulStat>> getStatisticsForRecentDays(int days, String token) {
-		String username = jwtService.extractUsername(token);
+	public Map<LocalDate, List<ModulStat>> getStatisticsForRecentDays(int days, String username) {
 		List<Modul> modules = modulRepository.findByUsername(username);
 		Map<LocalDate, List<ModulStat>> dataMap = new HashMap<>();
 
