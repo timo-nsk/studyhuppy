@@ -75,7 +75,6 @@ public class ModulApiController {
 	@AngularApi
 	@PutMapping("/reset")
 	public ResponseEntity<Void> reset(@RequestBody String fachId) {
-		System.out.println("reset");
 		modulService.resetModulTime(UUID.fromString(fachId));
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
