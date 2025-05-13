@@ -120,9 +120,8 @@ public class ModulApiController {
 
 	@AngularApi
 	@GetMapping("/get-all-by-username")
-	public ResponseEntity<List<ModulDto>> getAllByUsername() {
-		// TODO: muss später aus auth_token gezogen werden
-		String username = "timo";
+	public ResponseEntity<List<ModulDto>> getAllByUsername(HttpServletRequest request) {
+		String username = jwtService.extractUsernameFromHeader(request);
 		List<ModulDto> l = modulService.findAllByUsername(username).stream().map(ModulMapper::toModulDto).toList();
 		return ResponseEntity.ok(l);
 	}
