@@ -11,12 +11,11 @@ export class StatisticApiService {
   http = inject(HttpClient)
   headerService = inject(HeaderService)
 
-  getTotalStudyTime(): Observable<string> {
-    return this.http.get(
+  getTotalStudyTime(): Observable<number> {
+    return this.http.get<number>(
       this.BASE_API_URL + "/get-total-study-time",
       {
-        headers: this.headerService.createAuthHeader(),
-        responseType: 'text'  // ✅ hier liegt die Lösung!
+        headers: this.headerService.createAuthHeader()
       }
     );
   }

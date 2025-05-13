@@ -93,13 +93,13 @@ public class ModulService {
 		return repo.findByUuid(fachId).getName();
 	}
 
-	public String getTotalStudyTimeForUser(String username) {
+	public Integer getTotalStudyTimeForUser(String username) {
 		Integer totalStudyTime = repo.getTotalStudyTime(username);
 
 		if(totalStudyTime == null) {
 			return null;
 		}
-		return ModulSecondsConverter.convertToString(totalStudyTime);
+		return totalStudyTime;
 	}
 
 	public Map<Integer, Integer> getTotalStudyTimePerFachSemester(String username) {

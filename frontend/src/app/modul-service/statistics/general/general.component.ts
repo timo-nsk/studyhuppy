@@ -12,14 +12,14 @@ import {NgFor} from '@angular/common';
 })
 export class GeneralComponent implements OnInit{
 
-  totalStudyTime: string = '';
+  totalStudyTime: number = 0;
   totalStudyTimePerSemester: { key: number, value: number }[] = [];
   numberActiveModules: string = '';
   numberNotActiveModules: string = '';
   maxStudiedModul: string = '';
   minStudiedModul: string = '';
 
-  constructor(private service: StatisticApiService) {}
+  constructor(private service: StatisticApiService, private timeFormat : TimeFormatPipe) {}
 
   ngOnInit(): void {
     this.service.getTotalStudyTime().subscribe(value => {

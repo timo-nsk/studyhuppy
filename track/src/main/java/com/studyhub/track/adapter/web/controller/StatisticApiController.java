@@ -35,10 +35,9 @@ public class StatisticApiController {
 
 	@AngularApi
 	@GetMapping("/get-total-study-time")
-	public ResponseEntity<String> getTotalStudyTime(HttpServletRequest request) {
+	public ResponseEntity<Integer> getTotalStudyTime(HttpServletRequest request) {
 		String username = jwtService.extractUsernameFromHeader(request);
-		String totalStudyTime = modulService.getTotalStudyTimeForUser(username);
-		return ResponseEntity.ok(totalStudyTime);
+		return ResponseEntity.ok(modulService.getTotalStudyTimeForUser(username));
 	}
 
 	@AngularApi
