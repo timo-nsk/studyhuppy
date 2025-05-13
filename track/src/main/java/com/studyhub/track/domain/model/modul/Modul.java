@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-import static com.studyhub.track.domain.model.ModulSecondsConverter.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,10 +24,6 @@ public class Modul {
 	private Semester semester;
 	private LocalDateTime klausurDate;
 	private Lerntage lerntage;
-
-	public String getTimeLearned() {
-		return convertToString(secondsLearned);
-	}
 
 	public String getGesamtArbeitsaufwand() {
 		return String.valueOf(kreditpunkte.getSelbststudiumStunden() + kreditpunkte.getKontaktzeitStunden());

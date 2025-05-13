@@ -4,16 +4,13 @@ import com.studyhub.jwt.JWTService;
 import com.studyhub.track.application.service.ModulRepository;
 import com.studyhub.track.application.service.ModulService;
 import com.studyhub.track.application.service.TimeConverter;
-import com.studyhub.track.domain.model.ModulSecondsConverter;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.util.ModulMother;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.relational.core.sql.In;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.*;
 import static com.studyhub.track.util.ModulMother.initModul;
 import static org.assertj.core.api.Assertions.assertThat;

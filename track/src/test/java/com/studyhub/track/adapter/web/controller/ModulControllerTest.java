@@ -2,6 +2,7 @@ package com.studyhub.track.adapter.web.controller;
 
 import com.studyhub.track.adapter.kartei.CreateNewStapelRequest;
 import com.studyhub.track.adapter.kartei.StapelRequestService;
+import com.studyhub.track.adapter.web.controller.api.ModulApiController;
 import com.studyhub.track.application.service.ModulService;
 import com.studyhub.track.domain.model.modul.Modul;
 import org.junit.jupiter.api.Disabled;
@@ -24,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Disabled
-@WebMvcTest(ModulController.class)
+@WebMvcTest(ModulApiController.class)
 public class ModulControllerTest {
 
 	@Autowired
@@ -36,15 +37,6 @@ public class ModulControllerTest {
 	@MockitoBean
 	StapelRequestService stapelRequestService;
 
-	@Test
-	@DisplayName("Die Startseite '/dashboard' ist für eingeloggte User erreichbar")
-	void test_01() throws Exception {
-		mvc.perform(get("/dashboard"))
-						.andExpect(status().isOk())
-						.andExpect(view().name("home"))
-						.andExpect(model().attribute("activeModulList", new LinkedList<>()))
-						.andExpect(model().attribute("deactivatedModulList", new LinkedList<>()));
-	}
 
 	@Test
 	@DisplayName("Die Startseite '/dashboard' ist für nicht eingeloggte User nicht erreichbar")

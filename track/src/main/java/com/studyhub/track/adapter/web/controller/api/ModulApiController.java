@@ -1,4 +1,4 @@
-package com.studyhub.track.adapter.web.controller;
+package com.studyhub.track.adapter.web.controller.api;
 
 import com.studyhub.jwt.JWTService;
 import com.studyhub.track.adapter.db.modul.ModulDto;

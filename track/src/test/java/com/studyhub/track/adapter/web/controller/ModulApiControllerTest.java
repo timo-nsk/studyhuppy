@@ -2,6 +2,7 @@ package com.studyhub.track.adapter.web.controller;
 
 import com.studyhub.jwt.JWTService;
 import com.studyhub.track.adapter.web.ModulForm;
+import com.studyhub.track.adapter.web.controller.api.ModulApiController;
 import com.studyhub.track.application.service.ModulEventService;
 import com.studyhub.track.application.service.ModulService;
 import com.studyhub.track.domain.model.modul.Modul;

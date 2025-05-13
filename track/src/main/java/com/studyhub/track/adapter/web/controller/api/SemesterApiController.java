@@ -1,10 +1,9 @@
-package com.studyhub.track.adapter.web.controller;
+package com.studyhub.track.adapter.web.controller.api;
 
 import com.studyhub.track.adapter.web.SemesterForm;
 import com.studyhub.track.application.service.ModulService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-public class SemesterController {
+public class SemesterApiController {
 
 	private ModulService modulService;
 
-	public SemesterController(ModulService modulService) {
+	public SemesterApiController(ModulService modulService) {
 		this.modulService = modulService;
 	}
 
