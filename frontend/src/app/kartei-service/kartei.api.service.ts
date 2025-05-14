@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {HeaderService} from '../header.service';
-import {Stapel} from './domain';
+import {Stapel, UpdateInfo} from './domain';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +26,11 @@ export class KarteiApiService {
   getStapelByFachId(fachId : string) : Observable<Stapel> {
     const headers = this.headerService.createAuthHeader()
     return this.http.post<Stapel>( this.BASE_API_URL + "/get-stapel-by-fachid",fachId,  {headers})
+  }
+
+  updateKarte(data : UpdateInfo) : void {
+    console.log("blub")
+    const headers = this.headerService.createAuthHeader()
+    this.http.post( "http://localhost:9081/update-karteikarte",data,  {headers}).subscribe()
   }
 }

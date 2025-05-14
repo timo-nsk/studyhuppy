@@ -1,10 +1,10 @@
 <div>
   <div id="karteikarte-container" class="shd">
     <div class="karteikarte-container-item">
-      <p>{{ thisStapel.karteikarten?.[0]?.frage}}</p>
+      <p>{{ thisStapel.karteikarten?.[kartenIndex]?.frage}}</p>
     </div>
     <div *ngIf="!hideAntwort" id="kartei-antwort-div" class="karteikarte-container-item">
-      <p>{{ thisStapel.karteikarten?.[0]?.antwort}}</p>
+      <p>{{ thisStapel.karteikarten?.[kartenIndex]?.antwort}}</p>
     </div>
     <div *ngIf="hideAntwortBtn" id="anzeigen-btn-div" class="karteikarte-container-item btn-anzeige active">
       <button id="anzeige-btn" (click)="toggleAntwort()">Antwort anzeigen</button>
@@ -12,36 +12,9 @@
 
     <div *ngIf="hideBtnGroup" id="btn-group-div" class="karteikarte-container-item">
       <hr>
-      <form method="post" th:action="@{/update-karteikarte}" th:each="btnData, iter : ${btnDataList}">
-        <input type="hidden" name="stapelId" th:value="${stapelId}">
-        <input type="hidden" name="karteId" th:value="${currentKarte.getFachId()}">
-        <input type="hidden" name="schwierigkeit" th:value="${btnData.schwierigkeit().toString()}">
-        <input type="hidden" name="secondsNeeded" value="0">
-
-        <div th:if="${btnDataList.size() == 3}" class="btn-group-container">
-
-          <button th:id="${'btn-' + iter.index}" class="btn-group" type="submit">
-            <span th:id="${'btn-' + iter.index + '-label'}" th:text="${btnData.getSchwierigkeitUpperCamelCase()}"></span>
-            (<span th:text="${btnData.btnTitel()}"></span>)
-          </button>
-
-        </div>
-        <div th:if="${btnDataList.size() == 2}" class="btn-group-container">
-
-          <button th:id="${'btn-' + (iter.index+1) }" class="btn-group" type="submit">
-            <span th:id="${'btn-' + (iter.index+1) + '-label'}" th:text="${btnData.getSchwierigkeitUpperCamelCase()}"></span>
-            (<span th:text="${btnData.btnTitel()}"></span>)
-          </button>
-
-        </div>
-        <div th:if="${btnDataList.size() == 1}" class="btn-group-container">
-          <button id="btn-2" type="submit" class="btn-group">
-            <span id="btn-2-label" th:text="${btnData.getSchwierigkeitUpperCamelCase()}"></span>
-            (<span th:text="${btnData.btnTitel()}"></span>)
-          </button>
-        </div>
-
-      </form>
+      <div *ngFor="let btnData of btnDataList; let i = index">
+        <button (click)="updateKarteikarte(i)">{{btnData.schwierigkeit}} ({{btnData.btnTitel}})</button>
+      </div>
     </div>
   </div>
 </div>

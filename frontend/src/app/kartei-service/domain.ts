@@ -34,3 +34,22 @@ export enum FrageTyp {
   MULTIPLE_CHOICE = "Multiple Choice"
 }
 
+export enum Schwierigkeit {
+  EASY = "EASY",
+  NORMAL = "NORMAL",
+  HARD = "HARD"
+}
+
+export class ButtonData {
+
+  constructor(private btnTitel : string, private  schwierigkeit : Schwierigkeit) {
+  }
+}
+
+export interface UpdateInfo {
+  stapelId : string;
+  karteId : string;
+  schwierigkeit : Schwierigkeit;
+  secondsNeeded : number
+}
+
