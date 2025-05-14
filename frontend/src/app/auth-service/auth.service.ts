@@ -1,9 +1,8 @@
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {inject, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {routes} from '../app.routes';
-import {HeaderService} from '../header.service';
 import {Observable} from 'rxjs';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: "root"
@@ -12,6 +11,7 @@ export class AuthApiService {
 
   router : Router = inject(Router)
   http : HttpClient = inject(HttpClient)
+  snackbar : MatSnackBar = inject(MatSnackBar)
 
   login(data : any) {
     console.log("trying login")
