@@ -1,1 +1,57 @@
-<p>kartei-service works!</p>
+<div id="kartei-übersicht-container">
+  <div id="kartei-übersicht-header">
+    <div>
+      <h2>Deine Karteikarten-Sets</h2>
+    </div>
+    <div id="add-set-container">
+      <a id="add-set" th:href="@{/new-set}">
+        <i class="bi bi-plus-circle"></i>
+      </a>
+    </div>
+  </div>
+</div>
+<div id="kartei-set-container">
+  <div id="kartei-set-info-kachel" class="alert alert-light shd" th:if="${karteiSetsAvailable}" th:each="karteiSet : ${karteisetList}">
+    <div class="kartei-set-info-actions">
+      <div class="kartei-set-info-item">
+        <a id="kartei-set-kachel-set-name" th:href="@{/lernen/{karteiSetId}/übersicht(karteiSetId=${karteiSet.getFachId()})}" title="Set Details">
+          <strong>
+            <span th:text="${karteiSet.getName()}">Set Name</span>
+          </strong>
+        </a>
+      </div>
+      <div class="kartei-set-info-item" th:if="${karteiSet.hasModulFachId()}">
+        <p>Modul: <span th:text="${modulService.getModulName(karteiSet.getModulFachId())}">Mathematik</span></p>
+      </div>
+    </div>
+    <div class="kartei-set-info-actions">
+      <!-- TODO: Wenn fällige karteikarten anstehen, wird der lernen button angezeigt-->
+      <div id="lernen-btn-container" class="kartei-set-info-item" th:if="${karteiSet.anzahlFälligeKarteikarten(today) > 0}">
+        <a id="lernen-btn" th:href="@{/lernen/{karteiSetId}/start(karteiSetId=${karteiSet.getFachId().toString()})}">
+          <strong>lernen
+            <span id="vorrausichtliche-zeit-label"
+                  th:if="${lernzeitService.showVorraussichtlicheLernzeitWhen(karteiSet.getFachId(), today)}"
+                  th:text="${'(' + lernzeitService.calculateZeitAsString(lernzeitService.getVorraussichtlicheLernzeitFürStapel(karteiSet.getFachId(), today)) + ')'}">
+                        </span>
+          </strong>
+        </a>
+      </div>
+
+      <div class="kartei-set-info-item">
+        <p>Neu: <span id="neue-karten" th:text="${karteiSet.anzahlNeueKarteikarten()}"></span></p>
+      </div>
+      <div class="kartei-set-info-item">
+        <p>Fällig: <span id="fällige-karten" th:text="${karteiSet.anzahlFälligeKarteikarten(today)}"></span></p>
+      </div>
+      <div class="kartei-set-info-item">
+        <a id="kartei-set-kachel-option" th:href="@{/set-bearbeiten/{karteiSetId}(karteiSetId=${karteiSet.getFachId()})}">
+          <i class="bi bi-gear" title="Set bearbeiten"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div th:unless="${karteiSetsAvailable}">
+    <p>Keine Karteikarten-Sets vorhanden.</p>
+  </div>
+</div>

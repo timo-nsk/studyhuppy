@@ -12,6 +12,7 @@ import {PwServiceComponent} from './auth-service/pw-service/pw-service.component
 import {UserProfileComponent} from './user-profile/user-profile.component';
 import {GeneralComponent} from './modul-service/statistics/general/general.component';
 import {ChartsComponent} from './modul-service/statistics/charts/charts.component';
+import {KarteiServiceComponent} from './kartei-service/kartei-service.component';
 
 export const routes: Routes = [
   {
@@ -72,7 +73,11 @@ export const routes: Routes = [
                 ]
             }
           ]
-      }]
+      },
+        {
+          path: 'kartei',
+          component: KarteiServiceComponent
+        }]
   },
   { path: '**', redirectTo: 'login' }
 ];
