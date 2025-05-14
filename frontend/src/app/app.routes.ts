@@ -13,7 +13,7 @@ import {UserProfileComponent} from './user-profile/user-profile.component';
 import {GeneralComponent} from './modul-service/statistics/general/general.component';
 import {ChartsComponent} from './modul-service/statistics/charts/charts.component';
 import {KarteiServiceComponent} from './kartei-service/kartei-service.component';
-import {StapelDetailsComponent} from './kartei-service/stapel-details/stapel-details.component';
+import {LernenComponent} from './kartei-service/lernen/lernen.component';
 
 export const routes: Routes = [
   {
@@ -81,8 +81,8 @@ export const routes: Routes = [
           canActivate: [authGuard]
         },
         {
-          path: 'stapel-detail',
-          component: StapelDetailsComponent,
+          path: 'lernen/:fachId',
+          component: LernenComponent,
           canActivate: [authGuard]
         }]
   },
