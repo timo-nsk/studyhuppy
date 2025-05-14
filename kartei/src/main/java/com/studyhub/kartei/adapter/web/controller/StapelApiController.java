@@ -32,4 +32,10 @@ public class StapelApiController {
 		Map<String, Integer> responseMap = stapelService.getAnzahlFaelligeKartenForEachStapel(LocalDateTime.now());
 		return responseMap;
 	}
+
+	@AngularApi
+	@GetMapping("/sets-available")
+	public ResponseEntity<Boolean> setsAvailable() {
+		return ResponseEntity.ok(stapelService.areKarteiSetsAvailable());
+	}
 }
