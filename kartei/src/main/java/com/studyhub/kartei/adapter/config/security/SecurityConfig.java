@@ -3,6 +3,7 @@ package com.studyhub.kartei.adapter.config.security;
 import com.studyhub.jwt.JWTService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -29,8 +30,9 @@ public class SecurityConfig {
 		http
 				// TODO: muss aus sein, weil sonst die keine POST requests als 403. fixen
 				.csrf().disable()
+				.cors(Customizer.withDefaults())
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/styles/**", "/js/**", "/api/get-db-health", "/actuator/**").permitAll()
+						.requestMatchers("/api/**").permitAll()
 						.anyRequest().authenticated()
 				)
 				.exceptionHandling(exceptionHandling -> exceptionHandling
