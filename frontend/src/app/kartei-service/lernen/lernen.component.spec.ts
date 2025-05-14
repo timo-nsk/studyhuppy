@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StapelDetailsComponent } from './stapel-details.component';
+import { LernenComponent } from './lernen.component';
 
-describe('StapelDetailsComponent', () => {
-  let component: StapelDetailsComponent;
-  let fixture: ComponentFixture<StapelDetailsComponent>;
+describe('LernenComponent', () => {
+  let component: LernenComponent;
+  let fixture: ComponentFixture<LernenComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StapelDetailsComponent]
+      imports: [LernenComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(StapelDetailsComponent);
+    fixture = TestBed.createComponent(LernenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
