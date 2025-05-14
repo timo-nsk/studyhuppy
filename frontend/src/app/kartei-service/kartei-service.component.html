@@ -15,11 +15,9 @@
     <div id="kartei-set-info-kachel" class="alert alert-light shd" *ngFor="let s of stapel">
       <div class="kartei-set-info-actions">
         <div class="kartei-set-info-item">
-          <a id="kartei-set-kachel-set-name" [routerLink]="'/stapel-detail'"  title="Karteikartenstapel Details">
             <strong>
-              <span>{{s.name}}</span>
+              <span id="kartei-set-kachel-set-name">{{s.name}}</span>
             </strong>
-          </a>
         </div>
         <!-- TODO: implement
         <div class="kartei-set-info-item" th:if="${karteiSet.hasModulFachId()}">
@@ -29,8 +27,8 @@
       </div>
       <div class="kartei-set-info-actions">
         <!-- TODO: Wenn fällige karteikarten anstehen, wird der lernen button angezeigt-->
-        <div id="lernen-btn-container" class="kartei-set-info-item" *ngIf="s.anzahlFaelligeKarteikarten > 0">
-          <a id="lernen-btn" href="#">
+        <div id="lernen-btn-container" class="kartei-set-info-item" *ngIf="s.anzahlFaelligeKarteikarten >= 0">
+          <a id="lernen-btn" [routerLink]="['/lernen', s.fachId]" >
             <strong>lernen
               <span id="vorrausichtliche-zeit-label">( {{s.vorraussichtlicheLernzeit}}s )</span>
             </strong>
