@@ -4,6 +4,8 @@ import {KarteiApiService} from '../kartei.api.service';
 import {Stapel, UpdateInfo} from '../domain';
 import {NgIf, NgFor} from '@angular/common';
 import {ButtonDataGenerator} from '../button.data.generator';
+import { Router } from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -22,7 +24,10 @@ export class LernenComponent implements OnInit {
   kartenIndex = 0
 
   route = inject(ActivatedRoute)
+  router = inject(Router)
   karteiService = inject(KarteiApiService)
+  snackbar = inject(MatSnackBar)
+  //TODO: aus dem backend muss der stapel so geändert werden, dass da nur die fälligen karten reingepackt werden
   thisStapel : Stapel = {};
   gen!: ButtonDataGenerator;
 
@@ -38,8 +43,6 @@ export class LernenComponent implements OnInit {
         this.gen = new ButtonDataGenerator(data.karteikarten?.[this.kartenIndex]);
         this.btnDataList = this.gen.generateButtons()
         console.log(this.btnDataList)
-
-
       }
     })
   }
@@ -57,7 +60,17 @@ export class LernenComponent implements OnInit {
       schwierigkeit: this.btnDataList[i].schwierigkeit,
       secondsNeeded: 0
     }
-    this.kartenIndex++
     this.karteiService.updateKarte(data)
+
+    let n = this.thisStapel.karteikarten?.length!
+    if(this.kartenIndex == n - 1) {
+      this.kartenIndex = 0
+      this.router.navigate(['/kartei'])
+      this.snackbar.open("Stapel lernen beendet", "schließen", {
+        duration: 3500
+      })
+    }else {
+      this.kartenIndex++
+    }
   }
 }
