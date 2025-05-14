@@ -1,10 +1,10 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {NgIf} from '@angular/common';
+import {NgFor, NgIf} from '@angular/common';
 import {KarteiApiService} from './kartei.api.service';
 
 @Component({
   selector: 'app-kartei-service',
-  imports: [NgIf],
+  imports: [NgIf, NgFor],
   templateUrl: './kartei-service.component.html',
   standalone: true,
   styleUrl: './kartei-service.component.scss'
@@ -15,8 +15,11 @@ export class KarteiServiceComponent implements OnInit{
 
   karteiService = inject(KarteiApiService)
 
+  stapel : any = []
+
   ngOnInit(): void {
     this.checkSetsAvailable()
+    this.getAllStapelByUsername()
   }
 
   checkSetsAvailable() {
@@ -24,6 +27,15 @@ export class KarteiServiceComponent implements OnInit{
       next: (result) => {
         this.karteiSetsAvailable = result
         console.log(this.karteiSetsAvailable)
+      }
+    })
+  }
+
+  getAllStapelByUsername() {
+    this.karteiService.getAllStapelByUsername().subscribe({
+      next: (data) => {
+        this.stapel = data
+        console.log(this.stapel)
       }
     })
   }

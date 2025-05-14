@@ -76,7 +76,8 @@ export const routes: Routes = [
       },
         {
           path: 'kartei',
-          component: KarteiServiceComponent
+          component: KarteiServiceComponent,
+          canActivate: [authGuard]
         }]
   },
   { path: '**', redirectTo: 'login' }
