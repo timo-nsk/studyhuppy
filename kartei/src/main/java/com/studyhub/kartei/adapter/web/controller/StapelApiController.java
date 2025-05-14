@@ -53,4 +53,10 @@ public class StapelApiController {
 		List<StapelDashboardDto> res = stapelService.prepareDashboardInfo(stapel);
 		return ResponseEntity.ok(res);
 	}
+
+	@AngularApi
+	@PostMapping("/get-stapel-by-fachid")
+	public ResponseEntity<Stapel> getStapelByFachid(@RequestBody String fachId) {
+		return ResponseEntity.ok(stapelService.findByFachId(fachId));
+	}
 }

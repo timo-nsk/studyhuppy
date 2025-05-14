@@ -2,6 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {HeaderService} from '../header.service';
+import {Stapel} from './domain';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,10 @@ export class KarteiApiService {
   getAllStapelByUsername() : Observable<any>{
     const headers = this.headerService.createAuthHeader()
     return this.http.get<any>(this.BASE_API_URL + "/get-all-stapel-by-username", {headers})
+  }
+
+  getStapelByFachId(fachId : string) : Observable<Stapel> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.post<Stapel>( this.BASE_API_URL + "/get-stapel-by-fachid",fachId,  {headers})
   }
 }
