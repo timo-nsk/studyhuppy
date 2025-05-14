@@ -1,17 +1,16 @@
 package com.studyhub.kartei.service.application;
 
+import com.studyhub.kartei.adapter.web.controller.StapelDashboardDto;
 import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.domain.model.Stapel;
+import com.studyhub.kartei.service.application.lernzeit.LernzeitService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 
 @Service
@@ -19,9 +18,11 @@ public class StapelService {
 
 	private StapelRepository repo;
 	private Logger log = LoggerFactory.getLogger(StapelService.class);
+	private LernzeitService lernzeitService;
 
-	public StapelService(StapelRepository repo) {
+	public StapelService(StapelRepository repo, LernzeitService lernzeitService) {
 		this.repo = repo;
+		this.lernzeitService = lernzeitService;
 	}
 
 
@@ -120,5 +121,24 @@ public class StapelService {
 
 	public boolean isStapelDbHealthy() {
 		return repo.isStapelDbHealthy();
+	}
+
+	public List<StapelDashboardDto> prepareDashboardInfo(List<Stapel> stapel) {
+		List<StapelDashboardDto> dtos = new LinkedList<>();
+		LocalDateTime now = LocalDateTime.now();
+
+		for (Stapel stap : stapel) {
+			UUID fachId = stap.getFachId();
+			StapelDashboardDto dto = new StapelDashboardDto(
+					stap.getName(),
+					fachId.toString(),
+					lernzeitService.getVorraussichtlicheLernzeitFürStapel(fachId, now),
+					stap.anzahlNeueKarteikarten(),
+					stap.anzahlFälligeKarteikarten(now)
+			);
+			dtos.add(dto);
+		}
+
+		return dtos;
 	}
 }

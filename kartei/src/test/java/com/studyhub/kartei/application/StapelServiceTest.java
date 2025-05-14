@@ -1,9 +1,11 @@
 package com.studyhub.kartei.application;
 
+import com.studyhub.kartei.adapter.web.controller.StapelDashboardDto;
 import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.domain.model.Stapel;
 import com.studyhub.kartei.service.application.StapelRepository;
 import com.studyhub.kartei.service.application.StapelService;
+import com.studyhub.kartei.service.application.lernzeit.LernzeitService;
 import com.studyhub.kartei.util.KarteikarteMother;
 import com.studyhub.kartei.util.StapelMother;
 import jakarta.servlet.http.HttpSession;
@@ -23,11 +25,13 @@ public class StapelServiceTest {
 
 	static StapelRepository repo;
 	static StapelService service;
+	static LernzeitService lernzeitService;
 
 	@BeforeAll
 	static void init() {
 		repo = mock(StapelRepository.class);
-		service = new StapelService(repo);
+		lernzeitService = mock(LernzeitService.class);
+		service = new StapelService(repo, lernzeitService);
 	}
 
 	@Test
@@ -222,5 +226,21 @@ public class StapelServiceTest {
 		assertThat(resultMap.get("stapel1")).isEqualTo(1);
 		assertThat(resultMap.get("stapel2")).isEqualTo(2);
 		assertThat(resultMap.get("stapel3")).isEqualTo(3);
+	}
+
+	@Test
+	@DisplayName("Benötigte Daten eines Stapels werden korrekt in ein Dto gepackt")
+	void test_19() {
+		List<Stapel> stapel = StapelMother.initManyStapel();
+		when(lernzeitService.getVorraussichtlicheLernzeitFürStapel(any(UUID.class), any(LocalDateTime.class))).thenReturn(1);
+
+		List<StapelDashboardDto> dtos = service.prepareDashboardInfo(stapel);
+
+		assertThat(dtos.size()).isEqualTo(3);
+		assertThat(dtos.get(0).name()).isEqualTo("stapel1");
+		assertThat(dtos.get(0).fachId()).isEqualTo("40c0ea04-fb47-4fbe-a512-76280cb7dd12");
+		assertThat(dtos.get(0).vorraussichtlicheLernzeit()).isNotNull();
+		assertThat(dtos.get(0).anzahlNeueKarteikarten()).isEqualTo(0);
+		assertThat(dtos.get(0).anzahlFaelligeKarteikarten()).isEqualTo(4);
 	}
 }
