@@ -1,10 +1,11 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {NgFor, NgIf} from '@angular/common';
 import {KarteiApiService} from './kartei.api.service';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-kartei-service',
-  imports: [NgIf, NgFor],
+  imports: [NgIf, NgFor, RouterLink],
   templateUrl: './kartei-service.component.html',
   standalone: true,
   styleUrl: './kartei-service.component.scss'

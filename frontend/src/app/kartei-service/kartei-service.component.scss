@@ -7,7 +7,8 @@
 #kartei-übersicht-header {
   display: flex;
   justify-content: flex-start;
-  width: 70%;
+  width: 60vw;
+  margin-top: 20px;
   margin-bottom: 20px;
   gap: 15px;
 }
@@ -65,8 +66,8 @@
 #kartei-set-info-kachel {
   display: flex;
   justify-content: space-between;
-  width: 70%;
-align-items: center;
+  width: 60vw;
+  align-items: center;
 }
 
 #kartei-set-info-kachel:hover {

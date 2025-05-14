@@ -15,7 +15,7 @@
     <div id="kartei-set-info-kachel" class="alert alert-light shd" *ngFor="let s of stapel">
       <div class="kartei-set-info-actions">
         <div class="kartei-set-info-item">
-          <a id="kartei-set-kachel-set-name" href="#" title="Set Details">
+          <a id="kartei-set-kachel-set-name" [routerLink]="'/stapel-detail'"  title="Karteikartenstapel Details">
             <strong>
               <span>{{s.name}}</span>
             </strong>
