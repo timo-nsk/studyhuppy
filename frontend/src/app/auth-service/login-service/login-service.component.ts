@@ -28,6 +28,7 @@ export class LoginServiceComponent {
   constructor(private http : HttpClient, private authService : AuthApiService) {}
 
   submitLogin() : void {
+    //TODO: form braucht noch validation, wenn login fehlschlägt
     const data = this.loginForm.value
     this.authService.login(data)
   }
