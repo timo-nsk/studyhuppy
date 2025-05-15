@@ -1,10 +1,6 @@
 package com.studyhub.track.adapter.web;
 
 import com.studyhub.jwt.JWTService;
-import com.studyhub.track.adapter.web.validation.ValidDateOder;
-import com.studyhub.track.adapter.web.validation.ValidModulRequest;
-import com.studyhub.track.adapter.web.validation.ValidSemesterDates;
-import com.studyhub.track.adapter.web.validation.ValidVorlesungDates;
 import com.studyhub.track.domain.model.modul.Kreditpunkte;
 import com.studyhub.track.domain.model.modul.Lerntage;
 import com.studyhub.track.domain.model.modul.Modul;
@@ -22,9 +18,6 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-@ValidSemesterDates
-@ValidVorlesungDates
-@ValidDateOder
 public class SemesterForm {
 
 	@Min(value = 1, message = "Semester Stufe muss positiv zwischen 1 und 16 liegen")
@@ -34,7 +27,6 @@ public class SemesterForm {
 	private LocalDate semesterEnde;
 	private LocalDate vlBeginn;
 	private LocalDate vlEnde;
-	@ValidModulRequest
 	private List<ModulRequest> module;
 	private String moduleData;
 

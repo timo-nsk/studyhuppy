@@ -1,7 +1,5 @@
 package com.studyhub.track.adapter.web;
 
-import com.studyhub.jwt.JWTService;
-import com.studyhub.track.adapter.web.validation.ValidKlausurDatum;
 import com.studyhub.track.application.service.TimeConverter;
 import com.studyhub.track.domain.model.modul.Kreditpunkte;
 import com.studyhub.track.domain.model.modul.Lerntage;
@@ -9,8 +7,6 @@ import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.semester.Semester;
 import com.studyhub.track.domain.model.semester.SemesterPhase;
 import com.studyhub.track.domain.model.semester.SemesterTyp;
-import jakarta.validation.constraints.*;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
