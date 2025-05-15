@@ -7,10 +7,13 @@ import java.util.UUID;
 public record CreateNewStapelRequest(String modulFachId,
                                      String setName,
                                      String beschreibung,
-                                     String lernIntervalle,
-                                     String username) {
+                                     String lernIntervalle) {
 
-	public Stapel toNewStapel() {
-		return new Stapel(UUID.fromString(modulFachId()), setName(), beschreibung(), username(), lernIntervalle());
+	public Stapel toNewStapel(String username) {
+		if (modulFachId == null) {
+			return new Stapel(null, setName(), beschreibung(), username, lernIntervalle());
+		} else {
+			return new Stapel(UUID.fromString(modulFachId()), setName(), beschreibung(), username, lernIntervalle());
+		}
 	}
 }

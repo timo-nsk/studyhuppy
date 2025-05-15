@@ -1,0 +1,21 @@
+#new-set-form-box {
+  display: flex;
+  justify-content: space-around;
+}
+
+#new-set-form{
+  width: 60%;
+  background-color: #fcfcfd;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  border-style: none;
+}
+
+.tip {
+  font-size: 1rem;
+}
+
+.tooltip-inner {
+  white-space: pre-line;
+}
