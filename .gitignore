@@ -1,4 +1,11 @@
+.gitignore
 ports.txt
 docker-compose.yaml
 todo.txt
+.env
+.idea
+
+track/modul-data
+kartei/kartei-data
+authentication/user-data
 
