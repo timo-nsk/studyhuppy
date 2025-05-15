@@ -15,6 +15,7 @@ import {ChartsComponent} from './modul-service/statistics/charts/charts.componen
 import {KarteiServiceComponent} from './kartei-service/kartei-service.component';
 import {LernenComponent} from './kartei-service/lernen/lernen.component';
 import {StapelErstellenComponent} from './kartei-service/stapel-erstellen/stapel-erstellen.component';
+import {StapelDetailsComponent} from './kartei-service/stapel-details/stapel-details.component';
 
 export const routes: Routes = [
   {
@@ -89,6 +90,11 @@ export const routes: Routes = [
         {
           path: 'neuer-stapel',
           component: StapelErstellenComponent,
+          canActivate: [authGuard]
+        },
+        {
+          path: 'stapel-details/:fachId',
+          component: StapelDetailsComponent,
           canActivate: [authGuard]
         }]
   },
