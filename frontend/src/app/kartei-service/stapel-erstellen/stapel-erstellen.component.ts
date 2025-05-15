@@ -8,7 +8,7 @@ import {KarteiApiService} from '../kartei.api.service';
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './stapel-erstellen.component.html',
   standalone: true,
-  styleUrls: ['./stapel-erstellen.component.scss', '../../button.scss']
+  styleUrls: ['./stapel-erstellen.component.scss', '../../button.scss', '../../color.scss']
 })
 export class StapelErstellenComponent {
   karteiService = inject(KarteiApiService)

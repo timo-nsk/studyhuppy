@@ -1,54 +1,59 @@
-<div id="new-set-form-box">
-  <form id="new-set-form" [formGroup]="newStapelForm" (ngSubmit)="submitForm()">
-    <h2>Neues Karteikarten-Set erstellen</h2>
-    <div class="mb-3">
-      <label for="set-name">Stapelname:</label>
-      <input id="set-name" class="form-control" formControlName="setName">
-      <span class="text-danger"
-            *ngIf="newStapelForm.controls['setName'].errors?.['required'] && newStapelForm.controls['setName'].touched">
+<div class="super-container">
+  <div id="new-set-form-box" class="bg-lightgrey">
+    <form id="new-set-form" [formGroup]="newStapelForm" (ngSubmit)="submitForm()">
+      <h2 class="m-accent-font">Karteikartenstapel erstellen</h2>
+      <div class="mb-3">
+        <label for="set-name" class="m-accent-font">Stapelname:</label>
+        <input id="set-name" class="form-control" formControlName="setName">
+        <span class="text-danger"
+              *ngIf="newStapelForm.controls['setName'].errors?.['required'] && newStapelForm.controls['setName'].touched">
               Geben Sie einen Namen für den Stapel ein
         </span>
-    </div>
+      </div>
 
-    <div class="mb-3">
-      <label for="beschreibung">Beschreibung:</label>
-      <input id="beschreibung" class="form-control" formControlName="beschreibung">
-    </div>
+      <div class="mb-3">
+        <label for="beschreibung" class="m-accent-font">Beschreibung:</label>
+        <textarea id="beschreibung" class="form-control" formControlName="beschreibung"rows="3"></textarea>
+      </div>
 
-    <div class="mb-3">
-      <label for="modul-link">Modul verlinken:</label>
-      <select id="modul-link" class="form-select fs-4" formControlName="modulFachId">
-        <option selected value="">kein</option>
-        <option *ngFor="let modul of modulMap" [value]="modul.key">
-          <span>{{modul.value}}</span>
-        </option>
-      </select>
-    </div>
+      <div class="mb-3">
+        <label for="modul-link" class="m-accent-font">Modul verlinken:</label>
+        <select id="modul-link" class="form-select fs-4" formControlName="modulFachId">
+          <option selected value="">kein</option>
+          <option *ngFor="let modul of modulMap" [value]="modul.key">
+            <span>{{modul.value}}</span>
+          </option>
+        </select>
+      </div>
 
-    <div class="mb-3">
-      <label for="interval">Lern-Intervalle:</label>
-      <div class="flex-container">
-        <div class="flex-15">
-          <input id="interval" class="form-control" formControlName="lernIntervalle">
-          <span class="text-danger"
-                *ngIf="newStapelForm.controls['lernIntervalle'].errors?.['required'] && newStapelForm.controls['lernIntervalle'].touched">
+      <div class="mb-3">
+        <label for="interval" class="m-accent-font">Lern-Intervalle:</label>
+        <div id="lerninterval-container">
+          <div class="col-11">
+            <input id="interval" class="form-control" formControlName="lernIntervalle">
+            <span class="text-danger"
+                  *ngIf="newStapelForm.controls['lernIntervalle'].errors?.['required'] && newStapelForm.controls['lernIntervalle'].touched">
                 Geben Sie ein Lernintervall ein
           </span>
-          <span class="text-danger"
-                *ngIf="newStapelForm.controls['lernIntervalle'].errors?.['pattern'] && newStapelForm.controls['lernIntervalle'].touched">
+            <span class="text-danger"
+                  *ngIf="newStapelForm.controls['lernIntervalle'].errors?.['pattern'] && newStapelForm.controls['lernIntervalle'].touched">
                 Geben Sie ein korrekt formatiertes Lernintervall ein
           </span>
-        </div>
-        <div class="flex-1">
-              <span class="ms-2" data-bs-toggle="tooltip" data-bs-placement="right" title="Beispiel: '10m,30m,2h'.<br>Nicht möglich ist '62m,30h,40d'">
-                <i class="bi bi-info-circle-fill text-dark tip"></i>
-              </span>
+          </div>
+          <div class="col-1">
+            <div id="tip-container">
+            <span class="ms-2" data-bs-toggle="tooltip" data-bs-placement="right" title="Beispiel: '10m,30m,2h'.<br>Nicht möglich ist '62m,30h,40d'">
+            <i class="bi bi-info-circle-fill text-dark tip"></i>
+          </span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="mb-3">
-      <button class="sh-btn" type="submit">erstellen</button>
-    </div>
-  </form>
+      <div class="mb-3">
+        <button class="sh-btn" type="submit">erstellen</button>
+      </div>
+    </form>
+  </div>
 </div>
+
