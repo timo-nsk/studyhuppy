@@ -1,77 +1,53 @@
+#super-container {
+  width: 90vw;
+  display: flex;
+  justify-content: center;
+}
+
 #karteikarte-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #fcfcfd;
-  border-style: none;
-  border-radius: 10px;
   width: 70%;
-  padding: 20px;
-  margin: 0 auto;
+  margin-top: 60px;
+  padding: 20px 20px 20px 20px;
 }
 
-.karteikarte-container-item {
+.sub-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#frage-container, #antwort-container {
+  width: 70%;
   text-align: center;
-  width: 100%;
+  font-size: 20px;
 }
 
-#btn-group-div {
-  margin-top: 50px;
-  flex-direction: row;
-  justify-content: center;
-}
-
-#anzeigen-btn-div {
-  margin-top: 50px;
-}
-
-#anzeigen-btn-div, #kartei-antwort-div {
-  flex-direction: row;
-  justify-content: center;
-}
-
-.hidden {
-  display: none;
-}
-
-.active {
+#btn-group {
   display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-.btn-group, .btn-anzeige {
+#bearbeiten-a {
+  margin-top: 11px;
+}
+
+.bordered {
+  border-radius: 50px;
+  border-color: lightgray;
+  //border-color: rgb(16, 45, 92);
   border-style: solid;
-  border-width: 2px;
-  border-radius: 5px;
-  width: 170px;
-  color: black;
-  margin: 2px;
-  justify-content: center;
+  border-width: 1px;
 }
 
-#btn-0:hover {
-  color: red;
-  background-color: #f55f5f;
-}
-
-#btn-1:hover {
-  color: blue;
-  background-color: lightblue;
-}
-
-#btn-2:hover {
-  color: green;
-  background-color: lightgreen;
-}
-
-.btn-group-container {
+#seconds-box {
   display: flex;
-  flex-direction: row;
   justify-content: center;
-}
-
-#anzeige-btn:hover {
-  background-color: lightgrey;
-  width: 170px;
+  width: 9%;
+  height: 24px;
+  background-color: rgb(16, 45, 92);
   border-style: none;
   border-radius: 5px;
+  color: white;
 }
+

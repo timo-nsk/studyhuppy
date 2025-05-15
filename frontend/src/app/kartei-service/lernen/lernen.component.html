@@ -1,20 +1,36 @@
-<div>
-  <div id="karteikarte-container" class="shd">
-    <div class="karteikarte-container-item">
-      <p>{{ thisStapel.karteikarten?.[kartenIndex]?.frage}}</p>
+<div id="super-container">
+  <div id="karteikarte-container">
+    <div id="seconds-box">
+      <p>{{overallSeconds | timeFormat}}</p>
     </div>
-    <div *ngIf="!hideAntwort" id="kartei-antwort-div" class="karteikarte-container-item">
-      <p>{{ thisStapel.karteikarten?.[kartenIndex]?.antwort}}</p>
+    <div class="sub-container">
+      <div id="frage-container">
+        <p>{{ thisStapel.karteikarten?.[kartenIndex]?.frage}}</p>
+      </div>
     </div>
-    <div *ngIf="hideAntwortBtn" id="anzeigen-btn-div" class="karteikarte-container-item btn-anzeige active">
-      <button id="anzeige-btn" (click)="toggleAntwort()">Antwort anzeigen</button>
+    <div class="sub-container" *ngIf="!hideAntwort">
+      <div id="antwort-container">
+        <hr>
+        <p>{{ thisStapel.karteikarten?.[kartenIndex]?.antwort}}</p>
+      </div>
     </div>
-
-    <div *ngIf="hideBtnGroup" id="btn-group-div" class="karteikarte-container-item">
-      <hr>
-      <div *ngFor="let btnData of btnDataList; let i = index">
-        <button (click)="updateKarteikarte(i)">{{btnData.schwierigkeit}} ({{btnData.btnTitel}})</button>
+    <div class="sub-container" *ngIf="hideAntwortBtn">
+      <button id="anzeige-btn" class="btn" (click)="toggleAntwort()">Antwort anzeigen</button>
+    </div>
+    <hr>
+    <div class="row" *ngIf="hideBtnGroup">
+      <div class="col-2"></div>
+      <div id="btn-group" class="col-8">
+        <div *ngFor="let btnData of btnDataList; let i = index">
+          <button [id]="'k-btn-'+i" class="btn w-150 m-1" (click)="updateKarteikarte(i, $event)">{{btnData.schwierigkeit}} ({{btnData.btnTitel}})</button>
+        </div>
+      </div>
+      <div class="col-1">
+        <div id="bearbeiten-a">
+          <a href="#">bearbeiten</a>
+        </div>
       </div>
     </div>
   </div>
 </div>
+

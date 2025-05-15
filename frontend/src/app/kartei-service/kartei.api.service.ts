@@ -29,7 +29,7 @@ export class KarteiApiService {
   }
 
   updateKarte(data : UpdateInfo) : void {
-    console.log("blub")
+    console.log(data)
     const headers = this.headerService.createAuthHeader()
     this.http.post( "http://localhost:9081/update-karteikarte",data,  {headers}).subscribe()
   }

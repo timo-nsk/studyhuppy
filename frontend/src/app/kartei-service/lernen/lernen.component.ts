@@ -6,16 +6,21 @@ import {NgIf, NgFor} from '@angular/common';
 import {ButtonDataGenerator} from '../button.data.generator';
 import { Router } from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
 
 
 @Component({
   selector: 'app-lernen',
-  imports: [NgIf, NgFor],
+  imports: [NgIf, NgFor, TimeFormatPipe],
   templateUrl: './lernen.component.html',
   standalone: true,
-  styleUrl: './lernen.component.scss'
+  styleUrls: ['./lernen.component.scss', '../../button.scss']
 })
 export class LernenComponent implements OnInit {
+  overallSeconds : number = 0
+  currentKarteSeconds : number = 0
+  currentTimerId: any;
+
   hideAntwort : boolean = true
   hideAntwortBtn : boolean = true
   hideBtnGroup : boolean = false
@@ -43,8 +48,12 @@ export class LernenComponent implements OnInit {
         this.gen = new ButtonDataGenerator(data.karteikarten?.[this.kartenIndex]);
         this.btnDataList = this.gen.generateButtons()
         console.log(this.btnDataList)
+
+        this.startOverallTimer()
+        this.startCurrentKarteTimer(null)
       }
     })
+
   }
 
   toggleAntwort() {
@@ -53,14 +62,15 @@ export class LernenComponent implements OnInit {
     this.hideBtnGroup = true
   }
 
-  updateKarteikarte(i : number) {
+  updateKarteikarte(i : number, event : MouseEvent) {
     const data: UpdateInfo = {
       stapelId: this.thisStapel.fachId!,
       karteId: this.thisStapel.karteikarten![this.kartenIndex].fachId!,
       schwierigkeit: this.btnDataList[i].schwierigkeit,
-      secondsNeeded: 0
+      secondsNeeded: this.currentKarteSeconds
     }
     this.karteiService.updateKarte(data)
+    this.startCurrentKarteTimer(event)
 
     let n = this.thisStapel.karteikarten?.length!
     if(this.kartenIndex == n - 1) {
@@ -73,4 +83,37 @@ export class LernenComponent implements OnInit {
       this.kartenIndex++
     }
   }
+
+  startOverallTimer(): void {
+    const intervalId = setInterval(() => {
+      this.overallSeconds++;
+
+      if (this.kartenIndex >= this.thisStapel.karteikarten!.length - 1) {
+        clearInterval(intervalId);
+        console.log("Timer gestoppt – letzte Karte erreicht");
+      }
+    }, 1000);
+  }
+
+  startCurrentKarteTimer(event: MouseEvent | null): void {
+    if (event) {
+      this.currentKarteSeconds = 0;
+
+      if (this.currentTimerId) {
+        clearInterval(this.currentTimerId);
+      }
+    }
+
+    this.currentTimerId = setInterval(() => {
+      this.currentKarteSeconds++;
+      console.log("Sekunden für aktuelle Karte:", this.currentKarteSeconds);
+    }, 1000);
+
+    if (this.kartenIndex >= this.thisStapel.karteikarten!.length - 1) {
+      clearInterval(this.currentTimerId);
+      console.log("Timer gestoppt – letzte Karte erreicht");
+    }
+  }
+
+
 }
