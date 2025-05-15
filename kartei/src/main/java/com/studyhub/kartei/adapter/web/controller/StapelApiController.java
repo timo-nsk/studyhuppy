@@ -24,10 +24,11 @@ public class StapelApiController {
 		this.jwtService = jwtService;
 	}
 
-	@Api
+	@AngularApi
 	@PostMapping("/create-stapel")
-	public ResponseEntity<String> createNewStapel(@RequestBody CreateNewStapelRequest req) {
-		stapelService.saveSet(req.toNewStapel());
+	public ResponseEntity<Void> createNewStapel(@RequestBody CreateNewStapelRequest newStapelRequest, HttpServletRequest req) {
+		String username = jwtService.extractUsernameFromHeader(req);
+		stapelService.saveSet(newStapelRequest.toNewStapel(username));
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
