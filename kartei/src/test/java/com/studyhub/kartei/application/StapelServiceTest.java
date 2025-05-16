@@ -48,7 +48,7 @@ public class StapelServiceTest {
 
 	@Test
 	@DisplayName("Es Set wird abgespeichert")
-	void test_02() {
+	void test_02() throws Exception {
 		Stapel set = StapelMother.initSet();
 
 		service.saveSet(set);

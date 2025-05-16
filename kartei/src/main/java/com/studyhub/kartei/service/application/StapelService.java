@@ -30,8 +30,9 @@ public class StapelService {
 		return repo.findAll();
 	}
 
-	public void saveSet(Stapel set) {
-		repo.save(set);
+	public void saveSet(Stapel set) throws Exception {
+		Stapel res = repo.save(set);
+		if (res == null) throw new Exception("could not save stapel");
 		log.info("saved new stapel with id: '%s'".formatted(set.getFachId().toString()));
 	}
 

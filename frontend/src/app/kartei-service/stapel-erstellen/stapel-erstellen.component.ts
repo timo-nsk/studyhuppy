@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {KarteiApiService} from '../kartei.api.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-stapel-erstellen',
@@ -12,6 +14,8 @@ import {KarteiApiService} from '../kartei.api.service';
 })
 export class StapelErstellenComponent {
   karteiService = inject(KarteiApiService)
+  snackbar = inject(MatSnackBar)
+  router = inject(Router)
   // TODO: der regex ist auch nicht ganz korreket glaube ich
   lernintervalleRegex : string = '^(?:(?:[1-5]?[0-9]m|(?:1[0-9]|2[0-3]|[1-9])h|(?:[1-2][0-9]|3[0-1]|[1-9])d)(?:,(?:[1-5]?[0-9]m|(?:1[0-9]|2[0-3]|[1-9])h|(?:[1-2][0-9]|3[0-1]|[1-9])d))*)$'
   modulMap : any = []
@@ -26,12 +30,19 @@ export class StapelErstellenComponent {
   submitForm() {
     if (this.newStapelForm.valid) {
       const data : any = this.newStapelForm.value
-      this.karteiService.postNewStapel(data)
-
-    } else {
-      console.log("nope")
+      this.karteiService.postNewStapel(data).subscribe({
+        next: () => {
+          this.router.navigateByUrl("/kartei")
+          this.snackbar.open("Stapel erfolgreich erstellt", "schließen", {
+            duration: 3500
+          })
+        },
+        error: () => {
+          this.snackbar.open("Stapel konnte nicht erstellt werden", "schließen", {
+            duration: 3500
+          })
+        }
+      })
     }
-
-
   }
 }

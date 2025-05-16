@@ -34,9 +34,9 @@ export class KarteiApiService {
     this.http.post( "http://localhost:9081/update-karteikarte",data,  {headers}).subscribe()
   }
 
-  postNewStapel(data : any) : void {
+  postNewStapel(data : any) : Observable<any> {
     console.log(data)
     const headers = this.headerService.createAuthHeader()
-    this.http.post(this.BASE_API_URL + '/create-stapel', data, {headers}).subscribe()
+    return this.http.post<any>(this.BASE_API_URL + '/create-stapel', data, {headers})
   }
 }

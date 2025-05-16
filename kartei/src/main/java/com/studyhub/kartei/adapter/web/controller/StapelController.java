@@ -56,19 +56,4 @@ public class StapelController {
 		model.addAttribute("modulMap", modulRequestService.getModulApiMap());
 		return "new-set";
 	}
-
-	@PostMapping("/new-set")
-	public ModelAndView newSetErstellen(@Valid @ModelAttribute StapelForm stapelForm,
-	                                    BindingResult result,
-	                                    RedirectAttributes redirectAttributes,
-	                                    @CookieValue(name = "auth_token") String token) {
-		if (result.hasErrors()) return new ModelAndView("new-set", HttpStatus.NOT_ACCEPTABLE);
-
-		redirectAttributes.addFlashAttribute("stapelForm", stapelForm);
-
-		String username = jwtService.extractUsername(token);
-		stapelService.saveSet(stapelForm.toStapel(username));
-
-		return new ModelAndView("redirect:/kartei-uebersicht");
-	}
 }

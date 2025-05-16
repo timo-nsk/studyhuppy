@@ -28,7 +28,11 @@ public class StapelApiController {
 	@PostMapping("/create-stapel")
 	public ResponseEntity<Void> createNewStapel(@RequestBody CreateNewStapelRequest newStapelRequest, HttpServletRequest req) {
 		String username = jwtService.extractUsernameFromHeader(req);
-		stapelService.saveSet(newStapelRequest.toNewStapel(username));
+		try {
+			stapelService.saveSet(newStapelRequest.toNewStapel(username));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
