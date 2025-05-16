@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -91,8 +93,7 @@ public class ModulApiController {
 	@GetMapping("get-active-modules")
 	public ResponseEntity<List<ModulDto>> getActiveModules(HttpServletRequest request) {
 		String username = jwtService.extractUsernameFromHeader(request);
-		List<ModulDto> l = modulService.findActiveModuleByUsername(true, username)
-				.stream().map(ModulMapper::toModulDto).toList();
+		List<ModulDto> l = modulService.findActiveModuleByUsername(true, username);
 		return ResponseEntity.ok(l);
 	}
 

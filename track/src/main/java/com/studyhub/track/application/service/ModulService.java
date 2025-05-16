@@ -1,6 +1,8 @@
 package com.studyhub.track.application.service;
 
 import com.studyhub.jwt.JWTService;
+import com.studyhub.track.adapter.db.modul.ModulDto;
+import com.studyhub.track.adapter.db.modul.ModulMapper;
 import com.studyhub.track.adapter.mail.KlausurReminderDto;
 import com.studyhub.track.domain.model.modul.Modul;
 import org.slf4j.Logger;
@@ -53,8 +55,11 @@ public class ModulService {
 		log.info("reseted modul time to 0 with id:%s".formatted(fachId.toString()));
 	}
 
-	public List<Modul> findActiveModuleByUsername(boolean active, String username) {
-		return repo.findActiveModuleByUsername(active, username);
+	public List<ModulDto> findActiveModuleByUsername(boolean active, String username) {
+		return repo.findActiveModuleByUsername(active, username)
+				.stream().map(ModulMapper::toModulDto)
+				.sorted(Comparator.comparing(ModulDto::secondsLearned).reversed())
+				.toList();
 	}
 
 	public void activateModul(UUID fachId) {
