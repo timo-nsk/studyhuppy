@@ -24,59 +24,30 @@ import java.util.List;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
 	private JWTService jwtService;
-	private UserDetailsService userDetailsService;
 
 	@Autowired
-	public JwtAuthFilter(@Lazy JWTService jwtService, UserDetailsService userDetailsService) {
+	public JwtAuthFilter(@Lazy JWTService jwtService) {
 		this.jwtService = jwtService;
-		this.userDetailsService = userDetailsService;
 	}
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request,
 	                                HttpServletResponse response,
 	                                FilterChain filterChain) throws ServletException, IOException {
-		System.out.println("Filter aktiv: " + request.getRequestURI());
-
-		// Extrahiere das Token aus der Anfrage
 		String header = request.getHeader("Authorization");
 		String token = jwtService.extractTokenFromHeader(header);
-		System.out.println(token);
 
 		if (token != null) {
-			// Extrahiere den Benutzernamen und andere Claims aus dem Token
 			String username = jwtService.extractUsername(token);
-
-			// Hier kannst du direkt auf die Claims zugreifen, ohne UserDetailsService zu verwenden
 			if (jwtService.validateToken(token, username)) {
-				System.out.println("blub");
-				// Du kannst auch Rollen und Berechtigungen aus den Claims extrahieren
-				//List<GrantedAuthority> authorities = jwtService.getAuthoritiesFromToken(token);
-
-				// Erstelle ein Authentication-Objekt basierend auf den extrahierten Informationen
 				UsernamePasswordAuthenticationToken authentication =
 						new UsernamePasswordAuthenticationToken(username, null, List.of(new SimpleGrantedAuthority("ROLE_USER")));
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-				// Setze die Authentifizierung in den SecurityContext
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 		}
 
-		// Fahre mit dem Filter fort
 		filterChain.doFilter(request, response);
-	}
-
-
-	private String extractToken(HttpServletRequest request) {
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if ("auth_token".equals(cookie.getName())) {
-					return cookie.getValue();
-				}
-			}
-		}
-		return null;
 	}
 }
