@@ -53,7 +53,13 @@ export class ModuleComponent implements OnInit{
   }
 
   async startTimer(fachId: string): Promise<void> {
-    let seconds : number = await this.service.getSeconds(fachId);
+    let seconds : number;
+
+    this.service.getSeconds(fachId).subscribe({
+      next: (data) => {
+        seconds = data
+      }
+    })
 
     if (this.running) {
       this.timer = setInterval(() => {
@@ -63,7 +69,7 @@ export class ModuleComponent implements OnInit{
       this.running = false;
     } else {
       clearInterval(this.timer)
-      await this.service.postNewSeconds(fachId, this.sessionSecondsLearned)
+      this.service.postNewSeconds(fachId, this.sessionSecondsLearned).subscribe()
       this.sessionSecondsLearned = 0
       this.switchButtonStyle(fachId, 1);
       this.running = true;

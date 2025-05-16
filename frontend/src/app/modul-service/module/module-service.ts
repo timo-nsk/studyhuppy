@@ -32,35 +32,20 @@ export class ModuleService {
     return this.http.get<Modul[]>(this.MODUL_BASE_API + '/get-all-by-username', { headers });
   }
 
-  async getSeconds(fachId: string): Promise<number> {
-    try {
-      const response = await fetch(this.MODUL_BASE_API + '/get-seconds', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-XSRF-TOKEN': this.getCsrfToken() || '',
-        },
-        body: JSON.stringify({ fachId: fachId })
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      return parseInt(await response.text());
-    } catch (error) {
-      console.error('Fehler beim Abrufen der Sekunden:', error);
-      return 0
-    }
+  getSeconds(fachId : string) : Observable<number> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.post<number>(this.MODUL_BASE_API + '/get-seconds', fachId,  {headers})
   }
 
   // TODO: refactor later
-  async postNewSeconds(fachId: string, sessionSecondsLearned: number): Promise<void> {
+  postNewSeconds(fachId: string, sessionSecondsLearned: number): Observable<any> {
     const element = document.getElementById(fachId);
-    if (!element || !element.dataset['value']) return;
+    if (!element || !element.dataset['value']) return new Observable<any>();
 
     const seconds = parseInt(element.dataset['value'], 10);
-    if (isNaN(seconds)) return;
+    if (isNaN(seconds)) return new Observable<any>();;
+
+    const headers = this.headerService.createAuthHeader()
 
     const payload = {
       fachId: fachId,
@@ -68,17 +53,7 @@ export class ModuleService {
       secondsLearnedThisSession: sessionSecondsLearned
     };
 
-    try {
-      const response = await this.doPost(payload, this.MODUL_BASE_API + '/update');
-
-      if (response.ok) {
-        // Daten erfolgreich gesendet
-      } else {
-        // Fehler beim Senden der Daten
-      }
-    } catch (error) {
-      // Fehler beim Abrufen der API
-    }
+    return this.http.post<any>(this.MODUL_BASE_API + '/update', payload, {headers})
   }
 
   postFormData(formData : any) : Observable<any> {

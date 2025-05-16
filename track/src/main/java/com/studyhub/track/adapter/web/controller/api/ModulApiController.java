@@ -50,8 +50,9 @@ public class ModulApiController {
 
 	@Api
 	@PostMapping("/get-seconds")
-	public ResponseEntity<Integer> getSeconds(@RequestBody FachIdRequest request) {
-		return ResponseEntity.ok(modulService.getSecondsForId(UUID.fromString(request.fachId())));
+	public ResponseEntity<Integer> getSeconds(@RequestBody String fachId) {
+		System.out.println("get seconds");
+		return ResponseEntity.ok(modulService.getSecondsForId(UUID.fromString(fachId)));
 	}
 
 	@Api
