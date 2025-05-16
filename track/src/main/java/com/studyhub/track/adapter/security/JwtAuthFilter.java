@@ -36,9 +36,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request,
 	                                HttpServletResponse response,
 	                                FilterChain filterChain) throws ServletException, IOException {
+		System.out.println("Filter aktiv: " + request.getRequestURI());
 
 		// Extrahiere das Token aus der Anfrage
-		String token = extractToken(request);
+		String header = request.getHeader("Authorization");
+		String token = jwtService.extractTokenFromHeader(header);
+		System.out.println(token);
 
 		if (token != null) {
 			// Extrahiere den Benutzernamen und andere Claims aus dem Token
@@ -46,6 +49,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
 			// Hier kannst du direkt auf die Claims zugreifen, ohne UserDetailsService zu verwenden
 			if (jwtService.validateToken(token, username)) {
+				System.out.println("blub");
 				// Du kannst auch Rollen und Berechtigungen aus den Claims extrahieren
 				//List<GrantedAuthority> authorities = jwtService.getAuthoritiesFromToken(token);
 

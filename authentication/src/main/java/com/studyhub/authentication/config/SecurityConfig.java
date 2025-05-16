@@ -34,6 +34,7 @@ public class SecurityConfig {
 		return http
 				.csrf(AbstractHttpConfigurer::disable)
 				.cors(Customizer.withDefaults())
+				.formLogin(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
 						.requestMatchers(
 								"/login",

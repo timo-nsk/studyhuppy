@@ -1,6 +1,7 @@
 package com.studyhub.track.adapter.security;
 
 import com.studyhub.jwt.JWTService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,12 +18,10 @@ import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 public class SecurityConfig {
 
 	private JwtAuthFilter jwtAuthenticationFilter;
-	private RedirectEntryPoint redirectEntryPoint;
 
 	@Autowired
-	public SecurityConfig(JwtAuthFilter jwtAuthenticationFilter, RedirectEntryPoint redirectEntryPoint) {
+	public SecurityConfig(JwtAuthFilter jwtAuthenticationFilter) {
 		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-		this.redirectEntryPoint = redirectEntryPoint;
 	}
 
 	@Bean
@@ -45,9 +44,6 @@ public class SecurityConfig {
 				//.csrf(csrf -> csrf
 				//		.csrfTokenRequestHandler(requestHandler)
 				//		.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-				.exceptionHandling(exceptionHandling -> exceptionHandling
-						.authenticationEntryPoint(redirectEntryPoint)
-				)
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

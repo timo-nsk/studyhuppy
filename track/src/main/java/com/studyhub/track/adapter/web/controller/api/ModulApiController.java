@@ -88,8 +88,9 @@ public class ModulApiController {
 
 	@AngularApi
 	@GetMapping("get-active-modules")
-	public ResponseEntity<List<ModulDto>> getActiveModules() {
-		List<ModulDto> l = modulService.findActiveModuleByUsername(true, "tplaceholder")
+	public ResponseEntity<List<ModulDto>> getActiveModules(HttpServletRequest request) {
+		String username = jwtService.extractUsernameFromHeader(request);
+		List<ModulDto> l = modulService.findActiveModuleByUsername(true, username)
 				.stream().map(ModulMapper::toModulDto).toList();
 		return ResponseEntity.ok(l);
 	}

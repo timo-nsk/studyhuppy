@@ -53,9 +53,7 @@ public class ModulService {
 		log.info("reseted modul time to 0 with id:%s".formatted(fachId.toString()));
 	}
 
-	public List<Modul> findActiveModuleByUsername(boolean active, String token) {
-		//String username = jwtService.extractUsername(token);
-		String username = "timo";
+	public List<Modul> findActiveModuleByUsername(boolean active, String username) {
 		return repo.findActiveModuleByUsername(active, username);
 	}
 
