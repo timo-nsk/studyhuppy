@@ -9,9 +9,8 @@ import {HeaderService} from '../../header.service';
 })
 export class ModuleService {
   private MODUL_BASE_API = 'http://localhost:9080/api';
-  headerService = inject(HeaderService)
-
-  constructor(private http: HttpClient) {}
+  private headerService = inject(HeaderService)
+  private http = inject(HttpClient)
 
   resetTimer(fachId: string): void {
     this.http.put(this.MODUL_BASE_API + '/reset', fachId, {
@@ -37,7 +36,6 @@ export class ModuleService {
     return this.http.post<number>(this.MODUL_BASE_API + '/get-seconds', fachId,  {headers})
   }
 
-  // TODO: refactor later
   postNewSeconds(fachId: string, sessionSecondsLearned: number): Observable<any> {
     const element = document.getElementById(fachId);
     if (!element || !element.dataset['value']) return new Observable<any>();
@@ -59,17 +57,6 @@ export class ModuleService {
   postFormData(formData : any) : Observable<any> {
     const headers = this.headerService.createAuthHeader()
     return this.http.post(this.MODUL_BASE_API + '/new-modul', formData, {headers})
-  }
-
-  async doPost(payload: unknown, api: string): Promise<Response> {
-    return await fetch(api, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-XSRF-TOKEN': this.getCsrfToken() || ''
-      },
-      body: JSON.stringify(payload)
-    });
   }
 
   getCsrfToken(): string {
