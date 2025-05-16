@@ -57,8 +57,10 @@ export class OptionsComponent implements OnInit{
 
 
   resetTimer(fachId : string, name : string) {
-    this.service.resetTimer(fachId)
-    this.showConfirmation("Timer von '" + name + "' zurückgesetzt", 2500, "")
+    this.service.resetTimer(fachId).subscribe({
+      next: () => this.showConfirmation("Timer von '" + name + "' zurückgesetzt", 2500, ""),
+      error: () => this.showConfirmation("Timer von '" + name + "' konnte nicht zurückgesetzt werden", 2500, ""),
+    })
   }
 
   deleteModul(fachId: string, name : string): void {

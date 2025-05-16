@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import {Observable } from 'rxjs';
 import {HeaderService} from '../../header.service';
 
+// TODO: need to handle errors when backend htorws exception for almost every method here
 @Injectable({
   providedIn: 'root' // macht den Service global verfügbar
 })
@@ -12,13 +13,9 @@ export class ModuleService {
   private headerService = inject(HeaderService)
   private http = inject(HttpClient)
 
-  resetTimer(fachId: string): void {
-    this.http.put(this.MODUL_BASE_API + '/reset', fachId, {
-      headers: { 'Content-Type': 'application/json' }
-    }).subscribe({
-      next: () => console.log('Request erfolgreich gesendet'),
-      error: err => console.error('Fehler beim Senden:', err)
-    });
+  resetTimer(fachId: string): Observable<any> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.put(this.MODUL_BASE_API + '/reset', fachId, {headers});
   }
 
   getActiveModuleByUsername(): Observable<Modul[]> {
@@ -59,33 +56,28 @@ export class ModuleService {
     return this.http.post(this.MODUL_BASE_API + '/new-modul', formData, {headers})
   }
 
-  getCsrfToken(): string {
-    const row = document.cookie
-      .split('; ')
-      .find((cookie) => cookie.startsWith('XSRF-TOKEN='));
-
-    if (!row) return "";
-
-    return row.split('=')[1];
-  }
-
   deleteModul(fachId: string) : Observable<void> {
-    return this.http.delete<void>(this.MODUL_BASE_API + '/delete?fachId=' + fachId)
+    const headers = this.headerService.createAuthHeader()
+    return this.http.delete<void>(this.MODUL_BASE_API + '/delete?fachId=' + fachId, {headers})
   }
 
   deactivateModul(fachId: string) : Observable<void> {
-    return this.http.put<void>(this.MODUL_BASE_API + '/deactivate', fachId)
+    const headers = this.headerService.createAuthHeader()
+    return this.http.put<void>(this.MODUL_BASE_API + '/deactivate', fachId, {headers})
   }
 
   activateModul(fachId: string) : Observable<void> {
-    return this.http.put<void>(this.MODUL_BASE_API + '/activate', fachId)
+    const headers = this.headerService.createAuthHeader()
+    return this.http.put<void>(this.MODUL_BASE_API + '/activate', fachId, {headers})
   }
 
   sendAddTimeData(data: any) {
-    this.http.post(this.MODUL_BASE_API + '/add-time', data)
+    const headers = this.headerService.createAuthHeader()
+    this.http.post(this.MODUL_BASE_API + '/add-time', data, {headers}).subscribe()
   }
 
   sendKlausurDateData(data: any) {
-    this.http.post(this.MODUL_BASE_API + '/add-klausur-date', data)
+    const headers = this.headerService.createAuthHeader()
+    this.http.post(this.MODUL_BASE_API + '/add-klausur-date', data ,{headers}).subscribe()
   }
 }

@@ -75,7 +75,7 @@ public class ModulServiceTest {
 
 	@Test
 	@DisplayName("addTime funktioniert korrekt und addiert die Sekunden zum Modul")
-	void test_08() {
+	void test_08() throws Exception {
 		String time = "00:01";
 		TimeConverter tc = mock(TimeConverter.class);
 		when(tc.timeToSeconds(time)).thenReturn(60);

@@ -44,10 +44,14 @@ public class ModulApiController {
 
 	@AngularApi
 	@PostMapping("/update")
-	public ResponseEntity<String> updateSeconds(@RequestBody ModulUpdateRequest request) {
-		modulService.updateSeconds(UUID.fromString(request.fachId()), request.secondsLearned());
-		modulEventService.saveEvent(request, "");
-		return ResponseEntity.ok("Erfolgreich aktualisiert");
+	public ResponseEntity<Void> updateSeconds(@RequestBody ModulUpdateRequest request) {
+		try {
+			modulService.updateSeconds(UUID.fromString(request.fachId()), request.secondsLearned());
+			modulEventService.saveEvent(request, "");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	@Api
@@ -78,8 +82,12 @@ public class ModulApiController {
 	@AngularApi
 	@PutMapping("/reset")
 	public ResponseEntity<Void> reset(@RequestBody String fachId) {
-		modulService.resetModulTime(UUID.fromString(fachId));
-		return ResponseEntity.status(HttpStatus.OK).build();
+		try {
+			modulService.resetModulTime(UUID.fromString(fachId));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	@AngularApi
@@ -145,7 +153,11 @@ public class ModulApiController {
 	@AngularApi
 	@PostMapping("/add-time")
 	public ResponseEntity<Void> addTime(@RequestBody AddTimeRequest req) {
-		modulService.addTime(UUID.fromString(req.fachId()), req.time());
+		try {
+			modulService.addTime(UUID.fromString(req.fachId()), req.time());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 

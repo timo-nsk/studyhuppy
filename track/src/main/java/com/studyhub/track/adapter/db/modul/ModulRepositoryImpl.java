@@ -73,8 +73,9 @@ public class ModulRepositoryImpl implements ModulRepository {
 	}
 
 	@Override
-	public void updateSecondsByUuid(UUID fachid, int seconds) {
-		modulDao.updateSecondsByUuid(fachid, seconds);
+	public int updateSecondsByUuid(UUID fachid, int seconds) {
+
+		return modulDao.updateSecondsByUuid(fachid, seconds);
 	}
 
 	@Override

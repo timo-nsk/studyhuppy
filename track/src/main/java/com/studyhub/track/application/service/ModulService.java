@@ -40,8 +40,9 @@ public class ModulService {
 		return repo.findAll();
 	}
 
-	public void updateSeconds(UUID fachId, int seconds) {
-		repo.updateSecondsByUuid(fachId, seconds);
+	public void updateSeconds(UUID fachId, int seconds) throws Exception {
+		int res = repo.updateSecondsByUuid(fachId, seconds);
+		if (res == 0) throw new Exception();
 		log.info("updated modul with id:%s to seconds=%s".formatted(fachId.toString(), String.valueOf(seconds)));
 	}
 
@@ -50,8 +51,9 @@ public class ModulService {
 		log.warn("deleted modul with id:%s".formatted(fachId.toString()));
 	}
 
-	public void resetModulTime(UUID fachId) {
-		updateSeconds(fachId, 0);
+	public void resetModulTime(UUID fachId) throws Exception {
+		int res = repo.updateSecondsByUuid(fachId, 0);
+		if (res == 0) throw new Exception();
 		log.info("reseted modul time to 0 with id:%s".formatted(fachId.toString()));
 	}
 
@@ -72,13 +74,12 @@ public class ModulService {
 		log.info("deactivated modul id:%s".formatted(fachId.toString()));
 	}
 
-	public void addTime(UUID fachId, String time) {
+	public void addTime(UUID fachId, String time) throws Exception {
 		TimeConverter tc = new TimeConverter();
 		int addSeconds = tc.timeToSeconds(time);
 		int alreadyLearned = repo.findSecondsById(fachId);
 		int newSeconds = addSeconds + alreadyLearned;
 		updateSeconds(fachId, newSeconds);
-		log.info("added seconds=%s to modul with id:%s".formatted(addSeconds, fachId.toString()));
 	}
 
 	public int getSecondsForId(UUID fachId) {

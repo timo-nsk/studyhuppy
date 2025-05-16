@@ -22,7 +22,7 @@ public interface ModulRepository {
 	String findByMaxSeconds(String username);
 	boolean isModulDbHealthy();
 	void deleteByUuid(UUID fachId);
-	void updateSecondsByUuid(UUID fachid, int seconds);
+	int updateSecondsByUuid(UUID fachid, int seconds);
 	void setActive(UUID fachId, boolean active);
 	void addKlausurDate(UUID fachId, LocalDateTime klausurDate);
 

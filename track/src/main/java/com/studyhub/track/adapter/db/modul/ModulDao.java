@@ -34,7 +34,7 @@ public interface ModulDao extends CrudRepository<ModulDto, Integer> {
 	@Modifying
 	@Transactional
 	@Query("update modul set seconds_learned = :seconds where fach_id = :fachId")
-	void updateSecondsByUuid(@Param("fachId") UUID fachId,
+	int updateSecondsByUuid(@Param("fachId") UUID fachId,
 	                         @Param("seconds") int seconds);
 
 	@Modifying
