@@ -16,7 +16,7 @@
       <div class="kartei-set-info-actions">
         <div class="kartei-set-info-item">
             <strong>
-              <span id="kartei-set-kachel-set-name">{{s.name}}</span>
+              <a id="kartei-set-kachel-set-name" [routerLink]="['/stapel-details', s.fachId]">{{s.name}}</a>
             </strong>
         </div>
         <!-- TODO: implement

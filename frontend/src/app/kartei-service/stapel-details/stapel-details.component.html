@@ -1,1 +1,50 @@
-<p>stapel-details works!</p>
+<div>
+  <h2>Übersicht Stapel: "<span>{{stapel.name}}</span>"</h2>
+
+  <!-- TODO: hier ein drop down mit formular für neue karte einfügen -->
+  <a href="#">Karten hinzufügen</a>
+
+  <div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th class="col-1" scope="col">Nr.</th>
+        <th class="col-7" scope="col">Frage</th>
+        <th class="col-2" scope="col">Typ</th>
+        <th class="col-2" scope="col">Option</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let karte of stapel.karteikarten; let i = index">
+        <td>
+          <p>
+            <span>{{i+1}}</span>
+          </p>
+        </td>
+        <td>
+          <p>
+            "<span class="word-break">{{karte.frage}}</span>"
+          </p>
+        </td>
+        <td>
+          <p>
+            <span class="word-break">{{karte.frageTyp}}</span>
+          </p>
+        </td>
+        <td>
+          <div id="option-btn-group">
+            <a id="edit-btn" title="Karteikarte bearbeiten" th:href="@{/karte-bearbeiten/{karteiSetId}/{karteFachId}(karteiSetId=${karteiSetId}, karteFachId=${karte.getFachId()})}">
+              <i class="bi bi-pencil"></i>
+            </a>
+            <form>
+              <button id="delete-btn" type="submit" title="Karteikarte aus Set entfernen">
+                <i class="bi bi-x-circle-fill"></i>
+              </button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
