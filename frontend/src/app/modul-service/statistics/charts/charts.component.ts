@@ -55,7 +55,7 @@ export class ChartsComponent implements  OnInit {
         datasets: [
           {
             label: label,
-            backgroundColor: 'rgba(84, 19, 136, 1)',
+            backgroundColor: this.generateRgba(),
             data: data,
             borderWidth: 1
           }]
@@ -93,8 +93,8 @@ export class ChartsComponent implements  OnInit {
   }
 
   getOverallLabels(data : any) {
-    console.log("keys: " + Object.keys(data))
-    return Object.keys(data);
+    console.log(data)
+    return Object.keys(data).map(e => this.formatToGermanDate(e)).reverse();
   }
 
   getOverallDataMinutes(data : any) {
@@ -114,20 +114,29 @@ export class ChartsComponent implements  OnInit {
   }
 
   getEachLabels(data : any) {
-    return Object.keys(data);
+    console.log(data)
+    return Object.keys(data).map(e => this.formatToGermanDate(e)).reverse();
   }
 
   getDatasets(data: any) {
     // Erstelle ein leeres Array für die Datasets
     const datasets :any[] = [];
 
-    const colors = [
+    const colors2 = [
       'rgba(84, 19, 136, 1)',
       'rgba(217, 3, 104, 1)',
       'rgba(241, 233, 218, 1)',
       'rgba(46, 41, 78, 1)',
       'rgba(255, 212, 0, 1)'
     ];
+
+    let colors : string[] = []
+
+    for (let i = 0; i < 10; i++) {
+      colors.push(this.generateRgba())
+    }
+
+    console.log(colors)
 
     let colorIndex = 0; // Index für Farbzuweisung
 
@@ -154,5 +163,35 @@ export class ChartsComponent implements  OnInit {
     });
 
     return datasets;
+  }
+
+  formatToGermanDate(input: string): string {
+    const date = new Date(input);
+
+    const formatter = new Intl.DateTimeFormat('de-DE', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+
+    return formatter.format(date);
+  }
+
+  randomBlueColorVector() {
+    let r = this.randomBetween(20, 100)
+    let g = this.randomBetween(20, 100)
+    let b = this.randomBetween(20, 255)
+    return {r,g,b,a: 1}
+  }
+
+  randomBetween(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  generateRgba(): string {
+    let color = this.randomBlueColorVector()
+    const { r, g, b, a = 1 } = color;
+    return `rgba(${r}, ${g}, ${b}, ${a})`;
   }
 }
