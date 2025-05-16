@@ -9,7 +9,7 @@ import {RouterLink, RouterOutlet} from '@angular/router';
   ],
   templateUrl: './statistics.component.html',
   standalone: true,
-  styleUrl: './statistics.component.scss'
+  styleUrls: ['./statistics.component.scss', '../../links.scss', '../../color.scss']
 })
 export class StatisticsComponent {
 

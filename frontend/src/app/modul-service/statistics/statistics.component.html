@@ -1,16 +1,14 @@
 <div id="chart-ansicht-container">
   <div id="chart-ansicht-box">
-    <div class="chart-container shd">
-      <nav id="nav-statistic-charts" aria-label="...">
-        <ul class="pagination">
-          <li class="page-item">
-            <a class="page-link" [routerLink]="'general'">Allgemein</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" [routerLink]="'charts'">Charts</a>
-          </li>
-        </ul>
-      </nav>
+    <div id="pagination-container">
+      <div id="modul-pagination">
+        <div class="pagination-item left-page-item">
+          <a class="std-link m-accent-font" [routerLink]="'general'">Allgemein</a>
+        </div>
+        <div class="pagination-item right-page-item">
+          <a class="std-link m-accent-font" [routerLink]="'charts'">Charts</a>
+        </div>
+      </div>
     </div>
     <router-outlet></router-outlet>
   </div>
