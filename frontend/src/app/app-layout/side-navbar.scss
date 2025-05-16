@@ -1,20 +1,22 @@
 #side-navbar-container {
-  width: 220px;
+  width: 15vw;
   background-color: rgb(248, 249, 250);
   border-right-style: solid;
-  border-right-color: lightgray;
-  border-right-width: 1px;
+  border-right-color: rgb(16, 45, 92);;
+  border-right-width: 3px;
   min-height: 85vh;
 }
 
 .navbar-link {
-  padding-left: 20px;
   text-decoration: none;
   color: rgb(16, 45, 92);
 }
 
 .navbar-link:hover {
-  text-decoration: underline;
   font-weight: bold;
   cursor: pointer;
+}
+
+td {
+  text-align: center;
 }

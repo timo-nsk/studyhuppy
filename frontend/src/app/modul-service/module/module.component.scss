@@ -3,10 +3,13 @@ p {
 }
 
 #modul-container {
+  width: 85vw;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   gap: 10px;
+  padding-left: 40px;
+  padding-right: 35px;
 }
 
 .modul-card {
