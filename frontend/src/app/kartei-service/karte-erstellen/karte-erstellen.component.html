@@ -4,8 +4,7 @@
       <div class="mb-3">
         <select class="form-select w-200">
           <option (click)="choseFragetyp('n')">Normal</option>
-          <option (click)="choseFragetyp('sc')">Single Choice</option>
-          <option (click)="choseFragetyp('mc')">Multiple Choice</option>
+          <option (click)="choseFragetyp('c')">Single Choice</option>
         </select>
       </div>
       <div *ngIf="chosenFragenTyp == 'n'">
@@ -47,17 +46,68 @@
                   Geben Sie eine Frage ein
             </span>
           </div>
+
           <!-- User muss mindestens 2 Antworten erstellen -->
-          <div class="mb-3">
-            <p>Antworten</p>
-            <div *ngFor="let aw of antwortenArrayRes; let i = index">
-              <span>{{ aw[0] }}</span> – <span>{{ aw[1] }}</span>
-              <button (click)="removeAntwort(i)">Antwort löschen</button>
+          <p>Antworten</p>
+          <div id="antwort-container" class="mb-3">
+            <div *ngIf="lengthAntwortenArray() == 0" class="mb-3">
+              Mindestens 2 Antworten eingeben
             </div>
-            <div [formGroup]="antwortenChoiceForm">
-              <input type="checkbox" formControlName="wahrheit"> Richtig?
-              <textarea formControlName="aw" placeholder="Antworttext"></textarea>
-              <button type="button" (click)="addAntwort()">Antwort hinzufügen</button>
+            <div *ngIf="lengthAntwortenArray() > 0" class="mb-3">
+              <!--
+              <mat-list *ngFor="let aw of antwortenArrayRes; let i = index">
+                <mat-list-item class="antwort-item">
+                  <span>{{i+1}}. {{ aw[0] ? 'Wahr' : 'Falsch'  }}</span> – <span class="word-break">"{{ aw[1] }}"</span>
+                  <button (click)="removeAntwort(i)">Antwort löschen</button>
+                </mat-list-item>
+              </mat-list>
+              -->
+
+
+              <table mat-table [dataSource]="antwortenArrayRes" class="mat-elevation-z8">
+
+                <ng-container matColumnDef="idx">
+                  <th mat-header-cell *matHeaderCellDef> Nr. </th>
+                  <td mat-cell *matCellDef="let i = index"> {{i+1}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="wahr">
+                  <th mat-header-cell *matHeaderCellDef> Wahr </th>
+                  <td mat-cell *matCellDef="let element"> {{element[0] ? 'Ja' : 'Nein'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="antwort">
+                  <th mat-header-cell *matHeaderCellDef> Antwort </th>
+                  <td mat-cell *matCellDef="let element"> "{{element[1]}}" </td>
+                </ng-container>
+
+                <ng-container matColumnDef="option">
+                  <th mat-header-cell *matHeaderCellDef> Option </th>
+                  <td mat-cell *matCellDef="let i = index">
+                    <a (click)="removeAntwort(i)">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ff4643"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+                    </a>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+
+            </div>
+            <div id="choice-aw-container" [formGroup]="antwortenChoiceForm">
+              <div id="choice-wahr-item">
+                <label>Wahr</label>
+                <mat-checkbox class="example-margin" formControlName="wahrheit"></mat-checkbox>
+              </div>
+              <div id="choice-aw-item">
+                <label>Antwort</label>
+                <textarea matInput class="form-control" formControlName="aw"></textarea>
+              </div>
+              <div id="choice-add-btn">
+                <a type="button" (click)="addAntwort()">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#5985E1"><path d="M446.67-280h66.66v-166.67H680v-66.66H513.33V-680h-66.66v166.67H280v66.66h166.67V-280Zm-260 160q-27 0-46.84-19.83Q120-159.67 120-186.67v-586.66q0-27 19.83-46.84Q159.67-840 186.67-840h586.66q27 0 46.84 19.83Q840-800.33 840-773.33v586.66q0 27-19.83 46.84Q800.33-120 773.33-120H186.67Zm0-66.67h586.66v-586.66H186.67v586.66Zm0-586.66v586.66-586.66Z"/></svg>
+                </a>
+              </div>
             </div>
           </div>
           <div class="mb-3">

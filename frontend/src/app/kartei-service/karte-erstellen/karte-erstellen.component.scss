@@ -1,5 +1,5 @@
 #super-container, #karte-erstellen-form-container {
-  width: 85vw;
+  width: 74vw;
 }
 
 #super-container, #karte-erstellen-container, #karte-erstellen-form-container {
@@ -8,8 +8,47 @@
 }
 
 #karte-erstellen-form-container {
-  border-style: solid;
-  border-color: red;
   flex-direction: column;
   padding: 20px 20px 20px 20px;
+}
+
+#antwort-container {
+  border-style: solid;
+  border-width: 1px;
+  border-color: lightgray;
+  border-radius: 5px;
+  padding: 10px 10px 10px 10px;
+  background-color: white;
+}
+
+#choice-aw-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
+
+#choice-wahr-item {
+  width: 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+  text-align: center;
+}
+
+#choice-aw-item {
+  width: 60vw;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+}
+
+#choice-add-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.word-break {
+  word-break: break-word;
+  white-space: normal;
 }

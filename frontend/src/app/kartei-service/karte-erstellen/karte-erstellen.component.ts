@@ -1,10 +1,22 @@
 import {Component, inject, Input, OnInit} from '@angular/core';
 import {NgIf, NgFor} from '@angular/common';
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MatList, MatListItem} from '@angular/material/list';
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef,
+  MatHeaderCell, MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatRow, MatRowDef, MatTable
+} from '@angular/material/table';
 
 @Component({
   selector: 'app-karte-erstellen',
-  imports: [NgIf, NgFor, ReactiveFormsModule, FormsModule],
+  imports: [NgIf, NgFor, ReactiveFormsModule, FormsModule, MatCheckbox, MatFormField, MatInput, MatLabel, MatFormField, MatList, MatListItem, MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatHeaderCellDef],
   templateUrl: './karte-erstellen.component.html',
   standalone: true,
   styleUrls: ['./karte-erstellen.component.scss', '../../button.scss']
@@ -17,6 +29,7 @@ export class KarteErstellenComponent implements OnInit{
 
   neueChoiceFrageForm : FormGroup = new FormGroup({});
   antwortenChoiceForm: FormGroup = new FormGroup({})
+  displayedColumns: string[] = ['idx','wahr', 'antwort', 'option'];
 
   ngOnInit(): void {
     this.neueNormaleFrageForm = new FormGroup({
@@ -57,6 +70,15 @@ export class KarteErstellenComponent implements OnInit{
       const group = control as FormGroup;
       return [group.get('wahrheit')?.value, group.get('aw')?.value];
     });
+  }
+
+  lengthAntwortenArray() {
+    let arr = this.antwortenArray.controls.map(control => {
+      const group = control as FormGroup;
+      return [group.get('wahrheit')?.value, group.get('aw')?.value];
+    });
+
+    return arr.length
   }
 
   addAntwort() {

@@ -1,53 +1,48 @@
-<div>
-  <h2>Übersicht Stapel: "<span>{{stapel.name}}</span>"</h2>
-
-  <!-- TODO: hier ein drop down mit formular für neue karte einfügen -->
-  <a (click)="showKarteErstellenForm()">Karten hinzufügen</a>
-  <ng-container *ngIf="showForm">
+<div id="super-container">
+  <div class="sub-container">
+    <h2>Übersicht Stapel: "<span>{{stapel.name}}</span>"</h2>
+  </div>
+  <div class="sub-container">
+    <a id="add-karte-btn" mat-button (click)="showKarteErstellenForm()" target="_blank">
+      {{!showForm ? 'Karte hinzufügen' : 'schließen'}}
+    </a>
+  </div>
+  <div *ngIf="showForm" @slideDown>
     <app-karte-erstellen [stapelId]="stapelId"></app-karte-erstellen>
-  </ng-container>
+  </div>
 
   <div>
-    <table class="table">
-      <thead>
-      <tr>
-        <th class="col-1" scope="col">Nr.</th>
-        <th class="col-7" scope="col">Frage</th>
-        <th class="col-2" scope="col">Typ</th>
-        <th class="col-2" scope="col">Option</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let karte of stapel.karteikarten; let i = index">
-        <td>
-          <p>
-            <span>{{i+1}}</span>
-          </p>
+    <table mat-table [dataSource]="karteikarten" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="idx">
+        <th mat-header-cell *matHeaderCellDef> Nr. </th>
+        <td mat-cell *matCellDef="let i = index"> {{i+1}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="frage">
+        <th mat-header-cell *matHeaderCellDef> Frage </th>
+        <td mat-cell *matCellDef="let element"> "{{element.frage}}" </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="typ">
+        <th mat-header-cell *matHeaderCellDef> Typ </th>
+        <td mat-cell *matCellDef="let element"> {{element.frageTyp}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="option">
+        <th mat-header-cell *matHeaderCellDef> Option </th>
+        <td mat-cell *matCellDef="let element">
+          <a>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
+          </a>
+          <a (click)="deleteKarte(stapelId, element.fachId)">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ff4643"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+          </a>
         </td>
-        <td>
-          <p>
-            "<span class="word-break">{{karte.frage}}</span>"
-          </p>
-        </td>
-        <td>
-          <p>
-            <span class="word-break">{{karte.frageTyp}}</span>
-          </p>
-        </td>
-        <td>
-          <div id="option-btn-group">
-            <a id="edit-btn" title="Karteikarte bearbeiten" th:href="@{/karte-bearbeiten/{karteiSetId}/{karteFachId}(karteiSetId=${karteiSetId}, karteFachId=${karte.getFachId()})}">
-              <i class="bi bi-pencil"></i>
-            </a>
-            <form>
-              <button id="delete-btn" type="submit" title="Karteikarte aus Set entfernen">
-                <i class="bi bi-x-circle-fill"></i>
-              </button>
-            </form>
-          </div>
-        </td>
-      </tr>
-      </tbody>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
 </div>
