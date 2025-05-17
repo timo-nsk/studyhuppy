@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HeaderMainComponent } from './header-main.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('HeaderMainComponent', () => {
   let component: HeaderMainComponent;
@@ -8,7 +9,7 @@ describe('HeaderMainComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeaderMainComponent]
+      imports: [HeaderMainComponent, HttpClientTestingModule]
     })
     .compileComponents();
 

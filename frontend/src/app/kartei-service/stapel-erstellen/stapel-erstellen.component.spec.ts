@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StapelErstellenComponent } from './stapel-erstellen.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('StapelErstellenComponent', () => {
   let component: StapelErstellenComponent;
@@ -8,7 +9,7 @@ describe('StapelErstellenComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StapelErstellenComponent]
+      imports: [StapelErstellenComponent, HttpClientTestingModule]
     })
     .compileComponents();
 
