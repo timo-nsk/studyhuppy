@@ -3,10 +3,6 @@ import {ModuleService} from './module-service';
 import {Modul} from './modul';
 import { CommonModule } from '@angular/common';
 import { TimeFormatPipe } from './time-format.pipe';
-import {StatisticsComponent} from '../statistics/statistics.component';
-import {OptionsComponent} from '../options/options.component';
-import {AddModuleComponent} from '../add-module/add-module.component';
-import {RouterLink, RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-module',
@@ -39,18 +35,20 @@ export class ModuleComponent implements OnInit{
     });
   }
 
-  updateTime(fachId: string, seconds: number): number {
+  updateSeconds(seconds: number): number {
     seconds++;
     this.sessionSecondsLearned++;
+    return seconds;
+  }
 
+  updateSecondsOnModulUI(fachId: string, seconds: number): void {
     const element = document.getElementById(fachId);
     if (element) {
       element.innerText = this.pipe.transform(seconds)
       element.dataset['value'] = seconds.toString();
     }
-
-    return seconds;
   }
+
 
   async startTimer(fachId: string): Promise<void> {
     let seconds : number;
@@ -63,7 +61,8 @@ export class ModuleComponent implements OnInit{
 
     if (this.running) {
       this.timer = setInterval(() => {
-        seconds = this.updateTime(fachId, seconds);
+        seconds = this.updateSeconds(seconds);
+        this.updateSecondsOnModulUI(fachId, seconds)
       }, 1000);
       this.switchButtonStyle(fachId, 0);
       this.running = false;
