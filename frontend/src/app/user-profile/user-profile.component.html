@@ -40,12 +40,12 @@
       <tr>
         <th class="col-wd-200 m-accent-font">E-Mail Benachrichtigungen</th>
         <td class="col-wd-300 td-border-l m-accent-font">
-          <div class="form-check form-switch">
+          <ng-container>
             <mat-slide-toggle (change)="toggleEmailSubscription()" [checked]="userData.notificationSubscription">
                 <span *ngIf="userData.notificationSubscription">deaktivieren</span>
                 <span *ngIf="!userData.notificationSubscription">aktivieren</span>
               </mat-slide-toggle>
-          </div>
+          </ng-container>
         </td>
       </tr>
       <tr>
