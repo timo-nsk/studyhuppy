@@ -3,10 +3,11 @@ import {CommonModule, NgIf} from '@angular/common';
 import {UserApiService} from './user.service';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSlideToggle} from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [CommonModule, ReactiveFormsModule, NgIf, MatSnackBarModule],
+  imports: [CommonModule, ReactiveFormsModule, NgIf, MatSnackBarModule, MatSlideToggle],
   templateUrl: './user-profile.component.html',
   standalone: true,
   styleUrls: ['./user-profile.component.scss', '../general.scss', '../button.scss', '../color.scss']
