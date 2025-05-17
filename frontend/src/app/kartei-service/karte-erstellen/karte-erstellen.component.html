@@ -1,0 +1,74 @@
+<div id="super-container">
+  <div id="karte-erstellen-container">
+    <div id="karte-erstellen-form-container">
+      <div class="mb-3">
+        <select class="form-select w-200">
+          <option (click)="choseFragetyp('n')">Normal</option>
+          <option (click)="choseFragetyp('sc')">Single Choice</option>
+          <option (click)="choseFragetyp('mc')">Multiple Choice</option>
+        </select>
+      </div>
+      <div *ngIf="chosenFragenTyp == 'n'">
+        <hr>
+        <form [formGroup]="neueNormaleFrageForm" (ngSubmit)="sendNeuekarteData('n')">
+          <div class="mb-3">
+            <label for="n-frage" class="form-label">Frage</label>
+            <textarea id="n-frage" class="form-control" formControlName="frage"></textarea>
+            <span class="text-danger"
+                  *ngIf="neueNormaleFrageForm.controls['frage'].errors?.['required'] && neueNormaleFrageForm.controls['frage'].touched">
+                  Geben Sie eine Frage ein
+            </span>
+          </div>
+          <div class="mb-3">
+            <label for="n-antwort" class="form-label">Antwort</label>
+            <textarea id="n-antwort" class="form-control" rows="4" formControlName="antwort"></textarea>
+            <span class="text-danger"
+                  *ngIf="neueNormaleFrageForm.controls['antwort'].errors?.['required'] && neueNormaleFrageForm.controls['antwort'].touched">
+                  Geben Sie eine Antwort ein
+            </span>
+          </div>
+          <div class="mb-3">
+            <label for="n-notiz" class="form-label">Notiz</label>
+            <textarea id="n-notiz" class="form-control" formControlName="notiz"></textarea>
+          </div>
+          <div class="mb-3">
+            <button class="sh-btn w-150" type="submit">Karte hinzufügen</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="chosenFragenTyp == 'c'">
+        <hr>
+        <form [formGroup]="neueChoiceFrageForm" (ngSubmit)="sendNeuekarteData('c')">
+          <div class="mb-3">
+            <label for="sc-frage" class="form-label">Frage</label>
+            <textarea id="sc-frage" class="form-control" formControlName="frage"></textarea>
+            <span class="text-danger"
+                  *ngIf="neueChoiceFrageForm.controls['frage'].errors?.['required'] && neueChoiceFrageForm.controls['frage'].touched">
+                  Geben Sie eine Frage ein
+            </span>
+          </div>
+          <!-- User muss mindestens 2 Antworten erstellen -->
+          <div class="mb-3">
+            <p>Antworten</p>
+            <div *ngFor="let aw of antwortenArrayRes; let i = index">
+              <span>{{ aw[0] }}</span> – <span>{{ aw[1] }}</span>
+              <button (click)="removeAntwort(i)">Antwort löschen</button>
+            </div>
+            <div [formGroup]="antwortenChoiceForm">
+              <input type="checkbox" formControlName="wahrheit"> Richtig?
+              <textarea formControlName="aw" placeholder="Antworttext"></textarea>
+              <button type="button" (click)="addAntwort()">Antwort hinzufügen</button>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="sc-notiz" class="form-label">Notiz</label>
+            <textarea id="sc-notiz" class="form-control" formControlName="notiz"></textarea>
+          </div>
+          <div class="mb-3">
+            <button class="sh-btn w-150" type="submit">Karte hinzufügen</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -11,6 +11,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -122,6 +123,12 @@ public class KarteikarteController {
 	public String setAnzahlAntworten(SetAnzahlAntwortenRequest request, HttpServletResponse resp) {
 		resp.addCookie(CookieHandler.createAnzahlAntwortenCookie(request.anzahlAntworten()));
 		return "redirect:/lernen/%s/new-karte".formatted(request.karteiSetId());
+	}
+
+	@PostMapping("/add-neue-karte")
+	public ResponseEntity<Void> addNewKarteikarte(@RequestBody NewNormalKarteikarteRequest nkRequest,
+												  HttpServletRequest req) {
+		return ResponseEntity.ok().build();
 	}
 }
 

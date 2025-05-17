@@ -23,7 +23,7 @@ export class KarteiApiService {
     return this.http.get<any>(this.BASE_API_URL + "/get-all-stapel-by-username", {headers})
   }
 
-  getStapelByFachId(fachId : string) : Observable<Stapel> {
+  getStapelByFachId(fachId: string | null) : Observable<Stapel> {
     const headers = this.headerService.createAuthHeader()
     return this.http.post<Stapel>( this.BASE_API_URL + "/get-stapel-by-fachid",fachId,  {headers})
   }

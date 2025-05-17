@@ -2,7 +2,10 @@
   <h2>Übersicht Stapel: "<span>{{stapel.name}}</span>"</h2>
 
   <!-- TODO: hier ein drop down mit formular für neue karte einfügen -->
-  <a href="#">Karten hinzufügen</a>
+  <a (click)="showKarteErstellenForm()">Karten hinzufügen</a>
+  <ng-container *ngIf="showForm">
+    <app-karte-erstellen [stapelId]="stapelId"></app-karte-erstellen>
+  </ng-container>
 
   <div>
     <table class="table">
