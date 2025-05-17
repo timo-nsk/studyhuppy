@@ -1,21 +1,28 @@
 <div id="modul-ansicht-box" class="bg">
-  <div *ngIf="module.length === 0">
-    <p class="alert modul-item" role="alert">Keine eingetragenen Module vorhanden.</p>
-  </div>
-  <div >
-    <!-- TODO: kleinen hover effekt einbauen, sodass beim bereteten des elements das element ein wenig gezoomed wird -->
-    <div *ngIf="module.length > 0" id="modul-container">
-      <div *ngFor="let m of module" class="modul-card shd">
-        <a class="wht-font std-link fs-20 fw-bold" href="#">{{m.name}}</a>
-        <p class="wht-font">
-          Gesamt: <span [id]="m.fachId">{{m.secondsLearned | timeFormat}}</span>
-        </p>
-        <div id="btn-container">
-          <button [id]="'btn-' + m.fachId" class="play-button btn play" (click)="startTimer(m.fachId)">
-            <i id="button-icon" class="fa-solid fa-play wht-font"></i>
-          </button>
+  <ng-container *ngIf="isLoading" >
+    <div id="loading-bar-container">
+      <mat-progress-bar id="loading-bar" mode="buffer"></mat-progress-bar>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!isLoading">
+    <div *ngIf="module.length === 0">
+      <p class="alert modul-item" role="alert">Keine eingetragenen Module vorhanden.</p>
+    </div>
+    <div>
+      <!-- TODO: kleinen hover effekt einbauen, sodass beim bereteten des elements das element ein wenig gezoomed wird -->
+      <div *ngIf="module.length > 0" class="modul-container">
+        <div *ngFor="let m of module" class="modul-card shd">
+          <a class="wht-font std-link fs-20 fw-bold" href="#">{{m.name}}</a>
+          <p class="wht-font">
+            Gesamt: <span [id]="m.fachId">{{m.secondsLearned | timeFormat}}</span>
+          </p>
+          <div id="btn-container">
+            <button [id]="'btn-' + m.fachId" class="play-button btn play" (click)="startTimer(m.fachId)">
+              <i id="button-icon" class="fa-solid fa-play wht-font"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </ng-container>
 </div>

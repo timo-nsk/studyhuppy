@@ -3,15 +3,17 @@ import {ModuleService} from './module-service';
 import {Modul} from './modul';
 import { CommonModule } from '@angular/common';
 import { TimeFormatPipe } from './time-format.pipe';
+import {MatProgressBar} from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-module',
   templateUrl: './module.component.html',
-  styleUrls: ['./module.component.scss'],
+  styleUrls: ['./module.component.scss', '../../loading.scss'],
   standalone: true,
   imports: [
     CommonModule,
-    TimeFormatPipe
+    TimeFormatPipe,
+    MatProgressBar
   ]
 })
 export class ModuleComponent implements OnInit{
@@ -19,7 +21,8 @@ export class ModuleComponent implements OnInit{
   module: Modul[] = [];
   sessionSecondsLearned : number = 0;
   timer: number = 0
-  running: boolean = true;
+  running: boolean = true
+  isLoading: boolean = true
 
   constructor(private service: ModuleService) {}
 
@@ -27,10 +30,11 @@ export class ModuleComponent implements OnInit{
     this.service.getActiveModuleByUsername().subscribe({
       next: (data) => {
         this.module = data;
-        console.log(this.module);
+        this.isLoading = false
+        //console.log(this.module);
       },
       error: (err) => {
-        console.error('Fehler beim Laden:', err);
+        console.error(err);
       }
     });
   }
