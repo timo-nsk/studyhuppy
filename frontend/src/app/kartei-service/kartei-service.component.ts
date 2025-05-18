@@ -2,16 +2,17 @@ import {Component, inject, OnInit} from '@angular/core';
 import {NgFor, NgIf} from '@angular/common';
 import {KarteiApiService} from './kartei.api.service';
 import {RouterLink} from '@angular/router';
+import {MatProgressBar} from "@angular/material/progress-bar";
 
 @Component({
   selector: 'app-kartei-service',
-  imports: [NgIf, NgFor, RouterLink],
+    imports: [NgIf, NgFor, RouterLink, MatProgressBar],
   templateUrl: './kartei-service.component.html',
   standalone: true,
-  styleUrl: './kartei-service.component.scss'
+  styleUrls: ['./kartei-service.component.scss', '../loading.scss']
 })
 export class KarteiServiceComponent implements OnInit{
-
+  isLoading : boolean = true
   karteiSetsAvailable : boolean = false
 
   karteiService = inject(KarteiApiService)
@@ -27,7 +28,6 @@ export class KarteiServiceComponent implements OnInit{
     this.karteiService.checkSetsAvailable().subscribe({
       next: (result) => {
         this.karteiSetsAvailable = result
-        console.log(this.karteiSetsAvailable)
       }
     })
   }
@@ -36,7 +36,7 @@ export class KarteiServiceComponent implements OnInit{
     this.karteiService.getAllStapelByUsername().subscribe({
       next: (data) => {
         this.stapel = data
-        console.log(this.stapel)
+        this.isLoading = false
       }
     })
   }
