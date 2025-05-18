@@ -1,8 +1,6 @@
 package com.studyhub.kartei.adapter.web.controller;
 
 import com.studyhub.kartei.adapter.web.CookieHandler;
-import com.studyhub.kartei.adapter.web.controller.KarteikarteController;
-import com.studyhub.kartei.adapter.web.controller.SetFragetypRequest;
 import com.studyhub.kartei.domain.model.FrageTyp;
 import com.studyhub.kartei.domain.model.Stapel;
 import com.studyhub.kartei.service.application.StapelService;
@@ -27,8 +25,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-@WebMvcTest(KarteikarteController.class)
-public class KarteikarteControllerTest {
+@WebMvcTest(KarteikarteApiController.class)
+public class KarteikarteApiControllerTest {
 
 	@Autowired
 	MockMvc mvc;

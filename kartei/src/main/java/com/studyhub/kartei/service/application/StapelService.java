@@ -72,8 +72,9 @@ public class StapelService {
 	}
 
 
-	public void updateSetWithNewKarteikarte(String karteiSetId, Karteikarte karteikarte) {
-		repo.updateSetWithNewKarteikarte(karteiSetId, karteikarte);
+	public void updateSetWithNewKarteikarte(String karteiSetId, Karteikarte karteikarte) throws Exception {
+		int res = repo.updateSetWithNewKarteikarte(karteiSetId, karteikarte);
+		if (res == 0) throw  new Exception();
 		log.info("new karteikarte ( '%s' ) was added to stapel ( '%s' )".formatted(karteikarte.getFachId(), karteiSetId));
 	}
 

@@ -196,4 +196,22 @@ public class Karteikarte {
 	public int hashCode() {
 		return Objects.hash(getFachId());
 	}
+
+	@Override
+	public String toString() {
+		return "Karteikarte{" +
+				"fachId=" + fachId +
+				", frage='" + frage + '\'' +
+				", antwort='" + antwort + '\'' +
+				", antworten=" + antworten +
+				", erstelltAm=" + erstelltAm +
+				", letzteAenderungAm=" + letzteAenderungAm +
+				", faelligAm=" + faelligAm +
+				", notiz='" + notiz + '\'' +
+				", wasHard=" + wasHard +
+				", frageTyp=" + frageTyp +
+				", antwortzeitSekunden=" + antwortzeitSekunden +
+				", lernstufen='" + lernstufen + '\'' +
+				'}';
+	}
 }

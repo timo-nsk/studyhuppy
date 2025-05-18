@@ -78,11 +78,13 @@ public class StapelRepositoryImpl implements StapelRepository {
 	}
 
 	@Override
-	public void updateSetWithNewKarteikarte(String karteiSetId, Karteikarte karteikarte) {
+	public int updateSetWithNewKarteikarte(String karteiSetId, Karteikarte karteikarte) {
 		Stapel stapel = StapelMapper.toStapel(dao.findByFachId(UUID.fromString(karteiSetId)).get());
 		karteikarte.setLernstufen(stapel.getLernIntervalle());
 		stapel.addKarteikarte(karteikarte);
-		save(stapel);
+		Stapel s = save(stapel);
+		if(s == null) return 0;
+		return 1;
 	}
 
 	@Override

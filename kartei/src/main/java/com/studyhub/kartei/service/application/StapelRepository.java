@@ -23,7 +23,7 @@ public interface StapelRepository {
 
 	void updateLernIntervalle(String newLernIntervalle, UUID stapelFachId);
 
-	void updateSetWithNewKarteikarte(String karteiSetId, Karteikarte karteikarte);
+	int updateSetWithNewKarteikarte(String karteiSetId, Karteikarte karteikarte);
 
 	List<Stapel> findByUsername(String username);
 

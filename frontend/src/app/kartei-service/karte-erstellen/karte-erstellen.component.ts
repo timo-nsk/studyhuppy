@@ -13,6 +13,9 @@ import {
   MatHeaderRowDef,
   MatRow, MatRowDef, MatTable
 } from '@angular/material/table';
+import {KarteiApiService} from '../kartei.api.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-karte-erstellen',
@@ -22,6 +25,10 @@ import {
   styleUrls: ['./karte-erstellen.component.scss', '../../button.scss']
 })
 export class KarteErstellenComponent implements OnInit{
+  karteiService = inject(KarteiApiService)
+  snackbar = inject(MatSnackBar)
+  router = inject(Router)
+
   chosenFragenTyp : string = "n"
   @Input() stapelId!: string | null;
 
@@ -34,6 +41,7 @@ export class KarteErstellenComponent implements OnInit{
   ngOnInit(): void {
     this.neueNormaleFrageForm = new FormGroup({
       stapelId: new FormControl(this.stapelId, Validators.required),
+      frageTyp: new FormControl("NORMAL"),
       frage: new FormControl(null, Validators.required),
       antwort: new FormControl(null, Validators.required),
       notiz: new FormControl(null),
@@ -41,12 +49,11 @@ export class KarteErstellenComponent implements OnInit{
 
     this.neueChoiceFrageForm = new FormGroup({
       stapelId: new FormControl(this.stapelId, Validators.required),
+      frageTyp: new FormControl("CHOICE"),
       frage: new FormControl(null, Validators.required),
       notiz: new FormControl(null),
       antworten: new FormArray([])
     })
-
-
 
     this.antwortenChoiceForm = new FormGroup({
       wahrheit: new FormControl(false),
@@ -59,12 +66,10 @@ export class KarteErstellenComponent implements OnInit{
     else if (choice == "c") this.chosenFragenTyp = "c"
   }
 
-  // Getter für das FormArray
   get antwortenArray(): FormArray {
     return this.neueChoiceFrageForm.get('antworten') as FormArray;
   }
 
-  // Getter für die Ausgabeansicht
   get antwortenArrayRes(): [boolean, string][] {
     return this.antwortenArray.controls.map(control => {
       const group = control as FormGroup;
@@ -85,7 +90,7 @@ export class KarteErstellenComponent implements OnInit{
     const wahr = this.antwortenChoiceForm.get('wahrheit')?.value;
     const text = this.antwortenChoiceForm.get('aw')?.value;
 
-    if (!text) return; // Leere Antwort ignorieren
+    if (!text) return;
 
     const antwortGroup = new FormGroup({
       wahrheit: new FormControl(wahr),
@@ -99,9 +104,29 @@ export class KarteErstellenComponent implements OnInit{
 
 
   sendNeuekarteData(kartenTyp : string) {
+    console.log("ping sendNeueKarteData")
     if (kartenTyp == 'n') {
-      if(!this.neueNormaleFrageForm.invalid) {
-        console.log(this.neueNormaleFrageForm.value)
+      if(this.neueNormaleFrageForm.invalid) {
+        //console.log("invalid inputs for normalefrageform")
+        this.neueNormaleFrageForm.markAllAsTouched()
+      } else {
+        //console.log("valid inputs for normalefrageform")
+        const data = this.neueNormaleFrageForm.value
+        this.karteiService.sendNeuekarteData(data).subscribe({
+          next: () => {
+            this.snackbar.open("Karteikarte erstellt", "schließen", {
+              duration: 3500
+            })
+          },
+          error: () => {
+            this.snackbar.open("Karteikarte konnte nicht erstellt werden", "schießen", {
+              duration: 3500
+            })
+          },
+          complete: () => {
+            this.router.navigateByUrl('/stapel-details/' + this.stapelId)
+          }
+        })
       }
     } else if(kartenTyp == 'c') {
       if(!this.neueChoiceFrageForm.invalid) {

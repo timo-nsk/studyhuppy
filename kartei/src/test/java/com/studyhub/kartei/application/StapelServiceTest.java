@@ -204,7 +204,7 @@ public class StapelServiceTest {
 
 	@Test
 	@DisplayName("Für das updaten eines Stapels mit einer neuen Karteikarte wird das repo aufgerufen")
-	void test_17() {
+	void test_17() throws Exception {
 		Karteikarte k = KarteikarteMother.newKarteikarte("f", "a");
 		String stapelId = UUID.randomUUID().toString();
 
