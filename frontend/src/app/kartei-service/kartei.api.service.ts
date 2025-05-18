@@ -40,8 +40,12 @@ export class KarteiApiService {
     return this.http.post<any>(this.BASE_API_URL + '/create-stapel', data, {headers})
   }
 
-  sendNeuekarteData(data: any) : Observable<any> {
+  sendNeuekarteData(data: any, typ : string) : Observable<any> {
     const headers = this.headerService.createAuthHeader()
-    return this.http.post(this.BASE_API_URL + '/add-neue-karte-normal', data, {headers})
+    if(typ == 'n')
+      return this.http.post<any>(this.BASE_API_URL + '/add-neue-karte-normal', data, {headers})
+    else if (typ == 'c')
+      console.log("sendneuekartedata ping")
+      return this.http.post<any>(this.BASE_API_URL + '/add-neue-karte-choice', data, {headers})
   }
 }

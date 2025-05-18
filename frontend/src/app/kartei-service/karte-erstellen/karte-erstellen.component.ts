@@ -49,7 +49,7 @@ export class KarteErstellenComponent implements OnInit{
 
     this.neueChoiceFrageForm = new FormGroup({
       stapelId: new FormControl(this.stapelId, Validators.required),
-      frageTyp: new FormControl("CHOICE"),
+      frageTyp: new FormControl(null),
       frage: new FormControl(null, Validators.required),
       notiz: new FormControl(null),
       antworten: new FormArray([])
@@ -57,7 +57,7 @@ export class KarteErstellenComponent implements OnInit{
 
     this.antwortenChoiceForm = new FormGroup({
       wahrheit: new FormControl(false),
-      aw: new FormControl('', Validators.required)
+      antwort: new FormControl('', Validators.required)
     });
   }
 
@@ -73,14 +73,14 @@ export class KarteErstellenComponent implements OnInit{
   get antwortenArrayRes(): [boolean, string][] {
     return this.antwortenArray.controls.map(control => {
       const group = control as FormGroup;
-      return [group.get('wahrheit')?.value, group.get('aw')?.value];
+      return [group.get('wahrheit')?.value, group.get('antwort')?.value];
     });
   }
 
   lengthAntwortenArray() {
     let arr = this.antwortenArray.controls.map(control => {
       const group = control as FormGroup;
-      return [group.get('wahrheit')?.value, group.get('aw')?.value];
+      return [group.get('wahrheit')?.value, group.get('antwort')?.value];
     });
 
     return arr.length
@@ -88,23 +88,22 @@ export class KarteErstellenComponent implements OnInit{
 
   addAntwort() {
     const wahr = this.antwortenChoiceForm.get('wahrheit')?.value;
-    const text = this.antwortenChoiceForm.get('aw')?.value;
+    const text = this.antwortenChoiceForm.get('antwort')?.value;
 
     if (!text) return;
 
     const antwortGroup = new FormGroup({
       wahrheit: new FormControl(wahr),
-      aw: new FormControl(text)
+      antwort: new FormControl(text)
     });
 
     this.antwortenArray.push(antwortGroup);
-    this.antwortenChoiceForm.reset({ wahrheit: false, aw: '' }); // Zurücksetzen fürs nächste Tupel
-    console.log(this.neueNormaleFrageForm)
+    this.antwortenChoiceForm.reset({ wahrheit: false, antwort: '' });
   }
 
 
   sendNeuekarteData(kartenTyp : string) {
-    console.log("ping sendNeueKarteData")
+    //console.log("ping sendNeueKarteData")
     if (kartenTyp == 'n') {
       if(this.neueNormaleFrageForm.invalid) {
         //console.log("invalid inputs for normalefrageform")
@@ -112,7 +111,7 @@ export class KarteErstellenComponent implements OnInit{
       } else {
         //console.log("valid inputs for normalefrageform")
         const data = this.neueNormaleFrageForm.value
-        this.karteiService.sendNeuekarteData(data).subscribe({
+        this.karteiService.sendNeuekarteData(data, 'n').subscribe({
           next: () => {
             this.snackbar.open("Karteikarte erstellt", "schließen", {
               duration: 3500
@@ -129,8 +128,28 @@ export class KarteErstellenComponent implements OnInit{
         })
       }
     } else if(kartenTyp == 'c') {
-      if(!this.neueChoiceFrageForm.invalid) {
-        console.log(this.neueChoiceFrageForm.value)
+      if(this.neueChoiceFrageForm.invalid) {
+        //console.log("invalid inputs for neuechoicefrageform")
+      } else {
+        //console.log("valid inputs for neuechoicefrageform")
+        const frageTyp = this.decideFrageTyp(this.antwortenArrayRes)
+        this.neueChoiceFrageForm.patchValue({ frageTyp: frageTyp });
+        const data = this.neueChoiceFrageForm.value
+        this.karteiService.sendNeuekarteData(data, 'c').subscribe({
+          next: () => {
+            this.snackbar.open("Karteikarte erstellt", "schließen", {
+              duration: 3500
+            })
+          },
+          error: () => {
+            this.snackbar.open("Karteikarte konnte nicht erstellt werden", "schießen", {
+              duration: 3500
+            })
+          },
+          complete: () => {
+            this.router.navigateByUrl('/stapel-details/' + this.stapelId)
+          }
+        })
       }
     }
 
@@ -140,5 +159,19 @@ export class KarteErstellenComponent implements OnInit{
   removeAntwort(i: number) {
     (this.neueChoiceFrageForm.get('antworten') as FormArray).removeAt(i)
     console.log("removed antwort at index:" + i)
+  }
+
+  countTrueAnswers(arr: [boolean, string][]) {
+    let c = 0
+    for(let i = 0; i < arr.length; i++) {
+      if (arr[0]) c++
+    }
+    return c
+  }
+
+  decideFrageTyp(arr: [boolean, string][]) : string {
+    const c = this.countTrueAnswers(arr)
+    if(c == 1) return 'SINGLE_CHOICE'
+    return 'MULTIPLE_CHOICE'
   }
 }

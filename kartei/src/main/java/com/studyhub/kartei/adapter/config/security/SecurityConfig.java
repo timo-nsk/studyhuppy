@@ -18,11 +18,8 @@ public class SecurityConfig {
 	private JwtAuthFilter jwtAuthenticationFilter;
 
 
-	private RedirectEntryPoint redirectEntryPoint;
-
-	public SecurityConfig(JwtAuthFilter jwtAuthenticationFilter, RedirectEntryPoint redirectEntryPoint) {
+	public SecurityConfig(JwtAuthFilter jwtAuthenticationFilter) {
 		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-		this.redirectEntryPoint = redirectEntryPoint;
 	}
 
 	@Bean
@@ -34,9 +31,6 @@ public class SecurityConfig {
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/api/**").permitAll()
 						.anyRequest().authenticated()
-				)
-				.exceptionHandling(exceptionHandling -> exceptionHandling
-						.authenticationEntryPoint(redirectEntryPoint)  // Setze den Custom Authentication Entry Point
 				)
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
