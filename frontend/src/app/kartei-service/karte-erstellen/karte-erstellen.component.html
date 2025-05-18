@@ -1,3 +1,4 @@
+<!-- TODO: für beiden forms sollen frage und antworten nicht mehr als 2000 zeichen sein und die aktuelle Anzahl zeichen wird angezeigt -->
 <div id="super-container">
   <div id="karte-erstellen-container">
     <div id="karte-erstellen-form-container">
@@ -47,7 +48,7 @@
             </span>
           </div>
 
-          <!-- User muss mindestens 2 Antworten erstellen -->
+          <!-- TODO: validation User muss mindestens 2 Antworten erstellen und mindestens eine muss true sein, bevor sie deem form hinzugefügt werden kann -->
           <p>Antworten</p>
           <div id="antwort-container" class="mb-3">
             <div *ngIf="lengthAntwortenArray() == 0" class="mb-3">
