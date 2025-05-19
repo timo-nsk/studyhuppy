@@ -18,6 +18,7 @@ export class AntwortManager {
 
   setAntwort(i : number) : void {
     this.userAntworten[i] = !this.userAntworten[i]
+    //console.log("user set antwort at index " + i + " to: " + this.userAntworten[i])
   }
 
   compareAntworten() : boolean[] {
@@ -25,15 +26,23 @@ export class AntwortManager {
       for(let i = 0; i < this.userAntworten.length; i++) {
         let expectedAntwort = this.expectedAntworten[i].wahrheit
         let actualAntwort = this.userAntworten[i]
-        if(expectedAntwort == actualAntwort) {
+        if(expectedAntwort && actualAntwort) {
           this.result.push(true)
-        } else {
+        } else if(expectedAntwort && !actualAntwort) {
+          this.result.push(false)
+        } else if(!expectedAntwort && !actualAntwort) {
+          this.result.push(true)
+        } else if(!expectedAntwort && actualAntwort) {
           this.result.push(false)
         }
       }
     }
 
-
+    console.log("compared antworten with result: " + this.result)
     return this.result
   }
+  // true : true -> truesArecorrect true
+  // true : false -> truesArecorrect false
+  // false : false -> truesAreCorrect true
+  // false : true -> truesAreCorrect false
 }

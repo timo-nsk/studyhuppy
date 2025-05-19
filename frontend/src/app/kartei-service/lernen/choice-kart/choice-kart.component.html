@@ -18,7 +18,13 @@
                 <mat-checkbox (click)="setAntwort(i)"></mat-checkbox>
               </div>
               <div>
-                <span [ngClass]="{'fehler': actualCorrectAnswers[i]}">{{antwort.antwort}}</span>
+                <span [ngClass]="{
+                                     'korrekt': actualCorrectAnswers[i],
+                                     'fehler': !actualCorrectAnswers[i],
+                                     'pending': actualCorrectAnswers.length == 0
+                                   }">
+                  {{antwort.antwort}}
+                </span>
               </div>
             </div>
           </mat-list-item>

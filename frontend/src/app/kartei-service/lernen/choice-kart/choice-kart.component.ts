@@ -30,7 +30,7 @@ export class ChoiceKartComponent implements OnInit{
   @Input() hideAntwortBtn : boolean = false
   @Input() hideBtnGroup : boolean = false
   @Input() btnDataList : any[] | undefined
-  actualCorrectAnswers!: boolean[];
+  actualCorrectAnswers: boolean[] = [];
 
   private am! : AntwortManager;
 
@@ -39,6 +39,7 @@ export class ChoiceKartComponent implements OnInit{
     this.frageTyp = this.stapelData?.karteikarten?.[this.kartenIndex]?.frageTyp
     this.expectedAntworten = this.stapelData?.karteikarten?.[this.kartenIndex]?.antworten
 
+    console.log(this.expectedAntworten)
     this.am = new AntwortManager(this.stapelData?.karteikarten?.[this.kartenIndex].antworten?.length, this.expectedAntworten)
   }
 
