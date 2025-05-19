@@ -27,47 +27,53 @@
       </div>
       <div class="sub-container">
         <div class="antwort-container">
-          <hr>
-          <table id="karteikarten-table" mat-table [dataSource]="antworten" class="mat-elevation-z8">
-
-            <ng-container matColumnDef="wahr">
-              <th mat-header-cell *matHeaderCellDef> Wahr </th>
-              <td mat-cell *matCellDef="let element"> {{element.wahrheit}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="antwort">
-              <th mat-header-cell *matHeaderCellDef> Antwort </th>
-              <td mat-cell *matCellDef="let element"> "{{element.antwort}}" </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
+          <ng-container *ngIf="thisStapel.karteikarten?.[kartenIndex]?.frageTyp == FrageTyp.SINGLE_CHOICE">
+            <h3>Markieren Sie die zutreffende Antwort</h3>
+          </ng-container>
+          <ng-container *ngIf="thisStapel.karteikarten?.[kartenIndex]?.frageTyp == FrageTyp.MULTIPLE_CHOICE">
+            <p>Markieren Sie die zutreffenden Antworten</p>
+              <mat-list>
+                <div class="antworten-choices-container">
+                    <mat-list-item *ngFor="let antwort of thisStapel.karteikarten?.[kartenIndex]?.antworten; let i = index">
+                      <div class="antwort-choices" >
+                        <div>
+                          <mat-checkbox (click)="setAntwort(i)"></mat-checkbox>
+                        </div>
+                        <div>
+                          <span>{{antwort.antwort}}</span>
+                        </div>
+                      </div>
+                    </mat-list-item>
+                </div>
+              </mat-list>
+          </ng-container>
         </div>
       </div>
+
       <div *ngIf="!hideAntwort" class="sub-container">
         <div class="antwort-container">
           <p>actual antwort of the choices</p>
         </div>
       </div>
-    </ng-container>
 
-    <div class="sub-container" *ngIf="hideAntwortBtn">
-      <button id="anzeige-btn" class="btn" (click)="toggleAntwort()">Antwort anzeigen</button>
-    </div>
-    <hr>
-    <div class="row" *ngIf="hideBtnGroup">
-      <div class="col-2"></div>
-      <div id="btn-group" class="col-8">
-        <div *ngFor="let btnData of btnDataList; let i = index">
-          <button [id]="'k-btn-'+i" class="btn w-150 m-1" (click)="updateKarteikarte(i, $event)">{{btnData.schwierigkeit}} ({{btnData.btnTitel}})</button>
+      <div class="sub-container" *ngIf="hideAntwortBtn">
+        <button id="anzeige-btn" class="btn" (click)="toggleChoiceAntwort()">Antwort anzeigen</button>
+      </div>
+      <hr>
+      <div class="row" *ngIf="hideBtnGroup">
+        <div class="col-2"></div>
+        <div id="btn-group" class="col-8">
+          <div *ngFor="let btnData of btnDataList; let i = index">
+            <button [id]="'k-btn-'+i" class="btn w-150 m-1" (click)="updateKarteikarte(i, $event)">{{btnData.schwierigkeit}} ({{btnData.btnTitel}})</button>
+          </div>
+        </div>
+        <div class="col-1">
+          <div id="bearbeiten-a">
+            <a href="#">bearbeiten</a>
+          </div>
         </div>
       </div>
-      <div class="col-1">
-        <div id="bearbeiten-a">
-          <a href="#">bearbeiten</a>
-        </div>
-      </div>
-    </div>
+    </ng-container>
   </div>
 </div>
 

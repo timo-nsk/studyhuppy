@@ -1,26 +1,31 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {KarteiApiService} from '../kartei.api.service';
-import {Antwort, FrageTyp, Karteikarte, Stapel, UpdateInfo} from '../domain';
-import {NgIf, NgFor} from '@angular/common';
+import {Antwort, FrageTyp, Stapel, UpdateInfo} from '../domain';
+import {NgFor, NgIf} from '@angular/common';
 import {ButtonDataGenerator} from '../button.data.generator';
-import { Router } from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
 import {
   MatCell,
   MatCellDef,
   MatColumnDef,
-  MatHeaderCell, MatHeaderCellDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
   MatHeaderRow,
   MatHeaderRowDef,
-  MatRow, MatRowDef, MatTable, MatTableDataSource
+  MatRow,
+  MatRowDef,
+  MatTable,
+  MatTableDataSource
 } from "@angular/material/table";
+import {MatList, MatListItem} from '@angular/material/list';
+import {MatCheckbox} from '@angular/material/checkbox';
 
 
 @Component({
   selector: 'app-lernen',
-  imports: [NgIf, NgFor, TimeFormatPipe, MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatHeaderCellDef],
+  imports: [NgIf, NgFor, TimeFormatPipe, MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatHeaderCellDef, MatList, MatListItem, MatCheckbox],
   templateUrl: './lernen.component.html',
   standalone: true,
   styleUrls: ['./lernen.component.scss', '../../button.scss']
@@ -46,6 +51,7 @@ export class LernenComponent implements OnInit {
   //TODO: aus dem backend muss der stapel so geändert werden, dass da nur die fälligen karten reingepackt werden
   thisStapel : Stapel = {};
   gen!: ButtonDataGenerator;
+  antwortenChoicesFormArray : boolean[] = []
 
   ngOnInit(): void {
     let id: string | null = '';
@@ -59,6 +65,7 @@ export class LernenComponent implements OnInit {
         }
 
         this.gen = new ButtonDataGenerator(data.karteikarten?.[this.kartenIndex]);
+        this.initAntwortenChoicesFormArray(this.thisStapel)
         this.btnDataList = this.gen.generateButtons()
 
         this.startOverallTimer()
@@ -69,6 +76,13 @@ export class LernenComponent implements OnInit {
   }
 
   toggleAntwort() {
+    this.hideAntwort = false
+    this.hideAntwortBtn = false
+    this.hideBtnGroup = true
+  }
+
+  toggleChoiceAntwort() {
+    this.compareAntworten()
     this.hideAntwort = false
     this.hideAntwortBtn = false
     this.hideBtnGroup = true
@@ -126,7 +140,35 @@ export class LernenComponent implements OnInit {
       //console.log("Timer gestoppt – letzte Karte erreicht");
     }
   }
-
-
   protected readonly FrageTyp = FrageTyp;
+
+  initAntwortenChoicesFormArray(data : Stapel) {
+    let karteikarte = data.karteikarten?.[this.kartenIndex]
+    if(karteikarte?.frageTyp == FrageTyp.MULTIPLE_CHOICE || karteikarte?.frageTyp == FrageTyp.SINGLE_CHOICE) {
+      let n = karteikarte.antworten?.length ?? 0
+      for(let i = 0; i < n; i++) {
+        this.antwortenChoicesFormArray[i] = false
+      }
+    }
+  }
+
+  setAntwort(i: number) {
+    this.antwortenChoicesFormArray[i] = !this.antwortenChoicesFormArray[i]
+    console.log(this.antwortenChoicesFormArray)
+  }
+
+  private compareAntworten() {
+    let actualCorrectAnswers : boolean[] = []
+    let n = this.antwortenChoicesFormArray.length
+    for(let i = 0; i < n; i++) {
+      let actualActualCorrect = this.thisStapel.karteikarten?.[this.kartenIndex].antworten?.[i]?.wahrheit
+      let userCorrect = this.antwortenChoicesFormArray[i]
+      if(actualActualCorrect == userCorrect) {
+        actualCorrectAnswers.push(true)
+      } else {
+        !actualCorrectAnswers.push(false)
+      }
+    }
+    console.log(actualCorrectAnswers)
+  }
 }
