@@ -2,32 +2,17 @@ import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {KarteiApiService} from '../kartei.api.service';
 import {Antwort, FrageTyp, Stapel, UpdateInfo} from '../domain';
-import {NgClass, NgFor, NgIf} from '@angular/common';
+import {NgIf} from '@angular/common';
 import {ButtonDataGenerator} from '../button.data.generator';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
-import {
-  MatCell,
-  MatCellDef,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderCellDef,
-  MatHeaderRow,
-  MatHeaderRowDef,
-  MatRow,
-  MatRowDef,
-  MatTable,
-  MatTableDataSource
-} from "@angular/material/table";
-import {MatList, MatListItem} from '@angular/material/list';
-import {MatCheckbox} from '@angular/material/checkbox';
 import {NormalKarteComponent} from './normal-karte/normal-karte.component';
 import {ChoiceKartComponent} from './choice-kart/choice-kart.component';
 
 
 @Component({
   selector: 'app-lernen',
-  imports: [NgIf, NgFor, TimeFormatPipe, MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatHeaderCellDef, MatList, MatListItem, MatCheckbox, NgClass, NormalKarteComponent, ChoiceKartComponent],
+  imports: [NgIf, TimeFormatPipe, NormalKarteComponent, ChoiceKartComponent],
   templateUrl: './lernen.component.html',
   standalone: true,
   styleUrls: ['./lernen.component.scss', '../../button.scss']

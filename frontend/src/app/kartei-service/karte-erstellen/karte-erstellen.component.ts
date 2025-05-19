@@ -1,9 +1,7 @@
 import {Component, inject, Input, OnInit} from '@angular/core';
-import {NgIf, NgFor} from '@angular/common';
+import {NgIf} from '@angular/common';
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {MatList, MatListItem} from '@angular/material/list';
 import {
   MatCell,
   MatCellDef,
@@ -19,7 +17,7 @@ import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-karte-erstellen',
-  imports: [NgIf, NgFor, ReactiveFormsModule, FormsModule, MatCheckbox, MatFormField, MatInput, MatLabel, MatFormField, MatList, MatListItem, MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatHeaderCellDef],
+  imports: [NgIf, ReactiveFormsModule, FormsModule, MatCheckbox, MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatHeaderCellDef],
   templateUrl: './karte-erstellen.component.html',
   standalone: true,
   styleUrls: ['./karte-erstellen.component.scss', '../../button.scss']
