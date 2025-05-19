@@ -4,7 +4,8 @@ import { Component } from '@angular/core';
   selector: 'app-choice-kart',
   imports: [],
   templateUrl: './choice-kart.component.html',
-  styleUrl: './choice-kart.component.scss'
+  standalone: true,
+  styleUrls: ['./choice-kart.component.scss','../lernen.component.scss']
 })
 export class ChoiceKartComponent {
 

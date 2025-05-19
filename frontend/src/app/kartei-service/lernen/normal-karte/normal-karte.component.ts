@@ -4,7 +4,8 @@ import { Component } from '@angular/core';
   selector: 'app-normal-karte',
   imports: [],
   templateUrl: './normal-karte.component.html',
-  styleUrl: './normal-karte.component.scss'
+  standalone: true,
+  styleUrls: ['./normal-karte.component.scss', '../lernen.component.scss']
 })
 export class NormalKarteComponent {
 
