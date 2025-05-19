@@ -29,9 +29,9 @@ export interface Antwort {
 }
 
 export enum FrageTyp {
-  NORMAL = "Normal",
-  SINGLE_CHOICE = "Single Choice",
-  MULTIPLE_CHOICE = "Multiple Choice"
+  NORMAL = "NORMAL",
+  SINGLE_CHOICE = "SINGLE_CHOICE",
+  MULTIPLE_CHOICE = "MULTIPLE_CHOICE"
 }
 
 export enum Schwierigkeit {

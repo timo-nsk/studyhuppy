@@ -3,17 +3,54 @@
     <div id="seconds-box">
       <p>{{overallSeconds | timeFormat}}</p>
     </div>
-    <div class="sub-container">
-      <div id="frage-container">
-        <p>{{ thisStapel.karteikarten?.[kartenIndex]?.frage}}</p>
+    <!--NORMAL Karte -->
+    <ng-container *ngIf="thisStapel.karteikarten?.[kartenIndex]?.frageTyp == FrageTyp.NORMAL">
+      <div class="sub-container">
+        <div class="frage-container">
+          <p>{{ thisStapel.karteikarten?.[kartenIndex]?.frage}}</p>
+        </div>
       </div>
-    </div>
-    <div class="sub-container" *ngIf="!hideAntwort">
-      <div id="antwort-container">
-        <hr>
-        <p>{{ thisStapel.karteikarten?.[kartenIndex]?.antwort}}</p>
+      <div class="sub-container" *ngIf="!hideAntwort">
+        <div class="antwort-container">
+          <hr>
+          <p>{{ thisStapel.karteikarten?.[kartenIndex]?.antwort}}</p>
+        </div>
       </div>
-    </div>
+    </ng-container>
+
+    <!-- CHOICE Karte -->
+    <ng-container *ngIf="thisStapel.karteikarten?.[kartenIndex]?.frageTyp == FrageTyp.SINGLE_CHOICE || thisStapel.karteikarten?.[kartenIndex]?.frageTyp == FrageTyp.MULTIPLE_CHOICE">
+      <div class="sub-container">
+        <div class="frage-container">
+          <p>{{ thisStapel.karteikarten?.[kartenIndex]?.frage}}</p>
+        </div>
+      </div>
+      <div class="sub-container">
+        <div class="antwort-container">
+          <hr>
+          <table id="karteikarten-table" mat-table [dataSource]="antworten" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="wahr">
+              <th mat-header-cell *matHeaderCellDef> Wahr </th>
+              <td mat-cell *matCellDef="let element"> {{element.wahrheit}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="antwort">
+              <th mat-header-cell *matHeaderCellDef> Antwort </th>
+              <td mat-cell *matCellDef="let element"> "{{element.antwort}}" </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      </div>
+      <div *ngIf="!hideAntwort" class="sub-container">
+        <div class="antwort-container">
+          <p>actual antwort of the choices</p>
+        </div>
+      </div>
+    </ng-container>
+
     <div class="sub-container" *ngIf="hideAntwortBtn">
       <button id="anzeige-btn" class="btn" (click)="toggleAntwort()">Antwort anzeigen</button>
     </div>

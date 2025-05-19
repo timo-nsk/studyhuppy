@@ -1,17 +1,26 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {KarteiApiService} from '../kartei.api.service';
-import {Stapel, UpdateInfo} from '../domain';
+import {Antwort, FrageTyp, Karteikarte, Stapel, UpdateInfo} from '../domain';
 import {NgIf, NgFor} from '@angular/common';
 import {ButtonDataGenerator} from '../button.data.generator';
 import { Router } from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef,
+  MatHeaderCell, MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatRow, MatRowDef, MatTable, MatTableDataSource
+} from "@angular/material/table";
 
 
 @Component({
   selector: 'app-lernen',
-  imports: [NgIf, NgFor, TimeFormatPipe],
+  imports: [NgIf, NgFor, TimeFormatPipe, MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatHeaderCellDef],
   templateUrl: './lernen.component.html',
   standalone: true,
   styleUrls: ['./lernen.component.scss', '../../button.scss']
@@ -32,6 +41,8 @@ export class LernenComponent implements OnInit {
   router = inject(Router)
   karteiService = inject(KarteiApiService)
   snackbar = inject(MatSnackBar)
+  antworten = new MatTableDataSource<Antwort>();
+  displayedColumns: string[] = ['wahr','antwort'];
   //TODO: aus dem backend muss der stapel so geändert werden, dass da nur die fälligen karten reingepackt werden
   thisStapel : Stapel = {};
   gen!: ButtonDataGenerator;
@@ -43,11 +54,12 @@ export class LernenComponent implements OnInit {
     this.karteiService.getStapelByFachId(id).subscribe({
       next: (data : Stapel) => {
         this.thisStapel = data
-        //console.log(this.thisStapel)
+        if (this.thisStapel.karteikarten) {
+          this.antworten.data = this.thisStapel.karteikarten[this.kartenIndex].antworten ?? []
+        }
 
         this.gen = new ButtonDataGenerator(data.karteikarten?.[this.kartenIndex]);
         this.btnDataList = this.gen.generateButtons()
-        console.log(this.btnDataList)
 
         this.startOverallTimer()
         this.startCurrentKarteTimer(null)
@@ -90,7 +102,7 @@ export class LernenComponent implements OnInit {
 
       if (this.kartenIndex >= this.thisStapel.karteikarten!.length - 1) {
         clearInterval(intervalId);
-        console.log("Timer gestoppt – letzte Karte erreicht");
+        //console.log("Timer gestoppt – letzte Karte erreicht");
       }
     }, 1000);
   }
@@ -106,14 +118,15 @@ export class LernenComponent implements OnInit {
 
     this.currentTimerId = setInterval(() => {
       this.currentKarteSeconds++;
-      console.log("Sekunden für aktuelle Karte:", this.currentKarteSeconds);
+      //console.log("Sekunden für aktuelle Karte:", this.currentKarteSeconds);
     }, 1000);
 
     if (this.kartenIndex >= this.thisStapel.karteikarten!.length - 1) {
       clearInterval(this.currentTimerId);
-      console.log("Timer gestoppt – letzte Karte erreicht");
+      //console.log("Timer gestoppt – letzte Karte erreicht");
     }
   }
 
 
+  protected readonly FrageTyp = FrageTyp;
 }
