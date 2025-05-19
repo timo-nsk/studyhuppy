@@ -2,7 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {KarteiApiService} from '../kartei.api.service';
 import {Antwort, FrageTyp, Stapel, UpdateInfo} from '../domain';
-import {NgFor, NgIf} from '@angular/common';
+import {NgClass, NgFor, NgIf} from '@angular/common';
 import {ButtonDataGenerator} from '../button.data.generator';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
@@ -25,7 +25,7 @@ import {MatCheckbox} from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-lernen',
-  imports: [NgIf, NgFor, TimeFormatPipe, MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatHeaderCellDef, MatList, MatListItem, MatCheckbox],
+  imports: [NgIf, NgFor, TimeFormatPipe, MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatHeaderCellDef, MatList, MatListItem, MatCheckbox, NgClass],
   templateUrl: './lernen.component.html',
   standalone: true,
   styleUrls: ['./lernen.component.scss', '../../button.scss']
@@ -52,6 +52,7 @@ export class LernenComponent implements OnInit {
   thisStapel : Stapel = {};
   gen!: ButtonDataGenerator;
   antwortenChoicesFormArray : boolean[] = []
+  actualCorrectAnswers : boolean[] = []
 
   ngOnInit(): void {
     let id: string | null = '';
@@ -83,6 +84,7 @@ export class LernenComponent implements OnInit {
 
   toggleChoiceAntwort() {
     this.compareAntworten()
+    console.log("result= " + this.actualCorrectAnswers)
     this.hideAntwort = false
     this.hideAntwortBtn = false
     this.hideBtnGroup = true
@@ -158,17 +160,15 @@ export class LernenComponent implements OnInit {
   }
 
   private compareAntworten() {
-    let actualCorrectAnswers : boolean[] = []
     let n = this.antwortenChoicesFormArray.length
     for(let i = 0; i < n; i++) {
       let actualActualCorrect = this.thisStapel.karteikarten?.[this.kartenIndex].antworten?.[i]?.wahrheit
       let userCorrect = this.antwortenChoicesFormArray[i]
       if(actualActualCorrect == userCorrect) {
-        actualCorrectAnswers.push(true)
+        this.actualCorrectAnswers.push(true)
       } else {
-        !actualCorrectAnswers.push(false)
+        this.actualCorrectAnswers.push(false)
       }
     }
-    console.log(actualCorrectAnswers)
   }
 }

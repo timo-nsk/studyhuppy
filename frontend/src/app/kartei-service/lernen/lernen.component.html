@@ -40,7 +40,7 @@
                           <mat-checkbox (click)="setAntwort(i)"></mat-checkbox>
                         </div>
                         <div>
-                          <span>{{antwort.antwort}}</span>
+                          <span [ngClass]="{'fehler': actualCorrectAnswers[i]}">{{antwort.antwort}}</span>
                         </div>
                       </div>
                     </mat-list-item>
@@ -49,13 +49,6 @@
           </ng-container>
         </div>
       </div>
-
-      <div *ngIf="!hideAntwort" class="sub-container">
-        <div class="antwort-container">
-          <p>actual antwort of the choices</p>
-        </div>
-      </div>
-
       <div class="sub-container" *ngIf="hideAntwortBtn">
         <button id="anzeige-btn" class="btn" (click)="toggleChoiceAntwort()">Antwort anzeigen</button>
       </div>
@@ -76,4 +69,3 @@
     </ng-container>
   </div>
 </div>
-
