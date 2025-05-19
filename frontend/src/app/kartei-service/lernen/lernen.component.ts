@@ -21,19 +21,24 @@ import {
 } from "@angular/material/table";
 import {MatList, MatListItem} from '@angular/material/list';
 import {MatCheckbox} from '@angular/material/checkbox';
+import {NormalKarteComponent} from './normal-karte/normal-karte.component';
+import {ChoiceKartComponent} from './choice-kart/choice-kart.component';
 
 
 @Component({
   selector: 'app-lernen',
-  imports: [NgIf, NgFor, TimeFormatPipe, MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatHeaderCellDef, MatList, MatListItem, MatCheckbox, NgClass],
+  imports: [NgIf, NgFor, TimeFormatPipe, MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatHeaderCellDef, MatList, MatListItem, MatCheckbox, NgClass, NormalKarteComponent, ChoiceKartComponent],
   templateUrl: './lernen.component.html',
   standalone: true,
   styleUrls: ['./lernen.component.scss', '../../button.scss']
 })
 export class LernenComponent implements OnInit {
+  protected readonly FrageTyp = FrageTyp;
+
   overallSeconds : number = 0
   currentKarteSeconds : number = 0
   currentTimerId: any;
+
 
   hideAntwort : boolean = true
   hideAntwortBtn : boolean = true
@@ -46,13 +51,9 @@ export class LernenComponent implements OnInit {
   router = inject(Router)
   karteiService = inject(KarteiApiService)
   snackbar = inject(MatSnackBar)
-  antworten = new MatTableDataSource<Antwort>();
-  displayedColumns: string[] = ['wahr','antwort'];
   //TODO: aus dem backend muss der stapel so geändert werden, dass da nur die fälligen karten reingepackt werden
   thisStapel : Stapel = {};
   gen!: ButtonDataGenerator;
-  antwortenChoicesFormArray : boolean[] = []
-  actualCorrectAnswers : boolean[] = []
 
   ngOnInit(): void {
     let id: string | null = '';
@@ -61,12 +62,8 @@ export class LernenComponent implements OnInit {
     this.karteiService.getStapelByFachId(id).subscribe({
       next: (data : Stapel) => {
         this.thisStapel = data
-        if (this.thisStapel.karteikarten) {
-          this.antworten.data = this.thisStapel.karteikarten[this.kartenIndex].antworten ?? []
-        }
 
         this.gen = new ButtonDataGenerator(data.karteikarten?.[this.kartenIndex]);
-        this.initAntwortenChoicesFormArray(this.thisStapel)
         this.btnDataList = this.gen.generateButtons()
 
         this.startOverallTimer()
@@ -75,21 +72,6 @@ export class LernenComponent implements OnInit {
     })
 
   }
-
-  toggleAntwort() {
-    this.hideAntwort = false
-    this.hideAntwortBtn = false
-    this.hideBtnGroup = true
-  }
-
-  toggleChoiceAntwort() {
-    this.compareAntworten()
-    console.log("result= " + this.actualCorrectAnswers)
-    this.hideAntwort = false
-    this.hideAntwortBtn = false
-    this.hideBtnGroup = true
-  }
-
   updateKarteikarte(i : number, event : MouseEvent) {
     const data: UpdateInfo = {
       stapelId: this.thisStapel.fachId!,
@@ -142,33 +124,5 @@ export class LernenComponent implements OnInit {
       //console.log("Timer gestoppt – letzte Karte erreicht");
     }
   }
-  protected readonly FrageTyp = FrageTyp;
 
-  initAntwortenChoicesFormArray(data : Stapel) {
-    let karteikarte = data.karteikarten?.[this.kartenIndex]
-    if(karteikarte?.frageTyp == FrageTyp.MULTIPLE_CHOICE || karteikarte?.frageTyp == FrageTyp.SINGLE_CHOICE) {
-      let n = karteikarte.antworten?.length ?? 0
-      for(let i = 0; i < n; i++) {
-        this.antwortenChoicesFormArray[i] = false
-      }
-    }
-  }
-
-  setAntwort(i: number) {
-    this.antwortenChoicesFormArray[i] = !this.antwortenChoicesFormArray[i]
-    console.log(this.antwortenChoicesFormArray)
-  }
-
-  private compareAntworten() {
-    let n = this.antwortenChoicesFormArray.length
-    for(let i = 0; i < n; i++) {
-      let actualActualCorrect = this.thisStapel.karteikarten?.[this.kartenIndex].antworten?.[i]?.wahrheit
-      let userCorrect = this.antwortenChoicesFormArray[i]
-      if(actualActualCorrect == userCorrect) {
-        this.actualCorrectAnswers.push(true)
-      } else {
-        this.actualCorrectAnswers.push(false)
-      }
-    }
-  }
 }

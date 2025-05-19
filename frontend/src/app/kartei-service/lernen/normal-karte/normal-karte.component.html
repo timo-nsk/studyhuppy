@@ -1,1 +1,11 @@
+<div class="sub-container">
+  <div class="frage-container">
+    <p>{{ frage}}</p>
+  </div>
+</div>
 
+<div class="sub-container" *ngIf="!hideAntwort">
+  <div class="antwort-container">
+    <p>{{ antwort }}</p>
+  </div>
+</div>
