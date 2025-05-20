@@ -4,6 +4,7 @@ import {MatCheckbox} from '@angular/material/checkbox';
 import {MatList, MatListItem} from '@angular/material/list';
 import {NgClass, NgForOf, NgIf} from '@angular/common';
 import {AntwortManager} from './antwort-manager.service';
+import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
 
 @Component({
   selector: 'app-choice-kart',
@@ -13,11 +14,13 @@ import {AntwortManager} from './antwort-manager.service';
     MatListItem,
     NgForOf,
     NgIf,
-    NgClass
+    NgClass,
+    MatRadioGroup,
+    MatRadioButton
   ],
   templateUrl: './choice-kart.component.html',
   standalone: true,
-  styleUrls: ['./choice-kart.component.scss','../lernen.component.scss']
+  styleUrls: ['./choice-kart.component.scss','../lernen.component.scss', '../../../button.scss']
 })
 export class ChoiceKartComponent implements OnInit{
   protected readonly FrageTyp = FrageTyp;
@@ -40,6 +43,7 @@ export class ChoiceKartComponent implements OnInit{
     this.expectedAntworten = this.stapelData?.karteikarten?.[this.kartenIndex]?.antworten
 
     console.log(this.expectedAntworten)
+    console.log(this.frageTyp)
     this.am = new AntwortManager(this.stapelData?.karteikarten?.[this.kartenIndex].antworten?.length, this.expectedAntworten)
   }
 

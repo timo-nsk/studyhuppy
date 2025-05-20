@@ -1,52 +1,67 @@
-<div class="sub-container">
-  <div class="frage-container">
-    <p>{{ frage }}</p>
+<section>
+  <div class="sub-container">
+    <div class="frage-container">
+      <h4>{{ frage }}</h4>
+    </div>
   </div>
-</div>
-<div class="sub-container">
-  <div class="antwort-container">
-    <ng-container *ngIf="frageTyp == FrageTyp.SINGLE_CHOICE">
-      <h3>Markieren Sie die zutreffende Antwort</h3>
-    </ng-container>
-    <ng-container *ngIf="frageTyp == FrageTyp.MULTIPLE_CHOICE">
-      <p>Markieren Sie die zutreffenden Antworten</p>
-      <mat-list>
-        <div class="antworten-choices-container">
-          <mat-list-item *ngFor="let antwort of expectedAntworten; let i = index">
-            <div class="antwort-choices" >
-              <div>
-                <mat-checkbox (click)="setAntwort(i)"></mat-checkbox>
-              </div>
-              <div>
-                <span [ngClass]="{
-                                     'korrekt': actualCorrectAnswers[i],
-                                     'fehler': !actualCorrectAnswers[i],
-                                     'pending': actualCorrectAnswers.length == 0
-                                   }">
-                  {{antwort.antwort}}
-                </span>
-              </div>
-            </div>
-          </mat-list-item>
+</section>
+
+<section>
+  <div class="sub-container">
+    <div class="antwort-container">
+      <!-- SINGLE -->
+      <ng-container *ngIf="frageTyp == FrageTyp.SINGLE_CHOICE">
+        <mat-radio-group class="antwort-choices-radio" >
+          <p>Markieren Sie eine zutreffende Antwort</p>
+          <mat-radio-button (click)="setAntwort(i)" *ngFor="let antwort of expectedAntworten; let i = index">
+            <span [ngClass]="{
+                           'korrekt': actualCorrectAnswers[i],
+                           'fehler': !actualCorrectAnswers[i],
+                           'pending': actualCorrectAnswers.length == 0
+                         }">
+              {{antwort.antwort}}
+            </span>
+          </mat-radio-button>
+        </mat-radio-group>
+      </ng-container>
+
+      <!-- MULTIPLE -->
+      <ng-container *ngIf="frageTyp == FrageTyp.MULTIPLE_CHOICE">
+        <div class="antwort-choices">
+          <p>Markieren Sie zutreffende Antworten</p>
+          <mat-checkbox (click)="setAntwort(i)" *ngFor="let antwort of expectedAntworten; let i = index">
+            <span [ngClass]="{
+                             'korrekt': actualCorrectAnswers[i],
+                             'fehler': !actualCorrectAnswers[i],
+                             'pending': actualCorrectAnswers.length == 0
+                           }">
+              {{antwort.antwort}}
+            </span>
+          </mat-checkbox>
         </div>
-      </mat-list>
-    </ng-container>
-  </div>
-</div>
-<div class="sub-container" *ngIf="hideAntwortBtn">
-  <button id="anzeige-btn" class="btn" (click)="revealAntwort()">Antwort anzeigen</button>
-</div>
-<hr>
-<div class="row" *ngIf="hideBtnGroup">
-  <div class="col-2"></div>
-  <div id="btn-group" class="col-8">
-    <div *ngFor="let btnData of btnDataList; let i = index">
-      <button [id]="'k-btn-'+i" class="btn w-150 m-1" (click)="updateKarteikarte(i, $event)">{{btnData.schwierigkeit}} ({{btnData.btnTitel}})</button>
+      </ng-container>
     </div>
   </div>
-  <div class="col-1">
-    <div id="bearbeiten-a">
-      <a href="#">bearbeiten</a>
+</section>
+
+
+
+<section id="btn-section">
+  <hr>
+  <div class="sub-container" *ngIf="hideAntwortBtn">
+    <button id="anzeige-btn" class="btn" (click)="revealAntwort()">Antwort anzeigen</button>
+  </div>
+  <div class="row" *ngIf="hideBtnGroup">
+    <div class="col-2"></div>
+    <div id="btn-group" class="col-8">
+      <div *ngFor="let btnData of btnDataList; let i = index">
+        <button [id]="'k-btn-'+i" class="btn w-150 m-1" (click)="updateKarteikarte(i, $event)">{{btnData.schwierigkeit}} ({{btnData.btnTitel}})</button>
+      </div>
+    </div>
+    <div class="col-1">
+      <div id="bearbeiten-a">
+        <a href="#">bearbeiten</a>
+      </div>
     </div>
   </div>
-</div>
+</section>

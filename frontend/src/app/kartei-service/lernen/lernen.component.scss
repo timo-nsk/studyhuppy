@@ -51,18 +51,22 @@
   color: white;
 }
 
-.antworten-choices-container {
+.antwort-choices {
   display: flex;
   flex-direction: column;
+  gap: 10px;
   align-items: flex-start;
 }
 
-.antwort-choices {
+.antwort-choices-radio {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 10px;
-  justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
+}
+
+#btn-section {
+  margin-top: 50px;
 }
 
 .fehler {

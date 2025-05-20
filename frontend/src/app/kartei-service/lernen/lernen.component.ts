@@ -8,11 +8,12 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
 import {NormalKarteComponent} from './normal-karte/normal-karte.component';
 import {ChoiceKartComponent} from './choice-kart/choice-kart.component';
+import {MatDivider} from '@angular/material/divider';
 
 
 @Component({
   selector: 'app-lernen',
-  imports: [NgIf, TimeFormatPipe, NormalKarteComponent, ChoiceKartComponent],
+  imports: [NgIf, TimeFormatPipe, NormalKarteComponent, ChoiceKartComponent, MatDivider],
   templateUrl: './lernen.component.html',
   standalone: true,
   styleUrls: ['./lernen.component.scss', '../../button.scss']
