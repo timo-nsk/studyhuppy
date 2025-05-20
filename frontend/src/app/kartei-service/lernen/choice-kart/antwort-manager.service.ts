@@ -1,4 +1,4 @@
-import {Antwort} from '../../domain';
+import {Antwort, FrageTyp} from '../../domain';
 
 export class AntwortManager {
 
@@ -21,19 +21,34 @@ export class AntwortManager {
     //console.log("user set antwort at index " + i + " to: " + this.userAntworten[i])
   }
 
-  compareAntworten() : boolean[] {
+  compareAntworten(frageTyp : FrageTyp | undefined) : boolean[] {
     if(this.userAntworten) {
       for(let i = 0; i < this.userAntworten.length; i++) {
         let expectedAntwort = this.expectedAntworten[i].wahrheit
         let actualAntwort = this.userAntworten[i]
-        if(expectedAntwort && actualAntwort) {
-          this.result.push(true)
-        } else if(expectedAntwort && !actualAntwort) {
-          this.result.push(false)
-        } else if(!expectedAntwort && !actualAntwort) {
-          this.result.push(true)
-        } else if(!expectedAntwort && actualAntwort) {
-          this.result.push(false)
+        switch (frageTyp) {
+          case FrageTyp.SINGLE_CHOICE: {
+            if(expectedAntwort && actualAntwort) {
+              this.result.push(true)
+            } else if(!expectedAntwort && !actualAntwort) {
+              this.result.push(true)
+            } else {
+              this.result.push(false)
+            }
+            break
+          }
+          case FrageTyp.MULTIPLE_CHOICE: {
+            if(expectedAntwort && actualAntwort) {
+              this.result.push(true)
+            } else if(expectedAntwort && !actualAntwort) {
+              this.result.push(false)
+            } else if(!expectedAntwort && !actualAntwort) {
+              this.result.push(true)
+            } else if(!expectedAntwort && actualAntwort) {
+              this.result.push(false)
+            }
+            break
+          }
         }
       }
     }
@@ -41,7 +56,7 @@ export class AntwortManager {
     console.log("compared antworten with result: " + this.result)
     return this.result
   }
-  // true : true -> truesArecorrect true
+  // true : true -> result true
   // true : false -> truesArecorrect false
   // false : false -> truesAreCorrect true
   // false : true -> truesAreCorrect false

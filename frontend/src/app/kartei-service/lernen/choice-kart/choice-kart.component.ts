@@ -52,7 +52,7 @@ export class ChoiceKartComponent implements OnInit{
   }
 
   revealAntwort() {
-    this.actualCorrectAnswers = this.am.compareAntworten()
+    this.actualCorrectAnswers = this.am.compareAntworten(this.frageTyp)
     this.hideAntwortBtn = false
     this.hideBtnGroup = true
   }

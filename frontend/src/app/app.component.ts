@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {Router, RouterLink, RouterOutlet} from '@angular/router';
+import { RouterOutlet} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
@@ -17,8 +17,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 })
 export class AppComponent implements  OnInit{
   isAdmin : boolean = true
-  constructor( private titleService : Title, private router: Router) {
-    console.log('Routes:', this.router.config);  // Routen im Log überprüfen
+  constructor( private titleService : Title) {
   }
 
   ngOnInit() {
