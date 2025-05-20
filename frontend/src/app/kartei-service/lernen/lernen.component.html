@@ -8,9 +8,12 @@
     </div>
     <!--NORMAL Karte -->
     <ng-container *ngIf="thisStapel.karteikarten?.[kartenIndex]?.frageTyp == FrageTyp.NORMAL">
-      <app-normal-karte [frage]="thisStapel.karteikarten?.[kartenIndex]?.frage"
-                        [antwort]="thisStapel.karteikarten?.[kartenIndex]?.antwort"
+      <app-normal-karte [stapelData]="thisStapel"
+                        [btnDataList]="btnDataList"
+                        [kartenIndex]="kartenIndex"
                         [hideAntwort]="hideAntwort"
+                        [hideAntwortBtn]="hideAntwortBtn"
+                        [hideBtnGroup]="hideBtnGroup"
                         ></app-normal-karte>
     </ng-container>
 

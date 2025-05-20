@@ -1,6 +1,6 @@
 <div class="sub-container">
   <div class="frage-container">
-    <p>{{ frage}}</p>
+    <p>{{ frage }}</p>
   </div>
 </div>
 
@@ -9,3 +9,23 @@
     <p>{{ antwort }}</p>
   </div>
 </div>
+
+<section id="btn-section">
+  <hr>
+  <div class="sub-container" *ngIf="hideAntwortBtn">
+    <button id="anzeige-btn" class="btn" (click)="revealAntwort()">Antwort anzeigen</button>
+  </div>
+  <div class="row" *ngIf="hideBtnGroup">
+    <div class="col-2"></div>
+    <div id="btn-group" class="col-8">
+      <div *ngFor="let btnData of btnDataList; let i = index">
+        <button [id]="'k-btn-'+i" class="btn w-150 m-1" (click)="updateKarteikarte(i, $event)">{{btnData.schwierigkeit}} ({{btnData.btnTitel}})</button>
+      </div>
+    </div>
+    <div class="col-1">
+      <div id="bearbeiten-a">
+        <a href="#">bearbeiten</a>
+      </div>
+    </div>
+  </div>
+</section>
