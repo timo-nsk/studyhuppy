@@ -13,7 +13,7 @@
       <ng-container *ngIf="frageTyp == FrageTyp.SINGLE_CHOICE">
         <mat-radio-group class="antwort-choices-radio" >
           <p>Markieren Sie eine zutreffende Antwort</p>
-          <mat-radio-button (click)="setAntwort(i)" *ngFor="let antwort of expectedAntworten; let i = index">
+          <mat-radio-button (click)="setAntwort(i)" *ngFor="let antwort of expectedAntworten; let i = index" value="">
             <span [ngClass]="{
                            'korrekt': actualCorrectAnswers[i],
                            'fehler': !actualCorrectAnswers[i],

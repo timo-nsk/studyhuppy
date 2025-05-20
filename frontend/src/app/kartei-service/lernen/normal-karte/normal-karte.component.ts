@@ -52,7 +52,7 @@ export class NormalKarteComponent implements OnInit{
       stapelId: this.stapelData?.fachId!,
       karteId: this.stapelData?.karteikarten![this.tempIndex].fachId!,
       schwierigkeit: this.btnDataList?.[i].schwierigkeit,
-      secondsNeeded: this.currentKarteSeconds
+      secondsNeeded: this.lernzeitTimer.getLernzeitCurrentKarte
     }
     this.karteiService.updateKarte(data).subscribe()
     this.lernzeitTimer.startCurrentKarteTimer(this.tempIndex, this.n, $event)

@@ -22,19 +22,23 @@ export class AntwortManager {
   }
 
   compareAntworten(frageTyp : FrageTyp | undefined) : boolean[] {
+    console.log("expected: " + this.expectedAntworten)
+    console.log("actual: " + this.userAntworten)
     if(this.userAntworten) {
       for(let i = 0; i < this.userAntworten.length; i++) {
         let expectedAntwort = this.expectedAntworten[i].wahrheit
         let actualAntwort = this.userAntworten[i]
         switch (frageTyp) {
           case FrageTyp.SINGLE_CHOICE: {
-            if(expectedAntwort && actualAntwort) {
-              this.result.push(true)
-            } else if(!expectedAntwort && !actualAntwort) {
+            if((expectedAntwort && actualAntwort) || (!expectedAntwort && !actualAntwort)) {
               this.result.push(true)
             } else {
               this.result.push(false)
             }
+            // false : true -> result false
+            // true : false -> result false
+            // false : false -> result true
+            // true : true -> result true
             break
           }
           case FrageTyp.MULTIPLE_CHOICE: {
@@ -56,8 +60,5 @@ export class AntwortManager {
     console.log("compared antworten with result: " + this.result)
     return this.result
   }
-  // true : true -> result true
-  // true : false -> truesArecorrect false
-  // false : false -> truesAreCorrect true
-  // false : true -> truesAreCorrect false
+
 }
