@@ -38,7 +38,7 @@
         </div>
         <div class="kartei-set-info-actions">
           <!-- TODO: Wenn fällige karteikarten anstehen, wird der lernen button angezeigt-->
-          <div id="lernen-btn-container" class="kartei-set-info-item" *ngIf="s.anzahlFaelligeKarteikarten >= 0">
+          <div id="lernen-btn-container" class="kartei-set-info-item" *ngIf="s.anzahlFaelligeKarteikarten > 0">
             <a id="lernen-btn" [routerLink]="['/lernen', s.fachId]" >
               <strong>lernen
                 <span id="vorrausichtliche-zeit-label">( {{s.vorraussichtlicheLernzeit}}s )</span>
