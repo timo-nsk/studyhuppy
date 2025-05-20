@@ -243,4 +243,17 @@ public class StapelServiceTest {
 		assertThat(dtos.get(0).anzahlNeueKarteikarten()).isEqualTo(0);
 		assertThat(dtos.get(0).anzahlFaelligeKarteikarten()).isEqualTo(4);
 	}
+
+	@Test
+	@DisplayName("Finde Stapel, der nur die fälligen Karteikarten enthält")
+	void test_20() {
+		Stapel stapel = StapelMother.initSetWithALotKarteikarten();
+		UUID stapelId = stapel.getFachId();
+		LocalDateTime today = LocalDateTime.of(2025, 1, 20, 10, 0, 0);
+		when(repo.findByFachId(any())).thenReturn(stapel);
+
+		Stapel res = service.findByFachIdWithFaelligeKarten(stapelId.toString(), today);
+
+		assertThat(res.getKarteikarten().size()).isEqualTo(5);
+	}
 }

@@ -62,6 +62,7 @@ public class StapelApiController {
 	@AngularApi
 	@PostMapping("/get-stapel-by-fachid")
 	public ResponseEntity<Stapel> getStapelByFachid(@RequestBody String fachId) {
-		return ResponseEntity.ok(stapelService.findByFachId(fachId));
+		//return ResponseEntity.ok(stapelService.findByFachId(fachId));
+		return ResponseEntity.ok(stapelService.findByFachIdWithFaelligeKarten(fachId, LocalDateTime.now()));
 	}
 }

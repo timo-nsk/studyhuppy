@@ -14,19 +14,19 @@
                         [hideAntwortBtn]="hideAntwortBtn"
                         [hideBtnGroup]="hideBtnGroup"
                         [currentKarteSeconds]="currentKarteSeconds"
-                        [lernzeitTimer]="lernzeitTimer"
-                        ></app-normal-karte>
+                        [lernzeitTimer]="lernzeitTimer">
+      </app-normal-karte>
     </ng-container>
 
     <!-- CHOICE Karte -->
     <ng-container *ngIf="thisStapel.karteikarten?.[kartenIndex]?.frageTyp == FrageTyp.SINGLE_CHOICE
                          || thisStapel.karteikarten?.[kartenIndex]?.frageTyp == FrageTyp.MULTIPLE_CHOICE">
-      <app-choice-kart
-      [hideAntwortBtn]="hideAntwortBtn"
-      [hideBtnGroup]="hideBtnGroup"
-      [btnDataList]="btnDataList"
-      [stapelData]="thisStapel"
-      [lernzeitTimer]="lernzeitTimer"></app-choice-kart>
+      <app-choice-kart  [hideAntwortBtn]="hideAntwortBtn"
+                        [hideBtnGroup]="hideBtnGroup"
+                        [btnDataList]="btnDataList"
+                        [stapelData]="thisStapel"
+                      [lernzeitTimer]="lernzeitTimer">
+      </app-choice-kart>
     </ng-container>
   </div>
 </div>

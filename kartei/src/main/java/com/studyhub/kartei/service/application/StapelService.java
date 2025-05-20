@@ -143,4 +143,11 @@ public class StapelService {
 
 		return dtos;
 	}
+
+	public Stapel findByFachIdWithFaelligeKarten(String fachId, LocalDateTime now) {
+		Stapel s = repo.findByFachId(UUID.fromString(fachId));
+		List<Karteikarte> l = s.getFälligeKarteikarten(now);
+		s.setKarteikarten(l);
+		return s;
+	}
 }

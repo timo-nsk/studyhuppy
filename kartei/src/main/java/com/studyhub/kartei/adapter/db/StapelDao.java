@@ -1,11 +1,13 @@
 package com.studyhub.kartei.adapter.db;
 
 import com.studyhub.kartei.adapter.db.dto.StapelDto;
+import com.studyhub.kartei.domain.model.Stapel;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -39,4 +41,8 @@ public interface StapelDao extends CrudRepository<StapelDto, Integer> {
 
 	@Query("select 1")
 	Integer isStapelDbHealthy();
+
+	@Query("select * from stapel where (select * from karteikarte where faellig_am < :dateToday)")
+    Stapel findByFachIdWithFaelligeKarten(@Param("stapelfachId") UUID uuid,
+										  @Param("dateToday") LocalDateTime now);
 }
