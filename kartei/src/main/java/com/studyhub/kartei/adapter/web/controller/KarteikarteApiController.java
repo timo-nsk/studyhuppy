@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/api")
@@ -53,5 +54,12 @@ public class KarteikarteApiController {
 
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
+
+	@DeleteMapping("/delete-karte")
+	public ResponseEntity<Void> deleteKarteikarte(@RequestBody DeleteKarteRequest deleteKRequest) {
+		stapelService.deleteKarteikarteByFachId(UUID.fromString(deleteKRequest.stapelId()), UUID.fromString(deleteKRequest.karteId()));
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+
 }
 

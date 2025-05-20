@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Karteikarte, Stapel} from '../domain';
 import {KarteiApiService} from '../kartei.api.service';
 import {NgIf} from '@angular/common';
@@ -15,6 +15,7 @@ import {
   MatTableDataSource
 } from '@angular/material/table';
 import {MatAnchor} from '@angular/material/button';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-stapel-details',
@@ -44,11 +45,16 @@ export class StapelDetailsComponent implements OnInit{
   stapelId: string | null = ''
 
   route = inject(ActivatedRoute)
+  router = inject(Router)
   karteiService = inject(KarteiApiService)
+  snackbar = inject(MatSnackBar)
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => { this.stapelId = params.get('fachId'); });
+    this.loadStapel()
+  }
 
+  loadStapel() : void {
     this.karteiService.getStapelByFachId(this.stapelId).subscribe({
       next: (data : Stapel) => {
         this.stapel = data
@@ -63,6 +69,18 @@ export class StapelDetailsComponent implements OnInit{
   }
 
   deleteKarte(stapelId: string | null, karteId: string) {
-    //TODO implement
+    this.karteiService.deleteKarte(stapelId, karteId).subscribe({
+      next: () => {
+        this.snackbar.open("karteikarte erfolgreich gelöscht", "schließen", {
+          duration: 3500
+        })
+        this.loadStapel()
+      },
+      error: () => {
+        this.snackbar.open("karteikarte konnte nicht gelöscht werden", "schließen", {
+          duration: 3500
+        })
+      }
+    })
   }
 }

@@ -48,4 +48,15 @@ export class KarteiApiService {
       console.log("sendneuekartedata ping")
       return this.http.post<any>(this.BASE_API_URL + '/add-neue-karte-choice', data, {headers})
   }
+
+  deleteKarte(stapelId: string | null, karteId: string) : Observable<any> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.delete<any>(this.BASE_API_URL + "/delete-karte", {
+      headers,
+      body: {
+        "stapelId" : stapelId,
+        "karteId" : karteId
+      }
+    })
+  }
 }

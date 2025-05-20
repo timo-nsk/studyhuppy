@@ -3,10 +3,11 @@ import {NgFor, NgIf} from '@angular/common';
 import {KarteiApiService} from './kartei.api.service';
 import {RouterLink} from '@angular/router';
 import {MatProgressBar} from "@angular/material/progress-bar";
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-kartei-service',
-    imports: [NgIf, NgFor, RouterLink, MatProgressBar],
+  imports: [NgIf, NgFor, RouterLink, MatProgressBar, MatButton],
   templateUrl: './kartei-service.component.html',
   standalone: true,
   styleUrls: ['./kartei-service.component.scss', '../loading.scss']

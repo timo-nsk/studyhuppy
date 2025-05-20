@@ -41,7 +41,7 @@
           <div id="lernen-btn-container" class="kartei-set-info-item" *ngIf="s.anzahlFaelligeKarteikarten > 0">
             <a id="lernen-btn" [routerLink]="['/lernen', s.fachId]" >
               <strong>lernen
-                <span id="vorrausichtliche-zeit-label">( {{s.vorraussichtlicheLernzeit}}s )</span>
+                <span id="vorrausichtliche-zeit-label" *ngIf="s.vorraussichtlicheLernzeit > 0">{{'(' + s.vorraussichtlicheLernzeit + 's)'}}</span>
               </strong>
             </a>
           </div>
