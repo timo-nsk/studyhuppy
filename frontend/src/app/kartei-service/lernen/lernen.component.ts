@@ -9,6 +9,7 @@ import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
 import {NormalKarteComponent} from './normal-karte/normal-karte.component';
 import {ChoiceKartComponent} from './choice-kart/choice-kart.component';
 import {MatDivider} from '@angular/material/divider';
+import {LernzeitTimer} from './lernzeit-timer.service';
 
 
 @Component({
@@ -20,6 +21,8 @@ import {MatDivider} from '@angular/material/divider';
 })
 export class LernenComponent implements OnInit {
   protected readonly FrageTyp = FrageTyp;
+
+  lernzeitTimer : LernzeitTimer = new LernzeitTimer()
 
   overallSeconds : number = 0
   currentKarteSeconds : number = 0
@@ -42,6 +45,7 @@ export class LernenComponent implements OnInit {
   gen!: ButtonDataGenerator;
 
   ngOnInit(): void {
+    this.lernzeitTimer = new LernzeitTimer()
     let id: string | null = '';
     this.route.paramMap.subscribe(params => { id = params.get('fachId'); });
 
@@ -52,8 +56,8 @@ export class LernenComponent implements OnInit {
         this.gen = new ButtonDataGenerator(data.karteikarten?.[this.kartenIndex]);
         this.btnDataList = this.gen.generateButtons()
 
-        this.startOverallTimer()
-        this.startCurrentKarteTimer(null)
+        this.lernzeitTimer.startOverallTimer(this.kartenIndex, this.thisStapel.karteikarten?.length)
+        this.lernzeitTimer.startCurrentKarteTimer(this.kartenIndex, this.thisStapel.karteikarten?.length, null)
       }
     })
 

@@ -48,13 +48,6 @@ public class KarteikarteLernenController {
 		return "set-übersicht";
 	}
 
-	@PostMapping("/update-karteikarte")
-	public ResponseEntity<Void> updateKarteikarte(@RequestBody UpdateInfo updateInfo) {
-		boolean success = karteikarteService.updateKarteikarteForNextReview(updateInfo);
-		if (!success) throw new KarteikarteUpdateException("Karteikarte could not be updated.");
-
-		return ResponseEntity.status(HttpStatus.OK).build();
-	}
 
 	@GetMapping("/lernen/{karteiSetId}/ende")
 	public String endLearning(@PathVariable("karteiSetId") String karteiSetId) {

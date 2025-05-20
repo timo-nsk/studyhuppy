@@ -4,16 +4,17 @@
     <hr>
 
     <div id="seconds-box">
-      <p>{{overallSeconds | timeFormat}}</p>
+      <p>{{lernzeitTimer.getLernzeitGesamt | timeFormat}}</p>
     </div>
     <!--NORMAL Karte -->
     <ng-container *ngIf="thisStapel.karteikarten?.[kartenIndex]?.frageTyp == FrageTyp.NORMAL">
       <app-normal-karte [stapelData]="thisStapel"
                         [btnDataList]="btnDataList"
-                        [kartenIndex]="kartenIndex"
                         [hideAntwort]="hideAntwort"
                         [hideAntwortBtn]="hideAntwortBtn"
                         [hideBtnGroup]="hideBtnGroup"
+                        [currentKarteSeconds]="currentKarteSeconds"
+                        [lernzeitTimer]="lernzeitTimer"
                         ></app-normal-karte>
     </ng-container>
 
