@@ -1,20 +1,19 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {KarteiApiService} from '../kartei.api.service';
-import {Antwort, FrageTyp, Stapel, UpdateInfo} from '../domain';
+import {FrageTyp, Stapel, UpdateInfo} from '../domain';
 import {NgIf} from '@angular/common';
 import {ButtonDataGenerator} from '../button.data.generator';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
 import {NormalKarteComponent} from './normal-karte/normal-karte.component';
 import {ChoiceKartComponent} from './choice-kart/choice-kart.component';
-import {MatDivider} from '@angular/material/divider';
 import {LernzeitTimer} from './lernzeit-timer.service';
 
 
 @Component({
   selector: 'app-lernen',
-  imports: [NgIf, TimeFormatPipe, NormalKarteComponent, ChoiceKartComponent, MatDivider],
+  imports: [NgIf, TimeFormatPipe, NormalKarteComponent, ChoiceKartComponent],
   templateUrl: './lernen.component.html',
   standalone: true,
   styleUrls: ['./lernen.component.scss', '../../button.scss']

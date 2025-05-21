@@ -7,10 +7,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatFormField, MatLabel} from '@angular/material/input';
 import {MatSelect, MatSelectChange} from '@angular/material/select';
 import {MatOption} from '@angular/material/core';
+import {MatSlideToggle} from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-options',
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatSelect, MatOption],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatSlideToggle],
   templateUrl: './options.component.html',
   standalone: true,
   styleUrls: ['./options.component.scss', '../../color.scss']

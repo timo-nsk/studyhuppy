@@ -1,7 +1,6 @@
 import {Component, inject, Input, OnInit} from '@angular/core';
 import {Antwort, ButtonData, FrageTyp, Stapel, UpdateInfo} from '../../domain';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {MatList, MatListItem} from '@angular/material/list';
 import {NgClass, NgForOf, NgIf} from '@angular/common';
 import {AntwortManager} from './antwort-manager.service';
 import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
@@ -14,8 +13,6 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   selector: 'app-choice-kart',
   imports: [
     MatCheckbox,
-    MatList,
-    MatListItem,
     NgForOf,
     NgIf,
     NgClass,
