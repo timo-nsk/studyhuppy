@@ -1,8 +1,8 @@
 <div class="main-container">
   <div class="form-container">
     <form class="sh-form" [formGroup]="newStapelForm" (ngSubmit)="submitForm()">
-      <h2 class="m-accent-font">Karteikartenstapel erstellen</h2>
-      <div class="mb-3">
+      <h2 class="m-accent-font mb-4">Karteikartenstapel erstellen</h2>
+      <div class="mb-4">
         <label for="set-name" class="m-accent-font sh-form-lbl">Stapelname<span class="hint-star">*</span></label>
         <input id="set-name" class="form-control" formControlName="setName">
         <span class="text-danger"
@@ -11,12 +11,12 @@
         </span>
       </div>
 
-      <div class="mb-3">
+      <div class="mb-4">
         <label for="beschreibung" class="m-accent-font sh-form-lbl">Beschreibung</label>
         <textarea id="beschreibung" class="form-control" formControlName="beschreibung" rows="3"></textarea>
       </div>
 
-      <div class="mb-3">
+      <div class="mb-4">
         <label for="modul-link" class="m-accent-font sh-form-lbl">Modul verlinken</label>
         <select id="modul-link" class="form-select fs-4" formControlName="modulFachId">
           <option selected value="">kein</option>
@@ -26,7 +26,7 @@
         </select>
       </div>
 
-      <div class="mb-3">
+      <div class="mb-4">
         <label for="interval" class="m-accent-font sh-form-lbl">Lern-Intervalle<span class="hint-star">*</span></label>
         <div id="lerninterval-container">
           <div class="col-11">
