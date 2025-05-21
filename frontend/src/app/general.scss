@@ -118,3 +118,9 @@ td, th {
   background-color: rgb(248, 249, 250);
   border-width: 0;
 }
+
+.main-container {
+  display: flex;
+  width: 85vw;
+  justify-content: center;
+}

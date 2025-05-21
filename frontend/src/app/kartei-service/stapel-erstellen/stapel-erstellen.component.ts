@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './stapel-erstellen.component.html',
   standalone: true,
-  styleUrls: ['./stapel-erstellen.component.scss', '../../button.scss', '../../color.scss', '../../forms.scss']
+  styleUrls: ['./stapel-erstellen.component.scss', '../../button.scss', '../../color.scss', '../../forms.scss', '../../general.scss']
 })
 export class StapelErstellenComponent {
   karteiService = inject(KarteiApiService)

@@ -3,14 +3,6 @@
   justify-content: space-around;
 }
 
-#new-set-form{
-  width: 100%;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 10px;
-  border-style: none;
-}
-
 #lerninterval-container {
   display: flex;
   flex-direction: row;
@@ -26,10 +18,4 @@
 
 .tooltip-inner {
   white-space: pre-line;
-}
-
-.super-container {
-  display: flex;
-  width: 85vw;
-  justify-content: center;
 }

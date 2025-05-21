@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="de" xmlns="http://www.w3.org/1999/html">
-<head>
-  <meta charset="UTF-8">
-  <title>Modul hinzufügen</title>
-</head>
-<body class="bg-lightgrey">
-<div id="new-modul-container">
-  <div id="form-container">
-    <form id="new-modul-form" [formGroup]="newModulForm" (ngSubmit)="onSubmit()">
+<div class="main-container">
+  <div class="form-container">
+    <form class="sh-form" [formGroup]="newModulForm" (ngSubmit)="onSubmit()">
 
       <div class="mb-4">
         <label for="modul-name" class="form-label m-accent-font sh-form-lbl">Modulname<span class="hint-star">*</span></label>
@@ -197,5 +190,3 @@
     </form>
   </div>
 </div>
-</body>
-</html>
