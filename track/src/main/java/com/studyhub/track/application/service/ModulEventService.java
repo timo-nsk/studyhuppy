@@ -4,6 +4,7 @@ import com.studyhub.jwt.JWTService;
 import com.studyhub.track.adapter.web.ModulUpdateRequest;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.ModulGelerntEvent;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.*;
@@ -48,5 +49,9 @@ public class ModulEventService {
 			dataMap.put(date, statistics);
 		}
 		return dataMap;
+	}
+
+	public Integer computeAverageStudyTimePerDay(HttpServletRequest request) {
+		return null;
 	}
 }

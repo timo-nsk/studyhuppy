@@ -20,6 +20,15 @@ export class StatisticApiService {
     );
   }
 
+  getDurchschnittlicheLernzeitProTag(): Observable<number> {
+    return this.http.get<number>(
+      this.BASE_API_URL + "/get-total-study-time",
+      {
+        headers: this.headerService.createAuthHeader()
+      }
+    );
+  }
+
   getTotalStudyTimeperSemester(): Observable<{ [key: number]: number }> {
     const headers = this.headerService.createAuthHeader()
     return this.http.get<{ [key: number]: number }>(
