@@ -47,7 +47,7 @@ public class ModulServiceTest {
 
 	@Test
 	@DisplayName("repo.updateSecondsByUuid() wird korrekt aufgerufen")
-	void test_03() {
+	void test_03() throws Exception {
 		modulService.updateSeconds(UUID.randomUUID(), 10);
 		verify(repo).updateSecondsByUuid(any(UUID.class), anyInt());
 	}
