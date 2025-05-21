@@ -1,46 +1,85 @@
-<div>
-  <ul id="statistic-ul">
-    <li>
-      <p>Zeit studiert insgesamt: <span>{{totalStudyTime | timeFormat}}</span></p>
-    </li>
-    <li>
-      <div>
-        <p>Zeit studiert per Fachsemester</p>
-        <table>
-          <thead>
+<div id="super-container">
+  <div id="chart-container">
+    <div class="chart">
+      <table class="table">
+        <tbody>
           <tr>
-            <th>Fachsemester</th>
-            <th>Zeit</th>
+            <th>
+              Zeit studiert insgesamt:
+            </th>
+            <td>
+              <span>{{totalStudyTime | timeFormat}}</span>
+            </td>
           </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let semester of totalStudyTimePerSemester">
-            <td>{{semester.key}}</td>
-            <td>{{semester.value | timeFormat }}</td>
+          <tr>
+            <th>
+              Durchschnittliche Lernzeit am Tag:
+            </th>
+            <td>
+              <span>180m</span>
+            </td>
           </tr>
-          </tbody>
-        </table>
-      </div>
-    </li>
-    <li>
-      <p>Aktive Module: <span>{{numberActiveModules}}</span></p>
-    </li>
-    <li>
-      <p>Deaktivierte Module: <span>{{numberNotActiveModules}}</span></p>
-    </li>
-    <li>
-      <p>Modul am meisten studiert: <span>{{maxStudiedModul}}</span></p>
-    </li>
-    <li>
-      <p>Modul am wenigsten studiert: <span>{{minStudiedModul}}</span></p>
-    </li>
-    <!--
-    <li>
-        <p>Täglich studiert: <span>~4,3h</span></p>
-    </li>
-    <li>
-        <p>Wöchentlich studiert: <span>~40,3h</span></p>
-    </li>
-    -->
-  </ul>
+          <tr>
+            <th>
+              Zeit studiert per Fachsemester
+            </th>
+            <td>
+              <div>
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th>FS</th>
+                    <th>Zeit</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let semester of totalStudyTimePerSemester">
+                    <td>{{semester.key}}</td>
+                    <td>{{semester.value | timeFormat }}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <th>
+              Aktive Module:
+            </th>
+            <td>
+              <span>{{numberActiveModules}}</span>
+            </td>
+          </tr>
+
+          <tr>
+            <th>
+              Inaktive Module:
+            </th>
+            <td>
+              <span>{{numberNotActiveModules}}</span>
+            </td>
+          </tr>
+
+          <tr>
+            <th>
+              Modul am meisten studiert:
+            </th>
+            <td>
+              <span>{{maxStudiedModul}}</span>
+            </td>
+          </tr>
+
+          <tr>
+            <th>
+              Modul am meisten studiert:
+            </th>
+            <td>
+              <span>{{minStudiedModul}}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
