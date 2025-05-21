@@ -1,6 +1,5 @@
 .gitignore
 ports.txt
-docker-compose.yaml
 todo.txt
 .env
 .idea

@@ -1,0 +1,56 @@
+version: '3.8'
+services:
+  modul-db:
+    image: postgres:latest
+    ports:
+      - "6433:5432"
+    volumes:
+      - ./track/modul-data:/var/lib/postgresql/data
+    environment:
+        - "POSTGRES_DB=modul"
+        - "POSTGRES_USER=${DB_USER}"
+        - "POSTGRES_PASSWORD=${DB_PASS}"
+    env_file:
+      - .env
+  kartei-db:
+    image: postgres:latest
+    ports:
+      - "6434:5432"
+    volumes:
+      - ./kartei/kartei-data:/var/lib/postgresql/data
+    environment:
+      - "POSTGRES_DB=kartei"
+      - "POSTGRES_USER=${DB_USER}"
+      - "POSTGRES_PASSWORD=${DB_PASS}"
+    env_file:
+      - .env
+  mailpit:
+    image: axllent/mailpit
+    container_name: mailpit-dev
+    ports:
+      - "8025:8025" # Web-Interface für Mailpit (Zugriff auf die E-Mails)
+      - "1025:1025" # SMTP-Server für den Versand von E-Mails
+  mail-db:
+    image: postgres:latest
+    ports:
+      - "6435:5432"
+    volumes:
+      - ./mail/mail-data:/var/lib/postgresql/data
+    environment:
+      - "POSTGRES_DB=mail"
+      - "POSTGRES_USER=${DB_USER}"
+      - "POSTGRES_PASSWORD=${DB_PASS}"
+    env_file:
+      - .env
+  user-db:
+    image: postgres:latest
+    ports:
+      - "6436:5432"
+    volumes:
+      - ./authentication/user-data:/var/lib/postgresql/data
+    environment:
+      - "POSTGRES_DB=users"
+      - "POSTGRES_USER=${DB_USER}"
+      - "POSTGRES_PASSWORD=${DB_PASS}"
+    env_file:
+      - .env
