@@ -22,7 +22,7 @@ export class StatisticApiService {
 
   getDurchschnittlicheLernzeitProTag(): Observable<number> {
     return this.http.get<number>(
-      this.BASE_API_URL + "/get-total-study-time",
+      this.BASE_API_URL + "/get-average-study-time-per-day",
       {
         headers: this.headerService.createAuthHeader()
       }

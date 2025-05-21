@@ -14,6 +14,7 @@ export class GeneralComponent implements OnInit{
 
   totalStudyTime: number = 0;
   totalStudyTimePerSemester: { key: number, value: number }[] = [];
+  averageStudyTimePerDay : number = 0
   numberActiveModules: string = '';
   numberNotActiveModules: string = '';
   maxStudiedModul: string = '';
@@ -24,7 +25,6 @@ export class GeneralComponent implements OnInit{
   ngOnInit(): void {
     this.service.getTotalStudyTime().subscribe(value => {
       this.totalStudyTime = value;
-      console.log(this.totalStudyTime)
     });
 
     this.service.getTotalStudyTimeperSemester().subscribe(data => {
@@ -34,27 +34,24 @@ export class GeneralComponent implements OnInit{
       }));
     });
 
+    this.service.getDurchschnittlicheLernzeitProTag().subscribe(data => {
+      this.averageStudyTimePerDay = data
+    })
+
     this.service.getNumberActiveModules().subscribe(value => {
       this.numberActiveModules = value;
-      console.log(this.numberActiveModules)
     });
 
     this.service.getNumberNotActiveModules().subscribe(value => {
       this.numberNotActiveModules = value;
-      console.log(this.numberNotActiveModules)
     });
 
     this.service.getMaxStudiedModul().subscribe(value => {
       this.maxStudiedModul = value;
-      console.log((this.maxStudiedModul))
     });
 
     this.service.getMinStudiedModul().subscribe(value => {
       this.minStudiedModul = value;
-      console.log(this.minStudiedModul)
     });
   }
-
-
-
 }
