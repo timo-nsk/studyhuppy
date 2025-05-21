@@ -6,7 +6,7 @@
         <hr>
         <form [formGroup]="editNormaleFrageForm" (ngSubmit)="putEditedData('n')">
           <div class="mb-3">
-            <label for="n-frage" class="form-label">Frage</label>
+            <label for="n-frage" class="form-label">Frage<span class="hint-star">*</span></label>
             <textarea id="n-frage" class="form-control" formControlName="frage"></textarea>
             <span class="text-danger"
                   *ngIf="editNormaleFrageForm.controls['frage'].errors?.['required'] && editNormaleFrageForm.controls['frage'].touched">
@@ -14,7 +14,7 @@
             </span>
           </div>
           <div class="mb-3">
-            <label for="n-antwort" class="form-label">Antwort</label>
+            <label for="n-antwort" class="form-label">Antwort<span class="hint-star">*</span></label>
             <textarea id="n-antwort" class="form-control" rows="4" formControlName="antwort"></textarea>
             <span class="text-danger"
                   *ngIf="editNormaleFrageForm.controls['antwort'].errors?.['required'] && editNormaleFrageForm.controls['antwort'].touched">
@@ -26,9 +26,14 @@
             <textarea id="n-notiz" class="form-control" formControlName="notiz"></textarea>
           </div>
           <div class="mb-3">
-            <button class="sh-btn w-200" type="submit" [disabled]="notEdited">Änderung speichern</button>
-            <!-- TODO: implement abort button -->
-            <a >abbrechen</a>
+            <div class="mb-4">
+              <button class="sh-form-btn">
+                <span class="sh-form-btn-content">Änderung speichern</span>
+              </button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="form-hint">* Pflichtfeld</p>
           </div>
         </form>
       </div>
@@ -36,7 +41,7 @@
         <hr>
         <form [formGroup]="editChoiceFrageForm" (ngSubmit)="putEditedData('c')">
           <div class="mb-3">
-            <label for="sc-frage" class="form-label">Frage</label>
+            <label for="sc-frage" class="form-label">Frage<span class="hint-star">*</span></label>
             <textarea id="sc-frage" class="form-control" formControlName="frage"></textarea>
             <span class="text-danger"
                   *ngIf="editChoiceFrageForm.controls['frage'].errors?.['required'] && editChoiceFrageForm.controls['frage'].touched">
@@ -83,11 +88,11 @@
             </div>
             <div id="choice-aw-container" [formGroup]="antwortenChoiceForm">
               <div id="choice-wahr-item">
-                <label>Wahr</label>
+                <label>Wahr<span class="hint-star">*</span></label>
                 <mat-checkbox class="example-margin" formControlName="wahrheit"></mat-checkbox>
               </div>
               <div id="choice-aw-item">
-                <label>Antwort</label>
+                <label>Antwort<span class="hint-star">*</span></label>
                 <textarea matInput class="form-control" formControlName="antwort"></textarea>
               </div>
               <div id="choice-add-btn">
@@ -101,8 +106,13 @@
             <label for="sc-notiz" class="form-label">Notiz</label>
             <textarea id="sc-notiz" class="form-control" formControlName="notiz"></textarea>
           </div>
-          <div class="mb-3">
-            <button class="sh-btn w-200" type="submit">Änderung speichern</button>
+          <div class="mb-4">
+            <button class="sh-form-btn">
+              <span class="sh-form-btn-content">Änderung speichern</span>
+            </button>
+          </div>
+          <div class="mb-4">
+            <p class="form-hint">* Pflichtfeld</p>
           </div>
         </form>
       </div>

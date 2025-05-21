@@ -10,7 +10,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './add-module.component.html',
   standalone: true,
-  styleUrls: ['./add-module.component.scss', './color.scss', ]
+  styleUrls: ['./add-module.component.scss', './color.scss', '../../forms.scss']
 })
 export class AddModuleComponent {
   lerntageCheckbox : boolean = false

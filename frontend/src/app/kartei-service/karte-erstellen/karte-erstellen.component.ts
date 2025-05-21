@@ -20,7 +20,7 @@ import {Router} from '@angular/router';
   imports: [NgIf, ReactiveFormsModule, FormsModule, MatCheckbox, MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatHeaderCellDef],
   templateUrl: './karte-erstellen.component.html',
   standalone: true,
-  styleUrls: ['./karte-erstellen.component.scss', '../../button.scss']
+  styleUrls: ['./karte-erstellen.component.scss', '../../button.scss', '../../forms.scss']
 })
 export class KarteErstellenComponent implements OnInit{
   karteiService = inject(KarteiApiService)

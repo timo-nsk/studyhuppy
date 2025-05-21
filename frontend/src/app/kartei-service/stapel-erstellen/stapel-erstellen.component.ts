@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './stapel-erstellen.component.html',
   standalone: true,
-  styleUrls: ['./stapel-erstellen.component.scss', '../../button.scss', '../../color.scss']
+  styleUrls: ['./stapel-erstellen.component.scss', '../../button.scss', '../../color.scss', '../../forms.scss']
 })
 export class StapelErstellenComponent {
   karteiService = inject(KarteiApiService)
@@ -28,7 +28,9 @@ export class StapelErstellenComponent {
   })
 
   submitForm() {
-    if (this.newStapelForm.valid) {
+    if (this.newStapelForm.invalid) {
+      this.newStapelForm.markAsTouched()
+    } else {
       const data : any = this.newStapelForm.value
       this.karteiService.postNewStapel(data).subscribe({
         next: () => {

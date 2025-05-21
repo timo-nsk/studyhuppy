@@ -3,7 +3,7 @@
     <form id="new-set-form" [formGroup]="newStapelForm" (ngSubmit)="submitForm()">
       <h2 class="m-accent-font">Karteikartenstapel erstellen</h2>
       <div class="mb-3">
-        <label for="set-name" class="m-accent-font">Stapelname:</label>
+        <label for="set-name" class="m-accent-font sh-form-lbl">Stapelname<span class="hint-star">*</span></label>
         <input id="set-name" class="form-control" formControlName="setName">
         <span class="text-danger"
               *ngIf="newStapelForm.controls['setName'].errors?.['required'] && newStapelForm.controls['setName'].touched">
@@ -12,12 +12,12 @@
       </div>
 
       <div class="mb-3">
-        <label for="beschreibung" class="m-accent-font">Beschreibung:</label>
-        <textarea id="beschreibung" class="form-control" formControlName="beschreibung"rows="3"></textarea>
+        <label for="beschreibung" class="m-accent-font sh-form-lbl">Beschreibung</label>
+        <textarea id="beschreibung" class="form-control" formControlName="beschreibung" rows="3"></textarea>
       </div>
 
       <div class="mb-3">
-        <label for="modul-link" class="m-accent-font">Modul verlinken:</label>
+        <label for="modul-link" class="m-accent-font sh-form-lbl">Modul verlinken</label>
         <select id="modul-link" class="form-select fs-4" formControlName="modulFachId">
           <option selected value="">kein</option>
           <option *ngFor="let modul of modulMap" [value]="modul.key">
@@ -27,7 +27,7 @@
       </div>
 
       <div class="mb-3">
-        <label for="interval" class="m-accent-font">Lern-Intervalle:</label>
+        <label for="interval" class="m-accent-font sh-form-lbl">Lern-Intervalle<span class="hint-star">*</span></label>
         <div id="lerninterval-container">
           <div class="col-11">
             <input id="interval" class="form-control" formControlName="lernIntervalle">
@@ -49,9 +49,13 @@
           </div>
         </div>
       </div>
-
-      <div class="mb-3">
-        <button class="sh-btn" type="submit">erstellen</button>
+      <div class="mb-4">
+        <button class="sh-form-btn" [disabled]="!newStapelForm.valid">
+          <span class="sh-form-btn-content">Stapel erstellen</span>
+        </button>
+      </div>
+      <div class="mt-4">
+        <p class="m-accent-font form-hint">* Pflichtfeld</p>
       </div>
     </form>
   </div>
