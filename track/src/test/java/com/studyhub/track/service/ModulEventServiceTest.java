@@ -3,6 +3,7 @@ package com.studyhub.track.service;
 import com.studyhub.jwt.JWTService;
 import com.studyhub.track.application.service.*;
 import com.studyhub.track.domain.model.modul.Modul;
+import com.studyhub.track.domain.model.modul.ModulGelerntEvent;
 import com.studyhub.track.util.ModulMother;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -68,5 +71,41 @@ public class ModulEventServiceTest {
 		Map<LocalDate, List<ModulStat>> res = service.getStatisticsForRecentDays(7, "token");
 
 		assertThat(res.size()).isEqualTo(0);
+	}
+
+	@Test
+	@DisplayName("Die durchschnittliche Lernzeit eines Users an 6 gelernten Tagen wird korrekt berechnet.")
+	void test_03() {
+		String username = "timo123";
+		UUID modulAId = UUID.randomUUID();
+		UUID modulBId = UUID.randomUUID();
+		List<ModulGelerntEvent> events = List.of(
+				new ModulGelerntEvent(UUID.randomUUID(), modulAId, "timo123",  20, LocalDate.of(2025, 1, 10)),
+				new ModulGelerntEvent(UUID.randomUUID(),modulBId, "timo123",  20, LocalDate.of(2025, 1, 10)),
+				new ModulGelerntEvent(UUID.randomUUID(),modulAId,"timo123",  30, LocalDate.of(2025, 1, 11)),
+				new ModulGelerntEvent(UUID.randomUUID(),modulBId, "timo123",  30, LocalDate.of(2025, 1, 12)),
+				new ModulGelerntEvent(UUID.randomUUID(),modulAId, "timo123",  30, LocalDate.of(2025, 1, 12)),
+				new ModulGelerntEvent(UUID.randomUUID(),modulBId, "timo123",  30, LocalDate.of(2025, 1, 12)),
+				new ModulGelerntEvent(UUID.randomUUID(),modulAId, "timo123",  30, LocalDate.of(2025, 1, 13)),
+				new ModulGelerntEvent(UUID.randomUUID(),modulBId, "timo123",  30, LocalDate.of(2025, 1, 14)),
+				new ModulGelerntEvent(UUID.randomUUID(),modulAId, "timo123",  30, LocalDate.of(2025, 1, 15)),
+				new ModulGelerntEvent(UUID.randomUUID(),modulBId, "timo123", 30, LocalDate.of(2025, 1, 15)));
+		when(eventRepo.getAllByUsername(username)).thenReturn(events);
+
+		int res = service.computeAverageStudyTimePerDay(username);
+
+		assertThat(res).isEqualTo(47);
+	}
+
+	@Test
+	@DisplayName("Wenn keine Events für eine User gefunden werden, wird 0 als durchschnittliche Lernzeit am Tag berechnet")
+	void test_04() {
+		String username = "timo123";
+		List<ModulGelerntEvent> events = List.of();
+		when(eventRepo.getAllByUsername(username)).thenReturn(events);
+
+		int res = service.computeAverageStudyTimePerDay(username);
+
+		assertThat(res).isEqualTo(0);
 	}
 }

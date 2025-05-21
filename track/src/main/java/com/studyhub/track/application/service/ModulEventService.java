@@ -51,7 +51,13 @@ public class ModulEventService {
 		return dataMap;
 	}
 
-	public Integer computeAverageStudyTimePerDay(HttpServletRequest request) {
-		return null;
+	public Integer computeAverageStudyTimePerDay(String username) {
+		List<ModulGelerntEvent> allEvents = modulGelerntEvent.getAllByUsername(username);
+		int N = (int) allEvents.stream().map(ModulGelerntEvent::dateGelernt).distinct().count();
+		int sum = allEvents.stream().mapToInt(ModulGelerntEvent::secondsLearned).sum();
+
+		if(N == 0) return 0;
+
+		return (int) Math.round((double) sum / N);
 	}
 }

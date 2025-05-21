@@ -44,7 +44,7 @@ public class StatisticApiController {
 	@GetMapping("/get-average-study-time-per-day")
 	public ResponseEntity<Integer> getAverageStudyTimePerDay(HttpServletRequest request) {
 		String username = jwtService.extractUsernameFromHeader(request);
-		return ResponseEntity.ok(modulEventService.computeAverageStudyTimePerDay(request));
+		return ResponseEntity.ok(modulEventService.computeAverageStudyTimePerDay(username));
 	}
 
 	@AngularApi
