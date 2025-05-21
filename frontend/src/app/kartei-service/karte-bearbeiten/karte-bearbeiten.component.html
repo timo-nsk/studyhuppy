@@ -4,7 +4,8 @@
   <form class="sh-form" [formGroup]="editNormaleFrageForm" (ngSubmit)="putEditedData('n')">
     <div class="mb-3">
       <label for="n-frage" class="form-label">Frage<span class="hint-star">*</span></label>
-      <textarea id="n-frage" class="form-control" formControlName="frage"></textarea>
+      <textarea id="n-frage" class="form-control" formControlName="frage" (input)="updateCharsLeft()" maxlength="2000"></textarea>
+      <p><span>{{charsLeft}}</span> Zeichen übrig</p>
       <span class="text-danger"
             *ngIf="editNormaleFrageForm.controls['frage'].errors?.['required'] && editNormaleFrageForm.controls['frage'].touched">
             Geben Sie eine Frage ein
@@ -12,7 +13,8 @@
     </div>
     <div class="mb-3">
       <label for="n-antwort" class="form-label">Antwort<span class="hint-star">*</span></label>
-      <textarea id="n-antwort" class="form-control" rows="4" formControlName="antwort"></textarea>
+      <textarea id="n-antwort" class="form-control" rows="4" formControlName="antwort" (input)="updateCharsLeft()" maxlength="2000"></textarea>
+      <p><span>{{charsLeft}}</span> Zeichen übrig</p>
       <span class="text-danger"
             *ngIf="editNormaleFrageForm.controls['antwort'].errors?.['required'] && editNormaleFrageForm.controls['antwort'].touched">
             Geben Sie eine Antwort ein

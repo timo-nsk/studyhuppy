@@ -49,6 +49,8 @@ export class KarteBearbeitenComponent implements OnInit{
   displayedColumns: string[] = ['idx','wahr', 'antwort', 'option'];
   antwortenChoiceForm: FormGroup = new FormGroup({})
   notEdited : boolean = true
+  MAX_CHARACTERS : number = 2000
+  charsLeft: number = this.MAX_CHARACTERS
 
   ngOnInit(): void {
     this.editNormaleFrageForm = new FormGroup({
@@ -122,5 +124,9 @@ export class KarteBearbeitenComponent implements OnInit{
       const group = control as FormGroup;
       return [group.get('wahrheit')?.value, group.get('antwort')?.value];
     });
+  }
+
+  updateCharsLeft() {
+
   }
 }

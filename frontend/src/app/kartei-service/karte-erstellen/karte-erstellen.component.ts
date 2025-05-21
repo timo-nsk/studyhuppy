@@ -27,6 +27,10 @@ export class KarteErstellenComponent implements OnInit{
   snackbar = inject(MatSnackBar)
   router = inject(Router)
 
+  MAX_CHARACTERS : number = 2000
+  frageCharsLeft : number = this.MAX_CHARACTERS
+  antwortCharsLeft : number = this.MAX_CHARACTERS
+
   chosenFragenTyp : string = "n"
   @Input() stapelId!: string | null;
 
@@ -40,8 +44,8 @@ export class KarteErstellenComponent implements OnInit{
     this.neueNormaleFrageForm = new FormGroup({
       stapelId: new FormControl(this.stapelId, Validators.required),
       frageTyp: new FormControl("NORMAL"),
-      frage: new FormControl(null, Validators.required),
-      antwort: new FormControl(null, Validators.required),
+      frage: new FormControl(null, [Validators.required, Validators.maxLength(this.MAX_CHARACTERS-1)]),
+      antwort: new FormControl(null, [Validators.required, Validators.maxLength(this.MAX_CHARACTERS-1)]),
       notiz: new FormControl(null),
     })
 
@@ -174,4 +178,15 @@ export class KarteErstellenComponent implements OnInit{
   }
 
 
+  updateCharsLeft(type : string) {
+
+    if(type == 'frage') {
+      let charsUsed = this.neueNormaleFrageForm.get('frage')?.value.length
+      this.frageCharsLeft = this.MAX_CHARACTERS - charsUsed
+    } else if(type == 'antwort') {
+      let charsUsed = this.neueNormaleFrageForm.get('antwort')?.value.length
+      this.antwortCharsLeft = this.MAX_CHARACTERS - charsUsed
+    }
+
+  }
 }

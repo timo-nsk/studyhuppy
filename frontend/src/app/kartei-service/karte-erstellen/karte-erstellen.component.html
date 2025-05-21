@@ -12,7 +12,12 @@
   <form class="sh-form" [formGroup]="neueNormaleFrageForm" (ngSubmit)="sendNeuekarteData('n')">
     <div class="mb-4">
       <label for="n-frage" class="form-label">Frage<span class="hint-star">*</span></label>
-      <textarea id="n-frage" class="form-control" formControlName="frage"></textarea>
+      <textarea id="n-frage" class="form-control" formControlName="frage" (input)="updateCharsLeft('frage')" maxlength="2000"></textarea>
+      <span class="text-danger"
+            *ngIf="neueNormaleFrageForm.controls['frage'].errors?.['maxlength'] && neueNormaleFrageForm.controls['frage']">
+            Maximale Zeichen erreicht
+      </span>
+      <p><span>{{frageCharsLeft}}</span> Zeichen übrig</p>
       <span class="text-danger"
             *ngIf="neueNormaleFrageForm.controls['frage'].errors?.['required'] && neueNormaleFrageForm.controls['frage'].touched">
             Geben Sie eine Frage ein
@@ -20,7 +25,12 @@
     </div>
     <div class="mb-4">
       <label for="n-antwort" class="form-label">Antwort<span class="hint-star">*</span></label>
-      <textarea id="n-antwort" class="form-control" rows="4" formControlName="antwort"></textarea>
+      <textarea id="n-antwort" class="form-control" rows="4" formControlName="antwort" (input)="updateCharsLeft('antwort')" maxlength="2000"></textarea>
+      <span class="text-danger"
+            *ngIf="neueNormaleFrageForm.controls['antwort'].errors?.['maxlength'] && neueNormaleFrageForm.controls['antwort']">
+            Maximale Zeichen erreicht
+      </span>
+      <p><span>{{antwortCharsLeft}}</span> Zeichen übrig</p>
       <span class="text-danger"
             *ngIf="neueNormaleFrageForm.controls['antwort'].errors?.['required'] && neueNormaleFrageForm.controls['antwort'].touched">
             Geben Sie eine Antwort ein
