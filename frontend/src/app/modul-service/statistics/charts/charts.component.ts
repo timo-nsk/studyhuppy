@@ -10,38 +10,51 @@ import {
   Legend,
   BarController
 } from 'chart.js';
+import {NgIf} from '@angular/common';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, BarController);
 
 @Component({
   selector: 'app-charts',
-  imports: [],
+  imports: [
+    NgIf,
+    MatProgressSpinner
+  ],
   templateUrl: './charts.component.html',
   standalone: true,
   styleUrl: './charts.component.scss'
 })
 export class ChartsComponent implements  OnInit {
+  isLoading : boolean = true
 
   chartStats: { [date: string]: { modulName: string; secondsLearned: string }[] } = {};
 
   service = inject(StatisticApiService)
 
   ngOnInit(): void {
-    this.service.getChartLastDays().subscribe(value => {
-      this.chartStats = value;
-      console.log("chartStats", this.chartStats);
+    this.service.getChartLastDays().subscribe( {
+      next: (value) => {
+        this.chartStats = value;
+        this.isLoading = false
+      },
+      complete: () => {
+        setTimeout(() => {
+          this.initChartOverall(
+            "Minuten gelernt",
+            this.getOverallLabels(this.chartStats),
+            this.getOverallDataMinutes(this.chartStats),
+            "chart-total"
+          );
 
-      this.initChartOverall(
-        "Minuten gelernt",
-        this.getOverallLabels(this.chartStats),
-        this.getOverallDataMinutes(this.chartStats),
-        "chart-total"
-      );
-
-      this.initChartEachModule("time learned per modul",
-        this.getEachLabels(this.chartStats),
-        this.getDatasets(this.chartStats),
-        "chart-each");
+          this.initChartEachModule(
+            "time learned per modul",
+            this.getEachLabels(this.chartStats),
+            this.getDatasets(this.chartStats),
+            "chart-each"
+          );
+        }, 1);
+      }
     });
   }
 

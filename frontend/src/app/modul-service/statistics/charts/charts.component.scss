@@ -26,5 +26,13 @@
   border-style: solid;
   border-color: lightgray;
   border-width: 1px;
+}
 
+.spinner-container {
+  display: flex;
+  justify-content: center;
+}
+
+::ng-deep .spinner circle {
+  stroke: lightgray !important;
 }

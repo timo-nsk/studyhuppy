@@ -2,10 +2,24 @@
   <div id="chart-container">
     <!-- TODO FIX: die chart daten sind nciht ganz richtig, wie die zsammengerechnet werden für die Tage -->
     <div class="chart">
-      <canvas id="chart-total"></canvas>
+      <ng-container *ngIf="isLoading">
+        <div class="spinner-container">
+          <mat-spinner class="spinner" [diameter]="50"></mat-spinner>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!isLoading">
+        <canvas id="chart-total"></canvas>
+      </ng-container>
     </div>
     <div class="chart">
-      <canvas id="chart-each"></canvas>
+      <ng-container *ngIf="isLoading">
+        <div class="spinner-container">
+          <mat-spinner class="spinner" [diameter]="50"></mat-spinner>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!isLoading">
+        <canvas id="chart-each"></canvas>
+      </ng-container>
     </div>
   </div>
 </div>
