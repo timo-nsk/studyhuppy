@@ -5,6 +5,7 @@ import com.studyhub.track.domain.model.modul.ModulGelerntEvent;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import static com.studyhub.track.adapter.db.modul.ModulGelerntEventMapper.*;
@@ -26,5 +27,10 @@ public class ModulGelerntEventRepositoryImpl implements ModulGelerntEventReposit
 	@Override
 	public int getSumSecondsLearned(LocalDate date, String username, UUID modulId) {
 		return dao.getSumSecondsLearned(date, username, modulId);
+	}
+
+	@Override
+	public List<ModulGelerntEvent> getAllByUsername(String username) {
+		return dao.findAllByUsername(username);
 	}
 }

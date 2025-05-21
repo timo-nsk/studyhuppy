@@ -1,10 +1,12 @@
 package com.studyhub.track.adapter.db.modul;
 
+import com.studyhub.track.domain.model.modul.ModulGelerntEvent;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 public interface ModulGelerntEventDao extends CrudRepository<ModulGelerntEventDto, Integer> {
@@ -15,4 +17,5 @@ public interface ModulGelerntEventDao extends CrudRepository<ModulGelerntEventDt
 	                         @Param("username") String username,
 	                         @Param("modulId") UUID modulId);
 
+	List<ModulGelerntEvent> findAllByUsername(String username);
 }

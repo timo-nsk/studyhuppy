@@ -14,6 +14,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.utility.TestcontainersConfiguration;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -51,4 +52,15 @@ public class ModulGelerntEventRepositoryTest {
 		int secondsLearned = repository.getSumSecondsLearned(LocalDate.of(2025,3,1), "timo123", UUID.fromString("b3a1e8f2-7d6a-4b3e-90a8-b9e2345d6789"));
 		assertThat(secondsLearned).isEqualTo(300);
 	}
+
+	@Sql("events.sql")
+	@Test
+	@DisplayName("Alle Events eines users werden gefunden")
+	void test_03() {
+		List<ModulGelerntEvent> l = repository.getAllByUsername("timo123");
+
+		assertThat(l).hasSize(3);
+	}
+
+
 }
