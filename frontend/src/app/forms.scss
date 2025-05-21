@@ -64,3 +64,11 @@
   );
   transition: all 0.75s;
 }
+
+.fd-col {
+  flex-direction: column;
+}
+
+.wd-100 {
+  width: 100% !important;
+}

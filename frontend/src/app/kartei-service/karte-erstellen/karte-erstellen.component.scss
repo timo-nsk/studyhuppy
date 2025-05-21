@@ -1,17 +1,3 @@
-#super-container, #karte-erstellen-form-container {
-  width: 74vw;
-}
-
-#super-container, #karte-erstellen-container, #karte-erstellen-form-container {
-  display: flex;
-  justify-content: center;
-}
-
-#karte-erstellen-form-container {
-  flex-direction: column;
-  padding: 20px 20px 20px 20px;
-}
-
 #antwort-container {
   border-style: solid;
   border-width: 1px;

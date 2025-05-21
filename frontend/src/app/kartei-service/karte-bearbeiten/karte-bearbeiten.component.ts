@@ -34,7 +34,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   ],
   templateUrl: './karte-bearbeiten.component.html',
   standalone: true,
-  styleUrls: ['./karte-bearbeiten.component.scss', '../../button.scss', '../../forms.scss']
+  styleUrls: ['./karte-bearbeiten.component.scss', '../../button.scss', '../../forms.scss', '../../general.scss']
 })
 export class KarteBearbeitenComponent implements OnInit{
   protected readonly FrageTyp = FrageTyp
