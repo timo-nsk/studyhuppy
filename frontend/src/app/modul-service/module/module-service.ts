@@ -61,14 +61,9 @@ export class ModuleService {
     return this.http.delete<void>(this.MODUL_BASE_API + '/delete?fachId=' + fachId, {headers})
   }
 
-  deactivateModul(fachId: string) : Observable<void> {
+  putAktivStatus(fachId: string) : Observable<void> {
     const headers = this.headerService.createAuthHeader()
-    return this.http.put<void>(this.MODUL_BASE_API + '/deactivate', fachId, {headers})
-  }
-
-  activateModul(fachId: string) : Observable<void> {
-    const headers = this.headerService.createAuthHeader()
-    return this.http.put<void>(this.MODUL_BASE_API + '/activate', fachId, {headers})
+    return this.http.put<void>(this.MODUL_BASE_API + '/change-active', fachId, {headers})
   }
 
   sendAddTimeData(data: any) {

@@ -2,12 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {ModuleService} from '../module/module-service';
 import {Modul} from '../module/modul';
 import { CommonModule } from '@angular/common';
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatFormField, MatLabel} from '@angular/material/input';
+import {MatSelect, MatSelectChange} from '@angular/material/select';
+import {MatOption} from '@angular/material/core';
 
 @Component({
   selector: 'app-options',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatSelect, MatOption],
   templateUrl: './options.component.html',
   standalone: true,
   styleUrls: ['./options.component.scss', '../../color.scss']
@@ -15,12 +18,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class OptionsComponent implements OnInit{
 
   module : Modul[] = []
-
-  addTimeForms: FormGroup[] = [];
-
-  addKlausurDateForms : FormGroup[] = [];
-
-  fachId : string = ""
+  modulFachId : string = ''
 
   constructor(private service : ModuleService,
               private fb : FormBuilder,
@@ -31,23 +29,6 @@ export class OptionsComponent implements OnInit{
       next: (data) => {
         this.module = data;
 
-        // Jetzt sind die Daten vorhanden – hier Formulare aufbauen
-        this.module.forEach(modul => {
-          const form = this.fb.group({
-            time: new FormControl(""),
-            fachId: [modul.fachId]
-          });
-          this.addTimeForms.push(form);
-        });
-
-        this.module.forEach(modul => {
-          const form = this.fb.group({
-            date : new FormControl(""),
-            time : new FormControl(""),
-            fachId : [modul.fachId]
-          });
-          this.addKlausurDateForms.push(form);
-        });
       },
       error: (err) => {
         console.error('Fehler beim Laden:', err);
@@ -56,38 +37,22 @@ export class OptionsComponent implements OnInit{
   }
 
 
-  resetTimer(fachId : string, name : string) {
-    this.service.resetTimer(fachId).subscribe({
-      next: () => this.showConfirmation("Timer von '" + name + "' zurückgesetzt", 2500, ""),
-      error: () => this.showConfirmation("Timer von '" + name + "' konnte nicht zurückgesetzt werden", 2500, ""),
+  resetTimer() {
+    this.service.resetTimer(this.modulFachId).subscribe({
+      next: () => this.showConfirmation("Timer zurückgesetzt", 2500, ""),
+      error: () => this.showConfirmation("Timer von konnte nicht zurückgesetzt werden", 2500, ""),
     })
   }
 
-  deleteModul(fachId: string, name : string): void {
-    this.service.deleteModul(fachId).subscribe(() => {
-      this.module = this.module.filter(modul => modul.fachId !== fachId);
-      this.showConfirmation("Modul '"+ name + "' gelöscht", 2500, "")
+  deleteModul(): void {
+    this.service.deleteModul(this.modulFachId).subscribe(() => {
+      this.module = this.module.filter(modul => modul.fachId !== this.modulFachId);
+      this.showConfirmation("Modul erfolgreich gelöscht", 2500, "")
     });
   }
 
-  deactivateModul(fachId: string, name : string) {
-      this.service.deactivateModul(fachId).subscribe(() => {
-
-        this.service.getAllModulesByUsername().subscribe({
-          next: (data) => {
-            this.module = data;
-          },
-          error: (err) => {
-            console.error('Fehler beim Laden:', err);
-          }
-        });
-        this.showConfirmation("Modul '"+ name + "' deaktiviert", 2500, "success-snack")
-        //window.location.reload();
-      })
-  }
-
-  activateModul(fachId: string, name : string) {
-    this.service.activateModul(fachId).subscribe(() => {
+  putAktivStatus(fachId: string) {
+    this.service.putAktivStatus(fachId).subscribe(() => {
       this.service.getAllModulesByUsername().subscribe({
         next: (data) => {
           this.module = data;
@@ -96,22 +61,16 @@ export class OptionsComponent implements OnInit{
           console.error('Fehler beim Laden:', err);
         }
       });
-      this.showConfirmation("Modul '"+ name + "' aktiviert", 2500, "success-snack")
-
-      //window.location.reload();
+      this.showConfirmation("Modulaktivität geändert", 2500, "success-snack")
     })
   }
 
   sendAddTimeData(index : number, name : string) {
-    const data = this.addTimeForms[index].value
-    this.service.sendAddTimeData(data)
-    this.showConfirmation("Modul '"+ name + "' Zeit hinzugefügt", 2500, "")
+
   }
 
   sendKlausurDateData(index : number, name : string) {
-    const data = this.addKlausurDateForms[index].value
-    this.service.sendKlausurDateData(data)
-    this.showConfirmation("Modul '"+ name + "' Klausurdatum gesetzt", 2500, "")
+
   }
 
   showConfirmation(message: string, duration : number, cssClass : string) : void   {
@@ -120,5 +79,16 @@ export class OptionsComponent implements OnInit{
       panelClass: cssClass,
       horizontalPosition: 'end'
     })
+  }
+
+  selectModule(fachId: MatSelectChange<string>) {
+    this.modulFachId = fachId.value;
+  }
+
+  getActiveStatus(fachId: string) {
+    const modul = this.module.find(mod => mod.fachId === fachId);
+    let isActive : boolean = modul ? modul.active : false
+    //console.log("is active: " + isActive)
+    return isActive
   }
 }

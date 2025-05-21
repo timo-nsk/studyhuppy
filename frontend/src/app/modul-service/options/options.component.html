@@ -1,74 +1,85 @@
-<body class="bg-lightgrey">
 <!-- TODO: Wenn noch keine Module eingetragen sind muss hier default was stehen-->
-<div>
-  <div>
-    <div *ngFor="let modul of module; let i = index">
-      <h2>{{modul.name}}</h2>
-      <table>
-        <thead>
-        <tr>
-          <th>Option</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>
-            Timer zurücksetzen
-          </td>
-          <td><button class="btn option-btn" (click)="resetTimer(modul.fachId, modul.name)">reset</button></td>
-        </tr>
-        <tr>
-          <td>
-            Modul löschen
-          </td>
-          <td>
-            <button class="btn option-btn" (click)="deleteModul(modul.fachId, modul.name)">löschen</button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Modul aktivieren/deaktivieren
-          </td>
-          <td>
-            <div *ngIf="modul.active">
-              <button class="btn option-btn" (click)="deactivateModul(modul.fachId, modul.name)">deaktivieren</button>
-            </div>
-            <div *ngIf="!modul.active">
-              <button class="btn option-btn" (click)="activateModul(modul.fachId, modul.name)">aktivieren</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label class="fs-25">Zeit hinzufügen (hh:mm):</label>
-          </td>
-          <td>
-            <form id="form-add-time" *ngIf="addTimeForms[i]" [formGroup]="addTimeForms[i]" (click)="sendAddTimeData(i, modul.name)">
-              <div id="option-add-time">
-                <input id="time-inp" type="time" class="inp form-control" formControlName="time">
-                <button class="btn option-btn">hinzufügen</button>
+<div id="option-container">
+  <div *ngIf="module.length == 0">
+    <p>Es sind noch keine Module eingetragen.</p>
+  </div>
+  <div *ngIf="module.length > 0">
+    <div>
+      <div>
+        <mat-form-field>
+          <mat-label>Favorite food</mat-label>
+          <mat-select (selectionChange)="selectModule($event)">
+            @for (modul of module; track modul) {
+              <mat-option [value]="modul.fachId">{{modul.name}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+      <div id="option-table-container">
+        <table>
+          <tr>
+            <th class="col-wd-200 m-accent-font">
+              Timer zurücksetzen
+            </th>
+            <td class="col-wd-300 td-border-l m-accent-font">
+              <button class="btn option-btn" (click)="resetTimer()">
+                reset
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <th class="col-wd-200 m-accent-font">
+              Modul löschen
+            </th>
+            <td class="col-wd-300 td-border-l m-accent-font">
+              <button class="btn option-btn" (click)="deleteModul()">
+                löschen
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <th class="col-wd-200 m-accent-font">
+              Modul aktivieren/deaktivieren
+            </th>
+            <td class="col-wd-300 td-border-l m-accent-font">
+              <div>
+                <button class="btn option-btn" (click)="putAktivStatus(modulFachId)">
+                  <span *ngIf="getActiveStatus(modulFachId)">Deaktivieren</span>
+                  <span *ngIf="!getActiveStatus(modulFachId)">Aktivieren</span>
+                </button>
               </div>
-            </form>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="add-klausur" class="fs-25">Klausurdatum hinzufügen:</label>
-          </td>
-          <td>
-            <form id="form-klausur" *ngIf="addKlausurDateForms[i]" [formGroup]="addKlausurDateForms[i]" (click)="sendKlausurDateData(i, modul.name)">
-              <div id="option-add-klausur-date">
-                <input id="add-klausur" class="inp form-control" type="date" formControlName="date">
-                <input type="time" class="inp form-control" formControlName="time">
-                <button class="btn option-btn">hinzufügen</button>
-              </div>
-            </form>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+            </td>
+          </tr>
+          <tr>
+            <th class="col-wd-200 m-accent-font">
+              <label class="fs-25">Zeit hinzufügen (hh:mm):</label>
+            </th>
+            <td class="col-wd-300 td-border-l m-accent-font">
+              <form id="form-add-time">
+                <div id="option-add-time">
+                  <input id="time-inp" type="time" class="inp form-control">
+                  <button class="btn option-btn">hinzufügen</button>
+                </div>
+              </form>
+            </td>
+          </tr>
+          <tr>
+            <th class="col-wd-200 m-accent-font">
+              <label for="add-klausur" class="fs-25">Klausurdatum hinzufügen:</label>
+            </th>
+            <td class="col-wd-300 td-border-l m-accent-font">
+              <form id="form-klausur">
+                <div id="option-add-klausur-date">
+                  <input id="add-klausur" class="inp form-control" type="date">
+                  <input type="time" class="inp form-control">
+                  <button class="btn option-btn">hinzufügen</button>
+                </div>
+              </form>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
 </div>
-</body>
-

@@ -64,9 +64,17 @@ public class ModulService {
 				.toList();
 	}
 
-	public void activateModul(UUID fachId) {
-		repo.setActive(fachId, true);
-		log.info("activated modul id:%s".formatted(fachId.toString()));
+	public void changeActivity(UUID fachId) {
+		Modul m = repo.findByUuid(fachId);
+		boolean isActive = m.isActive();
+
+		if (isActive) {
+			repo.setActive(fachId, false);
+			log.info("deactivated modul id:%s".formatted(fachId.toString()));
+		} else {
+			repo.setActive(fachId, true);
+			log.info("activated modul id:%s".formatted(fachId.toString()));
+		}
 	}
 
 	public void deactivateModul(UUID fachId) {

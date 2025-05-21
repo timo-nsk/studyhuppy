@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -137,16 +136,9 @@ public class ModulApiController {
 	}
 
 	@AngularApi
-	@PutMapping("/activate")
+	@PutMapping("/change-active")
 	public ResponseEntity<Void> activate(@RequestBody  String fachId) {
-		modulService.activateModul(UUID.fromString(fachId));
-		return ResponseEntity.status(HttpStatus.OK).build();
-	}
-
-	@AngularApi
-	@PutMapping("/deactivate")
-	public ResponseEntity<Void> deactivate(@RequestBody  String fachId) {
-		modulService.deactivateModul(UUID.fromString(fachId));
+		modulService.changeActivity(UUID.fromString(fachId));
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 

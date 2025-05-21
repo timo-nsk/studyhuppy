@@ -167,7 +167,7 @@ public class ModulControllerTest {
 						.andExpect(status().is3xxRedirection())
 						.andExpect(redirectedUrl("/dashboard"));
 
-		verify(modulService).activateModul(any(UUID.class));
+		verify(modulService).changeActivity(any(UUID.class));
 		verify(modulService).deactivateModul(any(UUID.class));
 	}
 
