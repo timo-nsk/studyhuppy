@@ -172,4 +172,6 @@ export class KarteErstellenComponent implements OnInit{
     if(c == 1) return 'SINGLE_CHOICE'
     return 'MULTIPLE_CHOICE'
   }
+
+
 }

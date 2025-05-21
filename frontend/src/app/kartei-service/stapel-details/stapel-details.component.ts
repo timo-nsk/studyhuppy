@@ -16,10 +16,11 @@ import {
 } from '@angular/material/table';
 import {MatAnchor} from '@angular/material/button';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {KarteBearbeitenComponent} from '../karte-bearbeiten/karte-bearbeiten.component';
 
 @Component({
   selector: 'app-stapel-details',
-  imports: [NgIf, KarteErstellenComponent, MatTable, MatHeaderCell, MatColumnDef, MatCell, MatCellDef, MatHeaderRow, MatRow, MatRowDef, MatHeaderCellDef, MatHeaderRowDef, MatAnchor],
+  imports: [NgIf, KarteErstellenComponent, KarteBearbeitenComponent, MatTable, MatHeaderCell, MatColumnDef, MatCell, MatCellDef, MatHeaderRow, MatRow, MatRowDef, MatHeaderCellDef, MatHeaderRowDef, MatAnchor],
   templateUrl: './stapel-details.component.html',
   standalone: true,
   styleUrl: './stapel-details.component.scss',
@@ -37,10 +38,12 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class StapelDetailsComponent implements OnInit{
 
-  showForm = false
+  showErstellenForm = false
+  showBearbeitenForm = false
 
   stapel : Stapel = {}
   karteikarten = new MatTableDataSource<Karteikarte>();
+  karteToEdit : Karteikarte = {}
   displayedColumns: string[] = ['idx','frage', 'typ', 'option'];
   stapelId: string | null = ''
 
@@ -65,7 +68,7 @@ export class StapelDetailsComponent implements OnInit{
 
 
   showKarteErstellenForm() {
-    this.showForm = !this.showForm
+    this.showErstellenForm = !this.showErstellenForm
   }
 
   deleteKarte(stapelId: string | null, karteId: string) {
@@ -82,5 +85,10 @@ export class StapelDetailsComponent implements OnInit{
         })
       }
     })
+  }
+
+  showKarteBearbeitenForm(withKarte : Karteikarte) {
+    this.showBearbeitenForm = !this.showBearbeitenForm
+    this.karteToEdit = withKarte
   }
 }

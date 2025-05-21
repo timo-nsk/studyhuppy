@@ -1,0 +1,109 @@
+<!-- TODO: für beiden forms sollen frage und antworten nicht mehr als 2000 zeichen sein und die aktuelle Anzahl zeichen wird angezeigt -->
+<div id="super-container">
+  <div id="karte-erstellen-container">
+    <div id="karte-erstellen-form-container">
+      <div *ngIf="karteToEdit.frageTyp == FrageTyp.NORMAL">
+        <hr>
+        <form [formGroup]="editNormaleFrageForm" (ngSubmit)="putEditedData('n')">
+          <div class="mb-3">
+            <label for="n-frage" class="form-label">Frage</label>
+            <textarea id="n-frage" class="form-control" formControlName="frage"></textarea>
+            <span class="text-danger"
+                  *ngIf="editNormaleFrageForm.controls['frage'].errors?.['required'] && editNormaleFrageForm.controls['frage'].touched">
+                  Geben Sie eine Frage ein
+            </span>
+          </div>
+          <div class="mb-3">
+            <label for="n-antwort" class="form-label">Antwort</label>
+            <textarea id="n-antwort" class="form-control" rows="4" formControlName="antwort"></textarea>
+            <span class="text-danger"
+                  *ngIf="editNormaleFrageForm.controls['antwort'].errors?.['required'] && editNormaleFrageForm.controls['antwort'].touched">
+                  Geben Sie eine Antwort ein
+            </span>
+          </div>
+          <div class="mb-3">
+            <label for="n-notiz" class="form-label">Notiz</label>
+            <textarea id="n-notiz" class="form-control" formControlName="notiz"></textarea>
+          </div>
+          <div class="mb-3">
+            <button class="sh-btn w-150" type="submit">Karte bearbeiten</button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="karteToEdit.frageTyp == FrageTyp.SINGLE_CHOICE">
+        <hr>
+        <form [formGroup]="editChoiceFrageForm" (ngSubmit)="putEditedData('c')">
+          <div class="mb-3">
+            <label for="sc-frage" class="form-label">Frage</label>
+            <textarea id="sc-frage" class="form-control" formControlName="frage"></textarea>
+            <span class="text-danger"
+                  *ngIf="editChoiceFrageForm.controls['frage'].errors?.['required'] && editChoiceFrageForm.controls['frage'].touched">
+                  Geben Sie eine Frage ein
+            </span>
+          </div>
+
+          <!-- TODO: validation User muss mindestens 2 Antworten erstellen und mindestens eine muss true sein, bevor sie deem form hinzugefügt werden kann -->
+          <p>Antworten</p>
+          <div id="antwort-container" class="mb-3">
+            <div *ngIf="lengthAntwortenArray() == 0" class="mb-3">
+              Mindestens 2 Antworten eingeben
+            </div>
+            <div *ngIf="lengthAntwortenArray() > 0" class="mb-3">
+              <table id="antworten-table" mat-table [dataSource]="antwortenArrayRes" class="mat-elevation-z8">
+
+                <ng-container matColumnDef="idx">
+                  <th mat-header-cell *matHeaderCellDef> Nr. </th>
+                  <td mat-cell *matCellDef="let i = index"> {{i+1}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="wahr">
+                  <th mat-header-cell *matHeaderCellDef> Wahr </th>
+                  <td mat-cell *matCellDef="let element"> {{element[0] ? 'Ja' : 'Nein'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="antwort">
+                  <th mat-header-cell *matHeaderCellDef> Antwort </th>
+                  <td mat-cell *matCellDef="let element"> "{{element[1]}}" </td>
+                </ng-container>
+
+                <ng-container matColumnDef="option">
+                  <th mat-header-cell *matHeaderCellDef> Option </th>
+                  <td mat-cell *matCellDef="let i = index">
+                    <a (click)="removeAntwort(i)">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ff4643"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+                    </a>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+
+            </div>
+            <div id="choice-aw-container" [formGroup]="antwortenChoiceForm">
+              <div id="choice-wahr-item">
+                <label>Wahr</label>
+                <mat-checkbox class="example-margin" formControlName="wahrheit"></mat-checkbox>
+              </div>
+              <div id="choice-aw-item">
+                <label>Antwort</label>
+                <textarea matInput class="form-control" formControlName="antwort"></textarea>
+              </div>
+              <div id="choice-add-btn">
+                <a type="button" (click)="addAntwort()">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#5985E1"><path d="M446.67-280h66.66v-166.67H680v-66.66H513.33V-680h-66.66v166.67H280v66.66h166.67V-280Zm-260 160q-27 0-46.84-19.83Q120-159.67 120-186.67v-586.66q0-27 19.83-46.84Q159.67-840 186.67-840h586.66q27 0 46.84 19.83Q840-800.33 840-773.33v586.66q0 27-19.83 46.84Q800.33-120 773.33-120H186.67Zm0-66.67h586.66v-586.66H186.67v586.66Zm0-586.66v586.66-586.66Z"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="sc-notiz" class="form-label">Notiz</label>
+            <textarea id="sc-notiz" class="form-control" formControlName="notiz"></textarea>
+          </div>
+          <div class="mb-3">
+            <button class="sh-btn w-150" type="submit">Karte bearbeiten</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
