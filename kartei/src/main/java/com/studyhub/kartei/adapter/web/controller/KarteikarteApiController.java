@@ -61,5 +61,11 @@ public class KarteikarteApiController {
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
+	@PutMapping("/edit-karte")
+	public ResponseEntity<Void> editKarte(@RequestBody EditKarteikarteRequest editRequest) {
+		karteikarteService.editNormalKarteikarte(editRequest);
+		return ResponseEntity.ok().build();
+	}
+
 }
 

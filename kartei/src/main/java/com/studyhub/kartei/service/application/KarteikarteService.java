@@ -1,5 +1,6 @@
 package com.studyhub.kartei.service.application;
 
+import com.studyhub.kartei.adapter.web.controller.EditKarteikarteRequest;
 import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.domain.model.Stapel;
 import com.studyhub.kartei.service.application.lernzeit.KarteikarteGelerntEventRepository;
@@ -114,6 +115,28 @@ public class KarteikarteService {
 			}
 			stapelRepository.save(stapel);
 			log.info("edited karteikarte of set '%s'".formatted(stapelId));
+			return true;
+		}
+	}
+
+	public boolean editNormalKarteikarte(EditKarteikarteRequest editRequest) {
+		if(editRequest == null) {
+			return false;
+		} else {
+			Stapel stapel = stapelRepository.findByFachId(UUID.fromString(editRequest.stapelId()));
+			List<Karteikarte> karten = stapel.getKarteikarten();
+
+			for (Karteikarte currentKarte : karten) {
+				if (currentKarte.getFachId().toString().equals(editRequest.karteId())) {
+					currentKarte.setFrage(editRequest.frage());
+					currentKarte.setAntwort(editRequest.antwort());
+					currentKarte.setNotiz(editRequest.notiz());
+					currentKarte.setLetzteAenderungAm(LocalDateTime.now());
+					break;
+				}
+			}
+			stapelRepository.save(stapel);
+			log.info("edited karteikarte of stapel '%s'".formatted(editRequest.stapelId()));
 			return true;
 		}
 	}

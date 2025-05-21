@@ -59,4 +59,9 @@ export class KarteiApiService {
       }
     })
   }
+
+  putEditedData(data: any) : Observable<any> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.put<any>(this.BASE_API_URL + "/edit-karte", data, {headers})
+  }
 }
