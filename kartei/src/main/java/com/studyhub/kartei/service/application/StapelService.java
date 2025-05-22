@@ -1,7 +1,7 @@
 package com.studyhub.kartei.service.application;
 
-import com.studyhub.kartei.adapter.web.controller.RemoveAntwortRequest;
-import com.studyhub.kartei.adapter.web.controller.StapelDashboardDto;
+import com.studyhub.kartei.adapter.web.controller.request.dto.RemoveAntwortRequest;
+import com.studyhub.kartei.adapter.web.controller.request.dto.StapelDashboardDataResponse;
 import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.domain.model.Stapel;
 import com.studyhub.kartei.service.application.lernzeit.LernzeitService;
@@ -126,13 +126,13 @@ public class StapelService {
 		return repo.isStapelDbHealthy();
 	}
 
-	public List<StapelDashboardDto> prepareDashboardInfo(List<Stapel> stapel) {
-		List<StapelDashboardDto> dtos = new LinkedList<>();
+	public List<StapelDashboardDataResponse> prepareDashboardInfo(List<Stapel> stapel) {
+		List<StapelDashboardDataResponse> dtos = new LinkedList<>();
 		LocalDateTime now = LocalDateTime.now();
 
 		for (Stapel stap : stapel) {
 			UUID fachId = stap.getFachId();
-			StapelDashboardDto dto = new StapelDashboardDto(
+			StapelDashboardDataResponse dto = new StapelDashboardDataResponse(
 					stap.getName(),
 					fachId.toString(),
 					lernzeitService.getVorraussichtlicheLernzeitFürStapel(fachId, now),

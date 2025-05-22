@@ -1,6 +1,5 @@
 package com.studyhub.kartei.adapter.web.exception;
 
-import com.studyhub.kartei.adapter.web.form.InvalidAntwortenListFormatException;
 import com.studyhub.kartei.service.application.KarteikarteUpdateException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
@@ -52,15 +51,6 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(KarteikarteEditierenFehlerException.class)
 	public String karteikarteEditierenFehlerExceptionHandler(KarteikarteEditierenFehlerException ex, Model model, HttpServletResponse resp) {
 		resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-		model.addAttribute("errorMessage", ex.getMessage());
-		model.addAttribute("httpStatus", resp.getStatus());
-		model.addAttribute("reason", HttpStatus.valueOf(resp.getStatus()).getReasonPhrase());
-		return "error";
-	}
-
-	@ExceptionHandler(InvalidAntwortenListFormatException.class)
-	public String invalidAntwortenListFormatExceptionHandler(InvalidAntwortenListFormatException ex, Model model, HttpServletResponse resp) {
-		resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		model.addAttribute("errorMessage", ex.getMessage());
 		model.addAttribute("httpStatus", resp.getStatus());
 		model.addAttribute("reason", HttpStatus.valueOf(resp.getStatus()).getReasonPhrase());

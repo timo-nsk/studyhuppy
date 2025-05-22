@@ -29,13 +29,11 @@ export class KarteiApiService {
   }
 
   updateKarte(data : UpdateInfo) : Observable<any> {
-    console.log(data)
     const headers = this.headerService.createAuthHeader()
     return this.http.post<any>( this.BASE_API_URL + '/update-karteikarte' ,data ,  {headers})
   }
 
   postNewStapel(data : any) : Observable<any> {
-    console.log(data)
     const headers = this.headerService.createAuthHeader()
     return this.http.post<any>(this.BASE_API_URL + '/create-stapel', data, {headers})
   }
@@ -45,8 +43,8 @@ export class KarteiApiService {
     if(typ == 'n')
       return this.http.post<any>(this.BASE_API_URL + '/add-neue-karte-normal', data, {headers})
     else if (typ == 'c')
-      console.log("sendneuekartedata ping")
       return this.http.post<any>(this.BASE_API_URL + '/add-neue-karte-choice', data, {headers})
+    return new Observable()
   }
 
   deleteKarte(stapelId: string | null, karteId: string) : Observable<any> {
@@ -60,7 +58,7 @@ export class KarteiApiService {
     })
   }
 
-  putEditedData(data: any) : Observable<any> {
+  putNormalKarteEditedData(data: any) : Observable<any> {
     const headers = this.headerService.createAuthHeader()
     return this.http.put<any>(this.BASE_API_URL + "/edit-karte-normal", data, {headers})
   }
@@ -80,6 +78,5 @@ export class KarteiApiService {
             "antwortIndex": antwortIndex
         }
     })
-
   }
 }

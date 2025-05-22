@@ -1,7 +1,7 @@
 package com.studyhub.kartei.application;
 
-import com.studyhub.kartei.adapter.web.controller.RemoveAntwortRequest;
-import com.studyhub.kartei.adapter.web.controller.StapelDashboardDto;
+import com.studyhub.kartei.adapter.web.controller.request.dto.RemoveAntwortRequest;
+import com.studyhub.kartei.adapter.web.controller.request.dto.StapelDashboardDataResponse;
 import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.domain.model.Stapel;
 import com.studyhub.kartei.service.application.StapelRepository;
@@ -237,7 +237,7 @@ public class StapelServiceTest {
 		List<Stapel> stapel = StapelMother.initManyStapel();
 		when(lernzeitService.getVorraussichtlicheLernzeitFürStapel(any(UUID.class), any(LocalDateTime.class))).thenReturn(1);
 
-		List<StapelDashboardDto> dtos = service.prepareDashboardInfo(stapel);
+		List<StapelDashboardDataResponse> dtos = service.prepareDashboardInfo(stapel);
 
 		assertThat(dtos.size()).isEqualTo(3);
 		assertThat(dtos.get(0).name()).isEqualTo("stapel1");

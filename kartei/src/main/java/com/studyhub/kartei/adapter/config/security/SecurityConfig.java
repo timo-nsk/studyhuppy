@@ -14,9 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-
 	private JwtAuthFilter jwtAuthenticationFilter;
-
 
 	public SecurityConfig(JwtAuthFilter jwtAuthenticationFilter) {
 		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
@@ -24,17 +22,15 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		// TODO: csrf muss im frontend gemacht werden, hier werden keine Formulre templated
 		http
-				// TODO: muss aus sein, weil sonst die keine POST requests als 403. fixen
-				.csrf().disable()
-				.cors(Customizer.withDefaults())
-				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/api/**").permitAll()
-						.anyRequest().authenticated()
-				)
-				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
+			.csrf().disable() //muss disabled sein
+			.cors(Customizer.withDefaults())
+			.authorizeHttpRequests(auth -> auth
+					.anyRequest().authenticated()
+			)
+			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+			.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 	}
 
@@ -43,4 +39,3 @@ public class SecurityConfig {
 		return new JWTService();
 	}
 }
-

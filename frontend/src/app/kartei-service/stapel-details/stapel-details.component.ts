@@ -3,7 +3,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FrageTyp, Karteikarte, Stapel} from '../domain';
 import {KarteiApiService} from '../kartei.api.service';
 import {DatePipe, NgClass, NgIf} from '@angular/common';
-import {KarteErstellenComponent} from '../karte-erstellen/karte-erstellen.component';
 import { trigger, transition, style, animate } from '@angular/animations';
 import {
   MatCell,
@@ -16,12 +15,13 @@ import {
 } from '@angular/material/table';
 import {MatAnchor} from '@angular/material/button';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {KarteBearbeitenComponent} from '../karte-bearbeiten/karte-bearbeiten.component';
 import {FragetypFormatPipe} from '../fragetyp-format.pipe';
+import {KarteBearbeitenComponent} from './karte-bearbeiten/karte-bearbeiten.component';
+import {KarteErstellenComponent} from './karte-erstellen/karte-erstellen.component';
 
 @Component({
   selector: 'app-stapel-details',
-  imports: [NgIf, KarteErstellenComponent, KarteBearbeitenComponent, MatTable, MatHeaderCell, MatColumnDef, MatCell, MatCellDef, MatHeaderRow, MatRow, MatRowDef, MatHeaderCellDef, MatHeaderRowDef, MatAnchor, FragetypFormatPipe, DatePipe, NgClass],
+  imports: [NgIf, KarteBearbeitenComponent, KarteErstellenComponent, MatTable, MatHeaderCell, MatColumnDef, MatCell, MatCellDef, MatHeaderRow, MatRow, MatRowDef, MatHeaderCellDef, MatHeaderRowDef, MatAnchor, FragetypFormatPipe, DatePipe, NgClass],
   templateUrl: './stapel-details.component.html',
   standalone: true,
   styleUrl: './stapel-details.component.scss',
