@@ -1,11 +1,11 @@
-import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
 import {FrageTyp, Karteikarte} from '../domain';
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {
   MatCell,
   MatCellDef,
   MatColumnDef,
-  MatHeaderCell,
+  MatHeaderCell, MatHeaderCellDef,
   MatHeaderRow,
   MatHeaderRowDef,
   MatRow, MatRowDef, MatTable
@@ -14,6 +14,7 @@ import {MatCheckbox} from '@angular/material/checkbox';
 import {NgIf} from '@angular/common';
 import {KarteiApiService} from '../kartei.api.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {group} from '@angular/animations';
 
 @Component({
   selector: 'app-karte-bearbeiten',
@@ -30,13 +31,14 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     MatRowDef,
     MatTable,
     NgIf,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatHeaderCellDef
   ],
   templateUrl: './karte-bearbeiten.component.html',
   standalone: true,
   styleUrls: ['./karte-bearbeiten.component.scss', '../../button.scss', '../../forms.scss', '../../general.scss']
 })
-export class KarteBearbeitenComponent implements OnInit{
+export class KarteBearbeitenComponent implements OnInit, AfterViewInit{
   protected readonly FrageTyp = FrageTyp
 
   karteiService = inject(KarteiApiService)
@@ -47,7 +49,8 @@ export class KarteBearbeitenComponent implements OnInit{
   editNormaleFrageForm : FormGroup = new FormGroup({})
   editChoiceFrageForm: FormGroup =  new FormGroup({})
   displayedColumns: string[] = ['idx','wahr', 'antwort', 'option'];
-  antwortenChoiceForm: FormGroup = new FormGroup({})
+  editAntwortenChoiceForm: FormGroup = new FormGroup({})
+  anzahlAntworten : number | undefined = 0
   notEdited : boolean = true
   MAX_CHARACTERS : number = 2000
   charsLeft: number = this.MAX_CHARACTERS
@@ -60,7 +63,6 @@ export class KarteBearbeitenComponent implements OnInit{
       antwort: new FormControl(this.karteToEdit.antwort, Validators.required),
       notiz: new FormControl(this.karteToEdit.notiz)
     })
-
     this.editNormaleFrageForm.valueChanges.subscribe(formValue => {
       const origFrage = this.karteToEdit.frage
       const origAntwort = this.karteToEdit.antwort
@@ -75,6 +77,27 @@ export class KarteBearbeitenComponent implements OnInit{
         origNotiz == editedNotiz
     });
 
+    this.editChoiceFrageForm = new FormGroup({
+      stapelId: new FormControl(this.stapelId),
+      karteId: new FormControl(this.karteToEdit.fachId),
+      frage: new FormControl(this.karteToEdit.frage, Validators.required),
+      antworten: new FormArray(
+        this.karteToEdit.antworten!.map((antwort: any) =>
+          new FormGroup({
+            wahrheit: new FormControl(antwort.wahrheit),
+            antwort: new FormControl(antwort.antwort, Validators.required)
+          })
+        )
+      ),
+      notiz: new FormControl(this.karteToEdit.notiz)
+    })
+
+    this.editAntwortenChoiceForm = new FormGroup({
+      wahrheit: new FormControl(false),
+      antwort: new FormControl('', Validators.required)
+    });
+
+    this.anzahlAntworten = this.karteToEdit.antworten?.length
   }
 
   putEditedData(frageTyp: string) {
@@ -103,30 +126,49 @@ export class KarteBearbeitenComponent implements OnInit{
     }
   }
 
-  lengthAntwortenArray() : number {
-    return 10
-  }
-
-  removeAntwort(i : number) {
-
+  removeAntwort(i: number) {
+    (this.editChoiceFrageForm.get('antworten') as FormArray).removeAt(i)
+    console.log("removed antwort at index:" + i)
   }
 
   addAntwort() {
+    const wahr = this.editChoiceFrageForm.get('wahrheit')?.value;
+    const text = this.editChoiceFrageForm.get('antwort')?.value;
 
+    if (!text) return;
+
+    const antwortGroup = new FormGroup({
+      wahrheit: new FormControl(wahr),
+      antwort: new FormControl(text)
+    });
+
+    this.antwortenArray.push(antwortGroup);
+    this.editAntwortenChoiceForm.reset({ wahrheit: false, antwort: '' });
   }
 
   get antwortenArray(): FormArray {
-    return this.editChoiceFrageForm.get('antworten') as FormArray;
+    let arr = this.editChoiceFrageForm.get('antworten') as FormArray;
+    return arr
   }
 
   get antwortenArrayRes(): [boolean, string][] {
-    return this.antwortenArray.controls.map(control => {
+    let arr = this.editChoiceFrageForm.get('antworten') as FormArray;
+    const controls = arr?.controls;
+    if (!controls) return [];
+    return controls.map(control => {
       const group = control as FormGroup;
-      return [group.get('wahrheit')?.value, group.get('antwort')?.value];
+      return [
+        group.get('wahrheit')?.value ?? false,
+        group.get('antwort')?.value ?? ''
+      ];
     });
   }
 
   updateCharsLeft() {
 
+  }
+
+  ngAfterViewInit(): void {
+    console.log(this.antwortenArrayRes)
   }
 }
