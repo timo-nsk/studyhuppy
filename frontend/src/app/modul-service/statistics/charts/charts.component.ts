@@ -106,7 +106,6 @@ export class ChartsComponent implements  OnInit {
   }
 
   getOverallLabels(data : any) {
-    console.log(data)
     return Object.keys(data).map(e => this.formatToGermanDate(e)).reverse();
   }
 
@@ -122,45 +121,26 @@ export class ChartsComponent implements  OnInit {
       }
       timeLearned.push(seconds / 60);
     }
-    console.log("time leanred: " + timeLearned)
     return timeLearned;
   }
 
   getEachLabels(data : any) {
-    console.log(data)
     return Object.keys(data).map(e => this.formatToGermanDate(e)).reverse();
   }
 
   getDatasets(data: any) {
-    // Erstelle ein leeres Array für die Datasets
     const datasets :any[] = [];
-
-    const colors2 = [
-      'rgba(84, 19, 136, 1)',
-      'rgba(217, 3, 104, 1)',
-      'rgba(241, 233, 218, 1)',
-      'rgba(46, 41, 78, 1)',
-      'rgba(255, 212, 0, 1)'
-    ];
 
     let colors : string[] = []
 
-    for (let i = 0; i < 10; i++) {
-      colors.push(this.generateRgba())
-    }
+    for (let i = 0; i < 10; i++) colors.push(this.generateRgba())
 
-    console.log(colors)
+    let colorIndex = 0;
 
-    let colorIndex = 0; // Index für Farbzuweisung
-
-    // Iteriere über jedes Datum in den Daten
     Object.keys(data).forEach(date => {
-      // Iteriere über jedes Modul des jeweiligen Datums
       data[date].forEach((entry : any) => {
-        // Überprüfe, ob das Dataset für das Modul bereits existiert
         let dataset = datasets.find(ds => ds.label === entry.modulName);
 
-        // Wenn das Dataset nicht existiert, erstelle ein neues
         if (!dataset) {
           dataset = {
             label: entry.modulName,
@@ -170,7 +150,7 @@ export class ChartsComponent implements  OnInit {
           datasets.push(dataset);
         }
         colorIndex++;
-        // Füge die gelernte Zeit (in Sekunden) zum entsprechenden Dataset hinzu
+
         dataset.data.push(parseInt(entry.secondsLearned) / 60);
       });
     });
