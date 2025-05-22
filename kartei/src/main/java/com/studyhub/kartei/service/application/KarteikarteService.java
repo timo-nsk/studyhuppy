@@ -1,6 +1,7 @@
 package com.studyhub.kartei.service.application;
 
-import com.studyhub.kartei.adapter.web.controller.EditKarteikarteRequest;
+import com.studyhub.kartei.adapter.web.controller.EditChoiceKarteikarteRequest;
+import com.studyhub.kartei.adapter.web.controller.EditNormalKarteikarteRequest;
 import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.domain.model.Stapel;
 import com.studyhub.kartei.service.application.lernzeit.KarteikarteGelerntEventRepository;
@@ -119,7 +120,7 @@ public class KarteikarteService {
 		}
 	}
 
-	public boolean editNormalKarteikarte(EditKarteikarteRequest editRequest) {
+	public boolean editNormalKarteikarte(EditNormalKarteikarteRequest editRequest) {
 		if(editRequest == null) {
 			return false;
 		} else {
@@ -144,5 +145,9 @@ public class KarteikarteService {
 	public boolean karteNotExistsById(String karteiSetId) {
 		Karteikarte karteikarte = karteikarteRepository.findByFachId(karteiSetId);
 		return karteikarte == null;
+	}
+
+	public void editChoiceKarteikarte(EditChoiceKarteikarteRequest editRequest) {
+
 	}
 }

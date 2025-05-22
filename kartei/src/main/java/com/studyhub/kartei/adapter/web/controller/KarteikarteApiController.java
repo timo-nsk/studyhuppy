@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 @Controller
@@ -73,9 +72,15 @@ public class KarteikarteApiController {
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
-	@PutMapping("/edit-karte")
-	public ResponseEntity<Void> editKarte(@RequestBody EditKarteikarteRequest editRequest) {
+	@PutMapping("/edit-karte-normal")
+	public ResponseEntity<Void> editNomraleKarte(@RequestBody EditNormalKarteikarteRequest editRequest) {
 		karteikarteService.editNormalKarteikarte(editRequest);
+		return ResponseEntity.ok().build();
+	}
+
+	@PutMapping("/edit-karte-normal")
+	public ResponseEntity<Void> editChoiceKarte(@RequestBody EditChoiceKarteikarteRequest editRequest) {
+		karteikarteService.editChoiceKarteikarte(editRequest);
 		return ResponseEntity.ok().build();
 	}
 
