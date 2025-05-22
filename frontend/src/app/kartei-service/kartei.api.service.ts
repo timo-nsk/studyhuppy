@@ -65,6 +65,11 @@ export class KarteiApiService {
     return this.http.put<any>(this.BASE_API_URL + "/edit-karte-normal", data, {headers})
   }
 
+  putChoiceKarteEditedData(data: any) : Observable<any> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.put<any>(this.BASE_API_URL + "/edit-karte-choice", data, {headers})
+  }
+
   removeAntwortFromKarte(stapelId: string | null, karteId : string | undefined, antwortIndex: number) : Observable<any> {
     const headers = this.headerService.createAuthHeader()
     return this.http.delete<any>(this.BASE_API_URL + '/remove-antwort-from-karte', {

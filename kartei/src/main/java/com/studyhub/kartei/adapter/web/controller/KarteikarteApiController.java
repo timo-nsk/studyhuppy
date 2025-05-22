@@ -1,5 +1,6 @@
 package com.studyhub.kartei.adapter.web.controller;
 
+import com.studyhub.kartei.domain.model.Antwort;
 import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.service.application.KarteikarteService;
 import com.studyhub.kartei.service.application.KarteikarteUpdateException;

@@ -101,7 +101,6 @@ export class KarteBearbeitenComponent implements OnInit, AfterViewInit{
   }
 
   putEditedData(frageTyp: string) {
-    console.log(this.editNormaleFrageForm.value)
     switch (frageTyp) {
       case 'n': {
         if(this.editNormaleFrageForm.invalid) {
@@ -122,6 +121,28 @@ export class KarteBearbeitenComponent implements OnInit, AfterViewInit{
             }
           })
         }
+        break
+      }
+      case 'c': {
+        if(this.editChoiceFrageForm.invalid) {
+          this.editChoiceFrageForm.markAsTouched()
+          return
+        } else {
+          const data = this.editChoiceFrageForm.value
+          this.karteiService.putChoiceKarteEditedData(data).subscribe({
+            next: () => {
+              this.snackbar.open("Karteikarte erfolgreich geändert", "schließen", {
+                duration: 3500
+              })
+            },
+            error: () => {
+              this.snackbar.open("Karteikarte konnte nicht geändert werden", "schließen", {
+                duration: 3500
+              })
+            }
+          })
+        }
+        break
       }
     }
   }
@@ -142,18 +163,17 @@ export class KarteBearbeitenComponent implements OnInit, AfterViewInit{
   }
 
   addAntwort() {
-    const wahr = this.editChoiceFrageForm.get('wahrheit')?.value;
-    const text = this.editChoiceFrageForm.get('antwort')?.value;
+    const wahr = this.editAntwortenChoiceForm.get('wahrheit')?.value;
+    const text = this.editAntwortenChoiceForm.get('antwort')?.value;
+    console.log(wahr)
+    console.log(text)
 
-    if (!text) return;
-
-    const antwortGroup = new FormGroup({
+    const antworten = this.editChoiceFrageForm.get('antworten') as FormArray;
+    const neueAntwort = new FormGroup({
       wahrheit: new FormControl(wahr),
-      antwort: new FormControl(text)
+      antwort: new FormControl(text, Validators.required)
     });
-
-    this.antwortenArray.push(antwortGroup);
-    this.editAntwortenChoiceForm.reset({ wahrheit: false, antwort: '' });
+    antworten.push(neueAntwort);
   }
 
   get antwortenArray(): FormArray {

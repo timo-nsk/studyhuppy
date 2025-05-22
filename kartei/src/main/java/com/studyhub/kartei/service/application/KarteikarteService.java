@@ -147,7 +147,25 @@ public class KarteikarteService {
 		return karteikarte == null;
 	}
 
-	public void editChoiceKarteikarte(EditChoiceKarteikarteRequest editRequest) {
+	public boolean editChoiceKarteikarte(EditChoiceKarteikarteRequest editRequest) {
+		if(editRequest == null) {
+			return false;
+		} else {
+			Stapel stapel = stapelRepository.findByFachId(UUID.fromString(editRequest.stapelId()));
+			List<Karteikarte> karten = stapel.getKarteikarten();
 
+			for (Karteikarte currentKarte : karten) {
+				if (currentKarte.getFachId().toString().equals(editRequest.karteId())) {
+					currentKarte.setFrage(editRequest.frage());
+					currentKarte.setAntworten(List.of(editRequest.antworten()));
+					currentKarte.setNotiz(editRequest.notiz());
+					currentKarte.setLetzteAenderungAm(LocalDateTime.now());
+					break;
+				}
+			}
+			stapelRepository.save(stapel);
+			log.info("edited karteikarte of stapel '%s'".formatted(editRequest.stapelId()));
+			return true;
+		}
 	}
 }
