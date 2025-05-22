@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Karteikarte, Stapel} from '../domain';
+import {FrageTyp, Karteikarte, Stapel} from '../domain';
 import {KarteiApiService} from '../kartei.api.service';
 import {NgIf} from '@angular/common';
 import {KarteErstellenComponent} from '../karte-erstellen/karte-erstellen.component';
@@ -17,10 +17,11 @@ import {
 import {MatAnchor} from '@angular/material/button';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {KarteBearbeitenComponent} from '../karte-bearbeiten/karte-bearbeiten.component';
+import {FragetypFormatPipe} from '../fragetyp-format.pipe';
 
 @Component({
   selector: 'app-stapel-details',
-  imports: [NgIf, KarteErstellenComponent, KarteBearbeitenComponent, MatTable, MatHeaderCell, MatColumnDef, MatCell, MatCellDef, MatHeaderRow, MatRow, MatRowDef, MatHeaderCellDef, MatHeaderRowDef, MatAnchor],
+  imports: [NgIf, KarteErstellenComponent, KarteBearbeitenComponent, MatTable, MatHeaderCell, MatColumnDef, MatCell, MatCellDef, MatHeaderRow, MatRow, MatRowDef, MatHeaderCellDef, MatHeaderRowDef, MatAnchor, FragetypFormatPipe],
   templateUrl: './stapel-details.component.html',
   standalone: true,
   styleUrl: './stapel-details.component.scss',
@@ -44,7 +45,7 @@ export class StapelDetailsComponent implements OnInit{
   stapel : Stapel = {}
   karteikarten = new MatTableDataSource<Karteikarte>();
   karteToEdit : Karteikarte = {}
-  displayedColumns: string[] = ['idx','frage', 'typ', 'option'];
+  displayedColumns: string[] = ['idx','frage', 'antwort', 'typ', 'option'];
   stapelId: string | null = ''
 
   route = inject(ActivatedRoute)
@@ -91,4 +92,6 @@ export class StapelDetailsComponent implements OnInit{
     this.showBearbeitenForm = !this.showBearbeitenForm
     this.karteToEdit = withKarte
   }
+
+  protected readonly FrageTyp = FrageTyp;
 }
