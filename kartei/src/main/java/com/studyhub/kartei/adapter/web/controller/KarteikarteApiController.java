@@ -73,12 +73,12 @@ public class KarteikarteApiController {
 	}
 
 	@PutMapping("/edit-karte-normal")
-	public ResponseEntity<Void> editNomraleKarte(@RequestBody EditNormalKarteikarteRequest editRequest) {
+	public ResponseEntity<Void> editNormaleKarte(@RequestBody EditNormalKarteikarteRequest editRequest) {
 		karteikarteService.editNormalKarteikarte(editRequest);
 		return ResponseEntity.ok().build();
 	}
 
-	@PutMapping("/edit-karte-normal")
+	@PutMapping("/edit-karte-choice")
 	public ResponseEntity<Void> editChoiceKarte(@RequestBody EditChoiceKarteikarteRequest editRequest) {
 		karteikarteService.editChoiceKarteikarte(editRequest);
 		return ResponseEntity.ok().build();
