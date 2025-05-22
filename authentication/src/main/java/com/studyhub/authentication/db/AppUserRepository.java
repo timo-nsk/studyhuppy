@@ -44,7 +44,7 @@ public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
 
 	@Modifying
 	@Query("update users set mail = :newMail where user_id = :userId")
-    void updateMailByUserId(@Param("newMail")String newMail,
+    int updateMailByUserId(@Param("newMail")String newMail,
 							@Param("userId") UUID userId);
 
 	AppUser findByUserId(UUID userId);

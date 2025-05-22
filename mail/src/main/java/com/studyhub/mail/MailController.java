@@ -28,4 +28,11 @@ public class MailController {
 		templateMailService.prepareRegistrationConfirmationTemplating(registrationRequest);
 		return ResponseEntity.ok("successfully send registration confirmation");
 	}
+
+	@PostMapping("/user-change-mail")
+	public ResponseEntity<Void> sendChangedEmailInformation() {
+		System.out.println("sendChangedEmailInformation ping");
+		//TODO: implement
+		return ResponseEntity.ok().build();
+	}
 }

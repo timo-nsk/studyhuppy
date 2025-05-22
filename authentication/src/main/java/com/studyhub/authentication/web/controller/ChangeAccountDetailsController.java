@@ -1,25 +1,26 @@
 package com.studyhub.authentication.web.controller;
 
+import com.studyhub.authentication.adapter.mail.MailRequestService;
 import com.studyhub.authentication.web.ChangePasswordForm;
 import com.studyhub.authentication.web.EmailChangeRequest;
-import jakarta.validation.Valid;
 import com.studyhub.authentication.service.AccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Controller
 public class ChangeAccountDetailsController {
 
 	private final AccountService accountService;
+	private final MailRequestService mailRequestService;
 
-	public ChangeAccountDetailsController(AccountService accountService) {
+	public ChangeAccountDetailsController(AccountService accountService, MailRequestService mailRequestService) {
 		this.accountService = accountService;
+		this.mailRequestService = mailRequestService;
 	}
 
 	@PutMapping("/change-password")
@@ -35,8 +36,23 @@ public class ChangeAccountDetailsController {
 
 	@PutMapping("/change-mail")
 	public ResponseEntity<Void> changeMail(@RequestBody EmailChangeRequest req) {
-		accountService.changeMail(req);
-		return ResponseEntity.ok().build();
+		int res = accountService.changeMail(req);
+		AtomicBoolean success = new AtomicBoolean(false);
+		if(res == 1) {
+			mailRequestService.sendChangeMailInformation(req).doOnSuccess(mail -> {
+				System.out.println("sent request to mail service");
+				success.set(true);
+			}).doOnError(e -> {
+				System.out.println("error in mail service: " + e.getMessage());
+				success.set(false);
+			}).subscribe();
+		}
+
+		if(success.get()) {
+			return ResponseEntity.ok().build();
+		} else {
+			return ResponseEntity.internalServerError().build();
+		}
 	}
 
 	@PostMapping("/password-reset")

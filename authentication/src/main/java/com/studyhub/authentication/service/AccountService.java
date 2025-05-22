@@ -85,8 +85,8 @@ public class AccountService {
 		return false;
 	}
 
-	public void changeMail(EmailChangeRequest req) {
-		appUserRepository.updateMailByUserId(req.newMail(), UUID.fromString(req.userId()));
+	public int changeMail(EmailChangeRequest req) {
+		return appUserRepository.updateMailByUserId(req.newMail(), UUID.fromString(req.userId()));
 	}
 
 	public boolean validPassword(String sendPw, String userId) {
