@@ -64,7 +64,7 @@ export class ModuleComponent implements OnInit{
     })
 
     if (this.running) {
-      this.timer = setInterval(() => {
+      this.timer = window.setInterval(() => {
         seconds = this.updateSeconds(seconds);
         this.updateSecondsOnModulUI(fachId, seconds)
       }, 1000);
