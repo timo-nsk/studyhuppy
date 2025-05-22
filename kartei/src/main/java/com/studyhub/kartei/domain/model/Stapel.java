@@ -95,4 +95,11 @@ public class Stapel {
 		return karteikarten.stream()
 				.filter(k -> k.getFaelligAm().isBefore(now)).toList();
 	}
+
+	public void removeAntwortFromKarte(UUID karteId, int antwortIndex) throws IndexOutOfBoundsException{
+		if (karteikarten.isEmpty()) return;
+		Karteikarte k = findKarteikarteByFachId(karteId.toString());
+		if (k == null) return;
+		k.getAntworten().remove(antwortIndex);
+	}
 }

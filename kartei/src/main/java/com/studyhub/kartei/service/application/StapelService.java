@@ -1,5 +1,6 @@
 package com.studyhub.kartei.service.application;
 
+import com.studyhub.kartei.adapter.web.controller.RemoveAntwortRequest;
 import com.studyhub.kartei.adapter.web.controller.StapelDashboardDto;
 import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.domain.model.Stapel;
@@ -149,5 +150,12 @@ public class StapelService {
 		List<Karteikarte> l = s.getFälligeKarteikarten(now);
 		s.setKarteikarten(l);
 		return s;
+	}
+
+	public boolean removeAntwortFromKarte(RemoveAntwortRequest req) {
+		Stapel s = repo.findByFachId(UUID.fromString(req.stapelId()));
+		s.removeAntwortFromKarte(UUID.fromString(req.karteId()), req.antwortIndex());
+		repo.save(s);
+		return true;
 	}
 }

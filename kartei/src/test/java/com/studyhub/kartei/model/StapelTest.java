@@ -233,4 +233,18 @@ public class StapelTest {
 
 		assertThat(fälligeKarten.size()).isEqualTo(4);
 	}
+
+	@Test
+	@DisplayName("Eine Antwort aus einer Karteikarte des Stapels wird erfolgreich entfernt")
+	void test_24() {
+		Stapel stapel = StapelMother.stapelWithSingleChoiceKarteikarte();
+		Karteikarte karte = stapel.getKarteikarten().get(0);
+		UUID karteId = karte.getFachId();
+		int antwortIndex = 1;
+
+		stapel.removeAntwortFromKarte(karteId, antwortIndex);
+
+		assertThat(karte.getAntworten().size()).isEqualTo(2);
+		assertThat(karte.getAntworten().get(1)).isNotEqualTo("aw3");
+	}
 }

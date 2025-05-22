@@ -328,4 +328,34 @@ public class StapelMother {
 
 		return manyStapel;
 	}
+
+	public static Stapel stapelWithSingleChoiceKarteikarte() {
+		Antwort antwort = new Antwort("aw1", true);
+		Antwort antwort2 = new Antwort("aw2", true);
+		Antwort antwort3 = new Antwort("aw3", true);
+
+		List<Antwort>  aws = new LinkedList<>();
+		aws.add(antwort);
+		aws.add(antwort2);
+		aws.add(antwort3);
+
+		Karteikarte k = new Karteikarte(UUID.randomUUID(),
+				"ne frage",
+				null,
+				aws,
+				LocalDateTime.now(),
+				LocalDateTime.now(),
+				LocalDateTime.now(),
+				"notiz",
+				0,
+				FrageTyp.SINGLE_CHOICE,
+				0,
+				"10m,1d,3d");
+
+		List<Karteikarte> l = new LinkedList<>();
+		l.add(k);
+		Stapel stapel1 = new Stapel(UUID.randomUUID(), UUID.randomUUID(), "stapel1", "beschreibung1", "2m,2h,2d", "user1", l);
+
+		return stapel1;
+	}
 }

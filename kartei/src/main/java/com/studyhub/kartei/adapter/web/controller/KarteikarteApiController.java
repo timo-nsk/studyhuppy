@@ -61,6 +61,18 @@ public class KarteikarteApiController {
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
+	@DeleteMapping("/remove-antwort-from-karte")
+	public ResponseEntity<Void> removeAntwortFromKarte(@RequestBody RemoveAntwortRequest removeRequest) {
+		try {
+			stapelService.removeAntwortFromKarte(removeRequest);
+		} catch (IndexOutOfBoundsException | IllegalArgumentException e) {
+			return ResponseEntity.badRequest().build();
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().build();
+		}
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+
 	@PutMapping("/edit-karte")
 	public ResponseEntity<Void> editKarte(@RequestBody EditKarteikarteRequest editRequest) {
 		karteikarteService.editNormalKarteikarte(editRequest);

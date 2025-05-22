@@ -127,8 +127,18 @@ export class KarteBearbeitenComponent implements OnInit, AfterViewInit{
   }
 
   removeAntwort(i: number) {
-    (this.editChoiceFrageForm.get('antworten') as FormArray).removeAt(i)
-    console.log("removed antwort at index:" + i)
+    this.karteiService.removeAntwortFromKarte(this.stapelId, this.karteToEdit.fachId, i).subscribe({
+      next: () => {
+        this.snackbar.open("Antwort wurde erfolgreich entfernt", "schließen", {
+          duration: 3500
+        })
+      },
+      error: () => {
+        this.snackbar.open("Antwort konnte nicht entfernt werden", "schließen", {
+          duration: 3500
+        })
+      }
+    })
   }
 
   addAntwort() {

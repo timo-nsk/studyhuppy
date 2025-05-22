@@ -1,5 +1,6 @@
 package com.studyhub.kartei.application;
 
+import com.studyhub.kartei.adapter.web.controller.RemoveAntwortRequest;
 import com.studyhub.kartei.adapter.web.controller.StapelDashboardDto;
 import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.domain.model.Stapel;
@@ -19,6 +20,8 @@ import java.util.Map;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class StapelServiceTest {
@@ -255,5 +258,32 @@ public class StapelServiceTest {
 		Stapel res = service.findByFachIdWithFaelligeKarten(stapelId.toString(), today);
 
 		assertThat(res.getKarteikarten().size()).isEqualTo(5);
+	}
+
+	@Test
+	@DisplayName("Wenn ein Antwort aus einer Stapel gelöscht wurde, wird true zurückgegeben und keine Fehlermeldung geworfen")
+	void test_21() {
+		Stapel s = StapelMother.stapelWithSingleChoiceKarteikarte();
+		String karteId = s.getKarteikarten().get(0).getFachId().toString();
+		String stapelId = s.getFachId().toString();
+		RemoveAntwortRequest req = new RemoveAntwortRequest(stapelId, karteId, 1);
+		when(repo.findByFachId(any())).thenReturn(s);
+
+		boolean res = service.removeAntwortFromKarte(req);
+
+		assertThat(res).isTrue();
+	}
+
+	@Test
+	@DisplayName("Wenn ein Antwortindex geschickt wird, zu dem keine Antwort in einer karteikarte existiert, wird beim Löschen eine Exception geworfen")
+	void test_22() {
+		Stapel s = StapelMother.stapelWithSingleChoiceKarteikarte();
+		String karteId = s.getKarteikarten().get(0).getFachId().toString();
+		String stapelId = s.getFachId().toString();
+		RemoveAntwortRequest req = new RemoveAntwortRequest(stapelId, karteId, 10);
+		when(repo.findByFachId(any())).thenReturn(s);
+
+
+		assertThrows(IndexOutOfBoundsException.class, () -> service.removeAntwortFromKarte(req));
 	}
 }
