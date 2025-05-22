@@ -2,7 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FrageTyp, Karteikarte, Stapel} from '../domain';
 import {KarteiApiService} from '../kartei.api.service';
-import {NgIf} from '@angular/common';
+import {DatePipe, NgClass, NgIf} from '@angular/common';
 import {KarteErstellenComponent} from '../karte-erstellen/karte-erstellen.component';
 import { trigger, transition, style, animate } from '@angular/animations';
 import {
@@ -21,7 +21,7 @@ import {FragetypFormatPipe} from '../fragetyp-format.pipe';
 
 @Component({
   selector: 'app-stapel-details',
-  imports: [NgIf, KarteErstellenComponent, KarteBearbeitenComponent, MatTable, MatHeaderCell, MatColumnDef, MatCell, MatCellDef, MatHeaderRow, MatRow, MatRowDef, MatHeaderCellDef, MatHeaderRowDef, MatAnchor, FragetypFormatPipe],
+  imports: [NgIf, KarteErstellenComponent, KarteBearbeitenComponent, MatTable, MatHeaderCell, MatColumnDef, MatCell, MatCellDef, MatHeaderRow, MatRow, MatRowDef, MatHeaderCellDef, MatHeaderRowDef, MatAnchor, FragetypFormatPipe, DatePipe, NgClass],
   templateUrl: './stapel-details.component.html',
   standalone: true,
   styleUrl: './stapel-details.component.scss',
@@ -45,7 +45,7 @@ export class StapelDetailsComponent implements OnInit{
   stapel : Stapel = {}
   karteikarten = new MatTableDataSource<Karteikarte>();
   karteToEdit : Karteikarte = {}
-  displayedColumns: string[] = ['idx','frage', 'antwort', 'typ', 'option'];
+  displayedColumns: string[] = ['idx','frage', 'antwort', 'typ', 'due', 'option'];
   stapelId: string | null = ''
 
   route = inject(ActivatedRoute)
@@ -94,4 +94,10 @@ export class StapelDetailsComponent implements OnInit{
   }
 
   protected readonly FrageTyp = FrageTyp;
+
+  isFaellig(faelligAm: string | Date): boolean {
+    const date = new Date(faelligAm);
+    return date.getTime() < Date.now();
+  }
+
 }
