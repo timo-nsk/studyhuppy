@@ -1,29 +1,9 @@
-#login-container {
-  margin-top: 15vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#login-form-container {
-  background-color: white;
-  border-style: solid;
-  border-width: 3px;
-  border-color: rgb(16, 45, 92);;
-  border-radius: 10px;
-  width: 350px;
-}
-
-#login-form {
-  padding: 10px 10px 10px 10px;
-}
-
 #login-form-btn-grp {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   flex-direction: row;
-  margin: 10px 10px 10px 10px;
+  margin: 25px 10px 10px 10px;
 }
 
 #login-form-header {

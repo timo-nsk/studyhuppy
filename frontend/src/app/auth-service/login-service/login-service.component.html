@@ -1,8 +1,7 @@
 <app-header-auth></app-header-auth>
-
-<div id="login-container">
-  <div id="login-form-container" class="shd">
-    <form id="login-form" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+<div class="login-container">
+  <div class="form-container">
+    <form id="login-form" class="sh-form" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
 
       <div id="login-form-header">
         <h3 class="m-accent-font">Login</h3>
@@ -26,7 +25,9 @@
       </div>
 
       <div id="login-form-btn-grp">
-        <button class="sh-btn" type="submit">anmelden</button>
+        <button class="sh-form-btn">
+          <span class="sh-form-btn-content">anmelden</span>
+        </button>
         <a class="std-link m-accent-font" [routerLink]="'/register'">registrieren</a>
       </div>
     </form>

@@ -16,7 +16,7 @@ import { HeaderAuthComponent} from '../../app-layout/header-auth/header-auth.com
   ],
   templateUrl: './login-service.component.html',
   standalone: true,
-  styleUrls: ['./login-service.component.scss', '../../general.scss', '../../color.scss', '../../links.scss', '../../button.scss']
+  styleUrls: ['./login-service.component.scss', '../../general.scss', '../../color.scss', '../../links.scss', '../../button.scss', '../../forms.scss']
 })
 export class LoginServiceComponent {
 
