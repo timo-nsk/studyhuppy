@@ -55,4 +55,17 @@ public class KarteikarteImportServiceTest {
         assertThat(s.getKarteikarten()).hasSize(3);
         verify(repository).save(s);
     }
+
+    @Test
+    @DisplayName("Dateien ohne Notizen aber mit Fragen und Antworten werden erfolgreich in eine List<String[]>-Datenstruktur transformiert")
+    void test_3() throws IOException {
+        MockMultipartFile multipartFile = dl.ladeDateiAlsMultipart("src/test/resources/com/studyhub/kartei/service/application/test_fragen_no_notiz.csv");
+
+        List<String[]> res = service.processFile(multipartFile);
+
+        assertThat(res.get(0)).hasSize(3);
+        assertThat(res.get(1)).hasSize(2);
+        assertThat(res.get(1)[0]).isEqualTo("frage2");
+        assertThat(res.get(2)[1]).isEqualTo("aw3");
+    }
 }
