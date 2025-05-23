@@ -5,15 +5,15 @@ import com.studyhub.kartei.service.application.KarteikarteImportService;
 import com.studyhub.kartei.service.application.StapelRepository;
 import com.studyhub.kartei.util.DateiLader;
 import com.studyhub.kartei.util.StapelMother;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
-
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -28,6 +28,14 @@ public class KarteikarteImportServiceTest {
         repository = mock(StapelRepository.class);
         service = new KarteikarteImportService(repository);
         dl = new DateiLader();
+        write("src/test/resources/com/studyhub/kartei/service/application/large1.csv", 1);
+        write("src/test/resources/com/studyhub/kartei/service/application/large2.txt", 1);
+    }
+
+    @AfterAll
+    static void tearDown() {
+        write("src/test/resources/com/studyhub/kartei/service/application/large1.csv", 0);
+        write("src/test/resources/com/studyhub/kartei/service/application/large2.txt", 0);
     }
 
     @Test
@@ -67,5 +75,79 @@ public class KarteikarteImportServiceTest {
         assertThat(res.get(1)).hasSize(2);
         assertThat(res.get(1)[0]).isEqualTo("frage2");
         assertThat(res.get(2)[1]).isEqualTo("aw3");
+    }
+
+    @Test
+    @DisplayName("Dateien, die nicht .txt oder .csv und unter, werden angelehnt")
+    void test_4() throws IOException {
+        MockMultipartFile multipartFile = dl.ladeDateiAlsMultipart("src/test/resources/com/studyhub/kartei/service/application/wrong_dateiendung.yml");
+
+        boolean res = service.validateFile(multipartFile);
+
+        assertThat(res).isFalse();
+    }
+
+    @Test
+    @DisplayName("Dateien, die .txt oder .csv  und unter 1MB groß sind, werden akzeptiert ")
+    void test_5() throws IOException {
+        MockMultipartFile multipartFile1 = dl.ladeDateiAlsMultipart("src/test/resources/com/studyhub/kartei/service/application/test_fragen.csv");
+        MockMultipartFile multipartFile2 = dl.ladeDateiAlsMultipart("src/test/resources/com/studyhub/kartei/service/application/test_fragen2.txt");
+
+        boolean res1 = service.validateFile(multipartFile1);
+        boolean res2 = service.validateFile(multipartFile2);
+
+        assertThat(res1).isTrue();
+        assertThat(res2).isTrue();
+    }
+
+    @Test
+    @DisplayName("Leere Dateien werden abgelehnt")
+    void test_6() throws IOException {
+        MockMultipartFile multipartFile1 = dl.ladeDateiAlsMultipart("src/test/resources/com/studyhub/kartei/service/application/empty.csv");
+
+        boolean res = service.validateFile(multipartFile1);
+
+        assertThat(res).isFalse();
+    }
+
+    @Test
+    @DisplayName("Daten über 1MB Größe werden abgelehnt")
+    void test_7() throws IOException {
+        MockMultipartFile multipartFile1 = dl.ladeDateiAlsMultipart("src/test/resources/com/studyhub/kartei/service/application/test_fragen.csv");
+
+        boolean res = service.validateFile(multipartFile1);
+
+        assertThat(res).isTrue();
+    }
+
+    @Test
+    @DisplayName("Dateien, die .txt oder .csv  und über 1MB groß sind, werden abgelehnt ")
+    void test_8() throws IOException {
+        MockMultipartFile multipartFile1 = dl.ladeDateiAlsMultipart("src/test/resources/com/studyhub/kartei/service/application/large1.csv");
+        MockMultipartFile multipartFile2 = dl.ladeDateiAlsMultipart("src/test/resources/com/studyhub/kartei/service/application/large2.txt");
+
+        boolean res1 = service.validateFile(multipartFile1);
+        boolean res2 = service.validateFile(multipartFile2);
+
+        assertThat(res1).isFalse();
+        assertThat(res2).isFalse();
+    }
+
+    private static void write(String file, int writeFlag) {
+        if (writeFlag == 0) {
+            try (FileWriter writer = new FileWriter(file)) {
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (writeFlag == 1) {
+            try (FileWriter writer = new FileWriter(file)) {
+                for(int i = 0; i <= 1_048_577; i++) {
+                    writer.write("a");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }

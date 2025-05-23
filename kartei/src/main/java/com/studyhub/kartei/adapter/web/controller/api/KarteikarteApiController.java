@@ -90,6 +90,7 @@ public class KarteikarteApiController {
 	@PostMapping("/import-karten")
 	public ResponseEntity<String> importKarten(@RequestParam("file") MultipartFile file,
 											 @RequestParam("stapelId") String stapelId) {
+		karteikarteImportService.validateFile(file);
 		System.out.println("ping import");
 		try {
 			karteikarteImportService.importKarteikarten(file, stapelId);

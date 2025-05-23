@@ -18,6 +18,8 @@ import java.util.regex.PatternSyntaxException;
 @Service
 public class KarteikarteImportService {
 
+    private final int MAX_BYTE = 1_048_576; // 1MB
+
     private final StapelRepository stapelRepository;
 
     public KarteikarteImportService(StapelRepository stapelRepository) {
@@ -54,5 +56,16 @@ public class KarteikarteImportService {
             zeilen.add(values);
         }
         return zeilen;
+    }
+
+    public boolean validateFile(MultipartFile file) {
+        if (file == null || file.isEmpty()) return false;
+
+        String filename = file.getOriginalFilename();
+
+        boolean validExtension = filename.endsWith(".txt") || filename.endsWith(".csv");
+        boolean validSize = file.getSize() <= MAX_BYTE;
+
+        return validExtension && validSize;
     }
 }
