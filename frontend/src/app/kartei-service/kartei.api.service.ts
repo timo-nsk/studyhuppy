@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {HeaderService} from '../header.service';
 import {Stapel, UpdateInfo} from './domain';
@@ -78,5 +78,12 @@ export class KarteiApiService {
             "antwortIndex": antwortIndex
         }
     })
+  }
+
+  postKartenFile(formData: FormData) : Observable<string> {
+    let token = localStorage.getItem("auth_token")
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+
+    return this.http.post<string>(this.BASE_API_URL + '/import-karten', formData, { headers })
   }
 }

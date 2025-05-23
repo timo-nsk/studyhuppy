@@ -2,15 +2,16 @@ package com.studyhub.kartei.adapter.web.controller.api;
 
 import com.studyhub.kartei.adapter.web.controller.request.dto.*;
 import com.studyhub.kartei.domain.model.Karteikarte;
-import com.studyhub.kartei.service.application.KarteikarteService;
-import com.studyhub.kartei.service.application.KarteikarteUpdateException;
-import com.studyhub.kartei.service.application.StapelService;
-import com.studyhub.kartei.service.application.UpdateInfo;
+import com.studyhub.kartei.service.application.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.UUID;
+import java.util.regex.PatternSyntaxException;
 
 @Controller
 @RequestMapping("/api")
@@ -18,10 +19,12 @@ public class KarteikarteApiController {
 
 	private final StapelService stapelService;
 	private final KarteikarteService karteikarteService;
+	private final KarteikarteImportService karteikarteImportService;
 
-	public KarteikarteApiController(StapelService stapelService, KarteikarteService karteikarteService) {
+	public KarteikarteApiController(StapelService stapelService, KarteikarteService karteikarteService, KarteikarteImportService karteikarteImportService) {
 		this.stapelService = stapelService;
         this.karteikarteService = karteikarteService;
+        this.karteikarteImportService = karteikarteImportService;
     }
 
 	@PostMapping("/add-neue-karte-normal")
@@ -82,5 +85,21 @@ public class KarteikarteApiController {
 			return ResponseEntity.internalServerError().build();
 		}
 		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+
+	@PostMapping("/import-karten")
+	public ResponseEntity<String> importKarten(@RequestParam("file") MultipartFile file,
+											 @RequestParam("stapelId") String stapelId) {
+		System.out.println("ping import");
+		try {
+			karteikarteImportService.importKarteikarten(file, stapelId);
+		} catch (PatternSyntaxException e) {
+			System.out.println(e.getMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Inkorrektes Format");
+        } catch (IOException e) {
+			System.out.println(e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Es entstand ein Fehler auf dem Server, versuchen Sie es erneut");
+		}
+        return ResponseEntity.ok("Karteikarten erfolgreich importiert");
 	}
 }

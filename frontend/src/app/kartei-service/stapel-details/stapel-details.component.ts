@@ -18,10 +18,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {FragetypFormatPipe} from '../fragetyp-format.pipe';
 import {KarteBearbeitenComponent} from './karte-bearbeiten/karte-bearbeiten.component';
 import {KarteErstellenComponent} from './karte-erstellen/karte-erstellen.component';
+import {KarteImportComponent} from './karte-import/karte-import.component';
 
 @Component({
   selector: 'app-stapel-details',
-  imports: [NgIf, KarteBearbeitenComponent, KarteErstellenComponent, MatTable, MatHeaderCell, MatColumnDef, MatCell, MatCellDef, MatHeaderRow, MatRow, MatRowDef, MatHeaderCellDef, MatHeaderRowDef, MatAnchor, FragetypFormatPipe, DatePipe, NgClass],
+  imports: [NgIf, KarteBearbeitenComponent, KarteErstellenComponent, KarteImportComponent, MatTable, MatHeaderCell, MatColumnDef, MatCell, MatCellDef, MatHeaderRow, MatRow, MatRowDef, MatHeaderCellDef, MatHeaderRowDef, MatAnchor, FragetypFormatPipe, DatePipe, NgClass],
   templateUrl: './stapel-details.component.html',
   standalone: true,
   styleUrl: './stapel-details.component.scss',
@@ -41,6 +42,7 @@ export class StapelDetailsComponent implements OnInit{
 
   showErstellenForm = false
   showBearbeitenForm = false
+  showImportForm = false
 
   stapel : Stapel = {}
   karteikarten = new MatTableDataSource<Karteikarte>();
@@ -70,6 +72,10 @@ export class StapelDetailsComponent implements OnInit{
 
   showKarteErstellenForm() {
     this.showErstellenForm = !this.showErstellenForm
+  }
+
+  showImportierenForm() {
+    this.showImportForm = !this.showImportForm
   }
 
   deleteKarte(stapelId: string | null, karteId: string) {

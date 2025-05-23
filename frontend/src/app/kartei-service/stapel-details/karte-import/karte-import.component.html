@@ -1,0 +1,39 @@
+<p>Importiere deine Fragen aus einer <code>.txt</code>- oder <code>.csv</code>-Datei. Maximal 1MB</p>
+<p>Der Inhalt der Datei muss <a (click)="displayFormatCanvas()">in dieser Form</a> formattiert sein.</p>
+
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasLabel">Formattierung</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <p>Inhalt der Datei</p>
+    <p>Korrekt:</p>
+    <div class="format-file-container">
+      <p>
+        Was ist die Hauptstadt von Deutschland;Berlin;Eine Notiz dazu
+      </p>
+      <p>
+        Was bedeutet H2O;Chemischer Ausdruck für Wasser;Eine Notiz dazu
+      </p>
+      <p>
+        Gibt es Aliens?;Wer weiß, es gibt einige Theorien dazu...;Eine Notiz dazu
+      </p>
+    </div>
+  </div>
+</div>
+
+
+<form class="sh-form" [formGroup]="fileForm" (ngSubmit)="uploadData()">
+  <div class="input-group mb-3 input-container">
+    <input
+      type="file"
+      class="form-control"
+      id="inputGroupFile02"
+      accept=".csv,.txt"
+      (change)="onFileChange($event)"
+    >
+    <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Button</button>
+  </div>
+</form>
