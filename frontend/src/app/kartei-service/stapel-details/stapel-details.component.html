@@ -7,7 +7,7 @@
       {{!showErstellenForm ? 'Karte hinzufügen' : 'Formular schließen'}}
     </a>
     <a id="import-karten-btn" mat-button (click)="showImportierenForm()" target="_blank">
-      {{!showErstellenForm ? 'Karte importieren' : 'Formular schließen'}}
+      {{!showImportForm ? 'Karte importieren' : 'Formular schließen'}}
     </a>
   </div>
   <div *ngIf="showErstellenForm" @slideDown>
@@ -22,6 +22,7 @@
   </div>
 
   <div>
+    <h2>Karteikarten</h2>
     <table id="karteikarten-table" mat-table [dataSource]="karteikarten" class="mat-elevation-z8">
 
       <ng-container matColumnDef="idx">

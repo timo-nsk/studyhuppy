@@ -30,6 +30,7 @@ export class KarteErstellenComponent implements OnInit{
   MAX_CHARACTERS : number = 2000
   frageCharsLeft : number = this.MAX_CHARACTERS
   antwortCharsLeft : number = this.MAX_CHARACTERS
+  notizCharsLeft: number = this.MAX_CHARACTERS;
 
   chosenFragenTyp : string = "n"
   @Input() stapelId!: string | null;
@@ -40,13 +41,14 @@ export class KarteErstellenComponent implements OnInit{
   antwortenChoiceForm: FormGroup = new FormGroup({})
   displayedColumns: string[] = ['idx','wahr', 'antwort', 'option'];
 
+
   ngOnInit(): void {
     this.neueNormaleFrageForm = new FormGroup({
       stapelId: new FormControl(this.stapelId, Validators.required),
       frageTyp: new FormControl("NORMAL"),
       frage: new FormControl(null, [Validators.required, Validators.maxLength(this.MAX_CHARACTERS-1)]),
       antwort: new FormControl(null, [Validators.required, Validators.maxLength(this.MAX_CHARACTERS-1)]),
-      notiz: new FormControl(null),
+      notiz: new FormControl(null, Validators.maxLength(this.MAX_CHARACTERS-1)),
     })
 
     this.neueChoiceFrageForm = new FormGroup({
@@ -186,6 +188,9 @@ export class KarteErstellenComponent implements OnInit{
     } else if(type == 'antwort') {
       let charsUsed = this.neueNormaleFrageForm.get('antwort')?.value.length
       this.antwortCharsLeft = this.MAX_CHARACTERS - charsUsed
+    } else if(type == 'notiz') {
+      let charsUsed = this.neueNormaleFrageForm.get('notiz')?.value.length
+      this.notizCharsLeft = this.MAX_CHARACTERS - charsUsed
     }
 
   }

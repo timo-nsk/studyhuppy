@@ -4,8 +4,12 @@
   <form class="sh-form" [formGroup]="editNormaleFrageForm" (ngSubmit)="putEditedKarteData('n')">
     <div class="mb-3">
       <label for="n-frage" class="form-label">Frage<span class="hint-star">*</span></label>
-      <textarea id="n-frage" class="form-control" formControlName="frage" (input)="updateCharsLeft()" maxlength="2000"></textarea>
-      <p><span>{{charsLeft}}</span> Zeichen übrig</p>
+      <textarea id="n-frage" class="form-control" formControlName="frage" (input)="updateCharsLeft('frage')" maxlength="2000"></textarea>
+      <span class="text-danger"
+            *ngIf="editNormaleFrageForm.controls['notiz'].errors?.['maxlength'] && editNormaleFrageForm.controls['notiz']">
+            Maximale Zeichen erreicht
+      </span>
+      <p class="max-char-p"><span>{{frageCharsLeft}}</span> Zeichen übrig</p>
       <span class="text-danger"
             *ngIf="editNormaleFrageForm.controls['frage'].errors?.['required'] && editNormaleFrageForm.controls['frage'].touched">
             Geben Sie eine Frage ein
@@ -13,8 +17,12 @@
     </div>
     <div class="mb-3">
       <label for="n-antwort" class="form-label">Antwort<span class="hint-star">*</span></label>
-      <textarea id="n-antwort" class="form-control" rows="4" formControlName="antwort" (input)="updateCharsLeft()" maxlength="2000"></textarea>
-      <p><span>{{charsLeft}}</span> Zeichen übrig</p>
+      <textarea id="n-antwort" class="form-control" rows="2" formControlName="antwort" (input)="updateCharsLeft('antwort')" maxlength="2000"></textarea>
+      <span class="text-danger"
+            *ngIf="editNormaleFrageForm.controls['antwort'].errors?.['maxlength'] && editNormaleFrageForm.controls['antwort']">
+            Maximale Zeichen erreicht
+      </span>
+      <p class="max-char-p"><span>{{antwortCharsLeft}}</span> Zeichen übrig</p>
       <span class="text-danger"
             *ngIf="editNormaleFrageForm.controls['antwort'].errors?.['required'] && editNormaleFrageForm.controls['antwort'].touched">
             Geben Sie eine Antwort ein
@@ -22,7 +30,12 @@
     </div>
     <div class="mb-3">
       <label for="n-notiz" class="form-label">Notiz</label>
-      <textarea id="n-notiz" class="form-control" formControlName="notiz"></textarea>
+      <textarea id="n-notiz" class="form-control" formControlName="notiz" (input)="updateCharsLeft('notiz')" maxlength="2000"></textarea>
+      <span class="text-danger"
+            *ngIf="editNormaleFrageForm.controls['notiz'].errors?.['maxlength'] && editNormaleFrageForm.controls['notiz']">
+            Maximale Zeichen erreicht
+      </span>
+      <p class="max-char-p"><span>{{notizCharsLeft}}</span> Zeichen übrig</p>
     </div>
     <div class="mb-3">
       <div class="mb-4">

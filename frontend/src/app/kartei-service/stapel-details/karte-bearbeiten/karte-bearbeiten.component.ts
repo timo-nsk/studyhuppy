@@ -52,15 +52,17 @@ export class KarteBearbeitenComponent implements OnInit, AfterViewInit{
   anzahlAntworten : number | undefined = 0
   notEdited : boolean = true
   MAX_CHARACTERS : number = 2000
-  charsLeft: number = this.MAX_CHARACTERS
+  frageCharsLeft : number = this.MAX_CHARACTERS
+  antwortCharsLeft : number = this.MAX_CHARACTERS
+  notizCharsLeft: number = this.MAX_CHARACTERS;
 
   ngOnInit(): void {
     this.editNormaleFrageForm = new FormGroup({
       stapelId: new FormControl(this.stapelId),
       karteId: new FormControl(this.karteToEdit.fachId),
-      frage: new FormControl(this.karteToEdit.frage, Validators.required),
-      antwort: new FormControl(this.karteToEdit.antwort, Validators.required),
-      notiz: new FormControl(this.karteToEdit.notiz)
+      frage: new FormControl(this.karteToEdit.frage, [Validators.required, Validators.maxLength(this.MAX_CHARACTERS-1)]),
+      antwort: new FormControl(this.karteToEdit.antwort, [Validators.required, Validators.maxLength(this.MAX_CHARACTERS-1)]),
+      notiz: new FormControl(this.karteToEdit.notiz, Validators.maxLength(this.MAX_CHARACTERS-1))
     })
     this.editNormaleFrageForm.valueChanges.subscribe(formValue => {
       const origFrage = this.karteToEdit.frage
@@ -193,11 +195,22 @@ export class KarteBearbeitenComponent implements OnInit, AfterViewInit{
     });
   }
 
-  updateCharsLeft() {
-
-  }
-
   ngAfterViewInit(): void {
     console.log(this.antwortenArrayRes)
+  }
+
+  updateCharsLeft(type : string) {
+
+    if(type == 'frage') {
+      let charsUsed = this.editNormaleFrageForm.get('frage')?.value.length
+      this.frageCharsLeft = this.MAX_CHARACTERS - charsUsed
+    } else if(type == 'antwort') {
+      let charsUsed = this.editNormaleFrageForm.get('antwort')?.value.length
+      this.antwortCharsLeft = this.MAX_CHARACTERS - charsUsed
+    } else if(type == 'notiz') {
+      let charsUsed = this.editNormaleFrageForm.get('notiz')?.value.length
+      this.notizCharsLeft = this.MAX_CHARACTERS - charsUsed
+    }
+
   }
 }
