@@ -1,5 +1,6 @@
 package com.studyhub.kartei.service.application;
 
+
 import com.studyhub.kartei.domain.model.FrageTyp;
 import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.domain.model.Stapel;
@@ -13,12 +14,15 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 @Service
 public class KarteikarteImportService {
 
     private final int MAX_BYTE = 1_048_576; // 1MB
+
+    private final String FORMAT_REGEX = "^[^;]+;[^;]+$|^[^;]+;[^;]+;[^;]+$";
 
     private final StapelRepository stapelRepository;
 
@@ -35,10 +39,7 @@ public class KarteikarteImportService {
             String antwort = zeile[1];
             String notiz = null;
 
-            // Notizen sind kein Pflichtfeld, deswgen überprüfen, ob eine eingetragen wurde
-            if(zeile.length == 3) {
-                notiz = zeile[2];
-            }
+            if(zeile.length == 3) notiz = zeile[2];
 
             Karteikarte k = Karteikarte.initNewKarteikarte(frage, antwort, notiz, FrageTyp.NORMAL);
             stapel.addKarteikarte(k);
@@ -46,12 +47,18 @@ public class KarteikarteImportService {
         stapelRepository.save(stapel);
     }
 
-    public List<String[]> processFile(MultipartFile file) throws IOException, PatternSyntaxException {
+    public List<String[]> processFile(MultipartFile file) throws IOException, PatternSyntaxException, InvalidFileException, InvalidFormatException {
+        boolean validFile = validateFile(file);
+        if (!validFile) throw new InvalidFileException("");
+
+
         List<String[]> zeilen = new ArrayList<>();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8));
         String line;
         while ((line = reader.readLine()) != null) {
+            boolean validFormat = validFormat(line);
+            if (!validFormat) throw new InvalidFormatException("");
             String[] values = line.split(";");
             zeilen.add(values);
         }
@@ -67,5 +74,9 @@ public class KarteikarteImportService {
         boolean validSize = file.getSize() <= MAX_BYTE;
 
         return validExtension && validSize;
+    }
+
+    public boolean validFormat(String s) {
+        return Pattern.compile(FORMAT_REGEX).matcher(s).matches();
     }
 }

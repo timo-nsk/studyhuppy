@@ -133,6 +133,35 @@ public class KarteikarteImportServiceTest {
         assertThat(res2).isFalse();
     }
 
+    @Test
+    @DisplayName("Beispiel-Input werden korrekt von der Regex gematched")
+    void test_9() throws IOException {
+        String s1 = "a";
+        String s2 = "a;";
+        String s3 = "a;b";
+        String s4 = "a;b;";
+        String s5 = "a;b;c";
+        String s6 = ";;;";
+        String s7 = ";b;c";
+        String s8 = ";c;";
+        String s9 = ";;a";
+        String s10 = "a;;";
+        String s11 = "abc";
+
+        assertThat(service.validFormat(s1)).isFalse();
+        assertThat(service.validFormat(s2)).isFalse();
+        assertThat(service.validFormat(s3)).isTrue();
+        assertThat(service.validFormat(s4)).isFalse();
+        assertThat(service.validFormat(s5)).isTrue();
+        assertThat(service.validFormat(s6)).isFalse();
+        assertThat(service.validFormat(s7)).isFalse();
+        assertThat(service.validFormat(s8)).isFalse();
+        assertThat(service.validFormat(s9)).isFalse();
+        assertThat(service.validFormat(s10)).isFalse();
+        assertThat(service.validFormat(s11)).isFalse();
+
+    }
+
     private static void write(String file, int writeFlag) {
         if (writeFlag == 0) {
             try (FileWriter writer = new FileWriter(file)) {

@@ -1,60 +1,62 @@
-<p>Importiere deine Fragen aus einer <code>.txt</code>- oder <code>.csv</code>-Datei. Maximal 1MB</p>
-<p>Der Inhalt der Datei muss <a class="open-canvas-link link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" target="_blank" (click)="showFormatCanvas()">in diesem Format</a> formatiert sein.</p>
+<div id="import-container">
+  <p>Importiere deine Fragen aus einer <code>.txt</code>- oder <code>.csv</code>-Datei. Maximal 1MB</p>
+  <p>Der Inhalt der Datei muss <a class="open-canvas-link link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" target="_blank" (click)="showFormatCanvas()">in diesem Format</a> formatiert sein.</p>
 
 
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasLabel">Formatierung</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" (click)="hideFormatCanvas()"></button>
-  </div>
-  <div class="offcanvas-body">
-    <p>Inhalt der Datei muss dieses Zeilenformat haben gefolgt von einem Zeilenumbruch:</p>
-    <code>&lt;frage&gt;;&lt;antwort&gt;;&lt;notiz optional&gt; </code>
-    <div  class="format-file-container">
-      <p>Korrekt:</p>
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasLabel">Formatierung</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" (click)="hideFormatCanvas()"></button>
+    </div>
+    <div class="offcanvas-body">
+      <p>Inhalt der Datei muss dieses Zeilenformat haben gefolgt von einem Zeilenumbruch:</p>
+      <code>&lt;frage&gt;;&lt;antwort&gt;;&lt;notiz optional&gt; </code>
+      <div  class="format-file-container">
+        <p>Korrekt:</p>
+        <div class="format-file-container">
+          <p class="format-example">
+            Was ist die Hauptstadt von Deutschland;Berlin;Eine Notiz dazu
+          </p>
+          <p class="format-example">
+            Was bedeutet H2O;Chemischer Ausdruck für Wasser;Eine Notiz dazu
+          </p>
+          <p class="format-example">
+            Gibt es Aliens?;Wer weiß, es gibt einige Theorien dazu...;Eine Notiz dazu
+          </p>
+          <p class="format-example">
+            Was ist 5+5?;10;
+          </p>
+        </div>
+      </div>
+
       <div class="format-file-container">
-        <p class="format-example">
-          Was ist die Hauptstadt von Deutschland;Berlin;Eine Notiz dazu
-        </p>
-        <p class="format-example">
-          Was bedeutet H2O;Chemischer Ausdruck für Wasser;Eine Notiz dazu
-        </p>
-        <p class="format-example">
-          Gibt es Aliens?;Wer weiß, es gibt einige Theorien dazu...;Eine Notiz dazu
-        </p>
-        <p class="format-example">
-          Was ist 5+5?;10;
-        </p>
+        <p>Falsch</p>
+        <div class="format-file-container">
+          <p class="format-example">
+            Was ist die Hauptstadt von Deutschland Berlin Eine Notiz dazu
+          </p>
+          <p class="format-example">
+            Was bedeutet H2O
+          </p>
+          <p class="format-example">
+            Gibt es Aliens?;
+          </p>
+        </div>
       </div>
     </div>
-
-    <div class="format-file-container">
-      <p>Falsch</p>
-      <div class="format-file-container">
-        <p class="format-example">
-          Was ist die Hauptstadt von Deutschland Berlin Eine Notiz dazu
-        </p>
-        <p class="format-example">
-          Was bedeutet H2O
-        </p>
-        <p class="format-example">
-          Gibt es Aliens?;
-        </p>
-      </div>
-    </div>
   </div>
+
+
+  <form class="sh-form" [formGroup]="fileForm" (ngSubmit)="uploadData()">
+    <div class="input-group mb-3 input-container">
+      <input
+        type="file"
+        class="form-control"
+        id="inputGroupFile02"
+        accept=".csv,.txt"
+        (change)="onFileChange($event)"
+      >
+      <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Button</button>
+    </div>
+  </form>
 </div>
-
-
-<form class="sh-form" [formGroup]="fileForm" (ngSubmit)="uploadData()">
-  <div class="input-group mb-3 input-container">
-    <input
-      type="file"
-      class="form-control"
-      id="inputGroupFile02"
-      accept=".csv,.txt"
-      (change)="onFileChange($event)"
-    >
-    <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Button</button>
-  </div>
-</form>
