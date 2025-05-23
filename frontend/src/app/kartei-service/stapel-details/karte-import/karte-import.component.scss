@@ -8,7 +8,7 @@
 
 .format-file-container {
   background-color: lightgray;
-  margin: 5px 5px 5px 5px;
+  margin: 10px 10px 10px 10px;
   padding: 5px 5px 5px 5px;
 }
 
@@ -18,4 +18,8 @@
 
 p {
   margin-bottom: 0;
+}
+
+.open-canvas-link:hover {
+  cursor: pointer;
 }

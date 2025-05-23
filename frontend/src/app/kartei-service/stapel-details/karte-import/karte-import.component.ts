@@ -4,6 +4,8 @@ import {HttpClient} from '@angular/common/http';
 import {KarteiApiService} from '../../kartei.api.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-karte-import',
   imports: [
@@ -19,8 +21,8 @@ export class KarteImportComponent {
   snackbar = inject(MatSnackBar)
   fileForm: FormGroup;
   selectedFile: File | null = null;
-  displayFormatCanvasIsActive = false
   @Input() stapelId! : string | null
+  private offcanvasInstance: any
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.fileForm = this.fb.group({});
@@ -57,14 +59,13 @@ export class KarteImportComponent {
     }
   }
 
-  displayFormatCanvas() {
-    let offcanvas = document.getElementById("offcanvas")
-    if(this.displayFormatCanvasIsActive) {
-      offcanvas!.classList.remove("show")
-      this.displayFormatCanvasIsActive = !this.displayFormatCanvasIsActive
-    } else {
-      offcanvas!.classList.add("show")
-      this.displayFormatCanvasIsActive = !this.displayFormatCanvasIsActive
-    }
+  showFormatCanvas() {
+    let offcanvasElement = document.getElementById('offcanvas');
+    this.offcanvasInstance = new bootstrap.Offcanvas(offcanvasElement);
+    this.offcanvasInstance.show();
+  }
+
+  hideFormatCanvas() {
+    this.offcanvasInstance.hide()
   }
 }
