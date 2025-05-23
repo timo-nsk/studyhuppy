@@ -8,18 +8,37 @@
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-    <p>Inhalt der Datei</p>
-    <p>Korrekt:</p>
+    <p>Inhalt der Datei muss dieses Zeilenformat haben gefolgt von einem Zeilenumbruch</p>
+    <code>&lt;frage&gt;;&lt;antwort&gt;;&lt;notiz optional&gt; </code>
+
+    <div  class="format-file-container">
+      <p>Korrekt:</p>
+      <div class="format-file-container">
+        <p class="format-example">
+          Was ist die Hauptstadt von Deutschland;Berlin;Eine Notiz dazu
+        </p>
+        <p class="format-example">
+          Was bedeutet H2O;Chemischer Ausdruck für Wasser;Eine Notiz dazu
+        </p>
+        <p class="format-example">
+          Gibt es Aliens?;Wer weiß, es gibt einige Theorien dazu...;Eine Notiz dazu
+        </p>
+      </div>
+    </div>
+
     <div class="format-file-container">
-      <p>
-        Was ist die Hauptstadt von Deutschland;Berlin;Eine Notiz dazu
-      </p>
-      <p>
-        Was bedeutet H2O;Chemischer Ausdruck für Wasser;Eine Notiz dazu
-      </p>
-      <p>
-        Gibt es Aliens?;Wer weiß, es gibt einige Theorien dazu...;Eine Notiz dazu
-      </p>
+      <p>Falsch</p>
+      <div class="format-file-container">
+        <p class="format-example">
+          Was ist die Hauptstadt von Deutschland Berlin Eine Notiz dazu
+        </p>
+        <p class="format-example">
+          Was bedeutet H2O
+        </p>
+        <p class="format-example">
+          Gibt es Aliens?;
+        </p>
+      </div>
     </div>
   </div>
 </div>
