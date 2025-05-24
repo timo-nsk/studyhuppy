@@ -50,4 +50,9 @@ public class KarteikarteGelerntEventRepoImpl implements KarteikarteGelerntEventR
 	public List<KarteikarteGelerntEvent> findByStapelId(UUID stapelId) {
 		return dao.findByStapelId(stapelId);
 	}
+
+	@Override
+	public void deleteAllByKarteiFachId(UUID karteiFachId) {
+		dao.deleteAllByKarteiFachId(karteiFachId);
+	}
 }

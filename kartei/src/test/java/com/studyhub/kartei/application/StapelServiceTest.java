@@ -6,6 +6,7 @@ import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.domain.model.Stapel;
 import com.studyhub.kartei.service.application.StapelRepository;
 import com.studyhub.kartei.service.application.StapelService;
+import com.studyhub.kartei.service.application.lernzeit.KarteikarteGelerntEventRepository;
 import com.studyhub.kartei.service.application.lernzeit.LernzeitService;
 import com.studyhub.kartei.util.KarteikarteMother;
 import com.studyhub.kartei.util.StapelMother;
@@ -29,12 +30,14 @@ public class StapelServiceTest {
 	static StapelRepository repo;
 	static StapelService service;
 	static LernzeitService lernzeitService;
+	static KarteikarteGelerntEventRepository gelerntEventRepository;
 
 	@BeforeAll
 	static void init() {
 		repo = mock(StapelRepository.class);
 		lernzeitService = mock(LernzeitService.class);
-		service = new StapelService(repo, lernzeitService);
+		gelerntEventRepository = mock(KarteikarteGelerntEventRepository.class);
+		service = new StapelService(repo, gelerntEventRepository, lernzeitService);
 	}
 
 	@Test

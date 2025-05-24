@@ -4,11 +4,13 @@ import com.studyhub.kartei.adapter.web.controller.request.dto.RemoveAntwortReque
 import com.studyhub.kartei.adapter.web.controller.request.dto.StapelDashboardDataResponse;
 import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.domain.model.Stapel;
+import com.studyhub.kartei.service.application.lernzeit.KarteikarteGelerntEventRepository;
 import com.studyhub.kartei.service.application.lernzeit.LernzeitService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -18,11 +20,13 @@ import java.util.*;
 public class StapelService {
 
 	private StapelRepository repo;
+	private KarteikarteGelerntEventRepository gelerntEventRepository;
 	private Logger log = LoggerFactory.getLogger(StapelService.class);
 	private LernzeitService lernzeitService;
 
-	public StapelService(StapelRepository repo, LernzeitService lernzeitService) {
+	public StapelService(StapelRepository repo, KarteikarteGelerntEventRepository gelerntEventRepository, LernzeitService lernzeitService) {
 		this.repo = repo;
+		this.gelerntEventRepository = gelerntEventRepository;
 		this.lernzeitService = lernzeitService;
 	}
 
@@ -41,6 +45,7 @@ public class StapelService {
 		return repo.findByFachId(UUID.fromString(fachId));
 	}
 
+	@Transactional
 	public Stapel deleteKarteikarteByFachId(UUID setFachId, UUID karteiFachId) {
 		Stapel set = repo.findByFachId(setFachId);
 		List<Karteikarte> karteikarten = set.getKarteikarten();
@@ -52,10 +57,12 @@ public class StapelService {
 			}
 		}
 
+		Stapel res = repo.save(set);
+		gelerntEventRepository.deleteAllByKarteiFachId(karteiFachId);
 		log.info("deleted karteikarte '%s' from stapel '%s'".formatted(karteiFachId.toString(), setFachId.toString()));
-		return repo.save(set);
-	}
 
+		return res;
+	}
 
 	public Karteikarte findKarteikarteByFachId(String karteiSetId, String karteId) {
 		return repo.findByFachId(UUID.fromString(karteiSetId)).findKarteikarteByFachId(karteId);

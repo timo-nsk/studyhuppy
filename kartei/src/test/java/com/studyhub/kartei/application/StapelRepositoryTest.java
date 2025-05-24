@@ -6,6 +6,7 @@ import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.domain.model.Stapel;
 import com.studyhub.kartei.service.application.StapelRepository;
 import com.studyhub.kartei.service.application.StapelService;
+import com.studyhub.kartei.service.application.lernzeit.KarteikarteGelerntEventRepository;
 import com.studyhub.kartei.service.application.lernzeit.LernzeitService;
 import com.studyhub.kartei.util.StapelMother;
 import org.junit.jupiter.api.BeforeEach;
@@ -96,7 +97,7 @@ public class StapelRepositoryTest {
 		String karteToDelete = "7f8a3d6e-2c4b-4f8e-924b-8e5f9a6d3b1c";
 		Stapel s = StapelMother.initSetWithIds(setId, karteToDelete);
 		stapelRepository.save(s);
-		StapelService service = new StapelService(stapelRepository, mock(LernzeitService.class));
+		StapelService service = new StapelService(stapelRepository, mock(KarteikarteGelerntEventRepository.class), mock(LernzeitService.class));
 
 		Stapel saved = service.deleteKarteikarteByFachId(UUID.fromString(setId), UUID.fromString(karteToDelete));
 

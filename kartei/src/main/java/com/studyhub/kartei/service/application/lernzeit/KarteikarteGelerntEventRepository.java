@@ -16,4 +16,6 @@ public interface KarteikarteGelerntEventRepository {
 	double getAverageSecondsNeededForKarte(UUID karteikarteId);
 
 	List<KarteikarteGelerntEvent> findByStapelId(UUID stapelId);
+
+	void deleteAllByKarteiFachId(UUID karteiFachId);
 }
