@@ -11,7 +11,7 @@ export class AntwortManager {
     for(let i = 0; i < c; i++) {
       this.userAntworten.push(false)
     }
-    console.log("antwort manager init with userAntworten: " + this.userAntworten)
+    //console.log("antwort manager init with userAntworten: " + this.userAntworten)
 
     this.expectedAntworten = exptectedAntworten ?? []
   }
@@ -22,8 +22,8 @@ export class AntwortManager {
   }
 
   compareAntworten(frageTyp : FrageTyp | undefined) : boolean[] {
-    console.log("expected: " + this.expectedAntworten)
-    console.log("actual: " + this.userAntworten)
+    //console.log("expected: " + this.expectedAntworten)
+    //console.log("actual: " + this.userAntworten)
     if(this.userAntworten) {
       for(let i = 0; i < this.userAntworten.length; i++) {
         let expectedAntwort = this.expectedAntworten[i].wahrheit
@@ -57,7 +57,7 @@ export class AntwortManager {
       }
     }
 
-    console.log("compared antworten with result: " + this.result)
+    //console.log("compared antworten with result: " + this.result)
     return this.result
   }
 

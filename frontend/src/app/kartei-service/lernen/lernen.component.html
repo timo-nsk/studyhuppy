@@ -4,7 +4,7 @@
     <hr>
 
     <div id="seconds-box">
-      <p>{{lernzeitTimer.getLernzeitGesamt | timeFormat}}</p>
+      <p>{{lernzeitTimer?.getLernzeitGesamt() | timeFormat}}</p>
     </div>
     <!--NORMAL Karte -->
     <ng-container *ngIf="frageTyp(kartenIndex) == FrageTyp.NORMAL">

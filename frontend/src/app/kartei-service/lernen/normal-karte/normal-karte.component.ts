@@ -25,7 +25,7 @@ export class NormalKarteComponent implements OnInit{
   @Input() stapelData: Stapel | undefined
   @Input() btnDataList : any[] | undefined
   @Input() currentKartenIndex : number | undefined
-  @Input() lernzeitTimer!: LernzeitTimer
+  @Input() lernzeitTimer!: LernzeitTimer | undefined
 
   @Output() karteIndexChange = new EventEmitter<number>();
 
@@ -49,35 +49,46 @@ export class NormalKarteComponent implements OnInit{
     this.showAntwort = false
     this.showAntwortBtn = true
     this.showBtnGroup = false
-    console.log(this.btnDataList)
   }
 
   revealAntwort() {
     this.showAntwort = !this.showAntwort
-    this.showAntwortBtn = !this.showAntwortBtn
-    this.showBtnGroup = !this.showBtnGroup
+    this.showAntwortBtn = false
+    this.showBtnGroup = true
   }
 
-  updateKarteikarte(i: number, $event: MouseEvent) {
+  updateKarteikarte(i: number) {
+    //Prepare everything to update the current Karteikarte
     const data: UpdateInfo = {
       stapelId: this.stapelData?.fachId!,
       karteId: this.stapelData?.karteikarten![this.currentKartenIndex!].fachId!,
       schwierigkeit: this.btnDataList?.[i].schwierigkeit,
-      secondsNeeded: this.lernzeitTimer.getLernzeitCurrentKarte
+      secondsNeeded: this.lernzeitTimer!.getLernzeitCurrentKarte
     }
     this.karteiService.updateKarte(data).subscribe()
-    this.lernzeitTimer.startCurrentKarteTimer(this.currentKartenIndex!, this.n, $event)
     this.showBtnGroup = !this.showBtnGroup
 
     let m = this.n ?? 0
+    // Is this the last karte?
     if(this.currentKartenIndex == m - 1) {
+      // Yes, then clear the overall timer
+      this.lernzeitTimer!.clearOverallTimer()
+      this.lernzeitTimer!.clearCurrentTimer()
+      //and navigate to the kartei overview
       this.router.navigate(['/kartei'])
       this.snackbar.open("Stapel lernen beendet", "schließen", {
         duration: 3500
       })
     } else {
+      // No, then clear the current timer
+      this.lernzeitTimer!.clearCurrentTimer()
+
+      // and increment the current index
       this.currentKartenIndex! += 1
+      // Emit the updated index to the parent component, parent will initialize itself again with the next karteikarte
       this.karteIndexChange.emit(this.currentKartenIndex);
+      // The Parent initialized itself with the next karteikarte and gives the new index to this component with new ButtonData
+      // this component needs to initialize itself again with the new data
       this.init()
     }
   }

@@ -21,7 +21,8 @@ import {LernzeitTimer} from './lernzeit-timer.service';
 export class LernenComponent implements OnInit {
   protected readonly FrageTyp = FrageTyp;
 
-  lernzeitTimer : LernzeitTimer = new LernzeitTimer()
+  startedOverallTimer: boolean = false
+  lernzeitTimer : LernzeitTimer | undefined
 
   stapel : Stapel = {};
   stapelId : string | undefined = ''
@@ -33,10 +34,9 @@ export class LernenComponent implements OnInit {
   router = inject(Router)
   karteiService = inject(KarteiApiService)
   snackbar = inject(MatSnackBar)
-  gen!: ButtonDataGenerator;
+  gen!: ButtonDataGenerator
 
   ngOnInit(): void {
-    this.lernzeitTimer = new LernzeitTimer()
     let stapelId: string | null = this.getStapelIdFromRoute()
     this.initLearnSession(stapelId)
   }
@@ -51,14 +51,19 @@ export class LernenComponent implements OnInit {
     this.karteiService.getStapelByFachId(id).subscribe({
       next: (data : Stapel) => {
         this.stapel = data
+        console.log(this.stapel.karteikarten)
         this.stapelId = data.fachId
+        let n = this.stapel.karteikarten?.length ?? 0
+        if(!this.startedOverallTimer) {
+          this.lernzeitTimer = new LernzeitTimer(n)
+          this.startedOverallTimer = true
+        }
 
         // Generate button data for the current card
         this.gen = new ButtonDataGenerator(data.karteikarten?.[this.kartenIndex]);
         this.btnDataList = this.gen.generateButtons()
 
-        this.lernzeitTimer.startOverallTimer(this.kartenIndex, this.stapel.karteikarten?.length)
-        this.lernzeitTimer.startCurrentKarteTimer(this.kartenIndex, this.stapel.karteikarten?.length, null)
+        this.lernzeitTimer!.startCurrentKarteTimer()
       }
     })
   }
@@ -66,8 +71,9 @@ export class LernenComponent implements OnInit {
   updateKartenIndexFromChild(updatedIndex: number) {
     let before = this.kartenIndex
     this.kartenIndex = updatedIndex;
+
     this.initLearnSession(this.stapelId)
-    console.log("updated karten index from child: " + this.kartenIndex + " before: " + before)
+    console.log("--- updated karten index from child: " + this.kartenIndex + " before: " + before)
   }
 
   frageTyp(karteIndex: number): FrageTyp | undefined {

@@ -7,13 +7,13 @@ import {Injectable, Pipe, PipeTransform} from '@angular/core';
   name: 'timeFormat'
 })
 export class TimeFormatPipe implements PipeTransform {
-  transform(secondsLearned: number): string {
-    const days = Math.floor(secondsLearned / (24 * 3600));
-    secondsLearned %= (24 * 3600);
-    const hours = Math.floor(secondsLearned / 3600);
-    secondsLearned %= 3600;
-    const minutes = Math.floor(secondsLearned / 60);
-    const remainingSeconds = secondsLearned % 60;
+  transform(secondsLearned: number | undefined): string {
+    const days = Math.floor(secondsLearned! / (24 * 3600));
+    secondsLearned! %= (24 * 3600);
+    const hours = Math.floor(secondsLearned! / 3600);
+    secondsLearned! %= 3600;
+    const minutes = Math.floor(secondsLearned! / 60);
+    const remainingSeconds = secondsLearned! % 60;
 
     const parts: string[] = [];
 

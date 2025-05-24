@@ -32,7 +32,7 @@ export class ChoiceKartComponent implements OnInit{
 
   @Input() stapelData : Stapel | undefined
   @Input() btnDataList : any[] | undefined
-  @Input() lernzeitTimer!: LernzeitTimer
+  @Input() lernzeitTimer!: LernzeitTimer | undefined
   @Input() currentKartenIndex : number | undefined
 
   @Output() karteIndexChange = new EventEmitter<number>();
@@ -74,26 +74,38 @@ export class ChoiceKartComponent implements OnInit{
     this.showBtnGroup = true
   }
 
-  updateKarteikarte(i: number, $event: MouseEvent) {
+  updateKarteikarte(i: number) {
     const data: UpdateInfo = {
       stapelId: this.stapelData?.fachId!,
       karteId: this.stapelData?.karteikarten![this.currentKartenIndex!].fachId!,
       schwierigkeit: this.btnDataList?.[i].schwierigkeit,
-      secondsNeeded: this.lernzeitTimer.getLernzeitCurrentKarte
+      secondsNeeded: this.lernzeitTimer!.getLernzeitCurrentKarte
     }
     this.karteiService.updateKarte(data).subscribe()
-    this.lernzeitTimer.startCurrentKarteTimer(this.currentKartenIndex!, this.n, $event)
+    this.lernzeitTimer!.startCurrentKarteTimer()
     this.showBtnGroup = !this.showBtnGroup
 
     let m = this.n ?? 0
+    // Is this the last karte?
     if(this.currentKartenIndex == m - 1) {
+      // Yes, then clear the overall timer
+      this.lernzeitTimer!.clearOverallTimer()
+      this.lernzeitTimer!.clearCurrentTimer()
+      //and navigate to the kartei overview
       this.router.navigate(['/kartei'])
       this.snackbar.open("Stapel lernen beendet", "schließen", {
         duration: 3500
       })
     } else {
+      // No, then clear the current timer
+      this.lernzeitTimer!.clearCurrentTimer()
+
+      // and increment the current index
       this.currentKartenIndex! += 1
-      this.karteIndexChange.emit(this.currentKartenIndex)
+      // Emit the updated index to the parent component, parent will initialize itself again with the next karteikarte
+      this.karteIndexChange.emit(this.currentKartenIndex);
+      // The Parent initialized itself with the next karteikarte and gives the new index to this component with new ButtonData
+      // this component needs to initialize itself again with the new data
       this.init()
     }
   }

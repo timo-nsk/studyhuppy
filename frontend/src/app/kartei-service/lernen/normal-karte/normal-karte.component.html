@@ -4,7 +4,7 @@
   </div>
 </div>
 
-<div class="sub-container" *ngIf="!showAntwort">
+<div class="sub-container" *ngIf="showAntwort">
   <div class="antwort-container">
     <p>{{ antwort }}</p>
   </div>
@@ -19,7 +19,7 @@
     <div class="col-2"></div>
     <div id="btn-group" class="col-8">
       <div *ngFor="let btnData of btnDataList; let i = index">
-        <button [id]="'k-btn-'+i" class="btn w-150 m-1" (click)="updateKarteikarte(i, $event)">{{btnData.schwierigkeit}} ({{btnData.btnTitel}})</button>
+        <button [id]="'k-btn-'+i" class="btn w-150 m-1" (click)="updateKarteikarte(i)">{{btnData.schwierigkeit}} ({{btnData.btnTitel}})</button>
       </div>
     </div>
     <div class="col-1">
