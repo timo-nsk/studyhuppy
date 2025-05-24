@@ -4,6 +4,7 @@ import {Modul} from './modul';
 import { CommonModule } from '@angular/common';
 import { TimeFormatPipe } from './time-format.pipe';
 import {MatProgressBar} from '@angular/material/progress-bar';
+import {Lerntage} from './lerntage';
 
 @Component({
   selector: 'app-module',
@@ -104,5 +105,11 @@ export class ModuleComponent implements OnInit{
       button.classList.remove("play");
       button.classList.remove("play-button");
     }
+  }
+
+  isTodayLerntag(modul : Modul) : boolean {
+    let lerntage : boolean[] = modul.lerntage.allLerntage;
+    let dayOfWeek = new Date().getDay().valueOf();
+    return lerntage[dayOfWeek]
   }
 }
