@@ -1,4 +1,4 @@
-import {Component, inject, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
 import {Stapel, UpdateInfo} from '../../domain';
 import {KarteiApiService} from '../../kartei.api.service';
@@ -24,54 +24,61 @@ export class NormalKarteComponent implements OnInit{
 
   @Input() stapelData: Stapel | undefined
   @Input() btnDataList : any[] | undefined
-  @Input() hideAntwort : boolean = true
-  @Input() hideAntwortBtn : boolean = true
-  @Input() hideBtnGroup : boolean = false
-  tempIndex : number = 0
+  @Input() currentKartenIndex : number | undefined
+  @Input() lernzeitTimer!: LernzeitTimer
+
+  @Output() karteIndexChange = new EventEmitter<number>();
+
+  showAntwort : boolean = false
+  showAntwortBtn : boolean = true
+  showBtnGroup : boolean = false
 
   frage: string | undefined;
   antwort: string | undefined;
   n: number | undefined
-  @Input() currentKarteSeconds!: number;
-  @Input() lernzeitTimer!: LernzeitTimer;
+
 
   ngOnInit(): void {
-    this.frage = this.stapelData?.karteikarten?.[this.tempIndex].frage
-    this.antwort = this.stapelData?.karteikarten?.[this.tempIndex].antwort
+    this.init()
+  }
+
+  init() {
+    this.frage = this.stapelData?.karteikarten?.[this.currentKartenIndex!].frage
+    this.antwort = this.stapelData?.karteikarten?.[this.currentKartenIndex!].antwort
     this.n  = this.stapelData?.karteikarten?.length
+    this.showAntwort = false
+    this.showAntwortBtn = true
+    this.showBtnGroup = false
+    console.log(this.btnDataList)
   }
 
   revealAntwort() {
-    this.hideAntwort = !this.hideAntwort
-    this.hideAntwortBtn = false
-    this.hideBtnGroup = true
+    this.showAntwort = !this.showAntwort
+    this.showAntwortBtn = !this.showAntwortBtn
+    this.showBtnGroup = !this.showBtnGroup
   }
 
   updateKarteikarte(i: number, $event: MouseEvent) {
     const data: UpdateInfo = {
       stapelId: this.stapelData?.fachId!,
-      karteId: this.stapelData?.karteikarten![this.tempIndex].fachId!,
+      karteId: this.stapelData?.karteikarten![this.currentKartenIndex!].fachId!,
       schwierigkeit: this.btnDataList?.[i].schwierigkeit,
       secondsNeeded: this.lernzeitTimer.getLernzeitCurrentKarte
     }
     this.karteiService.updateKarte(data).subscribe()
-    this.lernzeitTimer.startCurrentKarteTimer(this.tempIndex, this.n, $event)
+    this.lernzeitTimer.startCurrentKarteTimer(this.currentKartenIndex!, this.n, $event)
+    this.showBtnGroup = !this.showBtnGroup
 
     let m = this.n ?? 0
-    if(this.tempIndex == m - 1) {
-      this.tempIndex = 0
+    if(this.currentKartenIndex == m - 1) {
       this.router.navigate(['/kartei'])
       this.snackbar.open("Stapel lernen beendet", "schließen", {
         duration: 3500
       })
     } else {
-      this.tempIndex++
-      this.nextKarte(this.tempIndex)
+      this.currentKartenIndex! += 1
+      this.karteIndexChange.emit(this.currentKartenIndex);
+      this.init()
     }
-  }
-
-  nextKarte(i : number) {
-    this.frage = this.stapelData?.karteikarten?.[i].frage
-    this.antwort = this.stapelData?.karteikarten?.[i].antwort
   }
 }

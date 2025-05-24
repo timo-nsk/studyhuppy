@@ -17,7 +17,7 @@ export class LernzeitTimer {
 
       if (n >= m - 1) {
         clearInterval(intervalId);
-        console.log("Timer gestoppt – letzte Karte erreicht");
+        //console.log("Timer gestoppt – letzte Karte erreicht");
       }
     }, 1000);
   }
@@ -36,12 +36,12 @@ export class LernzeitTimer {
 
     this.currentTimerId = setInterval(() => {
       this.lernzeitCurrentKarte++;
-      console.log("Sekunden für aktuelle Karte:", this.lernzeitCurrentKarte);
+      //console.log("Sekunden für aktuelle Karte:", this.lernzeitCurrentKarte);
     }, 1000);
 
     if (n >= m  - 1) {
       clearInterval(this.currentTimerId);
-      console.log("Timer gestoppt – letzte Karte erreicht");
+      //console.log("Timer gestoppt – letzte Karte erreicht");
     }
   }
 

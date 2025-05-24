@@ -7,25 +7,22 @@
       <p>{{lernzeitTimer.getLernzeitGesamt | timeFormat}}</p>
     </div>
     <!--NORMAL Karte -->
-    <ng-container *ngIf="thisStapel.karteikarten?.[kartenIndex]?.frageTyp == FrageTyp.NORMAL">
-      <app-normal-karte [stapelData]="thisStapel"
+    <ng-container *ngIf="frageTyp(kartenIndex) == FrageTyp.NORMAL">
+      <app-normal-karte [stapelData]="stapel"
                         [btnDataList]="btnDataList"
-                        [hideAntwort]="hideAntwort"
-                        [hideAntwortBtn]="hideAntwortBtn"
-                        [hideBtnGroup]="hideBtnGroup"
-                        [currentKarteSeconds]="currentKarteSeconds"
-                        [lernzeitTimer]="lernzeitTimer">
+                        [lernzeitTimer]="lernzeitTimer"
+                        [currentKartenIndex]="kartenIndex"
+                        (karteIndexChange)="updateKartenIndexFromChild($event)">
       </app-normal-karte>
     </ng-container>
 
     <!-- CHOICE Karte -->
-    <ng-container *ngIf="thisStapel.karteikarten?.[kartenIndex]?.frageTyp == FrageTyp.SINGLE_CHOICE
-                         || thisStapel.karteikarten?.[kartenIndex]?.frageTyp == FrageTyp.MULTIPLE_CHOICE">
-      <app-choice-kart  [hideAntwortBtn]="hideAntwortBtn"
-                        [hideBtnGroup]="hideBtnGroup"
-                        [btnDataList]="btnDataList"
-                        [stapelData]="thisStapel"
-                      [lernzeitTimer]="lernzeitTimer">
+    <ng-container *ngIf="frageTyp(kartenIndex) == FrageTyp.SINGLE_CHOICE || frageTyp(kartenIndex) == FrageTyp.MULTIPLE_CHOICE">
+      <app-choice-kart  [btnDataList]="btnDataList"
+                        [stapelData]="stapel"
+                        [currentKartenIndex]="kartenIndex"
+                        [lernzeitTimer]="lernzeitTimer"
+                        (karteIndexChange)="updateKartenIndexFromChild($event)">
       </app-choice-kart>
     </ng-container>
   </div>

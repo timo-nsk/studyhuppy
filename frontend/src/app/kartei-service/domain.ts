@@ -8,6 +8,8 @@ export interface Stapel {
   karteikarten?: Karteikarte[];
 }
 
+
+
 export interface Karteikarte {
   fachId?: string;               // UUID als String
   frage?: string;

@@ -48,10 +48,10 @@
 
 <section id="btn-section">
   <hr>
-  <div class="sub-container" *ngIf="hideAntwortBtn">
+  <div class="sub-container" *ngIf="showAntwortBtn">
     <button id="anzeige-btn" class="btn" (click)="revealAntwort()">Antwort anzeigen</button>
   </div>
-  <div class="row" *ngIf="hideBtnGroup">
+  <div class="row" *ngIf="showBtnGroup">
     <div class="col-2"></div>
     <div id="btn-group" class="col-8">
       <div *ngFor="let btnData of btnDataList; let i = index">

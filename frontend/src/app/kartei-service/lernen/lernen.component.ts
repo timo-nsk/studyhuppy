@@ -23,95 +23,54 @@ export class LernenComponent implements OnInit {
 
   lernzeitTimer : LernzeitTimer = new LernzeitTimer()
 
-  overallSeconds : number = 0
-  currentKarteSeconds : number = 0
-  currentTimerId: any;
-
-
-  hideAntwort : boolean = true
-  hideAntwortBtn : boolean = true
-  hideBtnGroup : boolean = false
-  btnDataList : any[] = []
+  stapel : Stapel = {};
+  stapelId : string | undefined = ''
 
   kartenIndex = 0
+  btnDataList : any[] = []
 
   route = inject(ActivatedRoute)
   router = inject(Router)
   karteiService = inject(KarteiApiService)
   snackbar = inject(MatSnackBar)
-  //TODO: aus dem backend muss der stapel so geändert werden, dass da nur die fälligen karten reingepackt werden
-  thisStapel : Stapel = {};
   gen!: ButtonDataGenerator;
 
   ngOnInit(): void {
     this.lernzeitTimer = new LernzeitTimer()
+    let stapelId: string | null = this.getStapelIdFromRoute()
+    this.initLearnSession(stapelId)
+  }
+
+  getStapelIdFromRoute(): string | null {
     let id: string | null = '';
     this.route.paramMap.subscribe(params => { id = params.get('fachId'); });
+    return id;
+  }
 
+  initLearnSession(id: string | null | undefined) {
     this.karteiService.getStapelByFachId(id).subscribe({
       next: (data : Stapel) => {
-        this.thisStapel = data
+        this.stapel = data
+        this.stapelId = data.fachId
 
+        // Generate button data for the current card
         this.gen = new ButtonDataGenerator(data.karteikarten?.[this.kartenIndex]);
         this.btnDataList = this.gen.generateButtons()
 
-        this.lernzeitTimer.startOverallTimer(this.kartenIndex, this.thisStapel.karteikarten?.length)
-        this.lernzeitTimer.startCurrentKarteTimer(this.kartenIndex, this.thisStapel.karteikarten?.length, null)
+        this.lernzeitTimer.startOverallTimer(this.kartenIndex, this.stapel.karteikarten?.length)
+        this.lernzeitTimer.startCurrentKarteTimer(this.kartenIndex, this.stapel.karteikarten?.length, null)
       }
     })
-
-  }
-  updateKarteikarte(i : number, event : MouseEvent) {
-    const data: UpdateInfo = {
-      stapelId: this.thisStapel.fachId!,
-      karteId: this.thisStapel.karteikarten![this.kartenIndex].fachId!,
-      schwierigkeit: this.btnDataList[i].schwierigkeit,
-      secondsNeeded: this.currentKarteSeconds
-    }
-    this.karteiService.updateKarte(data)
-    this.startCurrentKarteTimer(event)
-
-    let n = this.thisStapel.karteikarten?.length!
-    if(this.kartenIndex == n - 1) {
-      this.kartenIndex = 0
-      this.router.navigate(['/kartei'])
-      this.snackbar.open("Stapel lernen beendet", "schließen", {
-        duration: 3500
-      })
-    }else {
-      this.kartenIndex++
-    }
   }
 
-  startOverallTimer(): void {
-    const intervalId = setInterval(() => {
-      this.overallSeconds++;
-
-      if (this.kartenIndex >= this.thisStapel.karteikarten!.length - 1) {
-        clearInterval(intervalId);
-        //console.log("Timer gestoppt – letzte Karte erreicht");
-      }
-    }, 1000);
+  updateKartenIndexFromChild(updatedIndex: number) {
+    let before = this.kartenIndex
+    this.kartenIndex = updatedIndex;
+    this.initLearnSession(this.stapelId)
+    console.log("updated karten index from child: " + this.kartenIndex + " before: " + before)
   }
 
-  startCurrentKarteTimer(event: MouseEvent | null): void {
-    if (event) {
-      this.currentKarteSeconds = 0;
-
-      if (this.currentTimerId) {
-        clearInterval(this.currentTimerId);
-      }
-    }
-
-    this.currentTimerId = setInterval(() => {
-      this.currentKarteSeconds++;
-      //console.log("Sekunden für aktuelle Karte:", this.currentKarteSeconds);
-    }, 1000);
-
-    if (this.kartenIndex >= this.thisStapel.karteikarten!.length - 1) {
-      clearInterval(this.currentTimerId);
-      //console.log("Timer gestoppt – letzte Karte erreicht");
-    }
+  frageTyp(karteIndex: number): FrageTyp | undefined {
+    return this.stapel.karteikarten?.[karteIndex]?.frageTyp
   }
-
 }
