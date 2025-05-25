@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ModuleService} from '../module/module-service';
-import {Modul} from '../module/modul';
+import {Modul} from '../module/domain';
 import { CommonModule } from '@angular/common';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';

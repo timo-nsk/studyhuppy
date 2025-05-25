@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import { Modul} from './modul';
+import { Modul} from './domain';
 import { HttpClient } from '@angular/common/http';
 import {Observable } from 'rxjs';
 import {HeaderService} from '../../header.service';

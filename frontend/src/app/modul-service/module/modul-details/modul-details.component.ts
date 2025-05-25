@@ -1,9 +1,9 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Lerntage} from '../lerntage';
+import {ActivatedRoute} from '@angular/router';
 import {TimeFormatPipe} from '../time-format.pipe';
 import {DatePipe, NgIf} from '@angular/common';
 import {CapitalizePipe} from '../capitalize.pipe';
+import {Lerntage} from '../domain';
 
 @Component({
   selector: 'app-modul-details',

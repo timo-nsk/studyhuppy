@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ModuleService} from './module-service';
-import {Modul} from './modul';
+import {Modul} from './domain';
 import { CommonModule } from '@angular/common';
 import { TimeFormatPipe } from './time-format.pipe';
 import {MatProgressBar} from '@angular/material/progress-bar';
-import {Lerntage} from './lerntage';
 import {RouterLink} from '@angular/router';
 
 @Component({
