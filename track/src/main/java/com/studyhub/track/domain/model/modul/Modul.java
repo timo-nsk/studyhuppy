@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -24,6 +25,7 @@ public class Modul {
 	private Semester semester;
 	private LocalDateTime klausurDate;
 	private Lerntage lerntage;
+	private Set<Modultermin> modultermine;
 
 	public String getGesamtArbeitsaufwand() {
 		return String.valueOf(kreditpunkte.getSelbststudiumStunden() + kreditpunkte.getKontaktzeitStunden());
