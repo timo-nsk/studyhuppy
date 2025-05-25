@@ -4,12 +4,14 @@ import com.studyhub.track.application.service.TimeConverter;
 import com.studyhub.track.domain.model.modul.Kreditpunkte;
 import com.studyhub.track.domain.model.modul.Lerntage;
 import com.studyhub.track.domain.model.modul.Modul;
+import com.studyhub.track.domain.model.modul.Modultermin;
 import com.studyhub.track.domain.model.semester.Semester;
 import com.studyhub.track.domain.model.semester.SemesterPhase;
 import com.studyhub.track.domain.model.semester.SemesterTyp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -53,7 +55,7 @@ public record ModulForm(
 		if (klausurDatum != null) {
 			actualKlausurDatum = LocalDateTime.of(modulForm.klausurDatum(), TimeConverter.getLocalTimeFromString(time));
 		}
-		return new Modul(UUID.randomUUID(), name, 0, kreditpunkte, "timo", true, semester, new Semester(), actualKlausurDatum, lerntage);
+		return new Modul(UUID.randomUUID(), name, 0, kreditpunkte, "timo", true, semester, new Semester(), actualKlausurDatum, lerntage, null);
 	}
 
 	/** OLD METHOD

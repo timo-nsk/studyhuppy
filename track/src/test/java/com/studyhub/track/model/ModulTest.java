@@ -72,6 +72,7 @@ public class ModulTest {
 				2,
 				null,
 				null,
+				null,
 				null);
 
 		boolean klausurEingetragen = m.klausurDatumEingetragen();
@@ -90,6 +91,7 @@ public class ModulTest {
 				2,
 				null,
 				LocalDateTime.MAX,
+				null,
 				null);
 
 		boolean klausurEingetragen = m.klausurDatumEingetragen();
@@ -108,6 +110,7 @@ public class ModulTest {
 				true,
 				2,
 				s,
+				null,
 				null,
 				null);
 
@@ -128,6 +131,7 @@ public class ModulTest {
 				2,
 				s,
 				null,
+				null,
 				null);
 
 		boolean vorlesungEingetragen = m.vorlesungDatumangabenEingetragen();
@@ -146,6 +150,7 @@ public class ModulTest {
 				true,
 				2,
 				s,
+				null,
 				null,
 				null);
 
@@ -166,6 +171,7 @@ public class ModulTest {
 				2,
 				s,
 				null,
+				null,
 				null);
 
 		boolean vorlesungEingetragen = m.vorlesungDatumangabenEingetragen();
@@ -183,6 +189,7 @@ public class ModulTest {
 				"peter44",
 				true,
 				2,
+				null,
 				null,
 				null,
 				null);

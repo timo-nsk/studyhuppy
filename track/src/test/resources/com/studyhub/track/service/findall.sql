@@ -23,3 +23,10 @@ INSERT INTO lerntage (modul, mondays, tuesdays, wednesdays, thursdays, fridays, 
     (3846846, true, false, true, false, true, false, false, 'VORLESUNG'),
     (4846846, true, false, true, false, true, false, false, 'VORLESUNG'),
     (5846846, true, false, true, false, true, false, false, 'VORLESUNG');
+
+INSERT INTO modultermin (modul, termin_name, start_date, ende_date, notiz, terminfrequenz) VALUES
+    (1654654, 'T1', '2025-03-23 14:30:00', '2025-04-23 14:30:00', null, 'EINMALIG'),
+    (2546546, 'T2', '2025-03-24 14:30:00', null, null, 'TÄGLICH'),
+    (3846846, 'T3', '2025-03-25 14:30:00', null, null, 'WÖCHENTLICH'),
+    (4846846, 'T4', '2025-03-26 14:30:00', null, null, 'MONATLICH'),
+    (5846846, 'T5', '2025-03-27 14:30:00', null, 'N1', 'JÄHRLICH');

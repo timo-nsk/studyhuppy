@@ -54,7 +54,7 @@ public class ModulRepositoryTest {
 	void test_02() {
 		List<Modul> l = repository.findAll();
 
-		assertThat(l.size()).isEqualTo(5);
+		assertThat(l.size()).isEqualTo(6);
 	}
 
 
@@ -66,7 +66,7 @@ public class ModulRepositoryTest {
 
 		repository.deleteByUuid(fachId);
 
-		assertThat(repository.findAll().size()).isEqualTo(4);
+		assertThat(repository.findAll().size()).isEqualTo(5);
 	}
 
 

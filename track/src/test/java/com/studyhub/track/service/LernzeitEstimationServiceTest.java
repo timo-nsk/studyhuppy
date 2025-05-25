@@ -52,7 +52,8 @@ public class LernzeitEstimationServiceTest {
 				2,
 				semester,
 				null,
-				lerntage);
+				lerntage,
+				null);
 
 		int secondsPerDay = lernzeitEstimationService.getAverageLernzeitPerLerntagForModul(m, m.getLerntage().getSemesterPhase());
 
@@ -86,7 +87,8 @@ public class LernzeitEstimationServiceTest {
 				2,
 				semester,
 				klausurDate,
-				lerntage);
+				lerntage,
+				null);
 
 		int secondsPerDay = lernzeitEstimationService.getAverageLernzeitPerLerntagForModul(m, m.getLerntage().getSemesterPhase());
 
@@ -110,7 +112,8 @@ public class LernzeitEstimationServiceTest {
 				2,
 				semester,
 				null,
-				lerntage);
+				lerntage,
+				null);
 
 		int secondsPerDay = lernzeitEstimationService.getAverageLernzeitPerLerntagForModul(m, m.getLerntage().getSemesterPhase());
 
@@ -134,7 +137,8 @@ public class LernzeitEstimationServiceTest {
 				2,
 				semester,
 				null,
-				lerntage);
+				lerntage,
+				null);
 
 		int secondsPerDay = lernzeitEstimationService.getAverageLernzeitPerLerntagForModul(m, m.getLerntage().getSemesterPhase());
 
