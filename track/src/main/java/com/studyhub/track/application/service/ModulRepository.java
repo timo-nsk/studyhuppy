@@ -1,6 +1,7 @@
 package com.studyhub.track.application.service;
 
 import com.studyhub.track.domain.model.modul.Modul;
+import com.studyhub.track.domain.model.modul.Modultermin;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,6 +26,7 @@ public interface ModulRepository {
 	int updateSecondsByUuid(UUID fachid, int seconds);
 	void setActive(UUID fachId, boolean active);
 	void addKlausurDate(UUID fachId, LocalDateTime klausurDate);
+	boolean addModultermin(UUID fachId, Modultermin modultermin);
 
 	List<Modul> findActiveModuleByUsername(boolean active, String username);
 

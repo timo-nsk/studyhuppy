@@ -4,6 +4,8 @@ import com.studyhub.track.adapter.db.modul.ModulDao;
 import com.studyhub.track.adapter.db.modul.ModulRepositoryImpl;
 import com.studyhub.track.application.service.ModulRepository;
 import com.studyhub.track.domain.model.modul.Modul;
+import com.studyhub.track.domain.model.modul.Modultermin;
+import com.studyhub.track.domain.model.modul.Terminfrequenz;
 import com.studyhub.track.util.ModulMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -217,6 +219,44 @@ public class ModulRepositoryTest {
 		int anz = repository.countNotActiveModules("peter4");
 
 		assertThat(anz).isEqualTo(4);
+	}
+
+	@Test
+	@DisplayName("Gültiges Modultermin wird erfolgreich hinzugefügt und abgespeichert")
+	@Sql("findall.sql")
+	void test_19() {
+		UUID fachId = UUID.fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479");
+		Modultermin neuerTermin = new Modultermin(
+				"T2",
+				LocalDateTime.of(2024, 5, 15, 10, 0),
+				LocalDateTime.of(2024, 5, 15, 12, 0),
+				"Raum A",
+				Terminfrequenz.EINMALIG);
+
+		boolean success = repository.addModultermin(fachId, neuerTermin);
+
+		assertThat(success).isTrue();
+	}
+
+	@Test
+	@DisplayName("Unültiges Modultermine werden nicht hinzugefügt und abgespeichert")
+	@Sql("findall.sql")
+	void test_20() {
+		UUID fachId1 = null;
+		Modultermin neuerTermin1 = new Modultermin(
+				"T2",
+				LocalDateTime.of(2024, 5, 15, 10, 0),
+				LocalDateTime.of(2024, 5, 15, 12, 0),
+				"Raum A",
+				Terminfrequenz.EINMALIG);
+		boolean success1 = repository.addModultermin(fachId1, neuerTermin1);
+
+		UUID fachId2 = UUID.fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479");
+		Modultermin neuerTermin2 = null;
+		boolean success2 = repository.addModultermin(fachId2, neuerTermin2);
+
+		assertThat(success1).isFalse();
+		assertThat(success2).isFalse();
 	}
 
 }

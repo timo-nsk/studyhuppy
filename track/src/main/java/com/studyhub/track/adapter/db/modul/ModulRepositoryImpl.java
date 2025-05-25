@@ -3,6 +3,7 @@ package com.studyhub.track.adapter.db.modul;
 import com.studyhub.track.application.service.ModulRepository;
 import com.studyhub.track.application.service.NoModulPresentException;
 import com.studyhub.track.domain.model.modul.Modul;
+import com.studyhub.track.domain.model.modul.Modultermin;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static com.studyhub.track.adapter.db.modul.ModulMapper.toModul;
+import static com.studyhub.track.adapter.db.modul.ModulMapper.toModulDto;
 
 @Repository
 public class ModulRepositoryImpl implements ModulRepository {
@@ -116,6 +118,22 @@ public class ModulRepositoryImpl implements ModulRepository {
 	@Override
 	public void addKlausurDate(UUID fachId, LocalDateTime klausurDate) {
 		modulDao.addKlausurDate(fachId, klausurDate);
+	}
+
+	@Override
+	public boolean addModultermin(UUID fachId, Modultermin modultermin) {
+		if (modultermin == null || fachId == null) return false;
+
+		Optional<ModulDto> dto = modulDao.findByFachId(fachId);
+
+		if (dto.isPresent()) {
+			Modul modul = toModul(dto.get());
+			modul.putNewModulTermin(modultermin);
+			modulDao.save(toModulDto(modul));
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
