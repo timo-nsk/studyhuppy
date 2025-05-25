@@ -7,10 +7,7 @@ import com.studyhub.track.domain.model.semester.SemesterTyp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class ModulMother {
 
@@ -59,6 +56,10 @@ public class ModulMother {
 		}
 
 		return modulList;
+	}
+
+	public static Modul initModulWithoutTermine() {
+		return new Modul(UUID.randomUUID(), "Modul", 1, DEFAULT_KREDITPUNKTE, "user123", true, 1, DEFAULT_SEMESTER, LocalDateTime.now(), DEFAULT_LERNTAGE, new HashSet<>());
 	}
 
 }

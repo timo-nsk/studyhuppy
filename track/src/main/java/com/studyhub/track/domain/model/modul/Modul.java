@@ -50,4 +50,16 @@ public class Modul {
 	public int getRemainingSelbststudiumZeit() {
 		return (kreditpunkte.getSelbststudiumStunden()*60*60) - secondsLearned;
 	}
+
+	public boolean putNewModulTermin(Modultermin modultermin) {
+		return modultermine.add(modultermin);
+	}
+
+	public boolean removeModulTermin(Modultermin modultermin) {
+		if (modultermine.contains(modultermin)) {
+			modultermine.remove(modultermin);
+			return true;
+		}
+		return false;
+	}
 }
