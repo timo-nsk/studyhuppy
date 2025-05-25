@@ -27,7 +27,7 @@ export class ModulDetailsComponent implements  OnInit{
   semesterTyp!: string
   semesterJahr: string = '2000'
   klausurDate!: Date | null
-  lerntage!: Lerntage
+  lerntage!: string[]
 
   route = inject(ActivatedRoute)
 
@@ -76,5 +76,31 @@ export class ModulDetailsComponent implements  OnInit{
     }
   }
 
-  protected readonly Date = Date;
+  computeLerntageString() : string {
+    let lernTageArr  = this.lerntage
+
+    if (!lernTageArr) return "keine Lerntage eingetragen"
+
+    const wochentage = [
+      'montags',
+      'dienstags',
+      'mittwochs',
+      'donnerstags',
+      'freitags',
+      'samstags',
+      'sonntags'
+    ];
+
+    let lerntageString = ''
+    for(let i = 0; i < lernTageArr.length; i++) {
+      if (lernTageArr[i] === "true") {
+        if (lerntageString) {
+          lerntageString += ', ';
+        }
+        lerntageString += wochentage[i];
+      }
+    }
+
+    return lerntageString
+  }
 }
