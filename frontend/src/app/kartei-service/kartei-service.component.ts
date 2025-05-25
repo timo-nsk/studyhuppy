@@ -41,7 +41,4 @@ export class KarteiServiceComponent implements OnInit{
       }
     })
   }
-
-
-
 }

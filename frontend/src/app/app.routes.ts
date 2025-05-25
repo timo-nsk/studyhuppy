@@ -16,6 +16,7 @@ import {KarteiServiceComponent} from './kartei-service/kartei-service.component'
 import {LernenComponent} from './kartei-service/lernen/lernen.component';
 import {StapelErstellenComponent} from './kartei-service/stapel-erstellen/stapel-erstellen.component';
 import {StapelDetailsComponent} from './kartei-service/stapel-details/stapel-details.component';
+import {ModulDetailsComponent} from './modul-service/module/modul-details/modul-details.component';
 
 export const routes: Routes = [
   {
@@ -48,11 +49,13 @@ export const routes: Routes = [
           [
             { path: 'meine-module',
               component: ModuleComponent,
-              canActivate: [authGuard]
+            },
+            {
+              path: 'modul-details/:fachId',
+              component: ModulDetailsComponent
             },
             { path: 'add-modul',
               component: AddModuleComponent,
-              canActivate: [authGuard]
             },
             {
               path: 'einstellungen',

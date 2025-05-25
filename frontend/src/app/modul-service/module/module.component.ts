@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { TimeFormatPipe } from './time-format.pipe';
 import {MatProgressBar} from '@angular/material/progress-bar';
 import {Lerntage} from './lerntage';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-module',
@@ -14,7 +15,8 @@ import {Lerntage} from './lerntage';
   imports: [
     CommonModule,
     TimeFormatPipe,
-    MatProgressBar
+    MatProgressBar,
+    RouterLink
   ]
 })
 export class ModuleComponent implements OnInit{
@@ -108,8 +110,11 @@ export class ModuleComponent implements OnInit{
   }
 
   isTodayLerntag(modul : Modul) : boolean {
-    let lerntage : boolean[] = modul.lerntage.allLerntage;
-    let dayOfWeek = new Date().getDay().valueOf();
-    return lerntage[dayOfWeek]
+    if(modul.lerntage) {
+      let lerntage : boolean[] = modul.lerntage.allLerntage;
+      let dayOfWeek = new Date().getDay().valueOf();
+      return lerntage[dayOfWeek]
+    }
+    return false
   }
 }

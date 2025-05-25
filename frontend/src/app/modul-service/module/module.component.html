@@ -12,7 +12,20 @@
       <!-- TODO: kleinen hover effekt einbauen, sodass beim bereteten des elements das element ein wenig gezoomed wird -->
       <div *ngIf="module.length > 0" class="modul-container">
         <div *ngFor="let m of module" class="modul-card shd" [ngClass]="{'lerntag-info' : isTodayLerntag(m)}">
-          <a class="wht-font std-link fs-20 fw-bold" href="#">{{m.name}}</a>
+          <a class="wht-font std-link fs-20 fw-bold" [routerLink]="['/module/modul-details', m.fachId]"
+             [queryParams]="
+             {
+               name: m.name,
+               secondsLearned: m.secondsLearned,
+               kreditpunkte: m.kreditpunkte,
+               active: m.active,
+               semesterstufe: m.semesterstufe,
+               semester: m.semester,
+               klausurDate: m.klausurDate,
+               lerntage: m.lerntage?.allLerntage
+             }">
+            {{m.name}}
+          </a>
           <p class="wht-font">
             Gesamt: <span [id]="m.fachId">{{m.secondsLearned | timeFormat}}</span>
           </p>

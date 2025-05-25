@@ -13,5 +13,5 @@ export interface Modul {
   semesterstufe:  number;
   semester:       Semester;
   klausurDate:    Date;
-  lerntage:       Lerntage;
+  lerntage:       Lerntage | undefined;
 }
