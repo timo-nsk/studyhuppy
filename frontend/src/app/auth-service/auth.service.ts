@@ -13,17 +13,8 @@ export class AuthApiService {
   http : HttpClient = inject(HttpClient)
   snackbar : MatSnackBar = inject(MatSnackBar)
 
-  login(data : any) {
-    console.log("trying login")
-    this.http.post("http://localhost:9084/login", data).subscribe((r:any)=> {
-      if(r.validated == false) {
-        console.log("error valdiating credentials")
-      } else {
-        localStorage.setItem("auth_token", r.validated)
-        console.log("success valdiating credentials")
-        this.router.navigateByUrl("module")
-      }
-    })
+  login(data : any) : Observable<string>  {
+    return this.http.post("http://localhost:9084/login", data, { responseType: 'text' })
   }
 
   logoff() : void {

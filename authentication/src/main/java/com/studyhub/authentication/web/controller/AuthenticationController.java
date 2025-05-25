@@ -4,8 +4,10 @@ import com.studyhub.authentication.web.LoginRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import com.studyhub.authentication.service.AuthenticationService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,20 +30,17 @@ public class AuthenticationController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<Map<String, Object>> authenticateLogin(@RequestBody LoginRequest loginRequest) {
-
+	public ResponseEntity<String> authenticateLogin(@RequestBody LoginRequest loginRequest) {
+		System.out.println("pint login");
 		try {
 			String authToken = authenticationService.verify(loginRequest);
-
-			Map<String, Object> response = new HashMap<>();
-			response.put("validated", authToken);
-
-			return ResponseEntity.ok(response);
+			System.out.println("yessss");
+			return ResponseEntity.ok(authToken);
 		} catch (BadCredentialsException e) {
-			Map<String, Object> response = new HashMap<>();
-			response.put("validated", Boolean.FALSE);
-
-			return ResponseEntity.ok(response);
+			System.out.println("noooooo");
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		} catch (UsernameNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 	}
 }
