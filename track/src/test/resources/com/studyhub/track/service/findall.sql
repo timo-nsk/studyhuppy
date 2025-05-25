@@ -4,7 +4,9 @@ INSERT INTO modul (id, fach_id, name, seconds_learned, username, active, semeste
     (3846846, 'f47ac10c-58cc-4372-a537-0e02b2c3d479', 'mod3', 20,'peter4', false, 1,'2025-03-23 14:30:00'),
     (4846846, 'f48ac10c-58cc-4372-a537-0e02b2c3d479', 'mod5', 30,'peter4', false, 1,null),
     (5846846, 'f49ac10c-58cc-4372-a537-0e02b2c3d479', 'mod4', 30,'peter4', false, 1,null),
-    (6846846, 'f49bc10c-58cc-4372-a537-0e02b2c3d479', 'mod6', 10,'peter4', false, 1,null);
+    (6846846, 'f49bc10c-58cc-4372-a537-0e02b2c3d479', 'mod6', 10,'peter4', false, 1,null),
+    (7846846, 'b8f6e2f5-91a0-4e6d-91b0-ff4e6932a82a', 'mod7', 10,'peter5', false, 1,null);
+;
 
 INSERT INTO semester (modul, semester_typ,  vorlesung_beginn, vorlesung_ende, semester_beginn, semester_ende) VALUES
     (1654654, 'WINTERSEMESTER', '2024-10-01', '2025-01-31', '2024-10-01', '2025-04-30'),
@@ -29,4 +31,6 @@ INSERT INTO modultermin (modul, termin_name, start_date, ende_date, notiz, termi
     (2546546, 'T2', '2025-03-24 14:30:00', null, null, 'TÄGLICH'),
     (3846846, 'T3', '2025-03-25 14:30:00', null, null, 'WÖCHENTLICH'),
     (4846846, 'T4', '2025-03-26 14:30:00', null, null, 'MONATLICH'),
-    (5846846, 'T5', '2025-03-27 14:30:00', null, 'N1', 'JÄHRLICH');
+    (5846846, 'T5', '2025-03-27 14:30:00', null, 'N1', 'JÄHRLICH'),
+    (7846846, 'T6', '2024-03-30 14:30:00', '2024-04-30 14:30:00', null, 'EINMALIG');
+

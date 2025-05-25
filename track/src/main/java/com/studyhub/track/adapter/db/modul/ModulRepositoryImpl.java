@@ -137,6 +137,22 @@ public class ModulRepositoryImpl implements ModulRepository {
 	}
 
 	@Override
+	public boolean deleteModultermin(UUID fachId, Modultermin modultermin) {
+		if (modultermin == null || fachId == null) return false;
+
+		Optional<ModulDto> dto = modulDao.findByFachId(fachId);
+
+		if (dto.isPresent()) {
+			Modul modul = toModul(dto.get());
+			boolean succes = modul.removeModulTermin(modultermin);
+			modulDao.save(toModulDto(modul));
+			return succes;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
 	public List<Modul> findActiveModuleByUsername(boolean active, String username) {
 		return modulDao.findAll().stream()
 				.filter(m -> m.active() == active)

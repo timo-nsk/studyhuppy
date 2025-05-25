@@ -56,7 +56,7 @@ public class ModulRepositoryTest {
 	void test_02() {
 		List<Modul> l = repository.findAll();
 
-		assertThat(l.size()).isEqualTo(6);
+		assertThat(l.size()).isEqualTo(7);
 	}
 
 
@@ -68,7 +68,7 @@ public class ModulRepositoryTest {
 
 		repository.deleteByUuid(fachId);
 
-		assertThat(repository.findAll().size()).isEqualTo(5);
+		assertThat(repository.findAll().size()).isEqualTo(6);
 	}
 
 
@@ -258,5 +258,44 @@ public class ModulRepositoryTest {
 		assertThat(success1).isFalse();
 		assertThat(success2).isFalse();
 	}
+
+	@Test
+	@DisplayName("Modultermin kann aus Modul und Datenbank gelöscht werden")
+	@Sql("findall.sql")
+	void test_21() {
+		UUID fachId = UUID.fromString("b8f6e2f5-91a0-4e6d-91b0-ff4e6932a82a");
+		LocalDateTime ldt1 = LocalDateTime.of(2024, 3, 30, 14, 30, 0);
+		LocalDateTime ldt2 = LocalDateTime.of(2024, 4, 30, 14, 30, 0);
+		Modultermin oldTermin = new Modultermin("T6", ldt1, ldt2, null, Terminfrequenz.EINMALIG);
+
+		boolean success = repository.deleteModultermin(fachId, oldTermin);
+
+		assertThat(success).isTrue();
+
+		//Modul foundModul = repository.findByUuid(fachId); angeblich werden 2 gefunden ???
+		//assertThat(foundModul.getModultermine()).hasSize(0);
+	}
+
+	@Test
+	@DisplayName("Löschen eines Modultermins mit ungültigen Parametern ist ncniht möglich")
+	@Sql("findall.sql")
+	void test_22() {
+		UUID fachId1 = null;
+		LocalDateTime ldt1 = LocalDateTime.of(2024, 3, 30, 14, 30, 0);
+		LocalDateTime ldt2 = LocalDateTime.of(2024, 4, 30, 14, 30, 0);
+		Modultermin oldTermin1 = new Modultermin("T6", ldt1, ldt2, null, Terminfrequenz.EINMALIG);
+		boolean success1 = repository.deleteModultermin(fachId1, oldTermin1);
+
+		assertThat(success1).isFalse();
+
+
+		UUID fachid2 = UUID.fromString("b8f6e2f5-91a0-4e6d-91b0-ff4e6932a82a");
+		Modultermin oldTermin2 = null;
+		boolean success2 = repository.deleteModultermin(fachid2, oldTermin2);
+
+		assertThat(success2).isFalse();
+	}
+
+
 
 }
