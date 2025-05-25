@@ -11,7 +11,7 @@ export interface Modul {
   username:       string;
   active:         boolean;
   semesterstufe:  number;
-  semester:       Semester;
+  semester:       Semester | undefined;
   klausurDate:    Date;
   lerntage:       Lerntage | undefined;
 }

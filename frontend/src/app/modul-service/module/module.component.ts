@@ -34,7 +34,7 @@ export class ModuleComponent implements OnInit{
       next: (data) => {
         this.module = data;
         this.isLoading = false
-        //console.log(this.module);
+        //console.log(typeof this.module[0].semester.semesterTyp);
       },
       error: (err) => {
         console.error(err);

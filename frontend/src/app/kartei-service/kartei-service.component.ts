@@ -9,7 +9,7 @@ import {MatProgressBar} from "@angular/material/progress-bar";
   imports: [NgIf, NgFor, RouterLink, MatProgressBar],
   templateUrl: './kartei-service.component.html',
   standalone: true,
-  styleUrls: ['./kartei-service.component.scss', '../loading.scss']
+  styleUrls: ['./kartei-service.component.scss', '../loading.scss', '../color.scss']
 })
 export class KarteiServiceComponent implements OnInit{
   isLoading : boolean = true

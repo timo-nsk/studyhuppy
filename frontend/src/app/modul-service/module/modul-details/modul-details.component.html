@@ -1,2 +1,38 @@
-<p>modul-details works!</p>
-<p>jooooooooooooooooooo</p>
+<div id="account-container" class="h-offset">
+  <div id="account-table-container">
+    <h2 class="m-accent-font">{{name}}</h2>
+    <table class="table">
+      <tbody>
+      <tr>
+        <th class="col-wd-200 m-accent-font">Zeit gelernt</th>
+        <td class="col-wd-300 td-border-l m-accent-font">{{secondsLearned | timeFormat}}</td>
+      </tr>
+      <tr>
+        <th class="col-wd-200 m-accent-font">Kreditpunkte</th>
+        <td class="col-wd-300 td-border-l m-accent-font">
+          <span>{{kreditpunkte}}</span>
+        </td>
+      </tr>
+      <tr>
+        <th class="col-wd-200 m-accent-font">Arbeitsaufwand</th>
+        <td class="col-wd-300 td-border-l m-accent-font">Kontakzteit: {{kontaktzeitStunden}}</td>
+        <td class="col-wd-300 td-border-l m-accent-font">Selbststudium: {{selbststudiumStunden}}</td>
+      </tr>
+      <tr>
+        <th class="col-wd m-accent-font">Fachsemester</th>
+        <td class="col-wd-300 td-border-l m-accent-font">{{semesterstufe}}</td>
+        <td class="col-wd-300 td-border-l m-accent-font">{{semesterTyp  | capitalize}} {{semesterJahr}}</td>
+      </tr>
+      <tr>
+        <th class="col-wd m-accent-font">Klausur</th>
+        <td *ngIf="klausurDate == null" class="col-wd-300 td-border-l m-accent-font">kein Klausurtermin eingetragen</td>
+        <td *ngIf="klausurDate" class="col-wd-300 td-border-l m-accent-font">{{klausurDate | date:'dd.MM.yyyy, HH.mm'}}h</td>
+      </tr>
+      <tr>
+        <th class="col-wd m-accent-font">Lerntage</th>
+        <td class="col-wd-300 td-border-l m-accent-font">Soll Beispiel: Montag, Dienstag, Sonntag</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

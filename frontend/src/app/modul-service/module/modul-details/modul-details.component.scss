@@ -1,0 +1,39 @@
+#account-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  width: 85vw;
+}
+
+#account-table-container {
+  width: 800px;
+}
+
+.col-wd-200 {
+  width: 200px;
+}
+
+.col-wd-300 {
+  width: 300px;
+}
+.td-border-l {
+  border-left: 1px solid lightgray;
+}
+
+.width-n {
+  font-weight: normal;
+}
+
+.th-div, .group-div {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+#change-mail-form-goup, #change-pw-form {
+  width: 80%;
+}
+
+table {
+  margin-top: 25px;
+}

@@ -17,10 +17,11 @@
              {
                name: m.name,
                secondsLearned: m.secondsLearned,
-               kreditpunkte: m.kreditpunkte,
-               active: m.active,
+               kreditpunkte: m.kreditpunkte.anzahlPunkte,
+               kontaktzeitStunden: m.kreditpunkte.kontaktzeitStunden,
+               selbststudiumStunden: m.kreditpunkte.selbststudiumStunden,
                semesterstufe: m.semesterstufe,
-               semester: m.semester,
+               semesterTyp: m.semester?.semesterTyp,
                klausurDate: m.klausurDate,
                lerntage: m.lerntage?.allLerntage
              }">
