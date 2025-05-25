@@ -86,3 +86,28 @@ p {
   background-color: rgb(250, 146, 72);
 }
 
+.modul-card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+#modul-name-container {
+  width: 90%;
+}
+
+#termine-icon-container {
+  width: 10%;
+  display: flex;
+  justify-content: center;
+}
+
+#termine-icon-link {
+  cursor: pointer;
+}
+
+#termine-icon {
+  justify-content: flex-end;
+}
+
