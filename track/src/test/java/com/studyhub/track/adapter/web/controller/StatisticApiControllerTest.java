@@ -17,7 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@Disabled
 @WebMvcTest(StatisticApiController.class)
 @Import(SecurityConfig.class)
 public class StatisticApiControllerTest {
@@ -33,12 +32,5 @@ public class StatisticApiControllerTest {
 
 	@MockitoBean
 	JwtAuthFilter filter;
-
-	@Test
-	@DisplayName(" Get-Request auf /statistics/api/stats ist erfolgreich")
-	void test_01() throws Exception {
-
-		mvc.perform(get("/statistics/api/stats")).andExpect(status().isOk());
-	}
 
 }
