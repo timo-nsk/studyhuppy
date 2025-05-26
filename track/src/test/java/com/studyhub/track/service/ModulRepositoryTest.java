@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.utility.TestcontainersConfiguration;
 
@@ -21,12 +22,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(TestcontainersConfiguration.class)
 @DataJdbcTest
+@Rollback(false)
+@Sql(scripts = "delete_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "init_modul_db_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class ModulRepositoryTest {
 
 	@Autowired
@@ -51,7 +54,6 @@ public class ModulRepositoryTest {
 	}
 
 	@Test
-	@Sql("findall.sql")
 	@DisplayName("Alle Module werden gefunden.")
 	void test_02() {
 		List<Modul> l = repository.findAll();
@@ -61,7 +63,6 @@ public class ModulRepositoryTest {
 
 
 	@Test
-	@Sql("findall.sql")
 	@DisplayName("Modul wird erfolgreich gelöscht.")
 	void test_03() {
 		UUID fachId = UUID.fromString("f47ac10b-58cc-4372-a567-0e12b2c3d479");
@@ -73,7 +74,6 @@ public class ModulRepositoryTest {
 
 
 	@Test
-	@Sql("findall.sql")
 	@DisplayName("Modul wird erfolgreich reseted bzw. upgedated.")
 	void test_04() {
 		UUID fachId = UUID.fromString("f47ac10b-58cc-4372-a567-0e12b2c3d479");
@@ -85,7 +85,6 @@ public class ModulRepositoryTest {
 	}
 
 	@Test
-	@Sql("findall.sql")
 	@DisplayName("Active/nicht aktive Module werden erfolgreich für einen User gefundengefunden.")
 	void test_05() {
 		List<Modul> activeModule = repository.findActiveModuleByUsername(true, "user123");
@@ -96,7 +95,6 @@ public class ModulRepositoryTest {
 	}
 
 	@Test
-	@Sql("findall.sql")
 	@DisplayName("Modul wird deaktiviert.")
 	void test_06() {
 		List<Modul> activeModule = repository.findByActiveIsTrue();
@@ -108,7 +106,6 @@ public class ModulRepositoryTest {
 	}
 
 	@Test
-	@Sql("findall.sql")
 	@DisplayName("Module wird aktiviert.")
 	void test_07() {
 		List<Modul> activeModule = repository.findByActiveIsFalse();
@@ -119,7 +116,6 @@ public class ModulRepositoryTest {
 	}
 
 	@Test
-	@Sql("findall.sql")
 	@DisplayName("seconds aus allen Modulen eines Users wird korrekt summiert.")
 	void test_08() {
 		Integer sumSeconds = repository.getTotalStudyTime("peter4");
@@ -128,7 +124,6 @@ public class ModulRepositoryTest {
 	}
 
 	@Test
-	@Sql("findall.sql")
 	@DisplayName("Modul mit den wenigsten seconds wird gefunden.")
 	void test_09() {
 		String modulmMinSeconds = repository.findByMinSeconds("peter4");
@@ -137,7 +132,6 @@ public class ModulRepositoryTest {
 	}
 
 	@Test
-	@Sql("findall.sql")
 	@DisplayName("Modul mit den meisten seconds wird gefunden.")
 	void test_10() {
 		String modulMaxSeconds = repository.findByMaxSeconds("peter4");
@@ -146,7 +140,6 @@ public class ModulRepositoryTest {
 	}
 
 	@Test
-	@Sql("findall.sql")
 	@DisplayName("Wenn mehrere Module mit der gleichen Zeit am wenigsten gelernt wurden, wird lexikographisch das erste Modul gefunden.")
 	void test_11() {
 		String modulMinSeconds = repository.findByMinSeconds("peter4");
@@ -155,7 +148,6 @@ public class ModulRepositoryTest {
 	}
 
 	@Test
-	@Sql("findall.sql")
 	@DisplayName("Wenn mehrere Module mit der gleichen Zeit am häufigsten gelernt wurden, wird lexikographisch das erste Modul gefunden.")
 	void test_12() {
 		String modulMaxSeconds = repository.findByMaxSeconds("peter4");
@@ -183,7 +175,6 @@ public class ModulRepositoryTest {
 
 	@Test
 	@DisplayName("Das Klausur-Datum eines existierenden Moduls wird gefunden")
-	@Sql("findall.sql")
 	void test_15() {
 		UUID fachId = UUID.fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479");
 
@@ -194,7 +185,6 @@ public class ModulRepositoryTest {
 
 	@Test
 	@DisplayName("Falls kein Klausur-Datum für ein existierendes Modul eingetragen wurde, wird null zurückgegeben")
-	@Sql("findall.sql")
 	void test_16() {
 		UUID fachId = UUID.fromString("f48ac10c-58cc-4372-a537-0e02b2c3d479");
 
@@ -205,7 +195,6 @@ public class ModulRepositoryTest {
 
 	@Test
 	@DisplayName("Anzahl aktiver Module für einen User wird zurückgegeben")
-	@Sql("findall.sql")
 	void test_17() {
 		int anz = repository.countActiveModules("user123");
 
@@ -214,7 +203,6 @@ public class ModulRepositoryTest {
 
 	@Test
 	@DisplayName("Anzahl nicht aktiver Module für einen User wird zurückgegeben")
-	@Sql("findall.sql")
 	void test_18() {
 		int anz = repository.countNotActiveModules("peter4");
 
@@ -223,7 +211,6 @@ public class ModulRepositoryTest {
 
 	@Test
 	@DisplayName("Gültiges Modultermin wird erfolgreich hinzugefügt und abgespeichert")
-	@Sql("findall.sql")
 	void test_19() {
 		UUID fachId = UUID.fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479");
 		Modultermin neuerTermin = new Modultermin(
@@ -240,7 +227,6 @@ public class ModulRepositoryTest {
 
 	@Test
 	@DisplayName("Unültiges Modultermine werden nicht hinzugefügt und abgespeichert")
-	@Sql("findall.sql")
 	void test_20() {
 		UUID fachId1 = null;
 		Modultermin neuerTermin1 = new Modultermin(
@@ -261,7 +247,6 @@ public class ModulRepositoryTest {
 
 	@Test
 	@DisplayName("Modultermin kann aus Modul und Datenbank gelöscht werden")
-	@Sql("findall.sql")
 	void test_21() {
 		UUID fachId = UUID.fromString("b8f6e2f5-91a0-4e6d-91b0-ff4e6932a82a");
 		LocalDateTime ldt1 = LocalDateTime.of(2024, 3, 30, 14, 30, 0);
@@ -278,7 +263,6 @@ public class ModulRepositoryTest {
 
 	@Test
 	@DisplayName("Löschen eines Modultermins mit ungültigen Parametern ist ncniht möglich")
-	@Sql("findall.sql")
 	void test_22() {
 		UUID fachId1 = null;
 		LocalDateTime ldt1 = LocalDateTime.of(2024, 3, 30, 14, 30, 0);
@@ -295,7 +279,4 @@ public class ModulRepositoryTest {
 
 		assertThat(success2).isFalse();
 	}
-
-
-
 }
