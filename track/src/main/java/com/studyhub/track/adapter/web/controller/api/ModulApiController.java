@@ -165,7 +165,6 @@ public class ModulApiController {
 	@AngularApi
 	@GetMapping("/getModultermine")
 	public ResponseEntity<Set<Modultermin>> getModultermine(@RequestParam("modulId") UUID modulId) {
-		System.out.println(modulId);
-		return ResponseEntity.ok(Set.of());
+		return ResponseEntity.ok(modulService.getModultermineByModulId(modulId));
 	}
 }

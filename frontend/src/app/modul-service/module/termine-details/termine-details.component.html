@@ -1,16 +1,19 @@
 <div class="main-container">
   <div class="termine-container">
-    <div>
-      <app-modul-termine [modultermine]="modultermine"></app-modul-termine>
+    <div class="row">
+      <div class="col-4">
+        <ng-container *ngIf="hideAddForm">
+          <app-add-termin></app-add-termin>
+        </ng-container>
+      </div>
+      <div class="col-8">
+        <app-modul-termine [modultermine]="modultermine"></app-modul-termine>
+        <div class="add-btn-container">
+          <button class="sh-form-btn" type="button" (click)="showForm()">
+            <span class="sh-form-btn-content">Termin erstellen</span>
+          </button>
+        </div>
+      </div>
     </div>
-
-    <div class="add-btn-container">
-      <button class="sh-form-btn" type="button" (click)="showForm()">
-        <span class="sh-form-btn-content">Termin erstellen</span>
-      </button>
-    </div>
-    <ng-container *ngIf="hideAddForm">
-      <app-add-termin></app-add-termin>
-    </ng-container>
   </div>
 </div>

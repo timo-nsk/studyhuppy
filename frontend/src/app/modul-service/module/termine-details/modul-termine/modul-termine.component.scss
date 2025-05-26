@@ -1,0 +1,31 @@
+.all-termine-container {
+  width: 80%;
+}
+
+.termin-item {
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 2px;
+  border-color: rgb(16, 45, 92);
+  background-color: rgba(162, 193, 245, 0.25);
+  padding-left: 10px;
+  margin-bottom: 20px;
+  height: 150px;
+  width: 500px;
+}
+
+.termin-details-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.termin-dates {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 50px;
+}
+
+p {
+  margin-bottom: 0;
+}

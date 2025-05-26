@@ -5,6 +5,7 @@ import com.studyhub.track.adapter.db.modul.ModulDto;
 import com.studyhub.track.adapter.db.modul.ModulMapper;
 import com.studyhub.track.adapter.mail.KlausurReminderDto;
 import com.studyhub.track.domain.model.modul.Modul;
+import com.studyhub.track.domain.model.modul.Modultermin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -235,4 +236,12 @@ public class ModulService {
 		List<Modul> module = repo.findByUsername(username);
         return module.size() < limit;
     }
+
+	public Set<Modultermin> getModultermineByModulId(UUID modulId) {
+		Modul m = findByFachId(modulId);
+		if (m == null) {
+			return Collections.emptySet();
+		}
+		return m.getModultermine();
+	}
 }

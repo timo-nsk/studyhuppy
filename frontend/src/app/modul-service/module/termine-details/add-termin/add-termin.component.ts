@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   imports: [],
   templateUrl: './add-termin.component.html',
   standalone: true,
-  styleUrl: './add-termin.component.scss'
+  styleUrls: ['./add-termin.component.scss', '../../../../forms.scss']
 })
 export class AddTerminComponent {
 
