@@ -46,9 +46,11 @@ public class ModulServiceTest {
 	}
 
 	@Test
-	@DisplayName("repo.updateSecondsByUuid() wird korrekt aufgerufen")
+	@DisplayName("repo.updateSecondsByUuid() wird aufgerufen und Metode aktualisiert erfolgreich")
 	void test_03() throws Exception {
-		modulService.updateSeconds(UUID.randomUUID(), 10);
+		UUID uuid = UUID.randomUUID();
+		when(repo.updateSecondsByUuid(uuid, 10)).thenReturn(1);
+		modulService.updateSeconds(uuid, 10);
 		verify(repo).updateSecondsByUuid(any(UUID.class), anyInt());
 	}
 
@@ -60,31 +62,25 @@ public class ModulServiceTest {
 	}
 
 	@Test
-	@DisplayName("repo.findByActiveIsTrue() wird korrekt aufgerufen")
+	@DisplayName("repo.findActiveModuleByUsername() wird korrekt aufgerufen")
 	void test_05() {
-		modulService.findActiveModuleByUsername(true, "token");
-		verify(repo).findByActiveIsTrue();
-	}
-
-	@Test
-	@DisplayName("repo.findByActiveIsFalse() wird korrekt aufgerufen")
-	void test_06() {
-		modulService.findActiveModuleByUsername(false, "token");
-		verify(repo).findByActiveIsFalse();
+		modulService.findActiveModuleByUsername(true, "user123");
+		verify(repo).findActiveModuleByUsername(true, "user123");
 	}
 
 	@Test
 	@DisplayName("addTime funktioniert korrekt und addiert die Sekunden zum Modul")
 	void test_08() throws Exception {
+		UUID modulId = UUID.randomUUID();
 		String time = "00:01";
 		TimeConverter tc = mock(TimeConverter.class);
 		when(tc.timeToSeconds(time)).thenReturn(60);
 		when(repo.findSecondsById(any())).thenReturn(60);
-		UUID id = UUID.randomUUID();
+		when(repo.updateSecondsByUuid(modulId, 120)).thenReturn(1);
 
-		modulService.addTime(id, time);
+		modulService.addTime(modulId, time);
 
-		verify(repo).updateSecondsByUuid(id, 120);
+		verify(repo).updateSecondsByUuid(modulId, 120);
 	}
 
 	@Test
