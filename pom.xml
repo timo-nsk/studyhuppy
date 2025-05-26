@@ -37,7 +37,6 @@
         <module>authentication</module>
         <module>actuator</module>
         <module>jwt</module>
-        <module>ui</module>
         <module>track</module>
     </modules>
 

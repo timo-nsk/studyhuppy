@@ -82,11 +82,6 @@
             <artifactId>jwt</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>com.studyhub</groupId>
-            <artifactId>ui</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
 
         <!-- TESTING -->
 
