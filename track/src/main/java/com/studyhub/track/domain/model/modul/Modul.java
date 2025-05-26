@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -25,7 +26,7 @@ public class Modul {
 	private Semester semester;
 	private LocalDateTime klausurDate;
 	private Lerntage lerntage;
-	private Set<Modultermin> modultermine;
+	private List<Modultermin> modultermine;
 
 	public String getGesamtArbeitsaufwand() {
 		return String.valueOf(kreditpunkte.getSelbststudiumStunden() + kreditpunkte.getKontaktzeitStunden());
@@ -52,7 +53,10 @@ public class Modul {
 	}
 
 	public boolean putNewModulTermin(Modultermin modultermin) {
-		return modultermine.add(modultermin);
+		if (!this.modultermine.contains(modultermin)) {
+			return this.modultermine.add(modultermin);
+		}
+		return false;
 	}
 
 	public boolean removeModulTermin(Modultermin modultermin) {

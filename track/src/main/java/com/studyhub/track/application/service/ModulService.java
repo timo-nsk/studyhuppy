@@ -4,6 +4,7 @@ import com.studyhub.jwt.JWTService;
 import com.studyhub.track.adapter.db.modul.ModulDto;
 import com.studyhub.track.adapter.db.modul.ModulMapper;
 import com.studyhub.track.adapter.mail.KlausurReminderDto;
+import com.studyhub.track.adapter.web.controller.api.NeuerModulterminRequest;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.Modultermin;
 import org.slf4j.Logger;
@@ -60,7 +61,7 @@ public class ModulService {
 
 	public List<ModulDto> findActiveModuleByUsername(boolean active, String username) {
 		return repo.findActiveModuleByUsername(active, username)
-				.stream().map(ModulMapper::toModulDto)
+				.stream().map(ModulMapper::toModulDtoNoId)
 				.sorted(Comparator.comparing(ModulDto::secondsLearned).reversed())
 				.toList();
 	}
@@ -237,11 +238,21 @@ public class ModulService {
         return module.size() < limit;
     }
 
-	public Set<Modultermin> getModultermineByModulId(UUID modulId) {
+	public List<Modultermin> getModultermineByModulId(UUID modulId) {
 		Modul m = findByFachId(modulId);
 		if (m == null) {
-			return Collections.emptySet();
+			return Collections.emptyList();
 		}
 		return m.getModultermine();
+	}
+
+	public void saveNewModultermin(NeuerModulterminRequest req) {
+		Modultermin termin = req.toModultermin();
+		UUID modulId = req.modulId();
+		Modul modul = findByFachId(modulId);
+		System.out.println("modul1: " + modul);
+		modul.putNewModulTermin(termin);
+		System.out.println("modul2: " + modul);
+		repo.save(modul);
 	}
 }

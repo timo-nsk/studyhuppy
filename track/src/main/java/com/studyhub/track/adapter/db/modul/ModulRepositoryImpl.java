@@ -30,7 +30,10 @@ public class ModulRepositoryImpl implements ModulRepository {
 
 	@Override
 	public Modul save(Modul modul) {
-		return toModul(modulDao.save(ModulMapper.toModulDto(modul)));
+		Integer existingDbKey =
+				modulDao.findByFachId(modul.getFachId()).map(ModulDto::id).orElse(null);
+		System.out.println(modulDao.save(ModulMapper.toModulDto(modul, existingDbKey)));
+		return toModul(modulDao.save(ModulMapper.toModulDto(modul, existingDbKey)));
 	}
 
 	@Override
@@ -70,8 +73,11 @@ public class ModulRepositoryImpl implements ModulRepository {
 
 	@Override
 	public List<Modul> saveAll(List<Modul> modulList) {
-		List<ModulDto> saved = (List<ModulDto>) modulDao.saveAll(modulList.stream().map(ModulMapper::toModulDto).toList());
-		return saved.stream().map(ModulMapper::toModul).toList();
+		//TODO refactor
+		//List<ModulDto> saved = (List<ModulDto>) modulDao.saveAll(modulList.stream().map(ModulMapper::toModulDto).toList());
+
+		//return saved.stream().map(ModulMapper::toModul).toList();
+		return null;
 	}
 
 	@Override
@@ -129,7 +135,7 @@ public class ModulRepositoryImpl implements ModulRepository {
 		if (dto.isPresent()) {
 			Modul modul = toModul(dto.get());
 			modul.putNewModulTermin(modultermin);
-			modulDao.save(toModulDto(modul));
+			save(modul);
 			return true;
 		} else {
 			return false;
@@ -145,7 +151,7 @@ public class ModulRepositoryImpl implements ModulRepository {
 		if (dto.isPresent()) {
 			Modul modul = toModul(dto.get());
 			boolean succes = modul.removeModulTermin(modultermin);
-			modulDao.save(toModulDto(modul));
+			save(modul);
 			return succes;
 		} else {
 			return false;

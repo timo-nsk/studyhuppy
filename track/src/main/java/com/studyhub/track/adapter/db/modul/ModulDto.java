@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -23,5 +24,5 @@ public record ModulDto(@Id Integer id,
                        Semester semester,
                        LocalDateTime klausurDate,
                        Lerntage lerntage,
-                       Set<Modultermin> modultermine) {
+                       List<Modultermin> modultermine) {
 }

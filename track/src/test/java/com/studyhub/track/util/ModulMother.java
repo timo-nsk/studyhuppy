@@ -14,7 +14,7 @@ public class ModulMother {
 	public static Semester DEFAULT_SEMESTER = new Semester(null, 1,  SemesterTyp.WINTERSEMESTER, LocalDate.now(), LocalDate.now().plusMonths(2), LocalDate.now(), LocalDate.now().plusMonths(4));
 	public static Kreditpunkte DEFAULT_KREDITPUNKTE = new Kreditpunkte(10, 90, 210);
 	public static Lerntage DEFAULT_LERNTAGE = new Lerntage(true, true, true, true, true, false, false, SemesterPhase.VORLESUNG);
-	public static Set<Modultermin> DEFAULT_MODULTERMINE = Set.of(new Modultermin("Klausur", LocalDateTime.now(), null, "Klausur Notiz", Terminfrequenz.EINMALIG));
+	public static List<Modultermin> DEFAULT_MODULTERMINE = List.of(new Modultermin("Klausur", LocalDateTime.now(), null, "Klausur Notiz", Terminfrequenz.EINMALIG));
 
 	public static Modul initModul() {
 		return new Modul(UUID.randomUUID(), "Modul", 1000, DEFAULT_KREDITPUNKTE, "user123",true,1, DEFAULT_SEMESTER, LocalDateTime.now(), DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
@@ -59,7 +59,7 @@ public class ModulMother {
 	}
 
 	public static Modul initModulWithoutTermine() {
-		return new Modul(UUID.randomUUID(), "Modul", 1, DEFAULT_KREDITPUNKTE, "user123", true, 1, DEFAULT_SEMESTER, LocalDateTime.now(), DEFAULT_LERNTAGE, new HashSet<>());
+		return new Modul(UUID.randomUUID(), "Modul", 1, DEFAULT_KREDITPUNKTE, "user123", true, 1, DEFAULT_SEMESTER, LocalDateTime.now(), DEFAULT_LERNTAGE, new LinkedList<>());
 	}
 
 }
