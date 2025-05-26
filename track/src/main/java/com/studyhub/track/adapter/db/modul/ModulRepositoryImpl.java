@@ -32,7 +32,6 @@ public class ModulRepositoryImpl implements ModulRepository {
 	public Modul save(Modul modul) {
 		Integer existingDbKey =
 				modulDao.findByFachId(modul.getFachId()).map(ModulDto::id).orElse(null);
-		System.out.println(modulDao.save(ModulMapper.toModulDto(modul, existingDbKey)));
 		return toModul(modulDao.save(ModulMapper.toModulDto(modul, existingDbKey)));
 	}
 
