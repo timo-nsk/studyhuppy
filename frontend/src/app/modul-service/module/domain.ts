@@ -10,6 +10,7 @@ export interface Modul {
   semester:       Semester | undefined;
   klausurDate:    Date;
   lerntage:       Lerntage | undefined;
+  modultermine:   Modultermin[]
 }
 
 export interface Kreditpunkte {
@@ -37,4 +38,12 @@ export interface Semester {
   vorlesungEnde:   Date;
   semesterBeginn:  Date;
   semesterEnde:    Date;
+}
+
+export interface Modultermin {
+  terminName:     string
+  startDate:      Date
+  endeDate:       Date
+  notiz:          string
+  terminfrequenz: string
 }

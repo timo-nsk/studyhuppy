@@ -8,6 +8,7 @@ import com.studyhub.track.adapter.web.*;
 import com.studyhub.track.application.service.ModulEventService;
 import com.studyhub.track.application.service.ModulService;
 import com.studyhub.track.domain.model.modul.Modul;
+import com.studyhub.track.domain.model.modul.Modultermin;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -158,5 +160,12 @@ public class ModulApiController {
 	public ResponseEntity<Void> addKlausurDate(@RequestBody KlausurDateRequest req) {
 		modulService.addKlausurDate(UUID.fromString(req.fachId()), req.date(), req.time());
 		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+
+	@AngularApi
+	@GetMapping("/getModultermine")
+	public ResponseEntity<Set<Modultermin>> getModultermine(@RequestParam("modulId") UUID modulId) {
+		System.out.println(modulId);
+		return ResponseEntity.ok(Set.of());
 	}
 }

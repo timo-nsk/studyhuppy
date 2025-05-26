@@ -17,6 +17,7 @@ import {LernenComponent} from './kartei-service/lernen/lernen.component';
 import {StapelErstellenComponent} from './kartei-service/stapel-erstellen/stapel-erstellen.component';
 import {StapelDetailsComponent} from './kartei-service/stapel-details/stapel-details.component';
 import {ModulDetailsComponent} from './modul-service/module/modul-details/modul-details.component';
+import {TermineDetailsComponent} from './modul-service/module/termine-details/termine-details.component';
 
 export const routes: Routes = [
   {
@@ -53,6 +54,10 @@ export const routes: Routes = [
             {
               path: 'modul-details/:fachId',
               component: ModulDetailsComponent
+            },
+            {
+              path: 'termine-details',
+              component: TermineDetailsComponent
             },
             { path: 'add-modul',
               component: AddModuleComponent,
