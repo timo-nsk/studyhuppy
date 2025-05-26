@@ -19,4 +19,9 @@ export class ModultermineApiService {
       headers,
       params: {modulId}})
   }
+
+  postNeuerTermin(data : any) : Observable<any> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.post<any>(this.MODUL_BASE_API + "/addModultermin", data, { headers })
+  }
 }

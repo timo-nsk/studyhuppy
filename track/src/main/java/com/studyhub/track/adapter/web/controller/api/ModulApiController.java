@@ -133,7 +133,7 @@ public class ModulApiController {
 	@GetMapping("/get-all-by-username")
 	public ResponseEntity<List<ModulDto>> getAllByUsername(HttpServletRequest request) {
 		String username = jwtService.extractUsernameFromHeader(request);
-		List<ModulDto> l = modulService.findAllByUsername(username).stream().map(ModulMapper::toModulDto).toList();
+		List<ModulDto> l = modulService.findAllByUsername(username).stream().map(ModulMapper::toModulDtoNoId).toList();
 		return ResponseEntity.ok(l);
 	}
 
@@ -164,7 +164,15 @@ public class ModulApiController {
 
 	@AngularApi
 	@GetMapping("/getModultermine")
-	public ResponseEntity<Set<Modultermin>> getModultermine(@RequestParam("modulId") UUID modulId) {
+	public ResponseEntity<List<Modultermin>> getModultermine(@RequestParam("modulId") UUID modulId) {
 		return ResponseEntity.ok(modulService.getModultermineByModulId(modulId));
+	}
+
+	@AngularApi
+	@PostMapping("/addModultermin")
+	public ResponseEntity<Void> addModultermin(@RequestBody NeuerModulterminRequest req) {
+		System.out.println(req);
+		modulService.saveNewModultermin(req);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 }

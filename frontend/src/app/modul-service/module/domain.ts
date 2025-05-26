@@ -45,5 +45,13 @@ export interface Modultermin {
   startDate:      Date
   endeDate:       Date
   notiz:          string
-  terminfrequenz: string
+  terminfrequenz: Terminfrequenz
+}
+
+export enum Terminfrequenz {
+  EINMALIG = "einmalig",
+  TÄGLICH = "täglich",
+  WÖCHENTLICH = "wöchentlich",
+  MONATLICH = "monatlich",
+  JÄHRLICH = "jährlich"
 }

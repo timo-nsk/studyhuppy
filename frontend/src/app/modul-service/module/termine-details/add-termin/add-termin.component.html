@@ -1,38 +1,54 @@
 <div class="form-container">
-  <form class="sh-form">
+  <form class="sh-form m-accent-font" [formGroup]="neuerTerminForm" (ngSubmit)="sendTerminFormData()">
     <div class="mb-3">
-      <label class="form-label">Termin<span>*</span></label>
-      <input class="form-control" type="text">
+      <label class="form-label">Titel<span class="hint-star">*</span></label>
+      <input class="form-control" type="text" formControlName="titel">
+      <span class="text-danger"
+            *ngIf="neuerTerminForm.controls['titel'].errors?.['required'] && neuerTerminForm.controls['titel'].touched">
+              Geben Sie einen Namen ein
+      </span>
+      <span class="text-danger"
+            *ngIf="neuerTerminForm.controls['titel'].errors?.['maxlength'] && neuerTerminForm.controls['titel'].touched">
+              Max. 200 Zeichen
+      </span>
     </div>
     <div class="mb-3">
-      <label class="form-label">Beginn<span>*</span></label>
-      <input class="form-control" type="date">
+      <label class="form-label">Beginn<span class="hint-star">*</span></label>
+      <input class="form-control" type="datetime-local" formControlName="beginn">
+      <span class="text-danger"
+            *ngIf="neuerTerminForm.controls['beginn'].errors?.['required'] && neuerTerminForm.controls['beginn'].touched">
+              Geben Sie ein Datum ein
+      </span>
     </div>
     <div class="mb-3">
       <label class="form-label">Ende</label>
-      <input class="form-control" type="date">
+      <input class="form-control" type="datetime-local" formControlName="ende">
     </div>
     <div class="mb-3">
       <label class="form-label">Bemerkung</label>
-      <input class="form-control" type="text">
+      <input class="form-control" type="text" formControlName="notiz">
     </div>
     <div class="mb-3">
-      <select class="form-select" aria-label="Default select example">
-        <option selected>Wiederholen<span>*</span></option>
-        <option value="1">Nie</option>
-        <option value="2">Täglich</option>
-        <option value="3">Wöchentlich</option>
-        <option value="3">Monatlich</option>
-        <option value="3">Jährlich</option>
+      <select class="form-select" aria-label="Default select example" formControlName="repeat">
+        <option value="" selected disabled>Wiederholen*</option>
+        <option value="EINMALIG">Nie</option>
+        <option value="TÄGLICH">Täglich</option>
+        <option value="WÖCHENTLICH">Wöchentlich</option>
+        <option value="MONATLICH">Monatlich</option>
+        <option value="JÄHRLICH">Jährlich</option>
       </select>
+      <span class="text-danger"
+            *ngIf="neuerTerminForm.controls['repeat'].errors?.['required'] && neuerTerminForm.controls['repeat'].touched">
+              Wählen Sie eine Wiederholungsweise ein
+      </span>
     </div>
     <div class="mb-3">
-      <button class="sh-form-btn">
+      <button class="sh-form-btn" type="submit">
         <span class="sh-form-btn-content">Termin erstellen</span>
       </button>
     </div>
     <div>
-      <p>*Pflichtfelder</p>
+      <p class="form-hint">*Pflichtfelder</p>
     </div>
   </form>
 </div>

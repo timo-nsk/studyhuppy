@@ -3,7 +3,7 @@ import {AddTerminComponent} from './add-termin/add-termin.component';
 import {NgIf} from '@angular/common';
 import {ModulTermineComponent} from './modul-termine/modul-termine.component';
 import {ModultermineApiService} from './termine.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-termine-details',
@@ -24,17 +24,16 @@ export class TermineDetailsComponent implements OnInit{
 
   showForm() {
     this.hideAddForm = !this.hideAddForm
+    this.initComponentData()
   }
 
   ngOnInit(): void {
     this.initComponentData()
-    console.log(this.modulId)
+    console.log("termine-details: " + this.modulId)
   }
 
   initComponentData() {
-    this.route.queryParams.subscribe(params => {
-      this.modulId = params['fachId']
-    });
+    this.modulId = this.route.snapshot.queryParamMap.get('fachId')!;
 
     this.termineService.getTermine(this.modulId).subscribe({
       next: (data) => {
@@ -45,5 +44,9 @@ export class TermineDetailsComponent implements OnInit{
         console.log(err.status)
       }
     })
+  }
+
+  reloadData() {
+    this.initComponentData()
   }
 }

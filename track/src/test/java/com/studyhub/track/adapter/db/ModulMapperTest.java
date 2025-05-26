@@ -18,7 +18,7 @@ public class ModulMapperTest {
 	void test_1() {
 		Modul modul = new Modul(UUID.randomUUID(), "Mathematik", 3600, ModulMother.DEFAULT_KREDITPUNKTE, "timo_neske", true, 1, ModulMother.DEFAULT_SEMESTER, LocalDateTime.now(), ModulMother.DEFAULT_LERNTAGE, ModulMother.DEFAULT_MODULTERMINE);
 
-		ModulDto dto = ModulMapper.toModulDto(modul);
+		ModulDto dto = ModulMapper.toModulDto(modul,1);
 
 		assertThat(dto).isNotNull();
 		assertThat(dto.fachId()).isEqualTo(modul.getFachId());
