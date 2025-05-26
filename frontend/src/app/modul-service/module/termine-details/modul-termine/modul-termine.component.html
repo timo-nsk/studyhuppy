@@ -1,7 +1,6 @@
 <div class="all-termine-container">
-  <mat-list role="list">
-    <h2 class="m-accent-font">Termine</h2>
-    <mat-list-item role="listitem" *ngFor="let termin of modultermine" class="termin-item">
+  <ul role="list">
+    <li role="listitem" *ngFor="let termin of modultermine" class="termin-item shadow">
       <div class="termin-details-container m-accent-font">
         <h4>{{termin.terminName}}</h4>
         <div class="termin-dates">
@@ -14,6 +13,6 @@
         </div>
         <p *ngIf="termin.notiz"><strong>Bemerkung: </strong> "<span>{{termin.notiz}}</span>"</p>
       </div>
-    </mat-list-item>
-  </mat-list>
+    </li>
+  </ul>
 </div>
