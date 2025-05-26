@@ -22,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(TestcontainersConfiguration.class)
 @DataJdbcTest
+@Sql(scripts = "init_events_db_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class ModulGelerntEventRepositoryTest {
 
 	@Autowired
@@ -42,10 +43,8 @@ public class ModulGelerntEventRepositoryTest {
 		ModulGelerntEvent saved = repository.save(event);
 
 		assertThat(saved).isEqualTo(event);
-
 	}
 
-	@Sql("events.sql")
 	@Test
 	@DisplayName("Für einen User wird in einem Modul die Summe der gelernten Sekunden an einem bestimmten Datum berechnet und zurückgegeben")
 	void test_02() {
@@ -53,7 +52,6 @@ public class ModulGelerntEventRepositoryTest {
 		assertThat(secondsLearned).isEqualTo(300);
 	}
 
-	@Sql("events.sql")
 	@Test
 	@DisplayName("Alle Events eines users werden gefunden")
 	void test_03() {
@@ -61,6 +59,4 @@ public class ModulGelerntEventRepositoryTest {
 
 		assertThat(l).hasSize(3);
 	}
-
-
 }
