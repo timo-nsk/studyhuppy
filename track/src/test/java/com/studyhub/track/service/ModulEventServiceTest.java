@@ -46,7 +46,7 @@ public class ModulEventServiceTest {
 		when(dateProvider.getTodayDate()).thenReturn(LocalDate.of(2025, 1, 10));
 		when(eventRepo.getSumSecondsLearned(any(), any(), any())).thenReturn(20);
 
-		Map<LocalDate, List<ModulStat>> res = service.getStatisticsForRecentDays(7, "token");
+		Map<LocalDate, List<ModulStat>> res = service.getStatisticsForRecentDays(7, "timo123");
 
 		assertThat(res.size()).isEqualTo(7);
 		List<ModulStat> stats = res.get(LocalDate.of(2025, 1, 4));
