@@ -1,6 +1,6 @@
 package com.studyhub.mail.adapter.actuator;
 
-import com.studyhub.mail.MailGesendetEventService;
+import com.studyhub.mail.application.service.MailGesendetEventService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

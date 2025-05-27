@@ -1,4 +1,4 @@
-package com.studyhub.mail;
+package com.studyhub.mail.application.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

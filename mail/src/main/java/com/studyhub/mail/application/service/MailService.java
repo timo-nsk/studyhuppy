@@ -1,5 +1,6 @@
-package com.studyhub.mail;
+package com.studyhub.mail.application.service;
 
+import com.studyhub.mail.domain.model.MailTyp;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
@@ -7,7 +8,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import static com.studyhub.mail.MessagePreparer.*;
+import static com.studyhub.mail.application.service.MessagePreparer.*;
 
 @Service
 public class MailService {

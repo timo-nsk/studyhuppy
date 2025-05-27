@@ -1,13 +1,11 @@
 package com.studyhub.mail.adapter.track;
 
-import com.studyhub.mail.TemplateMailService;
+import com.studyhub.mail.application.service.TemplateMailService;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.studyhub.mail;
+package com.studyhub.mail.domain.model;
 
 import org.springframework.mail.SimpleMailMessage;
 

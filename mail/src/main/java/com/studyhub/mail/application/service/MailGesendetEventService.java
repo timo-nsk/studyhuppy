@@ -1,6 +1,8 @@
-package com.studyhub.mail;
+package com.studyhub.mail.application.service;
 
+import com.studyhub.mail.domain.model.MailTyp;
 import com.studyhub.mail.adapter.db.MailGesendetEventRepository;
+import com.studyhub.mail.domain.model.MailGesendetEvent;
 import org.springframework.stereotype.Service;
 
 @Service

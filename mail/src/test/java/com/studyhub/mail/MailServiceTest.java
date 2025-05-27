@@ -1,5 +1,9 @@
 package com.studyhub.mail;
 
+import com.studyhub.mail.application.service.MailGesendetEventService;
+import com.studyhub.mail.application.service.MailService;
+import com.studyhub.mail.application.service.MessagePreparer;
+import com.studyhub.mail.domain.model.MailTyp;
 import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +28,7 @@ public class MailServiceTest {
 	MailGesendetEventService mailGesendetEventService;
 
 	@InjectMocks
-	private  MailService mailService;
+	private MailService mailService;
 
 	@Disabled("funzt net kp warum")
 	@Test

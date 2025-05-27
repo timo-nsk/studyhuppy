@@ -1,4 +1,4 @@
-package com.studyhub.mail;
+package com.studyhub.mail.application.service;
 
 import com.studyhub.mail.adapter.auth.RegistrationRequest;
 import jakarta.mail.MessagingException;

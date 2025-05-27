@@ -1,6 +1,6 @@
 package com.studyhub.mail.adapter.kartei;
 
-import com.studyhub.mail.TemplateMailService;
+import com.studyhub.mail.application.service.TemplateMailService;
 import jakarta.mail.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

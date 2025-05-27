@@ -1,4 +1,4 @@
-package com.studyhub.mail;
+package com.studyhub.mail.domain.model;
 
 public enum MailTyp {
 	LERNEN_NOTIFICATION,

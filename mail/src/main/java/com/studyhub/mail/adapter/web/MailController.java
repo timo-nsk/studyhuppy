@@ -1,6 +1,7 @@
-package com.studyhub.mail;
+package com.studyhub.mail.adapter.web;
 
 import com.studyhub.mail.adapter.auth.RegistrationRequest;
+import com.studyhub.mail.application.service.TemplateMailService;
 import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
