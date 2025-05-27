@@ -4,10 +4,12 @@ import {NgIf} from '@angular/common';
 import {ModulTermineComponent} from './modul-termine/modul-termine.component';
 import {ModultermineApiService} from './termine.service';
 import {ActivatedRoute} from '@angular/router';
+import {Modultermin} from '../domain';
+import {SortbarComponent} from '../../../sortbar/sortbar.component';
 
 @Component({
   selector: 'app-termine-details',
-  imports: [AddTerminComponent, NgIf, ModulTermineComponent],
+  imports: [AddTerminComponent, NgIf, ModulTermineComponent, SortbarComponent],
   templateUrl: './termine-details.component.html',
   standalone: true,
   styleUrls: ['./termine-details.component.scss', '../../../general.scss', '../../../forms.scss']
@@ -19,7 +21,11 @@ export class TermineDetailsComponent implements OnInit{
 
   hideAddForm: boolean = true
   modulId! : string
-  modultermine: any;
+  modultermine: Modultermin[] = [];
+  sortItems : { titel: string; feld: string; }[] = [
+    {titel: "", feld: ""},
+    { titel: "Titel", feld: "terminName"},
+    {titel: "Datum", feld: "startDate"}]
 
 
   showForm() {
@@ -48,5 +54,10 @@ export class TermineDetailsComponent implements OnInit{
 
   reloadData() {
     this.initComponentData()
+  }
+
+  sortByAttribut(sortAttribut : string) {
+    console.log("sorting by attribut=" + sortAttribut)
+
   }
 }
