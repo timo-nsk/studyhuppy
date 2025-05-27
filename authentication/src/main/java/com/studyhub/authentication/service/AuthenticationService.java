@@ -15,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AuthenticationService {
 
@@ -42,7 +44,12 @@ public class AuthenticationService {
 
 		if (authentication.isAuthenticated()) {
 			log.info("User authenticated successfully (%s)".formatted(authentication));
-			return jwtService.generateToken(loginRequest.username());
+			if(authentication.getName().equals(adminUsername)) {
+				return jwtService.generateToken(loginRequest.username(), List.of("ROLE_ADMIN"));
+			} else {
+				return jwtService.generateToken(loginRequest.username(), List.of("ROLE_USER"));
+			}
+
 		} else {
 			log.error("User authenticated not successfully (%s)".formatted(authentication));
 			return "fail";

@@ -6,7 +6,7 @@ import {StatisticsComponent} from './modul-service/statistics/statistics.compone
 import {ModulServiceComponent} from './modul-service/modul-service.component';
 import {LoginServiceComponent} from './auth-service/login-service/login-service.component';
 import {AppLayoutComponent} from './app-layout/app-layout.component';
-import {authGuard} from './guard/auth.guard';
+import {authenticationGuard} from './guard/authentication.guard';
 import {RegisterServiceComponent} from './auth-service/register-service/register-service.component';
 import {PwServiceComponent} from './auth-service/pw-service/pw-service.component';
 import {UserProfileComponent} from './user-profile/user-profile.component';
@@ -18,6 +18,9 @@ import {StapelErstellenComponent} from './kartei-service/stapel-erstellen/stapel
 import {StapelDetailsComponent} from './kartei-service/stapel-details/stapel-details.component';
 import {ModulDetailsComponent} from './modul-service/module/modul-details/modul-details.component';
 import {TermineDetailsComponent} from './modul-service/module/termine-details/termine-details.component';
+import {AdminServiceComponent} from './auth-service/admin-service/admin-service.component';
+import {authorityGuard} from './guard/authority.guard';
+import {UnauthorizedComponent} from './auth-service/unauthorized/unauthorized.component';
 
 export const routes: Routes = [
   {
@@ -33,6 +36,10 @@ export const routes: Routes = [
     component: PwServiceComponent
   },
   {
+    path: 'unauthorized',
+    component: UnauthorizedComponent
+  },
+  {
     path: '',
     component: AppLayoutComponent,
     children:
@@ -40,12 +47,17 @@ export const routes: Routes = [
         {
           path: 'profil',
           component: UserProfileComponent,
-          canActivate: [authGuard]
+          canActivate: [authenticationGuard]
+        },
+        {
+          path: 'admin',
+          component: AdminServiceComponent,
+          canActivate: [authenticationGuard, authorityGuard]
         },
         {
         path: 'module',
         component: ModulServiceComponent,
-        canActivate: [authGuard],
+        canActivate: [authenticationGuard],
         children:
           [
             { path: 'meine-module',
@@ -65,12 +77,12 @@ export const routes: Routes = [
             {
               path: 'einstellungen',
               component: OptionsComponent,
-              canActivate: [authGuard]
+              canActivate: [authenticationGuard]
             },
             {
               path: 'statistiken',
               component: StatisticsComponent,
-              canActivate: [authGuard],
+              canActivate: [authenticationGuard],
               children:
                 [
                   {
@@ -88,22 +100,22 @@ export const routes: Routes = [
         {
           path: 'kartei',
           component: KarteiServiceComponent,
-          canActivate: [authGuard]
+          canActivate: [authenticationGuard]
         },
         {
           path: 'lernen/:fachId',
           component: LernenComponent,
-          canActivate: [authGuard]
+          canActivate: [authenticationGuard]
         },
         {
           path: 'neuer-stapel',
           component: StapelErstellenComponent,
-          canActivate: [authGuard]
+          canActivate: [authenticationGuard]
         },
         {
           path: 'stapel-details/:fachId',
           component: StapelDetailsComponent,
-          canActivate: [authGuard]
+          canActivate: [authenticationGuard]
         }]
   },
   { path: '**', redirectTo: 'login' }

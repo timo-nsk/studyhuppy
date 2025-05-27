@@ -15,8 +15,9 @@ public class JWTService {
 
 	private String secretkey = "Lb4t5iJI3EOL2aEQupj+sppum/fvoq4A5/u2idDDst3rjbytIzzRHq2dyP2C+b/g8QpJiRP+tA4SO9qE+o5srg==";
 
-	public String generateToken(String username) {
+	public String generateToken(String username, List<String> authorities) {
 		Map<String, Object> claims = new HashMap<>();
+		claims.put("authorities", authorities);
 		long expirationTime = 7 * 24 * 60 * 60 * 1000;
 		return Jwts.builder()
 				.claims()
