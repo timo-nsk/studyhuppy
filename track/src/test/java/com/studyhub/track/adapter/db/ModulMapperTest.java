@@ -44,4 +44,21 @@ public class ModulMapperTest {
 		assertThat(modul.getUsername()).isEqualTo(dto.username());
 		assertThat(modul.isActive()).isEqualTo(dto.active());
 	}
+
+	@Test
+	@DisplayName("toModulDtoNoId sollte Modul zu ModulDto ohne ID mappen")
+	void test_3() {
+		Modul modul = new Modul(UUID.randomUUID(), "Mathematik", 3600, ModulMother.DEFAULT_KREDITPUNKTE, "timo_neske", true, 1, ModulMother.DEFAULT_SEMESTER, LocalDateTime.now(), ModulMother.DEFAULT_LERNTAGE, ModulMother.DEFAULT_MODULTERMINE);
+
+		ModulDto dto = ModulMapper.toModulDtoNoId(modul);
+
+		assertThat(dto).isNotNull();
+		assertThat(dto.id()).isNull();
+		assertThat(dto.fachId()).isEqualTo(modul.getFachId());
+		assertThat(dto.name()).isEqualTo(modul.getName());
+		assertThat(dto.secondsLearned()).isEqualTo(modul.getSecondsLearned());
+		assertThat(dto.kreditpunkte().getAnzahlPunkte()).isEqualTo(modul.getKreditpunkte().getAnzahlPunkte());
+		assertThat(dto.username()).isEqualTo(modul.getUsername());
+		assertThat(dto.active()).isEqualTo(modul.isActive());
+	}
 }
