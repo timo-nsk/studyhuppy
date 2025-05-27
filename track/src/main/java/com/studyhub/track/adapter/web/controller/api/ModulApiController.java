@@ -37,12 +37,6 @@ public class ModulApiController {
         this.jwtService = jwtService;
     }
 
-	@Api
-	@GetMapping("/modules")
-	public ResponseEntity<List<Modul>> getAllModules() {
-		return ResponseEntity.ok(modulService.findAll());
-	}
-
 	@AngularApi
 	@PostMapping("/update")
 	public ResponseEntity<Void> updateSeconds(@RequestBody ModulUpdateRequest request) {
@@ -55,20 +49,20 @@ public class ModulApiController {
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
-	@Api
-	@PostMapping("/get-seconds")
-	public ResponseEntity<Integer> getSeconds(@RequestBody String fachId) {
-		System.out.println("get seconds");
+	@AngularApi
+	@GetMapping("/get-seconds")
+	public ResponseEntity<Integer> getSeconds(@RequestParam("fachId") String fachId) {
 		return ResponseEntity.ok(modulService.getSecondsForId(UUID.fromString(fachId)));
 	}
 
-	@Api
+	@AngularApi
 	@GetMapping("/module-map")
-	public Map<UUID, String> getModuleMap() {
-		return modulService.getModuleMap();
+	public ResponseEntity<Map<UUID, String>> getModuleMap(HttpServletRequest req) {
+		String username = jwtService.extractUsernameFromHeader(req);
+		return ResponseEntity.ok(modulService.getModuleMap(username));
 	}
 
-	@Api
+	@AngularApi
 	@GetMapping("/module-name")
 	public String getModulName(String modulFachId) {
 		return modulService.findModulNameByFachid(UUID.fromString(modulFachId));
@@ -82,7 +76,7 @@ public class ModulApiController {
 
 	@AngularApi
 	@PutMapping("/reset")
-	public ResponseEntity<Void> reset(@RequestBody String fachId) {
+	public ResponseEntity<Void> reset(@RequestParam("fachId") String fachId) {
 		try {
 			modulService.resetModulTime(UUID.fromString(fachId));
 		} catch (Exception e) {
@@ -99,7 +93,7 @@ public class ModulApiController {
 	}
 
 	@AngularApi
-	@GetMapping("get-active-modules")
+	@GetMapping("/get-active-modules")
 	public ResponseEntity<List<ModulDto>> getActiveModules(HttpServletRequest request) {
 		String username = jwtService.extractUsernameFromHeader(request);
 		List<ModulDto> l = modulService.findActiveModuleByUsername(true, username);
@@ -139,7 +133,7 @@ public class ModulApiController {
 
 	@AngularApi
 	@PutMapping("/change-active")
-	public ResponseEntity<Void> activate(@RequestBody  String fachId) {
+	public ResponseEntity<Void> activate(@RequestParam("fachId")  String fachId) {
 		modulService.changeActivity(UUID.fromString(fachId));
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
@@ -148,7 +142,7 @@ public class ModulApiController {
 	@PostMapping("/add-time")
 	public ResponseEntity<Void> addTime(@RequestBody AddTimeRequest req) {
 		try {
-			modulService.addTime(UUID.fromString(req.fachId()), req.time());
+			modulService.addTime(UUID.fromString(req.getFachId()), req.getTime());
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
@@ -158,7 +152,7 @@ public class ModulApiController {
 	@AngularApi
 	@PostMapping("/add-klausur-date")
 	public ResponseEntity<Void> addKlausurDate(@RequestBody KlausurDateRequest req) {
-		modulService.addKlausurDate(UUID.fromString(req.fachId()), req.date(), req.time());
+		modulService.addKlausurDate(UUID.fromString(req.getFachId()), req.getDate(), req.getTime());
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 

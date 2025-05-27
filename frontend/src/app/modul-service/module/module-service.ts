@@ -15,7 +15,10 @@ export class ModuleService {
 
   resetTimer(fachId: string): Observable<any> {
     const headers = this.headerService.createAuthHeader()
-    return this.http.put(this.MODUL_BASE_API + '/reset', fachId, {headers});
+    return this.http.put(this.MODUL_BASE_API + '/reset', {headers,
+    params: {
+    fachId: fachId}
+    });
   }
 
   getActiveModuleByUsername(): Observable<Modul[]> {
@@ -30,7 +33,12 @@ export class ModuleService {
 
   getSeconds(fachId : string) : Observable<number> {
     const headers = this.headerService.createAuthHeader()
-    return this.http.post<number>(this.MODUL_BASE_API + '/get-seconds', fachId,  {headers})
+    return this.http.get<number>(this.MODUL_BASE_API + '/get-seconds',  {
+      headers,
+      params: {
+        fachId: fachId
+      }
+    })
   }
 
   postNewSeconds(fachId: string, sessionSecondsLearned: number): Observable<any> {
@@ -63,7 +71,11 @@ export class ModuleService {
 
   putAktivStatus(fachId: string) : Observable<void> {
     const headers = this.headerService.createAuthHeader()
-    return this.http.put<void>(this.MODUL_BASE_API + '/change-active', fachId, {headers})
+    return this.http.put<void>(this.MODUL_BASE_API + '/change-active', {
+      headers,
+      params: {
+        fachId: fachId}
+      })
   }
 
   sendAddTimeData(data: any) {

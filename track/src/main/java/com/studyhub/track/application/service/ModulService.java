@@ -150,8 +150,8 @@ public class ModulService {
 		return repo.findByMinSeconds(username);
 	}
 
-	public Map<UUID, String> getModuleMap() {
-		List<Modul> all = repo.findAll();
+	public Map<UUID, String> getModuleMap(String username) {
+		List<Modul> all = repo.findByUsername(username);
 		Map<UUID, String> map = new HashMap<>();
 
 		for (Modul m: all) {
@@ -248,7 +248,7 @@ public class ModulService {
 
 	public void saveNewModultermin(NeuerModulterminRequest req) {
 		Modultermin termin = req.toModultermin();
-		UUID modulId = req.modulId();
+		UUID modulId = req.getModulId();
 		Modul modul = findByFachId(modulId);
 		System.out.println("modul1: " + modul);
 		modul.putNewModulTermin(termin);
