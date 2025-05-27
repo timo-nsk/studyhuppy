@@ -26,8 +26,8 @@
           </div>
         </div>
 
-        <app-sortbar [sortItems]="sortItems" (sortAttribut)="sortByAttribut($event)"></app-sortbar>
         <div *ngIf="modultermine.length > 0">
+          <app-sortbar [sortItems]="sortItems" (sortAttribut)="sortByAttribut($event)"></app-sortbar>
           <app-modul-termine [modultermine]="modultermine"></app-modul-termine>
         </div>
         <div *ngIf="modultermine.length == 0">

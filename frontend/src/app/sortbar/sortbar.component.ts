@@ -14,7 +14,7 @@ import {NgClass, NgForOf, NgIf} from '@angular/common';
 })
 export class SortbarComponent implements OnInit{
   @Input() sortItems: { titel: string; feld: string; }[] = []
-  @Output() sortAttribut = new EventEmitter<string>()
+  @Output() sortAttribut = new EventEmitter<[string, boolean]>()
   // Alle Daten sind angenommen schon asc sortiert und werden beim ersten klick asc sortiert
   shouldSortAsc : boolean[] = []
   currentSortedItemindex : number | null = null
@@ -23,7 +23,7 @@ export class SortbarComponent implements OnInit{
     // nach klick solle daten so sortiert werden
     let asc = this.shouldSortAsc[index]
     // sortiere daten im parent nach asc/desc
-    this.sortAttribut.emit(feld)
+    this.sortAttribut.emit([feld, asc])
     //Daten sind nun sortiert, der nächste soll die daten entgegengesetzt sortieren
     this.shouldSortAsc[index] = !this.shouldSortAsc[index]
     this.currentSortedItemindex = index

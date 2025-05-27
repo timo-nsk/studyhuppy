@@ -56,8 +56,26 @@ export class TermineDetailsComponent implements OnInit{
     this.initComponentData()
   }
 
-  sortByAttribut(sortAttribut : string) {
-    console.log("sorting by attribut=" + sortAttribut)
+  sortByAttribut(event: [string, boolean]) {
+    //console.log("sorting by attribut=" + event)
+    //console.log(this.modultermine)
+    const sortAttribut = event[0]
+    const asc = event[1]
 
+    if (sortAttribut == 'terminName') {
+      if(asc) {
+        this.modultermine.sort((a, b) => a.terminName.localeCompare(b.terminName));
+      } else {
+        this.modultermine.sort((a, b) => b.terminName.localeCompare(a.terminName));
+      }
+    } else if(sortAttribut == 'startDate') {
+      if(asc) {
+        this.modultermine.sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
+      } else {
+        this.modultermine.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
+      }
+    }
+    //console.log("done sorting")
+    //console.log(this.modultermine)
   }
 }
