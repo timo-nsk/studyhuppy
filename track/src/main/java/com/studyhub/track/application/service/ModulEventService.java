@@ -5,6 +5,8 @@ import com.studyhub.track.adapter.web.ModulUpdateRequest;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.ModulGelerntEvent;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.*;
@@ -15,6 +17,7 @@ public class ModulEventService {
 	private final ModulRepository modulRepository;
 	private final JWTService jwtService;
 	private final DateProvider dateProvider;
+	private final Logger logger = LoggerFactory.getLogger(ModulEventService.class);
 
 	public ModulEventService(ModulGelerntEventRepository modulGelerntEvent, ModulRepository modulRepository, JWTService jwtService, DateProvider dateProvider) {
 		this.modulGelerntEvent = modulGelerntEvent;
@@ -27,6 +30,7 @@ public class ModulEventService {
 		if (request.secondsLearnedThisSession() < 1) return;
 		ModulGelerntEvent event = ModulGelerntEvent.initEvent(UUID.fromString(request.fachId()), request.secondsLearnedThisSession(), "timo");
 		modulGelerntEvent.save(event);
+		logger.info("Saved ModulGelerntEvent: {}", event);
 	}
 
 	public Map<LocalDate, List<ModulStat>> getStatisticsForRecentDays(int days, String username) {
@@ -48,6 +52,8 @@ public class ModulEventService {
 
 			dataMap.put(date, statistics);
 		}
+
+		logger.info("Generated statistics for the last {} days for user '{}': {}", days, username, dataMap);
 		return dataMap;
 	}
 
@@ -58,6 +64,7 @@ public class ModulEventService {
 
 		if(N == 0) return 0;
 
+		logger.info("Computed average study time per day for user '{}': {} seconds over {} days", username, sum, N);
 		return (int) Math.round((double) sum / N);
 	}
 }
