@@ -5,6 +5,7 @@ todo.txt
 .idea
 
 track/modul-data
+track/run-tests-modul.bat
 kartei/kartei-data
 authentication/user-data
 mail/mail-data

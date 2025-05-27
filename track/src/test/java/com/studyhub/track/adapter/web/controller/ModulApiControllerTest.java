@@ -1,9 +1,8 @@
 package com.studyhub.track.adapter.web.controller;
 
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.studyhub.jwt.JWTService;
 import com.studyhub.track.adapter.security.SecurityConfig;
-import com.studyhub.track.adapter.web.AddTimeRequest;
+import com.studyhub.track.adapter.web.controller.request.dto.AddTimeRequest;
 import com.studyhub.track.adapter.web.KlausurDateRequest;
 import com.studyhub.track.adapter.web.ModulForm;
 import com.studyhub.track.adapter.web.ModulUpdateRequest;
@@ -13,7 +12,6 @@ import com.studyhub.track.application.service.ModulEventService;
 import com.studyhub.track.application.service.ModulService;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.Terminfrequenz;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +25,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

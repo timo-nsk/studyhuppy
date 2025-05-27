@@ -1,4 +1,4 @@
-package com.studyhub.track.adapter.web;
+package com.studyhub.track.adapter.web.controller.request.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
