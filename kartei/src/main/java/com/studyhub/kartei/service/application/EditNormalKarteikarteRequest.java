@@ -1,6 +1,5 @@
-package com.studyhub.kartei.adapter.web.controller.request.dto;
+package com.studyhub.kartei.service.application;
 
-@Dto
 public record EditNormalKarteikarteRequest(
          String stapelId,
          String karteId,

@@ -3,7 +3,6 @@ package com.studyhub.kartei.adapter.web.controller.request.dto;
 import com.studyhub.kartei.domain.model.FrageTyp;
 import com.studyhub.kartei.domain.model.Karteikarte;
 
-@Dto
 public record NewNormalKarteikarteRequest(
         String stapelId,
         FrageTyp frageTyp,

@@ -49,7 +49,7 @@ public class StapelRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("Ein neur Stapel wird erfolgreich abgespeichert")
+	@DisplayName("Ein neuer Stapel wird erfolgreich abgespeichert")
 	void test_01() {
 		Stapel s = StapelMother.initSet();
 

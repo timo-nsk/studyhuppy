@@ -1,7 +1,5 @@
 package com.studyhub.kartei.service.application;
 
-import com.studyhub.kartei.adapter.web.controller.request.dto.EditChoiceKarteikarteRequest;
-import com.studyhub.kartei.adapter.web.controller.request.dto.EditNormalKarteikarteRequest;
 import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.domain.model.Stapel;
 import com.studyhub.kartei.service.application.lernzeit.KarteikarteGelerntEventRepository;

@@ -1,5 +1,5 @@
 INSERT INTO karteikarte_gelernt_event (stapel_id, karteikarte_id, gelernt_am, seconds_needed) VALUES
-  ('f47ac10b-58cc-4372-a567-0e02b2c3d479', 'a12c9df0-6452-4f1e-9f53-cb1efdf934c1', '2024-05-01 10:00:00', 45),--hier
+  ('f47ac10b-58cc-4372-a567-0e02b2c3d479', 'a12c9df0-6452-4f1e-9f53-cb1efdf934c1', '2024-05-01 10:00:00', 45), --hier
   ('f47ac10b-58cc-4372-a567-0e02b2c3d479', 'b76d51f5-ef0d-4b5e-85c6-f65a849c9df9', '2024-05-01 10:05:00', 30),
   ('f47ac10b-58cc-4372-a567-0e02b2c3d479', 'c3b85dcb-937a-4cc1-b517-3f2a2de49fd1', '2024-05-01 10:10:00', 50),
   ('1b3d8e5b-9f17-4b71-9a4b-b243a3b3e11e', 'd72ac948-278f-431c-8fa0-5f2440d2cf6b', '2024-05-02 14:30:00', 20),
@@ -9,6 +9,6 @@ INSERT INTO karteikarte_gelernt_event (stapel_id, karteikarte_id, gelernt_am, se
   ('5e9ac59b-c432-4d4a-b9a6-fb53b54d48f2', '27b3a56e-4b14-4ee4-b5e6-9e9e6cbe5a8d', '2024-05-03 08:05:00', 60),
   ('5e9ac59b-c432-4d4a-b9a6-fb53b54d48f2', '395fd52e-8bb5-40b3-8913-b40b6634e508', '2024-05-03 08:10:00', 25),
   ('5e9ac59b-c432-4d4a-b9a6-fb53b54d48f2', '4263e248-98b5-42a9-aaba-32d7070f7a3a', '2024-05-03 08:15:00', 55),
-  ('f47ac10b-58cc-4372-a567-0e02b2c3d479', 'a12c9df0-6452-4f1e-9f53-cb1efdf934c1', '2024-05-01 10:00:00', 45),
-  ('f47ac10b-58cc-4372-a567-0e02b2c3d479', 'a12c9df0-6452-4f1e-9f53-cb1efdf934c1', '2024-06-01 10:00:00', 45),--hier
+  ('f47ac10b-58cc-4372-a567-0e02b2c3d479', 'a12c9df0-6452-4f1e-9f53-cb1efdf934c1', '2024-05-01 10:00:00', 45), --hier
+  ('f47ac10b-58cc-4372-a567-0e02b2c3d479', 'a12c9df0-6452-4f1e-9f53-cb1efdf934c1', '2024-06-01 10:00:00', 45), --hier
   ('f47ac10b-58cc-4372-a567-0e02b2c3d479', 'a12c9df0-6452-4f1e-9f53-cb1efdf934c1', '2024-06-01 10:00:00', 45); --hier

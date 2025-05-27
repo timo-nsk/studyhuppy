@@ -1,11 +1,7 @@
 package com.studyhub.kartei.service.application;
 
-import com.studyhub.kartei.adapter.web.controller.request.dto.RemoveAntwortRequest;
-import com.studyhub.kartei.adapter.web.controller.request.dto.StapelDashboardDataResponse;
 import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.domain.model.Stapel;
-import com.studyhub.kartei.service.application.StapelRepository;
-import com.studyhub.kartei.service.application.StapelService;
 import com.studyhub.kartei.service.application.lernzeit.KarteikarteGelerntEventRepository;
 import com.studyhub.kartei.service.application.lernzeit.LernzeitService;
 import com.studyhub.kartei.util.KarteikarteMother;
@@ -14,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -53,9 +50,10 @@ public class StapelServiceTest {
 	}
 
 	@Test
-	@DisplayName("Es Set wird abgespeichert")
+	@DisplayName("Es existierendes Set wird erfolgreich abgespeichert")
 	void test_02() throws Exception {
 		Stapel set = StapelMother.initSet();
+		when(repo.save(set)).thenReturn(StapelMother.initSet());
 
 		service.saveSet(set);
 
@@ -209,10 +207,11 @@ public class StapelServiceTest {
 	}
 
 	@Test
-	@DisplayName("Für das updaten eines Stapels mit einer neuen Karteikarte wird das repo aufgerufen")
+	@DisplayName("Das Repository wird für das Updaten eines Stapel mit einer neuen Karte aufgerufen und das Updaten ist erfolgreich")
 	void test_17() throws Exception {
 		Karteikarte k = KarteikarteMother.newKarteikarte("f", "a");
 		String stapelId = UUID.randomUUID().toString();
+		when(repo.updateSetWithNewKarteikarte(stapelId, k)).thenReturn(1);
 
 		service.updateSetWithNewKarteikarte(stapelId, k);
 
@@ -252,6 +251,7 @@ public class StapelServiceTest {
 
 	@Test
 	@DisplayName("Finde Stapel, der nur die fälligen Karteikarten enthält")
+	@Sql("drop_stapel.sql")
 	void test_20() {
 		Stapel stapel = StapelMother.initSetWithALotKarteikarten();
 		UUID stapelId = stapel.getFachId();
@@ -288,5 +288,26 @@ public class StapelServiceTest {
 
 
 		assertThrows(IndexOutOfBoundsException.class, () -> service.removeAntwortFromKarte(req));
+	}
+
+	@Test
+	@DisplayName("Wenn ein existierender Stapel nicht abgespeichert werden kann, wird eine Exception geworfen")
+	void test_23() {
+		Stapel set = StapelMother.initSet();
+		when(repo.save(set)).thenReturn(null);
+
+		assertThrows(StapelSaveException.class, () -> service.saveSet(set));
+	}
+
+	@Test
+	@DisplayName("Wenn beim Updaten eines Stapels mit einer neuen Karteikarte ein Fehler auftritt, wird eine Exception geworfen")
+	void test_24() {
+		Karteikarte k = KarteikarteMother.newKarteikarte("f", "a");
+		String stapelId = UUID.randomUUID().toString();
+		when(repo.updateSetWithNewKarteikarte(stapelId, k)).thenReturn(0);
+
+		assertThrows(StapelUpdateException.class, () -> {
+			service.updateSetWithNewKarteikarte(stapelId, k);
+		});
 	}
 }

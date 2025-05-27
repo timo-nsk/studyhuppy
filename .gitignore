@@ -7,6 +7,7 @@ todo.txt
 track/modul-data
 track/run-tests-modul.bat
 kartei/kartei-data
+kartei/run-tests-kartei.bat
 authentication/user-data
 mail/mail-data
 test.csv

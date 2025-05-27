@@ -1,7 +1,5 @@
 package com.studyhub.kartei.service.application;
 
-import com.studyhub.kartei.adapter.web.controller.request.dto.RemoveAntwortRequest;
-import com.studyhub.kartei.adapter.web.controller.request.dto.StapelDashboardDataResponse;
 import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.domain.model.Stapel;
 import com.studyhub.kartei.service.application.lernzeit.KarteikarteGelerntEventRepository;
@@ -35,7 +33,7 @@ public class StapelService {
 		return repo.findAll();
 	}
 
-	public void saveSet(Stapel set) throws Exception {
+	public void saveSet(Stapel set) throws StapelSaveException {
 		Stapel res = repo.save(set);
 		if (res == null) throw new StapelSaveException("could not save stapel");
 		log.info("saved new stapel with id: '%s'".formatted(set.getFachId().toString()));
@@ -154,9 +152,8 @@ public class StapelService {
 
 	public Stapel findByFachIdWithFaelligeKarten(String fachId, LocalDateTime now) {
 		Stapel s = repo.findByFachId(UUID.fromString(fachId));
-		//TODO: wieder einschalten später
-		//List<Karteikarte> l = s.getFälligeKarteikarten(now);
-		//s.setKarteikarten(l);
+		List<Karteikarte> l = s.getFälligeKarteikarten(now);
+		s.setKarteikarten(l);
 		return s;
 	}
 

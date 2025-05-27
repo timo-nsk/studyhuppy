@@ -4,7 +4,6 @@ import com.studyhub.kartei.domain.model.Stapel;
 
 import java.util.UUID;
 
-@Dto
 public record CreateNewStapelRequest(String modulFachId,
                                      String setName,
                                      String beschreibung,
