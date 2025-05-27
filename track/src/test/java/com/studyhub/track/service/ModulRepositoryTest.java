@@ -29,7 +29,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Import(TestcontainersConfiguration.class)
 @DataJdbcTest
 @Rollback(false)
-@Sql(scripts = "delete_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "init_modul_db_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class ModulRepositoryTest {
 

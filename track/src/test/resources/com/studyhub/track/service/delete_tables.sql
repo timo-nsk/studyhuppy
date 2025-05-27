@@ -1,2 +1,0 @@
-delete from modul;
-TRUNCATE TABLE modul RESTART IDENTITY CASCADE;
