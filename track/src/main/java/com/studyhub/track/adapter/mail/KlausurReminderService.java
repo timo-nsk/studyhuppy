@@ -1,7 +1,10 @@
 package com.studyhub.track.adapter.mail;
 
 import com.studyhub.track.application.service.ModulRepository;
+import com.studyhub.track.application.service.ModulService;
 import com.studyhub.track.domain.model.modul.Modul;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -11,6 +14,7 @@ import java.util.List;
 public class KlausurReminderService {
 
 	private final ModulRepository repo;
+	private final Logger log = LoggerFactory.getLogger(KlausurReminderService.class);
 
 	public KlausurReminderService(ModulRepository repo) {
 		this.repo = repo;
@@ -31,6 +35,7 @@ public class KlausurReminderService {
 				}
 			}
 		}
+		log.info("Got List<KlausurReminderDto> for mail service: {}", res);
 		return res;
 	}
 }
