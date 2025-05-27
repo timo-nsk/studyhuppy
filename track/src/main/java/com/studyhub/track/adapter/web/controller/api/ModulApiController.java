@@ -165,7 +165,6 @@ public class ModulApiController {
 	@AngularApi
 	@PostMapping("/addModultermin")
 	public ResponseEntity<Void> addModultermin(@RequestBody NeuerModulterminRequest req) {
-		System.out.println(req);
 		modulService.saveNewModultermin(req);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}

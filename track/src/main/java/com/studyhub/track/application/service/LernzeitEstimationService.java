@@ -12,7 +12,6 @@ public class LernzeitEstimationService {
 
 	public int getAverageLernzeitPerLerntagForModul(Modul modul, SemesterPhase phase) {
 		int remainingSelbststudiumZeit = modul.getRemainingSelbststudiumZeit();
-		System.out.println(remainingSelbststudiumZeit);
 		boolean[] lerntage = modul.getLerntage().getAllLerntage();
 		int countTage = 0;
 		for(boolean tag : lerntage) if(tag) countTage++;

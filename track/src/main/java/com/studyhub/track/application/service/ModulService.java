@@ -250,9 +250,7 @@ public class ModulService {
 		Modultermin termin = req.toModultermin();
 		UUID modulId = req.getModulId();
 		Modul modul = findByFachId(modulId);
-		System.out.println("modul1: " + modul);
 		modul.putNewModulTermin(termin);
-		System.out.println("modul2: " + modul);
 		repo.save(modul);
 	}
 }

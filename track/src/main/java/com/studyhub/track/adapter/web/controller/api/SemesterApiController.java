@@ -30,7 +30,6 @@ public class SemesterApiController {
 								 BindingResult bindingResult,
 								 RedirectAttributes redirectAttributes,
 	                             @CookieValue("auth_token") String token) {
-		System.out.println(semesterForm);
 		if (bindingResult.hasErrors()) return "semester";
 
 		redirectAttributes.addFlashAttribute("semesterForm", semesterForm);
