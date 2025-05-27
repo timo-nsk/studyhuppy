@@ -7,6 +7,7 @@ import com.studyhub.track.domain.model.modul.Modultermin;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -162,6 +163,7 @@ public class ModulRepositoryImpl implements ModulRepository {
 		return modulDao.findAll().stream()
 				.filter(m -> m.active() == active)
 				.filter(m -> m.username().equals(username))
+				.sorted(Comparator.comparing(ModulDto::secondsLearned).reversed())
 				.map(ModulMapper::toModul)
 				.toList();
 	}

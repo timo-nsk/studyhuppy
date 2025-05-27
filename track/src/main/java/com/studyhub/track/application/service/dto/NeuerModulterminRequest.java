@@ -1,4 +1,4 @@
-package com.studyhub.track.adapter.web.controller.api;
+package com.studyhub.track.application.service.dto;
 
 import com.studyhub.track.domain.model.modul.Modultermin;
 import com.studyhub.track.domain.model.modul.Terminfrequenz;

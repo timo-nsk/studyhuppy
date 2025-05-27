@@ -1,10 +1,7 @@
 package com.studyhub.track.application.service;
 
 import com.studyhub.jwt.JWTService;
-import com.studyhub.track.adapter.db.modul.ModulDto;
-import com.studyhub.track.adapter.db.modul.ModulMapper;
-import com.studyhub.track.adapter.mail.KlausurReminderDto;
-import com.studyhub.track.adapter.web.controller.api.NeuerModulterminRequest;
+import com.studyhub.track.application.service.dto.NeuerModulterminRequest;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.Modultermin;
 import org.slf4j.Logger;
@@ -59,11 +56,8 @@ public class ModulService {
 		log.info("reseted modul time to 0 with id:%s".formatted(fachId.toString()));
 	}
 
-	public List<ModulDto> findActiveModuleByUsername(boolean active, String username) {
-		return repo.findActiveModuleByUsername(active, username)
-				.stream().map(ModulMapper::toModulDtoNoId)
-				.sorted(Comparator.comparing(ModulDto::secondsLearned).reversed())
-				.toList();
+	public List<Modul> findActiveModuleByUsername(boolean active, String username) {
+		return repo.findActiveModuleByUsername(active, username);
 	}
 
 	public void changeActivity(UUID fachId) {
@@ -209,24 +203,6 @@ public class ModulService {
 
 	public Modul findByFachId(UUID uuid) {
 		return repo.findByUuid(uuid);
-	}
-
-	public List<KlausurReminderDto> findModuleWithoutKlausurDate(List<String> users) {
-		List<KlausurReminderDto> res = new LinkedList<>();
-
-		for (String user : users) {
-			List<Modul> userModule = repo.findActiveModuleByUsername(true, user);
-
-			if(userModule.isEmpty()) continue;
-
-			for (Modul modul : userModule) {
-				if (!modul.klausurDatumEingetragen()) {
-					KlausurReminderDto dto = new KlausurReminderDto(modul.getName(), user);
-					res.add(dto);
-				}
-			}
-		}
-		return res;
 	}
 
 	public List<Modul> findAllByUsername(String username) {

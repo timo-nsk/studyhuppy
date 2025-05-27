@@ -1,4 +1,4 @@
-package com.studyhub.track.adapter.web;
+package com.studyhub.track.application.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
