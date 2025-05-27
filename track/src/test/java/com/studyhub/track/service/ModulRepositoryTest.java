@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.utility.TestcontainersConfiguration;
 
@@ -28,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(TestcontainersConfiguration.class)
 @DataJdbcTest
+@ActiveProfiles("test")
 @Rollback(false)
 @Sql(scripts = "init_modul_db_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class ModulRepositoryTest {

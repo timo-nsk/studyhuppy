@@ -6,19 +6,6 @@ spring:
     username: ${DB_USER}
     url: jdbc:postgresql://localhost:6433/modul
   security:
-    oauth2:
-      client:
-        registration:
-          github:
-            client-id: ${GIT_CLIENT}
-            client-secret: ${GIT_SECRET}
-            scope: read:user
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-        provider:
-          github:
-            authorization-uri: https://github.com/login/oauth/authorize
-            token-uri: https://github.com/login/oauth/access_token
-            user-info-uri: https://api.github.com/user
     user:
       name: none
       password: none
