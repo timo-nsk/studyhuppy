@@ -7,6 +7,8 @@ import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.Modultermin;
 import com.studyhub.track.domain.model.modul.Terminfrequenz;
 import com.studyhub.track.util.ModulMother;
+import org.flywaydb.core.FlywayExecutor;
+import org.flywaydb.core.internal.jdbc.JdbcTemplate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -20,6 +22,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.utility.TestcontainersConfiguration;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJdbcTest
 @ActiveProfiles("test")
 @Rollback(false)
+@Sql(scripts = "drop.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "init_modul_db_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class ModulRepositoryTest {
 

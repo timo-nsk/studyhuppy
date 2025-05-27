@@ -15,7 +15,8 @@ public class TestcontainerConfiguration {
 	static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest")
 			.withDatabaseName("modultest")
 			.withUsername("timo")
-			.withPassword("1234");
+			.withPassword("1234")
+			.withReuse(false);
 
 	@DynamicPropertySource
 	static void overrideProperties(DynamicPropertyRegistry registry) {
