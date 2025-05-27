@@ -34,11 +34,6 @@ public class SecurityConfig {
 				.csrf().disable()
 				.cors(Customizer.withDefaults())
 				.authorizeHttpRequests(auth -> auth
-						//TODO: nur das System soll darauf zugang haben -> Api Key
-						.requestMatchers(
-								"/statistics/api/v1/**",
-								"/actuator/**",
-								"/create-semester").permitAll()
 						.anyRequest().authenticated())
 				//.csrf(csrf -> csrf
 				//		.csrfTokenRequestHandler(requestHandler)
