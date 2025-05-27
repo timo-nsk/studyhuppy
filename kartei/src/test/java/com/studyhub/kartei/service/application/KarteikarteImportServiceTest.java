@@ -1,4 +1,4 @@
-package com.studyhub.kartei.application;
+package com.studyhub.kartei.service.application;
 
 import com.studyhub.kartei.domain.model.Stapel;
 import com.studyhub.kartei.service.application.KarteikarteImportService;

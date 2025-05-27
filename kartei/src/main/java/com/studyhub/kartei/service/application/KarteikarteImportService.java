@@ -4,6 +4,8 @@ package com.studyhub.kartei.service.application;
 import com.studyhub.kartei.domain.model.FrageTyp;
 import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.domain.model.Stapel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +28,8 @@ public class KarteikarteImportService {
 
     private final StapelRepository stapelRepository;
 
+    private final Logger log = LoggerFactory.getLogger(KarteikarteImportService.class);
+
     public KarteikarteImportService(StapelRepository stapelRepository) {
         this.stapelRepository = stapelRepository;
     }
@@ -45,6 +49,7 @@ public class KarteikarteImportService {
             stapel.addKarteikarte(k);
         }
         stapelRepository.save(stapel);
+        log.info("Imported {} Karteikarten into Stapel with ID: {}", zeilen.size(), stapelId);
     }
 
     public List<String[]> processFile(MultipartFile file) throws IOException, PatternSyntaxException, InvalidFileException, InvalidFormatException {

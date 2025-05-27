@@ -37,7 +37,7 @@ public class StapelService {
 
 	public void saveSet(Stapel set) throws Exception {
 		Stapel res = repo.save(set);
-		if (res == null) throw new Exception("could not save stapel");
+		if (res == null) throw new StapelSaveException("could not save stapel");
 		log.info("saved new stapel with id: '%s'".formatted(set.getFachId().toString()));
 	}
 
@@ -80,10 +80,10 @@ public class StapelService {
 	}
 
 
-	public void updateSetWithNewKarteikarte(String karteiSetId, Karteikarte karteikarte) throws Exception {
-		int res = repo.updateSetWithNewKarteikarte(karteiSetId, karteikarte);
-		if (res == 0) throw  new Exception();
-		log.info("new karteikarte ( '%s' ) was added to stapel ( '%s' )".formatted(karteikarte.getFachId(), karteiSetId));
+	public void updateSetWithNewKarteikarte(String stapelId, Karteikarte karteikarte) throws Exception {
+		int res = repo.updateSetWithNewKarteikarte(stapelId, karteikarte);
+		if (res == 0) throw  new StapelUpdateException("could not update stapel %s with new karteikarte".formatted(stapelId));
+		log.info("new karteikarte ( '%s' ) was added to stapel ( '%s' )".formatted(karteikarte.getFachId(), stapelId));
 	}
 
 	public Stapel maybeGetHttpSessionForStapel(HttpSession session, Stapel stapel) {

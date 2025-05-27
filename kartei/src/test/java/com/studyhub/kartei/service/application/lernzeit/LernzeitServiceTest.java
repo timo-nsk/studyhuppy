@@ -1,4 +1,4 @@
-package com.studyhub.kartei.application.lernzeit;
+package com.studyhub.kartei.service.application.lernzeit;
 
 import com.studyhub.kartei.domain.model.KarteikarteGelerntEvent;
 import com.studyhub.kartei.domain.model.Stapel;

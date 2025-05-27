@@ -1,4 +1,4 @@
-package com.studyhub.kartei.model;
+package com.studyhub.kartei.domain.model;
 
 import com.studyhub.kartei.domain.model.FrageTyp;
 import org.junit.jupiter.api.DisplayName;
