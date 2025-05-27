@@ -1,0 +1,35 @@
+#sortbar {
+  display: inline-flex;
+  min-height: 35px;
+  border-style: none;
+  border-radius: 0.3rem;
+  background-color: white;
+}
+
+.sort-item {
+  display: inline-block; /* macht das div so breit wie nötig */
+  text-align: center;
+  align-content: center;
+  min-width: 80px;            /* Standard-Startbreite */
+  max-width: none;             /* keine Maximalbreite */
+  white-space: nowrap;         /* verhindert Zeilenumbruch */
+  font-size: 0.9rem;
+}
+
+.sort-link:hover {
+  cursor: pointer !important;
+  color: dodgerblue !important;
+}
+
+.link-container {
+  display: inline-flex;
+  flex-direction: row;
+}
+
+svg {
+  padding-bottom: 2px;
+}
+
+.activ-sorted {
+  background-color: #b9d8f4;
+}
