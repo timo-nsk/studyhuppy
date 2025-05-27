@@ -10,5 +10,6 @@ kartei/kartei-data
 kartei/run-tests-kartei.bat
 authentication/user-data
 mail/mail-data
+mail/run-tests-mail.bat
 test.csv
 
