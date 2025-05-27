@@ -12,17 +12,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.utility.TestcontainersConfiguration;
-
 import java.util.List;
 import java.util.UUID;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJdbcTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(TestcontainersConfiguration.class)
+@DataJdbcTest
+@ActiveProfiles("test")
+@Rollback(false)
+@Sql(scripts = "drop_events.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "gelernt_events_init.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class KarteikarteGelerntEventTest {
 
 	@Autowired
@@ -35,7 +39,6 @@ public class KarteikarteGelerntEventTest {
 		repo = new KarteikarteGelerntEventRepoImpl(dao);
 	}
 
-	@Sql("gelernt_events_init.sql")
 	@Test
 	@DisplayName("Alle KarteikarteGelerntEvents einer Kartekarte können erfolgreich gelöscht werden")
 	void test_1() {

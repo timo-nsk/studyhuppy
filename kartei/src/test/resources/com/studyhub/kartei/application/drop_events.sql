@@ -1,0 +1,1 @@
+DELETE FROM karteikarte_gelernt_event;

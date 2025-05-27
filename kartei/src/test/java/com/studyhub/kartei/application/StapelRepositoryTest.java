@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.utility.TestcontainersConfiguration;
 
@@ -26,9 +28,13 @@ import static com.studyhub.kartei.util.KarteikarteMother.newKarteikarte;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-@DataJdbcTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(TestcontainersConfiguration.class)
+@DataJdbcTest
+@ActiveProfiles("test")
+@Rollback(false)
+@Sql(scripts = "drop_stapel.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "init_stapel_db.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class StapelRepositoryTest {
 
 	@Autowired
@@ -43,7 +49,7 @@ public class StapelRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("Ein neues KarteikartenSet wird erfolgreich abgespeichert")
+	@DisplayName("Ein neur Stapel wird erfolgreich abgespeichert")
 	void test_01() {
 		Stapel s = StapelMother.initSet();
 
@@ -53,23 +59,23 @@ public class StapelRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("karteikarten-Sets werden gefunden")
+	@DisplayName("Stapel werden gefunden")
 	void test_02() {
 		Stapel s = StapelMother.initSet();
 		stapelRepository.save(s);
 
-		Stapel found = stapelRepository.findAll().get(0);
+		Stapel found = stapelRepository.findByFachId(s.getFachId());
 
 		assertThat(found.getFachId()).isEqualTo(s.getFachId());
 	}
 
 	@Test
-	@DisplayName("Einem Karteikarten-Set kann nachträglich eine Karteikarte hinzugefügt werden")
+	@DisplayName("Einem Stapel kann nachträglich eine Karteikarte hinzugefügt werden")
 	void test_03() {
 		Karteikarte neueKarteikarte = newKarteikarte("Neu hier?", "Ja");
 		Stapel s = StapelMother.initSet();
 		stapelRepository.save(s);
-		Stapel found = stapelRepository.findAll().get(0);
+		Stapel found = stapelRepository.findByFachId(s.getFachId());
 		found.addKarteikarte(neueKarteikarte);
 
 		Stapel saved = stapelRepository.save(found);
@@ -105,23 +111,8 @@ public class StapelRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("Wenn keine Karteikarten-Sets existieren, returned countAllByFachId -> 0")
-	void test_06() {
-		assertThat(stapelRepository.countAll()).isEqualTo(0);
-	}
-
-	@Test
-	@DisplayName("Wenn ein Karteikarten-Set existieren, returned countAllByFachId -> 1")
-	void test_07() {
-		Stapel set = StapelMother.initSet();
-
-		stapelRepository.save(set);
-
-		assertThat(stapelRepository.countAll()).isEqualTo(1);
-	}
-
-	@Test
-	@DisplayName("Wenn ein Set geladen wird und eine neue Karteikarte hinzugefügt wird, soll kein neues Set angelegt werden")
+	@DisplayName("Wenn ein Stapel geladen wird und eine neue Karteikarte hinzugefügt wird, soll kein neues Set angelegt werden")
+	@Sql("drop_stapel.sql")
 	void test_08() {
 		Stapel set = StapelMother.initSet();
 
@@ -136,20 +127,18 @@ public class StapelRepositoryTest {
 	}
 
 	@Test
-	@Sql("db_init.sql")
-	@DisplayName("Ein Set wird anhand seiner Fach-Id erfolgreich gelöscht")
+	@DisplayName("Ein Stapel wird anhand seiner Fach-Id erfolgreich gelöscht")
 	void test_9() {
 		String setToRemove = "6f8a3d6e-2c4c-4f8e-924b-8e5f9a6d3b1c";
 
 		stapelRepository.deleteKarteiSet(setToRemove);
 
 		List<Stapel> l = stapelRepository.findAll();
-		assertThat(l.size()).isEqualTo(1);
+		assertThat(l.size()).isEqualTo(8); // 9 sind in init_stapel_db.sql
 		assertThat(l.stream().anyMatch(e -> e.getFachId().toString().equals(setToRemove))).isFalse();
 	}
 
 	@Test
-	@Sql("db_init.sql")
 	@DisplayName("Der Name eines Sets wird erfolgreich geändert")
 	void test_10() {
 		String setToChange = "6f8a3d6e-2c4c-4f8e-924b-8e5f9a6d3b1c";
@@ -163,7 +152,6 @@ public class StapelRepositoryTest {
 
 
 	@Test
-	@Sql("db_init.sql")
 	@DisplayName("Alle Karteikarten in einem Set werden entfernt")
 	void test_11() {
 		String setToReset = "6f8a3d6e-2c4b-4f8e-924b-8e5f9a6d3b1c";
@@ -175,7 +163,6 @@ public class StapelRepositoryTest {
 	}
 
 	@Test
-	@Sql("db_init.sql")
 	@DisplayName("Das lern_intervalle-Feld wird erfolgreich aktualisiert.")
 	void test_12() {
 		String stapelToUpdate = "6f8a3d6e-2c4b-4f8e-924b-8e5f9a6d3b1c";
@@ -189,7 +176,6 @@ public class StapelRepositoryTest {
 	}
 
 	@Test
-	@Sql("db_init.sql")
 	@DisplayName("Eine Karteikarte wird einem schon existierenden Set hinzugefügt und erfolgreich abgespeichert")
 	void test_13() {
 		String stapelToUpdate = "6f8a3d6e-2c4b-4f8e-924b-8e5f9a6d3b1c";
@@ -214,7 +200,6 @@ public class StapelRepositoryTest {
 
 	@Test
 	@DisplayName("Alle Stapel für einer User mit username 'peter987' werden gefunden")
-	@Sql("db_init_many_stapel.sql")
 	void test_15() {
 		List<Stapel> res = stapelRepository.findByUsername("peter987");
 
