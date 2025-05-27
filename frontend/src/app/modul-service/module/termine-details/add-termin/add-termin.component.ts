@@ -22,6 +22,7 @@ export class AddTerminComponent implements OnInit{
   terminService = inject(ModultermineApiService);
 
 
+  // TODO FIX: nachdem termin angelegt wurde ist fachId null wenn man noch eins angelen will außer man läd seite neu
   sendTerminFormData() {
     const data = this.neuerTerminForm.value;
     if(this.neuerTerminForm.invalid) {
