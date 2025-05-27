@@ -70,8 +70,8 @@ public class ModulApiController {
 
 	@Api
 	@PostMapping("/data-klausur-reminding")
-	public List<KlausurReminderDto> findModuleWithoutKlausurDate(@RequestBody List<String> users) {
-		return modulService.findModuleWithoutKlausurDate(users);
+	public ResponseEntity<List<KlausurReminderDto>> findModuleWithoutKlausurDate(@RequestBody List<String> users) {
+		return ResponseEntity.ok(modulService.findModuleWithoutKlausurDate(users));
 	}
 
 	@AngularApi
