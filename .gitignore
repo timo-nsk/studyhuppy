@@ -9,6 +9,7 @@ track/run-tests-modul.bat
 kartei/kartei-data
 kartei/run-tests-kartei.bat
 authentication/user-data
+authentication/run-tests-auth.bat
 mail/mail-data
 mail/run-tests-mail.bat
 test.csv

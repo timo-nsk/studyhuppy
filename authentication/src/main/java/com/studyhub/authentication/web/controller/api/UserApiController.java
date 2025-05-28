@@ -1,9 +1,8 @@
-package com.studyhub.authentication.web.controller;
+package com.studyhub.authentication.web.controller.api;
 
 import com.studyhub.authentication.model.AppUser;
 import com.studyhub.authentication.model.UserDto;
 import com.studyhub.authentication.model.UserMapper;
-import com.studyhub.authentication.service.AccountDeletionException;
 import com.studyhub.authentication.service.AccountService;
 import com.studyhub.authentication.web.SetNotificationSubscriptionRequest;
 import com.studyhub.jwt.JWTService;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -30,7 +28,6 @@ public class UserApiController {
 
 	@PostMapping("get-semester")
 	public Integer getSemesterOfUser(@RequestBody String username) {
-		System.out.println("ping semester get");
 		return accountService.findSemesterByUsername(username);
 	}
 

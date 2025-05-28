@@ -15,7 +15,7 @@
 <header th:replace="~{/layout/fragments :: header}"></header>
 <div id="registration-container">
     <div id="registration-form-container" class="shd">
-        <form id="registration-form" method="post" th:action="@{/register/new-user}" th:object="${registerForm}">
+        <form id="registration-form" method="post" th:action="@{/register/new-user}" th:object="${registerRequest}">
 
             <div id="registration-form-header">
                 <h3>Registrieren</h3>

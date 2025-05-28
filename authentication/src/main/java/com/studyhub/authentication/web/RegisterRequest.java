@@ -7,26 +7,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.UUID;
 
-public record RegisterForm(
-		@Email(message = "Keine gültige E-Mail-Adresse")
-		@NotBlank(message = "Keine E-Mail-Adresse eingegeben")
+public record RegisterRequest(
 		String mail,
-
-		@NotBlank(message = "Kein Username eingegeben")
-		@IsAvailable
 		String username,
-
-		@NotBlank(message = "Kein Passwort eingegeben")
-		@Length(message = "Passwort muss 8 Zeichen lang sein", min = 8)
 		String password,
-
 		Boolean notificationSubscription,
-		@NotNull(message = "AGB's wurden nicht akzeptiert")
 		Boolean acceptedAgb,
-
-		@Min(value = 1, message = "Das Fachsemester muss zwischen 1 und 16 liegen")
-		@Max(value = 16, message = "Das Fachsemester muss zwischen 1 und 16 liegen")
-		@NotNull(message = "Bitte gebe dein derzeitiges Fachsemester ein")
 		Integer semester
 ) {
 	public AppUser toAppUser() {

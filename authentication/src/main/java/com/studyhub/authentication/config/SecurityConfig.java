@@ -41,8 +41,7 @@ public class SecurityConfig {
 								"/register",
 								"/password-reset",
 								"/api/get-db-health",
-								"/actuator/health",
-								"/agb")
+								"/actuator/health")
 						.permitAll()
 						.anyRequest().authenticated())
 				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
