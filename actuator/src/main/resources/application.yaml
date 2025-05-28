@@ -26,14 +26,16 @@ server:
   port: 9085
 app:
   metrics:
-    track: http://localhost:8080/actuator/metrics/http.server.requests
-    kartei: http://localhost:8081/actuator/metrics/http.server.requests
-    mail: http://localhost:8083/actuator/metrics/http.server.requests
-    authentication: http://localhost:8084/actuator/metrics/http.server.requests
+    track: http://localhost:9080/actuator/metrics/http.server.requests
+    kartei: http://localhost:9081/actuator/metrics/http.server.requests
+    mail: http://localhost:9083/actuator/metrics/http.server.requests
+    authentication: http://localhost:9084/actuator/metrics/http.server.requests
   services:
     health:
-        track: http://localhost:8080/actuator/health
-        kartei: http://localhost:8081/actuator/health
-        mail: http://localhost:8083/actuator/health
-        authentication: http://localhost:8084/actuator/health
+        track: http://localhost:9080/actuator/health
+        kartei: http://localhost:9081/actuator/health
+        mail: http://localhost:9083/actuator/health
+        authentication: http://localhost:9084/actuator/health
+  api:
+    token: abcdefg
 

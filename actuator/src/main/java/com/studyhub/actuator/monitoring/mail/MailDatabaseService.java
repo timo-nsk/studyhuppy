@@ -1,6 +1,7 @@
 package com.studyhub.actuator.monitoring.mail;
 
 import com.studyhub.actuator.DatabaseHealthIndicator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -12,6 +13,10 @@ import java.util.concurrent.ExecutionException;
 
 @Component
 public class MailDatabaseService implements DatabaseHealthIndicator {
+
+	@Value("${app.api.token}")
+	private String token;
+
 	@Override
 	public Health health() {
 		if(mailServiceDatabaseIsHealthy()) return Health.up().build();
@@ -19,10 +24,11 @@ public class MailDatabaseService implements DatabaseHealthIndicator {
 	}
 
 	private boolean mailServiceDatabaseIsHealthy() {
-		String uri = "http://localhost:8083/api/get-db-health";
+		String uri = "http://localhost:9083/api/get-db-health";
 		CompletableFuture<String> health = WebClient.create()
 				.get()
 				.uri(uri)
+				.header("ActuatorAuth", "Bearer " + token)
 				.retrieve()
 				.bodyToMono(String.class)
 				.timeout(Duration.of(3, ChronoUnit.SECONDS))

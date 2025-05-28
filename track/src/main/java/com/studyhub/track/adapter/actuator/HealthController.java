@@ -1,19 +1,23 @@
 package com.studyhub.track.adapter.actuator;
 
-
+import com.studyhub.track.application.service.ModulService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequestMapping("/api")
 public class HealthController {
 
+	private final ModulService modulService;
 
-	@RequestMapping("/get-db-health")
-	public String getDbHealth() {
+    public HealthController(ModulService modulService) {
+        this.modulService = modulService;
+    }
 
-		boolean modulDbHealth = true;
-
-		return String.valueOf(modulDbHealth);
+    @GetMapping("/get-db-health")
+	public ResponseEntity<String> getDbHealth() {
+		return ResponseEntity.ok(String.valueOf(modulService.isModulDbHealthy()));
 	}
 }

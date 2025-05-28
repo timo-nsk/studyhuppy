@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
+import {ActuatorServiceComponent} from './actuator-service/actuator-service.component';
 
 @Component({
   selector: 'app-admin-service',
-  imports: [],
+  imports: [
+    ActuatorServiceComponent
+  ],
   templateUrl: './admin-service.component.html',
-  styleUrl: './admin-service.component.scss'
+  standalone: true,
+  styleUrls: ['./admin-service.component.scss', '../../general.scss']
 })
 export class AdminServiceComponent {
 

@@ -1,6 +1,10 @@
 package com.studyhub.actuator.monitoring.kartei;
 
 import com.studyhub.actuator.DatabaseHealthIndicator;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.ObjectFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -12,6 +16,10 @@ import java.util.concurrent.ExecutionException;
 
 @Component
 public class KarteiDatabaseService implements DatabaseHealthIndicator {
+
+	@Value("${app.api.token}")
+	private String token;
+
 	@Override
 	public Health health() {
 		if(karteiServiceDatabaseIsHealthy()) return Health.up().build();
@@ -19,10 +27,11 @@ public class KarteiDatabaseService implements DatabaseHealthIndicator {
 	}
 
 	private boolean karteiServiceDatabaseIsHealthy() {
-		String uri = "http://localhost:8081/api/get-db-health";
+		String uri = "http://localhost:9081/api/get-db-health";
 		CompletableFuture<String> health = WebClient.create()
 				.get()
 				.uri(uri)
+				.header("ActuatorAuth", "Bearer " + token)
 				.retrieve()
 				.bodyToMono(String.class)
 				.timeout(Duration.of(3, ChronoUnit.SECONDS))

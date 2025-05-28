@@ -33,9 +33,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request,
 	                                HttpServletResponse response,
 	                                FilterChain filterChain) throws ServletException, IOException {
-		String path = request.getRequestURI();
 
-		if (path.equals("/login") || path.equals("/register") || path.equals("/agb") || path.equals("/password-reset")) {
+		String path = request.getRequestURI();
+		if (path.equals("/login") || path.equals("/register") || path.equals("/agb") || path.equals("/password-reset")
+				|| path.equals("/api/get-db-health") || path.equals("/actuator/health")) {
 			filterChain.doFilter(request, response);
 			return;
 		}

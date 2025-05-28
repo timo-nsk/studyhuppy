@@ -34,8 +34,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request,
 	                                HttpServletResponse response,
 	                                FilterChain filterChain) throws ServletException, IOException {
+		String path = request.getRequestURI();
+		if (path.equals("/api/get-db-health") || path.equals("/actuator/health")) {
+			filterChain.doFilter(request, response);
+			return;
+		}
+
 		String header = request.getHeader("Authorization");
 		String token = jwtService.extractTokenFromHeader(header);
+
 
 		if (token != null) {
 			String username = jwtService.extractUsername(token);

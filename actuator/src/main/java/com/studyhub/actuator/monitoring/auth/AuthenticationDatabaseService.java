@@ -1,6 +1,7 @@
 package com.studyhub.actuator.monitoring.auth;
 
 import com.studyhub.actuator.DatabaseHealthIndicator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -13,6 +14,9 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class AuthenticationDatabaseService implements DatabaseHealthIndicator {
 
+	@Value("${app.api.token}")
+	private String token;
+
 	@Override
 	public Health health() {
 		if(authenticationServiceDatabaseIsHealthy()) return Health.up().build();
@@ -20,10 +24,11 @@ public class AuthenticationDatabaseService implements DatabaseHealthIndicator {
 	}
 
 	private boolean authenticationServiceDatabaseIsHealthy() {
-		String uri = "http://localhost:8084/api/get-db-health";
+		String uri = "http://localhost:9084/api/get-db-health";
 		CompletableFuture<String> health = WebClient.create()
 				.get()
 				.uri(uri)
+				.header("ActuatorAuth", "Bearer " + token)
 				.retrieve()
 				.bodyToMono(String.class)
 				.timeout(Duration.of(3, ChronoUnit.SECONDS))

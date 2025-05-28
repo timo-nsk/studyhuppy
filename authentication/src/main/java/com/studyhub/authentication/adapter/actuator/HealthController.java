@@ -1,6 +1,7 @@
 package com.studyhub.authentication.adapter.actuator;
 
 import com.studyhub.authentication.service.AuthenticationService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,8 +17,7 @@ public class HealthController {
 	}
 
 	@GetMapping("/get-db-health")
-	public String getDbHealth() {
-		boolean userDbHealth = authenticationService.isUserDbHealthy();
-		return String.valueOf(userDbHealth);
+	public ResponseEntity<String> getDbHealth() {
+		return ResponseEntity.ok(String.valueOf(authenticationService.isUserDbHealthy()));
 	}
 }

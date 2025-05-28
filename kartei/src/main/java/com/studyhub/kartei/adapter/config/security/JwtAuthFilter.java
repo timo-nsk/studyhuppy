@@ -29,6 +29,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 	                                HttpServletResponse response,
 	                                FilterChain filterChain) throws ServletException, IOException {
 
+		String path = request.getRequestURI();
+		if (path.equals("/api/get-db-health") || path.equals("/actuator/health")) {
+			filterChain.doFilter(request, response);
+			return;
+		}
+
 		String header = request.getHeader("Authorization");
 		String token = jwtService.extractTokenFromHeader(header);
 
@@ -44,5 +50,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 			}
 		}
 		filterChain.doFilter(request, response);
+	}
+
+	public void skipPaths(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+		String path = request.getRequestURI();
+		if (path.equals("/api/get-db-health") || path.equals("/actuator/health")) {
+			System.out.println("skip path");
+			filterChain.doFilter(request, response);
+			return;
+		}
 	}
 }

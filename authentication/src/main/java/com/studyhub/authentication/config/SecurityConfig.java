@@ -40,6 +40,7 @@ public class SecurityConfig {
 								"/login",
 								"/register",
 								"/password-reset",
+								"/api/get-db-health",
 								"/agb")
 						.permitAll()
 						.anyRequest().authenticated())

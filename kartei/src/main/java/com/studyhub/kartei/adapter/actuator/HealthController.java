@@ -1,6 +1,7 @@
 package com.studyhub.kartei.adapter.actuator;
 
 import com.studyhub.kartei.service.application.StapelService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,10 +17,7 @@ public class HealthController {
 	}
 
 	@GetMapping("/get-db-health")
-	public String getDbHealth() {
-
-		boolean modulDbHealth = stapelService.isStapelDbHealthy();
-
-		return String.valueOf(modulDbHealth);
+	public ResponseEntity<String> getDbHealth() {
+		return ResponseEntity.ok(String.valueOf(stapelService.isStapelDbHealthy()));
 	}
 }
