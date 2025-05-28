@@ -13,10 +13,10 @@ jobs:
         name: Git Checkout
         
       - name: Set up Docker Compose
-        run: docker-compose --version
+        run: docker compose --version
 
       - name: Start services
-        run: docker-compose up -d
+        run: docker compose up -d
         
       - name: Java installieren
         uses: actions/setup-java@v1
