@@ -28,7 +28,7 @@ public class SystemHealthService {
 
 	public String getServiceHealthStatus(Map<String, ? extends HealthIndicator> indicatorMap) {
 		List<HealthIndicator> indicators = List.copyOf(indicatorMap.values());
-		System.out.println(indicators);
+		//System.out.println("blub " + indicators.get(0).health().getStatus().toString());
 		return indicators.get(0).health().getStatus().toString();
 	}
 

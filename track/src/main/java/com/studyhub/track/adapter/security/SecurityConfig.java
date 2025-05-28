@@ -34,7 +34,7 @@ public class SecurityConfig {
 				.csrf().disable()
 				.cors(Customizer.withDefaults())
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/api/get-db-health").permitAll()
+						.requestMatchers("/api/get-db-health", "/actuator/health").permitAll()
 						.anyRequest().authenticated())
 				//.csrf(csrf -> csrf
 				//		.csrfTokenRequestHandler(requestHandler)

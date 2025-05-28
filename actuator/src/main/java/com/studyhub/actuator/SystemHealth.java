@@ -23,5 +23,12 @@ public class SystemHealth {
 		return liveness;
 	}
 
-
+	@Override
+	public String toString() {
+		return "SystemHealth{" +
+				"system='" + system + '\'' +
+				", liveness='" + liveness + '\'' +
+				", readiness='" + readiness + '\'' +
+				'}';
+	}
 }

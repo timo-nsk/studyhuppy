@@ -10,6 +10,9 @@ import reactor.core.publisher.Mono;
 @Service
 public class KarteiService implements KarteiHealthIndicator {
 
+	@Value("${app.api.token}")
+	private String token;
+
 	@Value("${app.services.health.kartei}")
 	private String KARTEI_SERVICE_URI;
 
@@ -23,6 +26,7 @@ public class KarteiService implements KarteiHealthIndicator {
 		return WebClient.create()
 				.get()
 				.uri(KARTEI_SERVICE_URI)
+				.header("ActuatorAuth", "Bearer " + token)
 				.retrieve()
 				.toBodilessEntity()
 				.map(response -> response.getStatusCode().is2xxSuccessful())

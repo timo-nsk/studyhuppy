@@ -41,6 +41,7 @@ public class SecurityConfig {
 								"/register",
 								"/password-reset",
 								"/api/get-db-health",
+								"/actuator/health",
 								"/agb")
 						.permitAll()
 						.anyRequest().authenticated())

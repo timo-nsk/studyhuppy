@@ -9,6 +9,10 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class AuthenticationService implements AuthenticationHealthIndicator {
+
+	@Value("${app.api.token}")
+	private String token;
+
 	@Value("${app.services.health.authentication}")
 	private String AUTH_SERVICE_URI;
 
@@ -24,6 +28,7 @@ public class AuthenticationService implements AuthenticationHealthIndicator {
 		return WebClient.create()
 				.get()
 				.uri(AUTH_SERVICE_URI)
+				.header("ActuatorAuth", "Bearer " + token)
 				.retrieve()
 				.toBodilessEntity()
 				.map(response -> response.getStatusCode().is2xxSuccessful())

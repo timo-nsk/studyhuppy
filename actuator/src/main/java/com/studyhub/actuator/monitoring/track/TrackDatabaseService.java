@@ -29,7 +29,6 @@ public class TrackDatabaseService implements DatabaseHealthIndicator {
 	}
 
 	private boolean trackServiceDatabaseIsHealthy() {
-		System.out.println(token);
 		String uri = "http://localhost:9080/api/get-db-health";
 		CompletableFuture<String> health = WebClient.create()
 				.get()

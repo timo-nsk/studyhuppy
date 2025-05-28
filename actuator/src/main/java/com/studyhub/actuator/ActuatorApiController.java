@@ -20,6 +20,7 @@ public class ActuatorApiController {
 
 	@GetMapping("/get-system-health")
 	public ResponseEntity<List<SystemHealth>> getSystemHealth() {
+		systemHealthService.getSystemHealth().forEach(System.out::println);
 		return ResponseEntity.ok(systemHealthService.getSystemHealth());
 	}
 }

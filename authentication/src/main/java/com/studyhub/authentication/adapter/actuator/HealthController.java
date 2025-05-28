@@ -18,6 +18,8 @@ public class HealthController {
 
 	@GetMapping("/get-db-health")
 	public ResponseEntity<String> getDbHealth() {
+
+		System.out.println("auth health: " + authenticationService.isUserDbHealthy());
 		return ResponseEntity.ok(String.valueOf(authenticationService.isUserDbHealthy()));
 	}
 }

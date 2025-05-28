@@ -13,6 +13,9 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public class MetricsGatherService {
+	@Value("${app.api.token}")
+	private String token;
+
 	@Value("${app.metrics.track}")
 	private String TRACK_SERVICE_METRICS_URI;
 
@@ -33,6 +36,7 @@ public class MetricsGatherService {
 		return WebClient.create()
 				.get()
 				.uri(uri)
+				.header("ActuatorAuth", "Bearer " + token)
 				.retrieve()
 				.bodyToMono(String.class)
 				.timeout(Duration.of(5, ChronoUnit.SECONDS))

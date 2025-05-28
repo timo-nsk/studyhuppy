@@ -18,6 +18,8 @@ public class HealthController {
 
 	@GetMapping("/get-db-health")
 	public ResponseEntity<String> getDbHealth() {
+
+		System.out.println("kartei health: " + stapelService.isStapelDbHealthy());
 		return ResponseEntity.ok(String.valueOf(stapelService.isStapelDbHealthy()));
 	}
 }

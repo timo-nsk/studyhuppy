@@ -9,6 +9,10 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class TrackService implements TrackHealthIndicator {
+
+	@Value("${app.api.token}")
+	private String token;
+
 	@Value("${app.services.health.track}")
 	private String TRACK_SERVICE_URI;
 
@@ -24,6 +28,7 @@ public class TrackService implements TrackHealthIndicator {
 		return WebClient.create()
 				.get()
 				.uri(TRACK_SERVICE_URI)
+				.header("ActuatorAuth", "Bearer " + token)
 				.retrieve()
 				.toBodilessEntity()
 				.map(response -> response.getStatusCode().is2xxSuccessful())
