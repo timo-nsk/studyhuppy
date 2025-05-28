@@ -1,20 +1,7 @@
-#system-health-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 #system-health-table-container {
+  margin-top: 5vh;
   width: 500px;
 }
-
-.table {
-  border-style: solid;
-  border-color: rgb(9, 21, 64);
-  border-width: 2px;
-  --bs-table-bg: #fcfcfd !important;
-}
-
 
 .up {
   color: green;
@@ -26,9 +13,4 @@
   font-weight: bold;
 }
 
-a {
-  color: rgb(9, 21, 64);
-}
-a:hover {
-  color: rgba(9, 21, 64, 0.5);
-}
+
