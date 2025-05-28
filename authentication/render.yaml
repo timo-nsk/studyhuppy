@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: authentication-service
+    env: java
+    buildCommand: ./mvnw clean install -pl authentication -am
+    startCommand: java -jar authentication/target/authentication-0.0.1-SNAPSHOT.jar
+    envVars:
+      - key: JAVA_VERSION
+        value: 17
