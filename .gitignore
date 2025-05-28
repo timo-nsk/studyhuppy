@@ -4,6 +4,7 @@ todo.txt
 .env
 .idea
 
+run-tests-studyhub.bat
 track/modul-data
 track/run-tests-modul.bat
 kartei/kartei-data

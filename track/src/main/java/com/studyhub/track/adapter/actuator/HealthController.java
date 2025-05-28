@@ -18,7 +18,6 @@ public class HealthController {
 
     @GetMapping("/get-db-health")
 	public ResponseEntity<String> getDbHealth() {
-        System.out.println("track health: " + modulService.isModulDbHealthy());
 		return ResponseEntity.ok(String.valueOf(modulService.isModulDbHealthy()));
 	}
 }
