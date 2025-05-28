@@ -21,6 +21,9 @@ import {TermineDetailsComponent} from './modul-service/module/termine-details/te
 import {AdminServiceComponent} from './auth-service/admin-service/admin-service.component';
 import {authorityGuard} from './guard/authority.guard';
 import {UnauthorizedComponent} from './auth-service/unauthorized/unauthorized.component';
+import {
+  MetricServiceComponent
+} from './auth-service/admin-service/actuator-service/metric-service/metric-service.component';
 
 export const routes: Routes = [
   {
@@ -52,6 +55,11 @@ export const routes: Routes = [
         {
           path: 'admin',
           component: AdminServiceComponent,
+          canActivate: [authenticationGuard, authorityGuard]
+        },
+        {
+          path: 'metrics/:service',
+          component: MetricServiceComponent,
           canActivate: [authenticationGuard, authorityGuard]
         },
         {
