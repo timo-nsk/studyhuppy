@@ -5,6 +5,9 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DB_PASS: ${{ secrets.DB_PASS }}
+      DB_USER: ${{ secrets.DB_USER }}
     steps:
       - uses: actions/checkout@v1
         name: Git Checkout
