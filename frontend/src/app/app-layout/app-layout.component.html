@@ -20,7 +20,7 @@
             <a class="navbar-link" [routerLink]="'/kartei'">Kartei</a>
           </td>
         </tr>
-        <tr>
+        <tr *ngIf="isAdmin">
           <td>
             <a class="navbar-link" [routerLink]="'/admin'">Admin</a>
           </td>
