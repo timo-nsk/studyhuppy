@@ -11,12 +11,20 @@ jobs:
     steps:
       - uses: actions/checkout@v1
         name: Git Checkout
+        
+      - name: Set up Docker Compose
+        run: docker-compose --version
+
+      - name: Start services
+        run: docker-compose up -d
+        
       - name: Java installieren
         uses: actions/setup-java@v1
         with:
           java-version: 17
+          
       - name: Make mvnw executable
         run: chmod +x ./mvnw
+        
       - name: Run Maven
         run: ./mvnw clean install
-      
