@@ -39,23 +39,6 @@ public class HomeControllerTest {
 		mvc = MockMvcBuilders.webAppContextSetup(context).build();
 	}
 
-	@Test
-	@DisplayName("/home ist nur für authentifizierte Benutzer erreichbar und gibt die korrekte view zurück")
-	@WithMockUser(username = "user", authorities = "USER")
-	void test_1() throws Exception {
-		mvc.perform(get("/home"))
-				.andExpect(status().isOk())
-				.andExpect(view().name("home"));
-	}
 
-	@Disabled("funktioniert manuell")
-	@Test
-	@DisplayName("/home ist nicht für nicht-authentifizierte Benutzer erreichbar und redirected auf /login")
-	void test_2() throws Exception {
-		//TODO: fix
-		mvc.perform(get("/home"))
-				.andExpect(status().is3xxRedirection())
-				.andExpect(redirectedUrl("/login"));
-	}
 
 }

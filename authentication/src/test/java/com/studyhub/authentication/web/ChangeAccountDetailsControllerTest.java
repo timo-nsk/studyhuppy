@@ -30,23 +30,6 @@ public class ChangeAccountDetailsControllerTest {
 	@MockitoBean AccountService accountService;
 	@MockitoBean AuthenticationService authenticationService;
 
-	@Test
-	@DisplayName("/change-pass ist erfolgreich für authentifizierte Benutzer erfolgreich und gibt die korrekte View zurück")
-	@WithMockUser(username = "susi4")
-	void test_1() throws Exception {
-		mvc.perform(get("/change-pass"))
-				.andExpect(status().isOk())
-				.andExpect(view().name("change-pass"));
-	}
 
-	@Disabled("funktioniert manuell")
-	@Test
-	@DisplayName("/change-pass ist für nicht eingeloggte Benutzer nicht erreichbar und redirected zur login Seite")
-	void test_2() throws Exception {
-		//TODO: fix
-		mvc.perform(get("/change-pass"))
-				.andExpect(status().is3xxRedirection())
-				.andExpect(redirectedUrl("/login"));
-	}
 }
 

@@ -1,15 +1,31 @@
 .gitignore
 ports.txt
 todo.txt
+test.csv
 .env
 .idea
 
 track/modul-data
 track/run-tests-modul.bat
+track/modul-test.sh
+track/target
+
 kartei/kartei-data
 kartei/run-tests-kartei.bat
+kartei/kartei-test.sh
+kartei/target
+
 authentication/user-data
+authentication/auth-test.sh
+authentication/run-tests-auth.bat
+authentication/target
+
 mail/mail-data
 mail/run-tests-mail.bat
-test.csv
+mail/mail-test.sh
+mail/target
+
+actuator/actuator-test.sh
+actuator/run-tests-actuator.bat
+actuator/target
 

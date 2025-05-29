@@ -1,8 +1,6 @@
 package com.studyhub.authentication.service;
 
 import com.studyhub.jwt.JWTService;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import com.studyhub.authentication.db.AppUserRepository;
 import com.studyhub.authentication.web.LoginRequest;
 import org.slf4j.Logger;
@@ -54,15 +52,6 @@ public class AuthenticationService {
 			log.error("User authenticated not successfully (%s)".formatted(authentication));
 			return "fail";
 		}
-	}
-
-	public void createAuthTokenCookie(HttpServletResponse response, String token) {
-		Cookie cookie = new Cookie("auth_token", token);
-		cookie.setHttpOnly(true);
-		cookie.setSecure(true);
-		cookie.setPath("/");
-		cookie.setMaxAge(60 * 60 * 24); // 24h
-		response.addCookie(cookie);
 	}
 
 	public boolean isUserDbHealthy() {
