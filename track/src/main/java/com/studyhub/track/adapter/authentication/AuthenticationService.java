@@ -8,10 +8,10 @@ import java.time.Duration;
 
 @Service
 public class AuthenticationService {
-	private Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
+	private Logger log = LoggerFactory.getLogger(AuthenticationService.class);
 
 	public Integer getSemesterOfUser(String username) {
-		logger.info("Try get fachsemester of user '%s' from authentication service.", username);
+		log.info("Try get fachsemester of user '%s' from authentication service.", username);
 		return WebClient.create()
 				.post()
 				.uri("http://localhost:8084/api/v1/get-semester")
