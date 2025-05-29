@@ -1,6 +1,6 @@
 package com.studyhub.track.adapter.web.controller.api;
 
-import com.studyhub.jwt.JWTService;
+import com.studyhub.track.application.JWTService;
 import com.studyhub.track.adapter.db.modul.ModulDto;
 import com.studyhub.track.adapter.db.modul.ModulMapper;
 import com.studyhub.track.adapter.mail.KlausurReminderDto;

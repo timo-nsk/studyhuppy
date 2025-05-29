@@ -1,6 +1,6 @@
 package com.studyhub.track.adapter.web.controller;
 
-import com.studyhub.jwt.JWTService;
+import com.studyhub.track.application.JWTService;
 import com.studyhub.track.adapter.mail.KlausurReminderService;
 import com.studyhub.track.adapter.security.SecurityConfig;
 import com.studyhub.track.adapter.web.controller.request.dto.AddTimeRequest;

@@ -1,13 +1,10 @@
 package com.studyhub.track.adapter.web.controller;
 
-import com.studyhub.jwt.JWTService;
-import com.studyhub.track.adapter.security.JwtAuthFilter;
-import com.studyhub.track.adapter.security.RedirectEntryPoint;
+import com.studyhub.track.application.JWTService;
 import com.studyhub.track.adapter.security.SecurityConfig;
 import com.studyhub.track.adapter.web.controller.api.StatisticApiController;
 import com.studyhub.track.application.service.ModulEventService;
 import com.studyhub.track.application.service.ModulService;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

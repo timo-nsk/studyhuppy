@@ -1,6 +1,6 @@
 package com.studyhub.track.adapter.web.controller.api;
 
-import com.studyhub.jwt.JWTService;
+import com.studyhub.track.application.JWTService;
 import com.studyhub.track.adapter.web.AngularApi;
 import com.studyhub.track.application.service.ModulEventService;
 import com.studyhub.track.application.service.ModulService;

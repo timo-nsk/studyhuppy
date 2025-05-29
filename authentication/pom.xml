@@ -204,7 +204,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.0.6</version> <!-- oder deine Spring Boot Version -->
+                <version>3.4.5</version>
                 <executions>
                     <execution>
                         <goals>
@@ -215,4 +215,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

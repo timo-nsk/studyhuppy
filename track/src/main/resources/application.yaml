@@ -1,10 +1,10 @@
 spring:
   application:
-    name: studytracker
+    name: modul
   datasource:
-    password: ${DB_PASS}
-    username: ${DB_USER}
-    url: jdbc:postgresql://localhost:6433/modul
+    password: ${MODUL_DB_PASS}
+    username: ${MODUL_DB_USER}
+    url: jdbc:postgresql://modul-db:5432/${MODUL_DB}
   security:
     user:
       name: none

@@ -1,6 +1,7 @@
 package com.studyhub.track.application.service;
 
-import com.studyhub.jwt.JWTService;
+
+import com.studyhub.track.application.JWTService;
 import com.studyhub.track.application.service.dto.NeuerModulterminRequest;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.Modultermin;

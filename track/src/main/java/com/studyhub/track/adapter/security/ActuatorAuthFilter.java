@@ -1,6 +1,6 @@
 package com.studyhub.track.adapter.security;
 
-import com.studyhub.jwt.JWTService;
+import com.studyhub.track.application.JWTService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

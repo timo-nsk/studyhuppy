@@ -1,0 +1,36 @@
+version: '3.8'
+name: studyhub_module
+services:
+  modul-db:
+    container_name: modul_db
+    image: postgres:latest
+    ports:
+      - "${MODUL_DB_HOST_PORT}:${PG_PORT}"
+    volumes:
+      - ./modul-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${MODUL_DB}
+      - POSTGRES_USER=${MODUL_DB_USER}
+      - POSTGRES_PASSWORD=${MODUL_DB_PASS}
+    env_file:
+      - .env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${MODUL_DB_USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  modul-service:
+    container_name: modul_service
+    build:
+      dockerfile: Dockerfile
+    depends_on:
+      modul-db:
+        condition: service_healthy
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    environment:
+      - SERVER_PORT=${SERVER_PORT}
+      - SPRING_DATASOURCE_USERNAME=${MODUL_DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${MODUL_DB_PASS}
+    env_file:
+      - .env

@@ -1,6 +1,6 @@
 package com.studyhub.track.service;
 
-import com.studyhub.jwt.JWTService;
+import com.studyhub.track.application.JWTService;
 import com.studyhub.track.application.service.ModulRepository;
 import com.studyhub.track.application.service.ModulService;
 import com.studyhub.track.application.service.TimeConverter;

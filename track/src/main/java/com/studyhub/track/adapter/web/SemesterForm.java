@@ -1,6 +1,6 @@
 package com.studyhub.track.adapter.web;
 
-import com.studyhub.jwt.JWTService;
+import com.studyhub.track.application.JWTService;
 import com.studyhub.track.domain.model.modul.Kreditpunkte;
 import com.studyhub.track.domain.model.modul.Lerntage;
 import com.studyhub.track.domain.model.modul.Modul;

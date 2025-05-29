@@ -1,7 +1,6 @@
 package com.studyhub.track.adapter.security;
 
-import com.studyhub.jwt.JWTService;
-import jakarta.servlet.http.HttpServletResponse;
+import com.studyhub.track.application.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
