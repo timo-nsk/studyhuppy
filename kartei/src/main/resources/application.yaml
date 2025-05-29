@@ -8,9 +8,9 @@ spring:
   application:
     name: kartei
   datasource:
-    password: ${DB_PASS}
-    username: ${DB_USER}
-    url: jdbc:postgresql://localhost:6434/kartei
+    password: ${KARTEI_DB_PASS}
+    username: ${KARTEI_DB_USER}
+    url: jdbc:postgresql://kartei-db:5432/${KARTEI_DB}
   security:
     user:
       name: none
@@ -28,4 +28,3 @@ management:
       access: read_only
 server:
   port: 9081
-jwt:

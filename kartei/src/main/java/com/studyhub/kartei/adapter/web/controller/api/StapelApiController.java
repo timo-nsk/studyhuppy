@@ -1,6 +1,6 @@
 package com.studyhub.kartei.adapter.web.controller.api;
 
-import com.studyhub.jwt.JWTService;
+import com.studyhub.kartei.service.application.JWTService;
 import com.studyhub.kartei.adapter.web.controller.request.dto.CreateNewStapelRequest;
 import com.studyhub.kartei.service.application.StapelDashboardDataResponse;
 import com.studyhub.kartei.domain.model.Stapel;

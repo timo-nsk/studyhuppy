@@ -1,6 +1,6 @@
 package com.studyhub.kartei.adapter.config.security;
 
-import com.studyhub.jwt.JWTService;
+import com.studyhub.kartei.service.application.JWTService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,6 +1,7 @@
 package com.studyhub.kartei.adapter.config.security;
 
-import com.studyhub.jwt.JWTService;
+
+import com.studyhub.kartei.service.application.JWTService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,0 +1,36 @@
+version: '3.8'
+name: studyhub_kartei
+services:
+  kartei-db:
+    container_name: kartei_db
+    image: postgres:latest
+    ports:
+      - "${KARTEI_DB_HOST_PORT}:${PG_PORT}"
+    volumes:
+      - ./kartei-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${KARTEI_DB}
+      - POSTGRES_USER=${KARTEI_DB_USER}
+      - POSTGRES_PASSWORD=${KARTEI_DB_PASS}
+    env_file:
+      - .env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${MODUL_DB_USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  modul-service:
+    container_name: kartei_service
+    build:
+      dockerfile: Dockerfile
+    depends_on:
+      kartei-db:
+        condition: service_healthy
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    environment:
+      - SERVER_PORT=${SERVER_PORT}
+      - SPRING_DATASOURCE_USERNAME=${KARTEI_DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${KARTEI_DB_PASS}
+    env_file:
+      - .env

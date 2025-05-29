@@ -1,6 +1,6 @@
 package com.studyhub.kartei.adapter.config.security;
 
-import com.studyhub.jwt.JWTService;
+import com.studyhub.kartei.service.application.JWTService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
