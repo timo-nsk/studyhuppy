@@ -1,7 +1,8 @@
 version: '3.8'
+name: studyhub_authentication
 services:
   user-db:
-    container_name: studyhub_user_db
+    container_name: user_db
     image: postgres:latest
     ports:
       - "${AUTH_DB_HOST_PORT}:${PG_PORT}"
@@ -19,7 +20,7 @@ services:
       timeout: 5s
       retries: 5
   auth-service:
-    container_name: studyhub_auth_service
+    container_name: auth_service
     build:
       dockerfile: Dockerfile
     depends_on:
