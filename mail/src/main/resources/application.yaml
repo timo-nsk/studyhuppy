@@ -7,9 +7,9 @@ spring:
     username: timo
     password: 1234
   datasource:
-    password: ${DB_PASS}
-    username: ${DB_USER}
-    url: jdbc:postgresql://localhost:6435/mail
+    password: ${MAIL_DB_PASS}
+    username: ${MAIL_DB_USER}
+    url: jdbc:postgresql://mail-db:5432/${MAIL_DB}
 management:
   endpoints:
     web:
@@ -19,4 +19,4 @@ server:
   port: 9083
 application:
   mail:
-    address: "example@web.de"
+    address: ${MAIL_MAIN_EMAIL}

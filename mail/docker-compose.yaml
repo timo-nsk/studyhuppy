@@ -1,0 +1,42 @@
+version: '3.8'
+name: studyhub_mail
+services:
+  mail-db:
+    container_name: mail_db
+    image: postgres:latest
+    ports:
+      - "${MAIL_DB_HOST_PORT}:${PG_PORT}"
+    volumes:
+      - ./mail-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${MAIL_DB}
+      - POSTGRES_USER=${MAIL_DB_USER}
+      - POSTGRES_PASSWORD=${MAIL_DB_PASS}
+    env_file:
+      - .env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${MAIL_DB_USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  mail-service:
+    container_name: mail_service
+    build:
+      dockerfile: Dockerfile
+    depends_on:
+      mail-db:
+        condition: service_healthy
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    environment:
+      - SERVER_PORT=${SERVER_PORT}
+      - SPRING_DATASOURCE_USERNAME=${MAIL_DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${MAIL_DB_PASS}
+    env_file:
+      - .env
+  mailpit:
+    image: axllent/mailpit
+    container_name: mailpit-dev
+    ports:
+      - "${MAILPIT_PORT}:${MAILPIT_PORT}" # Web-Interface für Mailpit (Zugriff auf die E-Mails)
+      - "${SMTP_PORT}:${SMTP_PORT}" # SMTP-Server für den Versand von E-Mails
