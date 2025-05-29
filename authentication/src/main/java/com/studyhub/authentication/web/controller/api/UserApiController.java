@@ -5,7 +5,7 @@ import com.studyhub.authentication.model.UserDto;
 import com.studyhub.authentication.model.UserMapper;
 import com.studyhub.authentication.service.AccountService;
 import com.studyhub.authentication.web.SetNotificationSubscriptionRequest;
-import com.studyhub.jwt.JWTService;
+import com.studyhub.authentication.config.JWTService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

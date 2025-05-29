@@ -1,6 +1,6 @@
 package com.studyhub.authentication.service;
 
-import com.studyhub.jwt.JWTService;
+import com.studyhub.authentication.config.JWTService;
 import com.studyhub.authentication.db.AppUserRepository;
 import com.studyhub.authentication.web.LoginRequest;
 import org.slf4j.Logger;

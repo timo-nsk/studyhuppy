@@ -1,6 +1,6 @@
 package com.studyhub.authentication.config;
 
-import com.studyhub.jwt.JWTService;
+import com.studyhub.authentication.config.JWTService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  user-db:
+    container_name: studyhub_user_db
+    image: postgres:latest
+    ports:
+      - "${AUTH_DB_HOST_PORT}:${PG_PORT}"
+    volumes:
+      - ./user-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${AUTH_DB}
+      - POSTGRES_USER=${AUTH_DB_USER}
+      - POSTGRES_PASSWORD=${AUTH_DB_PASS}
+    env_file:
+      - .env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${AUTH_DB_USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  auth-service:
+    container_name: studyhub_auth_service
+    build:
+      dockerfile: Dockerfile
+    depends_on:
+      user-db:
+        condition: service_healthy
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    environment:
+      - SERVER_PORT=${SERVER_PORT}
+      - SPRING_DATASOURCE_USERNAME=${AUTH_DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${AUTH_DB_PASS}
+    env_file:
+      - .env

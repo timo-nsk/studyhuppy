@@ -1,25 +1,19 @@
 spring:
   application:
-    name: authentication
+    name: studyhub-auth-service
   datasource:
-    password: ${DB_PASS}
-    username: ${DB_USER}
-    url: jdbc:postgresql://localhost:6436/users
+    url: jdbc:postgresql://user-db:5432/${AUTH_DB}
+    username: ${AUTH_DB_USER}
+    password: ${AUTH_DB_PASS}
 management:
   endpoints:
     web:
       exposure:
         include: "*"
 server:
-  port: 9084
+  port: ${SERVER_PORT}
 jwt:
   secret: ${JWT_SECRET}
   role:
     admin:
-      username: 'timo'
-logging:
-  level:
-    org:
-      springframework:
-        web:
-        client:
+      username: ${ADMIN}

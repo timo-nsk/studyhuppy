@@ -1,6 +1,6 @@
 package com.studyhub.authentication.web;
 
-import com.studyhub.jwt.JWTService;
+import com.studyhub.authentication.config.JWTService;
 import jakarta.validation.Validator;
 import com.studyhub.authentication.db.AppUserRepository;
 import com.studyhub.authentication.service.AccountService;

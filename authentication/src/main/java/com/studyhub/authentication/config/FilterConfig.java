@@ -1,6 +1,6 @@
 package com.studyhub.authentication.config;
 
-import com.studyhub.jwt.JWTService;
+import com.studyhub.authentication.config.JWTService;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

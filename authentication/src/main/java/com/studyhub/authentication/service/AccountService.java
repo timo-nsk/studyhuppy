@@ -6,7 +6,7 @@ import com.studyhub.authentication.adapter.track.TrackRequestService;
 import com.studyhub.authentication.db.AppUserRepository;
 import com.studyhub.authentication.model.AppUser;
 import com.studyhub.authentication.web.EmailChangeRequest;
-import com.studyhub.jwt.JWTService;
+import com.studyhub.authentication.config.JWTService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

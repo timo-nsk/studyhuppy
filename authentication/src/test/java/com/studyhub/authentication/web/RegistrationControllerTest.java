@@ -4,7 +4,7 @@ import com.studyhub.authentication.model.AppUser;
 import com.studyhub.authentication.config.JwtAuthFilter;
 import com.studyhub.authentication.service.AppUserDetailsService;
 import com.studyhub.authentication.service.RegistrationService;
-import com.studyhub.jwt.JWTService;
+import com.studyhub.authentication.config.JWTService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

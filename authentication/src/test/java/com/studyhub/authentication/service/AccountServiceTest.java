@@ -3,7 +3,7 @@ package com.studyhub.authentication.service;
 import com.studyhub.authentication.adapter.kartei.KarteiRequestService;
 import com.studyhub.authentication.adapter.track.TrackRequestService;
 import com.studyhub.authentication.db.AppUserRepository;
-import com.studyhub.jwt.JWTService;
+import com.studyhub.authentication.config.JWTService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
