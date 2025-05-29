@@ -1,0 +1,44 @@
+name: Build and Test
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASS: ${{ secrets.DB_PASS }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Create .env file for Docker Compose
+        run: |
+          echo "DB_USER=${DB_USER}" >> .env
+          echo "DB_PASS=${DB_PASS}" >> .env
+
+      - name: Check Docker Compose version
+        run: docker compose version
+
+      - name: Start database with Docker Compose
+        run: docker compose up -d
+
+      - name: Wait for DB to be ready
+        run: |
+          echo "Waiting for database..."
+          sleep 15
+          docker ps
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Make mvnw executable
+        run: chmod +x ./mvnw
+
+      - name: Build with Maven (Multi-Module)
+        run: ./mvnw clean install
+

@@ -1,7 +1,7 @@
 package com.studyhub.authentication.web.controller;
 
 import com.studyhub.authentication.service.RegistrationService;
-import com.studyhub.authentication.web.RegisterForm;
+import com.studyhub.authentication.web.RegisterRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,8 +20,8 @@ public class RegistrationController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<Map<String, Object>> registerNewUser(@RequestBody RegisterForm registerForm) {
-		boolean success = registrationService.register(registerForm.toAppUser());
+	public ResponseEntity<Map<String, Object>> registerNewUser(@RequestBody RegisterRequest registerRequest) {
+		boolean success = registrationService.register(registerRequest.toAppUser());
 
 		Map<String, Object> response = new HashMap<>();
 		response.put("success", success);

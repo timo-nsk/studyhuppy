@@ -1,4 +1,4 @@
-package com.studyhub.authentication.web.controller;
+package com.studyhub.authentication.web.controller.api;
 
 import com.studyhub.authentication.adapter.mail.MailRequestService;
 import com.studyhub.authentication.web.ChangePasswordForm;

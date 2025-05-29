@@ -31,13 +31,10 @@ public class AuthenticationController {
 
 	@PostMapping("/login")
 	public ResponseEntity<String> authenticateLogin(@RequestBody LoginRequest loginRequest) {
-		System.out.println("pint login");
 		try {
 			String authToken = authenticationService.verify(loginRequest);
-			System.out.println("yessss");
 			return ResponseEntity.ok(authToken);
 		} catch (BadCredentialsException e) {
-			System.out.println("noooooo");
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		} catch (UsernameNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
