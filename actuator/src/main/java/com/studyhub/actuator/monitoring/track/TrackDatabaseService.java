@@ -1,13 +1,8 @@
 package com.studyhub.actuator.monitoring.track;
 
 import com.studyhub.actuator.DatabaseHealthIndicator;
-import com.studyhub.jwt.JWTService;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.ObjectFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.health.Health;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
