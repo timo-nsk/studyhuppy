@@ -15,7 +15,7 @@ services:
     env_file:
       - .env
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${MODUL_DB_USER}" ]
+      test: [ "CMD-SHELL", "pg_isready -U ${KARTEI_DB_USER}" ]
       interval: 5s
       timeout: 5s
       retries: 5
