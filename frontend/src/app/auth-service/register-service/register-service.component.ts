@@ -13,7 +13,7 @@ import {HeaderAuthComponent} from '../../app-layout/header-auth/header-auth.comp
   ],
   templateUrl: './register-service.component.html',
   standalone: true,
-  styleUrls: ['./register-service.component.scss', '../../general.scss']
+  styleUrls: ['./register-service.component.scss', '../../general.scss', '../../forms.scss']
 })
 export class RegisterServiceComponent {
 
