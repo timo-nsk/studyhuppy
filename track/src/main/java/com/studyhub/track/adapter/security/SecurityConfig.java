@@ -32,6 +32,7 @@ public class SecurityConfig {
 				// TODO: muss aus sein, weil sonst die keine POST requests als 403. fixen
 				.csrf().disable()
 				.cors(Customizer.withDefaults())
+				.requiresChannel().anyRequest().requiresSecure().and()
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/api/get-db-health", "/actuator/health").permitAll()
 						.anyRequest().authenticated())

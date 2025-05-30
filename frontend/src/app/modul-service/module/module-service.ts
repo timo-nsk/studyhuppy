@@ -9,7 +9,7 @@ import {HeaderService} from '../../header.service';
   providedIn: 'root' // macht den Service global verfügbar
 })
 export class ModuleService {
-  private MODUL_BASE_API = 'http://localhost:9080/api';
+  private MODUL_BASE_API = 'https://localhost:9080/api';
   private headerService = inject(HeaderService)
   private http = inject(HttpClient)
 
