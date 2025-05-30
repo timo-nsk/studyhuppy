@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /admin
+  endpoint:
+    health:
+      show-details: always
+  health:
+    ssl:
+      enabled: false
+    ping:
+      enabled: false
+    diskspace:
+      enabled: false
+info:
+  app:
+    name: "Actuator"
+    description: "Actuator Service"
+    version: "1.0.0"
+server:
+  port: ${SERVER_PORT}
+app:
+  metrics:
+    # TODO: später noch auch https ändern wenn das in den services eingeschaltet ist
+    track: http://localhost:9080/actuator/metrics/http.server.requests
+    kartei: http://localhost:9081/actuator/metrics/http.server.requests
+    mail: http://localhost:9083/actuator/metrics/http.server.requests
+    authentication: https://localhost:9084/actuator/metrics/http.server.requests
+  services:
+    health:
+      # TODO: später noch auch https ändern wenn das in den services eingeschaltet ist
+      track: http://localhost:9080/actuator/health
+      kartei: http://localhost:9081/actuator/health
+      mail: http://localhost:9083/actuator/health
+      authentication: https://localhost:9084/actuator/health
+  api:
+    token: ${ACTUATOR_API_KEY}
