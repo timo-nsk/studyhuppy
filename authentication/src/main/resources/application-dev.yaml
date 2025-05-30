@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: studyhub-auth-service
+  datasource:
+    url: jdbc:postgresql://localhost:6436/${AUTH_DB}
+    username: ${AUTH_DB_USER}
+    password: ${AUTH_DB_PASS}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+server:
+  port: ${SERVER_PORT}
+  ssl:
+    key-store: file:/Users/timoneske/Desktop/studyhub_dev/authentication/keystore.p12
+    key-store-password: ${DEV_KEYSTORE_PASS}
+    key-store-type: PKCS12
+    key-alias: springboot
+jwt:
+  secret: ${JWT_SECRET}
+  role:
+    admin:
+      username: ${ADMIN}
