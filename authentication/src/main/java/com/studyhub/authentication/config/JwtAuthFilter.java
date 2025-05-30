@@ -6,6 +6,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +25,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
 	private JWTService jwtService;
 	private UserDetailsService userDetailsService;
+	private Logger log = LoggerFactory.getLogger(JwtAuthFilter.class);
 
 	public JwtAuthFilter(@Lazy JWTService jwtService, UserDetailsService userDetailsService) {
 		this.jwtService = jwtService;
@@ -33,13 +36,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request,
 	                                HttpServletResponse response,
 	                                FilterChain filterChain) throws ServletException, IOException {
-
+		log.info("Try JwtAuthFilter ...");
 		String path = request.getRequestURI();
-		if (path.equals("/api/v1login") || path.equals("/api/v1/register") || path.equals("/agb") || path.equals("/api/v1/password-reset")
+		if (path.equals("/api/v1/login") || path.equals("/api/v1/register") || path.equals("/agb") || path.equals("/api/v1/password-reset")
 				|| path.equals("/api/v1/get-db-health") || path.equals("/actuator/health")) {
+			log.info("No need to filter request to path: " + path);
 			filterChain.doFilter(request, response);
 			return;
 		}
+
+		log.info("Check Header...");
 
 		String header = request.getHeader("Authorization");
 		String token = jwtService.extractTokenFromHeader(header);
