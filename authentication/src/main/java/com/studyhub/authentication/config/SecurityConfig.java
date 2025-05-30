@@ -34,45 +34,23 @@ public class SecurityConfig {
 		this.jwtAuthFilter = jwtAuthFilter;
 		this.userDetailsService = userDetailsService;
 	}
-/**
+
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
 				.csrf(AbstractHttpConfigurer::disable)
 				.cors(Customizer.withDefaults())
-				.formLogin(AbstractHttpConfigurer::disable)
 				//.requiresChannel().anyRequest().requiresSecure().and()
-				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-						.requestMatchers(
-								"/login",
-								"/register",
-								"/password-reset",
-								"/api/get-db-health",
-								"/actuator/health")
-						.permitAll()
+				.formLogin(AbstractHttpConfigurer::disable)
+				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-						.anyRequest()
-						.authenticated())
+						.requestMatchers("/login", "/register", "/password-reset", "/api/get-db-health", "/actuator/health").permitAll()
+						.anyRequest().authenticated())
 				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
 	}
- **/
 
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http
-				.csrf(AbstractHttpConfigurer::disable)
-				.cors(Customizer.withDefaults())
-				.authorizeHttpRequests(auth -> auth
-						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-						.requestMatchers("/login", "/register").permitAll()
-						.anyRequest().authenticated()
-				)
-				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.formLogin(AbstractHttpConfigurer::disable);
-		return http.build();
-	}
 
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
@@ -80,13 +58,14 @@ public class SecurityConfig {
 		config.setAllowedOrigins(List.of(
 				"http://localhost:4200",
 				"http://127.0.0.1:4200",
+				"http://127.0.0.1:8080",
 				"http://49.12.242.124:8080",
 				"http://49.12.242.124:4200"
 		));
 		config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 		config.setAllowedHeaders(List.of("*"));
 		config.setExposedHeaders(List.of("Authorization"));
-		config.setAllowCredentials(false);
+		config.setAllowCredentials(true);
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", config);
