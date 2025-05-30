@@ -41,7 +41,7 @@ public class SecurityConfig {
 				.csrf(AbstractHttpConfigurer::disable)
 				.cors(Customizer.withDefaults())
 				.formLogin(AbstractHttpConfigurer::disable)
-				.requiresChannel().anyRequest().requiresSecure().and()
+				//.requiresChannel().anyRequest().requiresSecure().and()
 				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
 						.requestMatchers(
 								"/login",
@@ -70,7 +70,7 @@ public class SecurityConfig {
 		config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 		config.setAllowedHeaders(List.of("*"));
 		config.setExposedHeaders(List.of("Authorization"));
-		config.setAllowCredentials(true);
+		config.setAllowCredentials(false);
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", config);
