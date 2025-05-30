@@ -13,7 +13,7 @@ management:
 server:
   port: ${SERVER_PORT}
   ssl:
-    key-store: file:/Users/timoneske/Desktop/studyhub_dev/authentication/keystore.p12
+    key-store: classpath:keystore.p12
     key-store-password: ${DEV_KEYSTORE_PASS}
     key-store-type: PKCS12
     key-alias: springboot

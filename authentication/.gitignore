@@ -32,4 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 .env
-keystore.p12
+src/main/resources/keystore.p12
