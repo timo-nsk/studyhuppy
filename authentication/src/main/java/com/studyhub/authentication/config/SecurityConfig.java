@@ -35,6 +35,7 @@ public class SecurityConfig {
 				.csrf(AbstractHttpConfigurer::disable)
 				.cors(Customizer.withDefaults())
 				.formLogin(AbstractHttpConfigurer::disable)
+				.requiresChannel().anyRequest().requiresSecure().and()
 				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
 						.requestMatchers(
 								"/login",
@@ -43,7 +44,8 @@ public class SecurityConfig {
 								"/api/get-db-health",
 								"/actuator/health")
 						.permitAll()
-						.anyRequest().authenticated())
+						.anyRequest()
+						.authenticated())
 				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();

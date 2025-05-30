@@ -9,12 +9,14 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class AuthApiService {
 
+  BASE_API_URL= "https://localhost:9084"
+
   router : Router = inject(Router)
   http : HttpClient = inject(HttpClient)
   snackbar : MatSnackBar = inject(MatSnackBar)
 
   login(data : any) : Observable<string>  {
-    return this.http.post("http://localhost:9084/login", data, { responseType: 'text' })
+    return this.http.post(this.BASE_API_URL + "/login", data, { responseType: 'text' })
   }
 
   logoff() : void {
@@ -22,7 +24,7 @@ export class AuthApiService {
   }
 
   register(data: any) {
-    this.http.post("http://localhost:9084/register", data).subscribe((r:any)=> {
+    this.http.post(this.BASE_API_URL + "/register", data).subscribe((r:any)=> {
       if(r.success) {
         console.log("registering complete")
         this.router.navigateByUrl("module")
@@ -34,6 +36,6 @@ export class AuthApiService {
   }
 
   pwReset(data: any): Observable<HttpResponse<any>> {
-    return this.http.post("http://localhost:9084/password-reset", data, { observe: 'response' });
+    return this.http.post(this.BASE_API_URL + "/password-reset", data, { observe: 'response' });
   }
 }
