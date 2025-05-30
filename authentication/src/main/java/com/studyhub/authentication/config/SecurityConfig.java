@@ -61,11 +61,17 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http
+		http
 				.csrf(AbstractHttpConfigurer::disable)
-				.cors(cors -> cors.disable())
-				.authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-				.build();
+				.cors(Customizer.withDefaults())
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+						.requestMatchers("/login", "/register").permitAll()
+						.anyRequest().authenticated()
+				)
+				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.formLogin(AbstractHttpConfigurer::disable);
+		return http.build();
 	}
 
 	@Bean
