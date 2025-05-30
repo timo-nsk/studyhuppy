@@ -34,7 +34,7 @@ public class SecurityConfig {
 		this.jwtAuthFilter = jwtAuthFilter;
 		this.userDetailsService = userDetailsService;
 	}
-
+/**
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
@@ -55,6 +55,16 @@ public class SecurityConfig {
 						.authenticated())
 				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+				.build();
+	}
+ **/
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		return http
+				.csrf(AbstractHttpConfigurer::disable)
+				.cors(cors -> cors.disable())
+				.authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
 				.build();
 	}
 
