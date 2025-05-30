@@ -24,7 +24,7 @@ public class AuthenticationDatabaseService implements DatabaseHealthIndicator {
 	}
 
 	private boolean authenticationServiceDatabaseIsHealthy() {
-		String uri = "http://localhost:9084/api/get-db-health";
+		String uri = "https://localhost:9084/api/get-db-health";
 		CompletableFuture<String> health = WebClient.create()
 				.get()
 				.uri(uri)
