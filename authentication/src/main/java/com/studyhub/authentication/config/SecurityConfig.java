@@ -2,6 +2,8 @@ package com.studyhub.authentication.config;
 
 
 import com.studyhub.authentication.service.AppUserDetailsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -29,6 +31,7 @@ public class SecurityConfig {
 
 	private final JwtAuthFilter jwtAuthFilter;
 	private final AppUserDetailsService userDetailsService;
+	private final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
 
 	public SecurityConfig(JwtAuthFilter jwtAuthFilter, AppUserDetailsService userDetailsService) {
 		this.jwtAuthFilter = jwtAuthFilter;
@@ -54,6 +57,8 @@ public class SecurityConfig {
 
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
+		log.debug("Configuring CorsConfigurationSource");
+
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowedOrigins(List.of(
 				"http://localhost:4200",
@@ -69,6 +74,8 @@ public class SecurityConfig {
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", config);
+
+		log.debug("CorsConfigurationSource configured");
 		return source;
 	}
 
