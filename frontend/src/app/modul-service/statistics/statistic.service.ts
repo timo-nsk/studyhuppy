@@ -2,12 +2,13 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {HeaderService} from '../../header.service';
 import {Observable} from 'rxjs';
+import { environment } from '../../../environments/environment'
 
 @Injectable({
   providedIn: "root"
 })
 export class StatisticApiService {
-  BASE_API_URL : string = "http://localhost:9080/statistics/api/v1"
+  BASE_API_URL : string = environment.modulServiceUrl
   http = inject(HttpClient)
   headerService = inject(HeaderService)
 

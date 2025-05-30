@@ -3,13 +3,14 @@ import { Modul} from './domain';
 import { HttpClient } from '@angular/common/http';
 import {Observable } from 'rxjs';
 import {HeaderService} from '../../header.service';
+import { environment } from '../../../environments/environment'
 
 // TODO: need to handle errors when backend htorws exception for almost every method here
 @Injectable({
   providedIn: 'root' // macht den Service global verfügbar
 })
 export class ModuleService {
-  private MODUL_BASE_API = 'https://localhost:9080/api';
+  private MODUL_BASE_API = environment.modulServiceUrl
   private headerService = inject(HeaderService)
   private http = inject(HttpClient)
 

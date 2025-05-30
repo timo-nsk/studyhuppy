@@ -3,13 +3,14 @@ import {inject, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { environment } from '../../environments/environment'
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthApiService {
 
-  BASE_API_URL= "https://localhost:9084"
+  BASE_API_URL= environment.authServiceUrl
 
   router : Router = inject(Router)
   http : HttpClient = inject(HttpClient)

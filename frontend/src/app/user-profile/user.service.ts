@@ -4,12 +4,13 @@ import {Observable, Subscription} from 'rxjs';
 import {User} from './user';
 import {HeaderAuthComponent} from '../app-layout/header-auth/header-auth.component';
 import {HeaderService} from '../header.service';
+import { environment } from '../../environments/environment'
 
 @Injectable({
   providedIn: "root"
 })
 export class UserApiService {
-  BASE_API_URL : string = "http://localhost:9084/api/v1"
+  BASE_API_URL : string = environment.authServiceUrl
 
   http = inject(HttpClient)
   headerService = inject(HeaderService)
@@ -32,18 +33,18 @@ export class UserApiService {
 
   putNewEmail(data: any): Observable<HttpResponse<any>> {
     const headers = this.headerService.createAuthHeader()
-    return this.http.put<any>("http://localhost:9084/change-mail", data, { headers, observe: 'response' });
+    return this.http.put<any>(this.BASE_API_URL + "/change-mail", data, { headers, observe: 'response' });
   }
 
   putNewPassword(data: any) : Observable<HttpResponse<any>> {
     const headers = this.headerService.createAuthHeader()
-    return this.http.put<any>("http://localhost:9084/change-password", data, { headers, observe : 'response'});
+    return this.http.put<any>(this.BASE_API_URL + "/change-password", data, { headers, observe : 'response'});
   }
 
   deleteAccount(data: any) {
     const headers = this.headerService.createAuthHeader()
 
-    this.http.request('DELETE', 'http://localhost:9084/api/v1/delete-account', {
+    this.http.request('DELETE', this.BASE_API_URL + '/delete-account', {
       headers,
       body: data
     }).subscribe({

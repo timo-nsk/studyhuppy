@@ -14,7 +14,7 @@ import java.util.UUID;
 import java.util.regex.PatternSyntaxException;
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class KarteikarteApiController {
 
 	private final StapelService stapelService;

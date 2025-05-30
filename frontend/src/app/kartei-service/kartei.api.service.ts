@@ -3,12 +3,13 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {HeaderService} from '../header.service';
 import {Stapel, UpdateInfo} from './domain';
+import { environment } from '../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
 })
 export class KarteiApiService {
-  BASE_API_URL : string = "https://localhost:9081/api"
+  BASE_API_URL : string = environment.karteiServiceUrl
 
   http = inject(HttpClient)
   headerService = inject(HeaderService)
