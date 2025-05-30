@@ -1,30 +1,3 @@
 spring:
-  sql:
-    init:
-      mode: always
-      platform: postgresql
-  jpa:
-    show-sql: true
-  application:
-    name: kartei
-  datasource:
-    password: ${KARTEI_DB_PASS}
-    username: ${KARTEI_DB_USER}
-    url: jdbc:postgresql://kartei-db:5432/${KARTEI_DB}
-  security:
-    user:
-      name: none
-      password: none
-      role: none
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  tracing:
-    enabled: true
-  endpoint:
-    httpexchanges:
-      access: read_only
-server:
-  port: 9081
+  profiles:
+    active: dev

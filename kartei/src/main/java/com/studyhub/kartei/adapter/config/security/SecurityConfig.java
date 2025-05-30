@@ -26,6 +26,7 @@ public class SecurityConfig {
 		http
 			.csrf().disable() //muss disabled sein
 			.cors(Customizer.withDefaults())
+			.requiresChannel().anyRequest().requiresSecure().and()
 			.authorizeHttpRequests(auth -> auth.requestMatchers("/api/get-db-health", "/actuator/health").permitAll().anyRequest().authenticated())
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -1,0 +1,37 @@
+spring:
+  sql:
+    init:
+      mode: always
+      platform: postgresql
+  jpa:
+    show-sql: true
+  application:
+    name: kartei
+  datasource:
+    password: ${KARTEI_DB_PASS}
+    username: ${KARTEI_DB_USER}
+    url: jdbc:postgresql://localhost:6434/${KARTEI_DB}
+  security:
+    user:
+      name: none
+      password: none
+      role: none
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  tracing:
+    enabled: true
+  endpoint:
+    httpexchanges:
+      access: read_only
+server:
+  port: ${SERVER_PORT}
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: ${DEV_KEYSTORE_PASS}
+    key-store-type: PKCS12
+    key-alias: springboot
+jwt:
+  secret: ${JWT_SECRET}

@@ -8,7 +8,7 @@ import {Stapel, UpdateInfo} from './domain';
   providedIn: 'root'
 })
 export class KarteiApiService {
-  BASE_API_URL : string = "http://localhost:9081/api"
+  BASE_API_URL : string = "https://localhost:9081/api"
 
   http = inject(HttpClient)
   headerService = inject(HeaderService)
