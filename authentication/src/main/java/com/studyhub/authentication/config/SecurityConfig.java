@@ -40,6 +40,7 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		log.info("Configuring SecurityFilterChain...");
 		return http
 				.csrf(AbstractHttpConfigurer::disable)
 				.cors(Customizer.withDefaults())
@@ -57,7 +58,7 @@ public class SecurityConfig {
 
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
-		log.debug("Configuring CorsConfigurationSource");
+		log.info("Configuring CorsConfigurationSource...");
 
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowedOrigins(List.of(
@@ -75,7 +76,7 @@ public class SecurityConfig {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", config);
 
-		log.debug("CorsConfigurationSource configured");
+		log.info("CorsConfigurationSource configured.");
 		return source;
 	}
 
