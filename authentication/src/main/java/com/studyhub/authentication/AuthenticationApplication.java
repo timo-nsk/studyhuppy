@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class AuthenticationApplication {
 
 	public static void main(String[] args) {
+		System.out.println("TEST");
 		SpringApplication.run(AuthenticationApplication.class, args);
 	}
 
