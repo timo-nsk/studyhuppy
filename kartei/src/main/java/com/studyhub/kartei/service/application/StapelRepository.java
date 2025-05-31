@@ -3,7 +3,6 @@ package com.studyhub.kartei.service.application;
 import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.domain.model.Stapel;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,7 +11,7 @@ public interface StapelRepository {
 	List<Stapel> findAll();
 	Stapel findByFachId(UUID fachId);
 	void deleteKarteikarteByFachid(UUID karteToDelete);
-	int countAll();
+	int countAllByUsername(String username);
 
 	void deleteKarteiSet(String karteiSetId);
 

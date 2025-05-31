@@ -17,8 +17,7 @@ public interface StapelDao extends CrudRepository<StapelDto, Integer> {
 	Optional<StapelDto> findByFachId(UUID fachId);
 	List<StapelDto> findByUsername(String username);
 
-	@Query("select count(*) from stapel")
-	int countAll();
+	int countAllByUsername(String username);
 
 	@Modifying
 	@Query("DELETE FROM stapel WHERE id IN (SELECT ks.id FROM stapel ks JOIN karteikarte k ON ks.id = k.karteikarte_set WHERE k.fach_id = :karteToDelete)")

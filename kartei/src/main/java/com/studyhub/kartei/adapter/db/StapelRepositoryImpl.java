@@ -7,7 +7,6 @@ import com.studyhub.kartei.domain.model.Stapel;
 import com.studyhub.kartei.service.application.StapelRepository;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -46,8 +45,8 @@ public class StapelRepositoryImpl implements StapelRepository {
 	}
 
 	@Override
-	public int countAll() {
-		return dao.countAll();
+	public int countAllByUsername(String username) {
+		return dao.countAllByUsername(username);
 	}
 
 	@Override

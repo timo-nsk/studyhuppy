@@ -73,8 +73,8 @@ public class StapelService {
 	}
 
 
-	public boolean areKarteiSetsAvailable() {
-		return repo.countAll() != 0;
+	public boolean areKarteiSetsAvailableByUsername(String username) {
+		return repo.countAllByUsername(username) != 0;
 	}
 
 

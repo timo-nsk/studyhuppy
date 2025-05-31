@@ -4,8 +4,6 @@ import com.studyhub.kartei.adapter.db.StapelDao;
 import com.studyhub.kartei.adapter.db.StapelRepositoryImpl;
 import com.studyhub.kartei.domain.model.Karteikarte;
 import com.studyhub.kartei.domain.model.Stapel;
-import com.studyhub.kartei.service.application.StapelRepository;
-import com.studyhub.kartei.service.application.StapelService;
 import com.studyhub.kartei.service.application.lernzeit.KarteikarteGelerntEventRepository;
 import com.studyhub.kartei.service.application.lernzeit.LernzeitService;
 import com.studyhub.kartei.util.StapelMother;
@@ -121,7 +119,7 @@ public class StapelRepositoryTest {
 		loadedSet.addKarteikarte(newKarteikarte("frage", "antwort"));
 		stapelRepository.save(loadedSet);
 
-		int count = stapelRepository.countAll();
+		int count = stapelRepository.countAllByUsername(set.getUsername());
 		assertThat(count).isNotEqualTo(2);
 		assertThat(count).isEqualTo(1);
 	}

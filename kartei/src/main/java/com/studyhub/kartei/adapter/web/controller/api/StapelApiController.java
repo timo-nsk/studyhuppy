@@ -42,15 +42,16 @@ public class StapelApiController {
 		return responseMap;
 	}
 
-	// TODO: muss noch per username
 	@GetMapping("/sets-available")
-	public ResponseEntity<Boolean> setsAvailable() {
-		return ResponseEntity.ok(stapelService.areKarteiSetsAvailable());
+	public ResponseEntity<Boolean> setsAvailable(HttpServletRequest request) {
+		String username = jwtService.extractUsernameFromHeader(request);
+		return ResponseEntity.ok(stapelService.areKarteiSetsAvailableByUsername(username));
 	}
 
 	@GetMapping("/get-all-stapel-by-username")
 	public ResponseEntity<List<StapelDashboardDataResponse>> getSetsByUsername(HttpServletRequest request) {
 		String username = jwtService.extractUsernameFromHeader(request);
+		System.out.println(username);
 		List<Stapel> stapel = stapelService.findByUsername(username);
 		List<StapelDashboardDataResponse> res = stapelService.prepareDashboardInfo(stapel);
 		return ResponseEntity.ok(res);

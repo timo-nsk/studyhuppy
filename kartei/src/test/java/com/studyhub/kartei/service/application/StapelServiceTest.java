@@ -87,27 +87,19 @@ public class StapelServiceTest {
 	}
 
 	@Test
-	@DisplayName("Wenn keine Karteikarten-Sets existieren, wird true returned")
+	@DisplayName("Wenn Karteikarten-Sets für einen User existieren, wird true returned")
 	void test_05() {
-		when(repo.countAll()).thenReturn(0);
+		when(repo.countAllByUsername(any())).thenReturn(1);
 
-		assertThat(service.areKarteiSetsAvailable()).isFalse();
+		assertThat(service.areKarteiSetsAvailableByUsername("peter88")).isTrue();
 	}
 
 	@Test
-	@DisplayName("Wenn keine Karteikarten-Sets existieren, wird true returned")
+	@DisplayName("Wenn keine Karteikarten-Sets existieren, wird false returned")
 	void test_06() {
-		when(repo.countAll()).thenReturn(10);
+		when(repo.countAllByUsername(any())).thenReturn(0);
 
-		assertThat(service.areKarteiSetsAvailable()).isTrue();
-	}
-
-	@Test
-	@DisplayName("Wenn keine Karteikarten-Sets existieren, wird true returned")
-	void test_07() {
-		when(repo.countAll()).thenReturn(10);
-
-		assertThat(service.areKarteiSetsAvailable()).isTrue();
+		assertThat(service.areKarteiSetsAvailableByUsername("peter88")).isFalse();
 	}
 
 	@Test
