@@ -5,6 +5,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {Router, RouterLink} from '@angular/router';
 import {NgIf} from '@angular/common';
 import { HeaderAuthComponent} from '../../app-layout/header-auth/header-auth.component';
+import {FooterComponent} from '../../app-layout/footer/footer.component'
 
 @Component({
   selector: 'app-login-service',
@@ -12,7 +13,8 @@ import { HeaderAuthComponent} from '../../app-layout/header-auth/header-auth.com
     ReactiveFormsModule,
     RouterLink,
     NgIf,
-    HeaderAuthComponent
+    HeaderAuthComponent,
+    FooterComponent
   ],
   templateUrl: './login-service.component.html',
   standalone: true,

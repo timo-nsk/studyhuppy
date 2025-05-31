@@ -4,6 +4,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {NgIf} from '@angular/common';
 import {AuthApiService} from '../auth.service';
 import {RouterLink} from '@angular/router';
+import {FooterComponent} from '../../app-layout/footer/footer.component'
 
 @Component({
   selector: 'app-pw-service',
@@ -11,7 +12,8 @@ import {RouterLink} from '@angular/router';
     HeaderAuthComponent,
     ReactiveFormsModule,
     NgIf,
-    RouterLink
+    RouterLink,
+    FooterComponent
   ],
   templateUrl: './pw-service.component.html',
   standalone: true,

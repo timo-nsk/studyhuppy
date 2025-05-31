@@ -21,6 +21,9 @@ import {TermineDetailsComponent} from './modul-service/module/termine-details/te
 import {AdminServiceComponent} from './auth-service/admin-service/admin-service.component';
 import {authorityGuard} from './guard/authority.guard';
 import {UnauthorizedComponent} from './auth-service/unauthorized/unauthorized.component';
+import { AgbComponent } from './app-layout/footer/agb/agb.component'
+import { ImpressumComponent } from './app-layout/footer/impressum/impressum.component'
+import { DsgvoComponent } from './app-layout/footer/dsgvo/dsgvo.component'
 import {
   MetricServiceComponent
 } from './auth-service/admin-service/actuator-service/metric-service/metric-service.component';
@@ -41,6 +44,18 @@ export const routes: Routes = [
   {
     path: 'unauthorized',
     component: UnauthorizedComponent
+  },
+  {
+    path: 'agb',
+    component: AgbComponent
+  },
+  {
+    path: 'impressum',
+    component: ImpressumComponent
+  },
+  {
+    path: 'datenschutz',
+    component: DsgvoComponent
   },
   {
     path: '',
