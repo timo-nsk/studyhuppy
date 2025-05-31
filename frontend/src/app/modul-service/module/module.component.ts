@@ -24,6 +24,7 @@ export class ModuleComponent implements OnInit{
   sessionSecondsLearned : number = 0;
   timer: number = 0
   running: boolean = true
+  disabledBtn : boolean [] = []
   isLoading: boolean = true
 
   constructor(private service: ModuleService) {}
@@ -33,12 +34,35 @@ export class ModuleComponent implements OnInit{
       next: (data) => {
         this.module = data;
         this.isLoading = false
-        //console.log(typeof this.module[0].semester.semesterTyp);
+        this.initRunningBtn()
       },
       error: (err) => {
         console.error(err);
       }
     });
+  }
+
+  initRunningBtn() {
+    for(let i = 0; i < this.module.length; i++) {
+      this.disabledBtn.push(false)
+    }
+  }
+
+  setRunningBtn(index : number){
+
+    for (let i = 0; i < this.module.length; i++) {
+      if(i != index) {
+        this.disabledBtn[i] = true
+      }
+    }
+    //console.log("modul " + this.module[index].name + " started running (" + this.disabledBtn + ")")
+  }
+
+  clearRunningBtn() {
+    for(let i = 0; i < this.module.length; i++) {
+      this.disabledBtn[i] = false
+    }
+    //console.log("stopped running modul")
   }
 
   updateSeconds(seconds: number): number {
@@ -56,7 +80,7 @@ export class ModuleComponent implements OnInit{
   }
 
 
-  async startTimer(fachId: string): Promise<void> {
+  async startTimer(fachId: string, index : number): Promise<void> {
     let seconds : number;
 
     this.service.getSeconds(fachId).subscribe({
@@ -65,42 +89,41 @@ export class ModuleComponent implements OnInit{
       }
     })
 
-    if (this.running) {
-      this.timer = window.setInterval(() => {
-        seconds = this.updateSeconds(seconds);
-        this.updateSecondsOnModulUI(fachId, seconds)
-      }, 1000);
-      this.switchButtonStyle(fachId, 0);
-      this.running = false;
-    } else {
-      clearInterval(this.timer)
-      this.service.postNewSeconds(fachId, this.sessionSecondsLearned).subscribe()
-      this.sessionSecondsLearned = 0
-      this.switchButtonStyle(fachId, 1);
-      this.running = true;
+    // Wurde noch kein Button betätigt wurde, dann kann Tiemr starten, sonst wäre disabledBtn[index]=true und es kann
+    // kein weiterer Button betätigt werden
+    if(this.disabledBtn[index] == false) {
+      if (this.running) {
+        this.timer = window.setInterval(() => {
+          seconds = this.updateSeconds(seconds);
+          this.updateSecondsOnModulUI(fachId, seconds)
+        }, 1000);
+        this.switchButtonStyle(fachId, 0, index);
+        this.running = false;
+        this.setRunningBtn(index)
+      } else {
+        clearInterval(this.timer)
+        this.clearRunningBtn()
+        this.service.postNewSeconds(fachId, this.sessionSecondsLearned).subscribe()
+        this.sessionSecondsLearned = 0
+        this.switchButtonStyle(fachId, 1, index);
+        this.running = true;
+      }
     }
   }
 
-  switchButtonStyle(fachId: string, flag: 0 | 1): void {
+  switchButtonStyle(fachId: string, flag: 0 | 1, index : number): void {
     const button = document.getElementById("btn-" + fachId)
     if (!button) return;
 
-    const icon = button.querySelector<HTMLElement>("#button-icon");
+    const icon = button.querySelector<HTMLElement>(".button-icon-" + index);
     if (!icon) return;
 
-    const PLAY = 'fa-play';
-    const STOP = 'fa-stop';
-
     if (flag === 1) {
-      icon.classList.add(PLAY);
-      icon.classList.remove(STOP);
       button.classList.remove("stop");
       button.classList.remove("stop-button");
       button.classList.add("play");
       button.classList.add("play-button");
     } else if (flag === 0) {
-      icon.classList.add(STOP);
-      icon.classList.remove(PLAY);
       button.classList.add("stop");
       button.classList.add("stop-button");
       button.classList.remove("play");
