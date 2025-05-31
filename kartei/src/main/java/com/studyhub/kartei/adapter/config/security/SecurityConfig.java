@@ -35,7 +35,7 @@ public class SecurityConfig {
 		return http
 			.csrf().disable() //muss disabled sein
 			.cors(Customizer.withDefaults())
-			.requiresChannel().anyRequest().requiresSecure().and()
+			//.requiresChannel().anyRequest().requiresSecure().and()
 			.authorizeHttpRequests(auth -> auth
 					.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 					.requestMatchers("/api/v1/get-db-health", "/actuator/health").permitAll().anyRequest().authenticated())
