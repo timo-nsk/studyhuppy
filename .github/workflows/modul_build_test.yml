@@ -1,6 +1,9 @@
 name: Build and Test Modul Service
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - 'track/**'
 
 jobs:
   build:
@@ -22,7 +25,7 @@ jobs:
 
       - name: Create .env file for service
         run: |
-          echo "PG_PORT=${PG_PORT}" >> .env
+          echo "PG_PORT=${PG_PORT}" >> track/.env
           echo "MODUL_DB_HOST_PORT=${MODUL_DB_HOST_PORT}" >> track/.env
           echo "SERVER_PORT=${SERVER_PORT}" >> track/.env
           echo "JWT_SECRET=${JWT_SECRET}" >track/.env

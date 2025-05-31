@@ -1,0 +1,37 @@
+name: Build and Test Kartei Service
+
+on:
+  push:
+    paths:
+      - 'kartei/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      PG_PORT: ${{ secrets.PG_PORT }}
+      KARTEI_DB_HOST_PORT: ${{ secrets.KARTEI_DB_HOST_PORT }}
+      SERVER_PORT: ${{ secrets.SERVER_PORT }}
+
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+      KARTEI_DB: ${{ secrets.KARTEI_DB }}
+      KARTEI_DB_USER: ${{ secrets.KARTEI_DB_USER }}
+      KARTEI_DB_PASS: ${{ secrets.KARTEI_DB_PASS }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Create .env file for service
+        run: |
+          echo "PG_PORT=${PG_PORT}" >> kartei/.env
+          echo "KARTEI_DB_HOST_PORT=${KARTEI_DB_HOST_PORT}" >> kartei/.env
+          echo "SERVER_PORT=${SERVER_PORT}" >> kartei/.env
+          echo "JWT_SECRET=${JWT_SECRET}" >kartei/.env
+          echo "KARTEI_DB=${MODUL_DB}" >> kartei/.env
+          echo "KARTEI_DB_USER=${KARTEI_DB_USER}" >> kartei/.env
+          echo "KARTEI_DB_PASS=${KARTEI_DB_PASS}" >> kartei/.env
+
+      - name: Start service with Docker Compose
+        run: docker compose -f kartei/docker-compose.yaml up -d --build
