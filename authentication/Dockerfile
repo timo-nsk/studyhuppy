@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY pom.xml .
 
+# Lade alle Abhängigkeiten, damit sie gecached werden können (schnellerer Build bei späteren Änderungen)
 RUN mvn dependency:go-offline -B
 
 COPY . .
