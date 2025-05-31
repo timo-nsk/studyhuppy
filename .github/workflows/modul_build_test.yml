@@ -1,0 +1,34 @@
+name: Build and Test Modul Service
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      PG_PORT: ${{ secrets.PG_PORT }}
+      MODUL_DB_HOST_PORT: ${{ secrets.MODUL_DB_HOST_PORT }}
+      SERVER_PORT: ${{ secrets.SERVER_PORT }}
+
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+      MODUL_DB: ${{ secrets.MODUL_DB }}
+      MODUL_DB_USER: ${{ secrets.MODUL_DB_USER }}
+      MODUL_DB_PASS: ${{ secrets.MODUL_DB_PASS }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Create .env file for service
+        run: |
+          echo "PG_PORT=${PG_PORT}" >> .env
+          echo "MODUL_DB_HOST_PORT=${MODUL_DB_HOST_PORT}" >> .env
+          echo "SERVER_PORT=${SERVER_PORT}" >> .env
+          echo "JWT_SECRET=${JWT_SECRET}" >> .env
+          echo "MODUL_DB=${MODUL_DB}" >> .env
+          echo "MODUL_DB_USER=${MODUL_DB_USER}" >> .env
+          echo "MODUL_DB_PASS=${MODUL_DB_PASS}" >> .env
+
+      - name: Start service with Docker Compose
+        run: docker compose -f track/docker-compose.yaml up -d --build
