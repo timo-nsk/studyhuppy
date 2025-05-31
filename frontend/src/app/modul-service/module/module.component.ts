@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { TimeFormatPipe } from './time-format.pipe';
 import {MatProgressBar} from '@angular/material/progress-bar';
 import {RouterLink} from '@angular/router';
+import { LoggingService } from '../../logging.service';
 
 @Component({
   selector: 'app-module',
@@ -19,6 +20,7 @@ import {RouterLink} from '@angular/router';
   ]
 })
 export class ModuleComponent implements OnInit{
+  log : LoggingService = new LoggingService("ModuleComponent", "modul-service")
   pipe : TimeFormatPipe = new TimeFormatPipe()
   module: Modul[] = [];
   sessionSecondsLearned : number = 0;
@@ -35,6 +37,7 @@ export class ModuleComponent implements OnInit{
         this.module = data;
         this.isLoading = false
         this.initRunningBtn()
+        this.log.debug("Got active module for user")
       },
       error: (err) => {
         console.error(err);
@@ -140,3 +143,7 @@ export class ModuleComponent implements OnInit{
     return false
   }
 }
+function provideLogger(arg0: { level: any; serverLogLevel: any; }): import("@angular/core").Provider[] | undefined {
+    throw new Error('Function not implemented.');
+}
+
