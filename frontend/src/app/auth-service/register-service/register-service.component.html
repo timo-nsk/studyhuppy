@@ -1,9 +1,8 @@
 <app-header-auth></app-header-auth>
-
-<div id="registration-container">
-  <a [routerLink]="'/login'">Zurück zum Login</a>
-  <div id="registration-form-container" class="shd">
-    <form id="registration-form" [formGroup]="registerForm" (ngSubmit)="submitRegister()">
+<div class="main-container">
+  <div id="form-container">
+    <a [routerLink]="'/login'">Zurück zum Login</a>
+    <form id="register-form" class="sh-form" [formGroup]="registerForm" (ngSubmit)="submitRegister()">
 
       <div id="registration-form-header">
         <h3>Registrieren</h3>
@@ -44,3 +43,4 @@
     </form>
   </div>
 </div>
+
