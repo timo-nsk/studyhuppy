@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {ModuleService} from '../module/module-service';
+import {ModuleApiService} from '../module/module-api.service';
 import {HttpClient} from '@angular/common/http';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
@@ -15,7 +15,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class AddModuleComponent {
   lerntageCheckbox : boolean = false
 
-  constructor(private service : ModuleService, private http : HttpClient, private snackbar : MatSnackBar) {
+  constructor(private service : ModuleApiService, private http : HttpClient, private snackbar : MatSnackBar) {
   }
 
   newModulForm = this.initForm()
@@ -30,8 +30,8 @@ export class AddModuleComponent {
             duration: 4000
           })
         },
-        error: (error) => {
-          console.log(error)
+        error: (err) => {
+          console.log(err)
           this.snackbar.open("Sie können keine weiteren Module erstellen", "dismiss", {
             duration: 4000
           })

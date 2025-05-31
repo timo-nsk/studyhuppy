@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {ModuleService} from './module-service';
+import {Component, OnInit, inject} from '@angular/core';
 import {Modul} from './domain';
 import { CommonModule } from '@angular/common';
 import { TimeFormatPipe } from './time-format.pipe';
 import {MatProgressBar} from '@angular/material/progress-bar';
 import {RouterLink} from '@angular/router';
 import { LoggingService } from '../../logging.service';
+import { ModuleApiService } from './module-api.service';
 
 @Component({
   selector: 'app-module',
@@ -20,6 +20,7 @@ import { LoggingService } from '../../logging.service';
   ]
 })
 export class ModuleComponent implements OnInit{
+  service = inject(ModuleApiService)
   log : LoggingService = new LoggingService("ModuleComponent", "modul-service")
   pipe : TimeFormatPipe = new TimeFormatPipe()
   module: Modul[] = [];
@@ -29,15 +30,13 @@ export class ModuleComponent implements OnInit{
   disabledBtn : boolean [] = []
   isLoading: boolean = true
 
-  constructor(private service: ModuleService) {}
-
   ngOnInit(): void {
     this.service.getActiveModuleByUsername().subscribe({
       next: (data) => {
         this.module = data;
         this.isLoading = false
-        this.initRunningBtn()
-        this.log.debug("Got active module for user")
+        this.initDisabledBtn()
+        this.log.debug("Got active module")
       },
       error: (err) => {
         console.error(err);
@@ -45,10 +44,11 @@ export class ModuleComponent implements OnInit{
     });
   }
 
-  initRunningBtn() {
+  initDisabledBtn() {
     for(let i = 0; i < this.module.length; i++) {
       this.disabledBtn.push(false)
     }
+    this.log.debug("Initialized disabledBtn: " + this.disabledBtn)
   }
 
   setRunningBtn(index : number){
@@ -58,14 +58,14 @@ export class ModuleComponent implements OnInit{
         this.disabledBtn[i] = true
       }
     }
-    //console.log("modul " + this.module[index].name + " started running (" + this.disabledBtn + ")")
+    this.log.debug(`Set disabledBtn to 'true', except at index ${index}`)
   }
 
   clearRunningBtn() {
     for(let i = 0; i < this.module.length; i++) {
       this.disabledBtn[i] = false
     }
-    //console.log("stopped running modul")
+    this.log.debug("Cleared disabledBtn array")
   }
 
   updateSeconds(seconds: number): number {
@@ -92,10 +92,11 @@ export class ModuleComponent implements OnInit{
       }
     })
 
-    // Wurde noch kein Button betätigt wurde, dann kann Tiemr starten, sonst wäre disabledBtn[index]=true und es kann
+    // Wurde noch kein Button betätigt wurde, dann kann Timer starten, sonst wäre disabledBtn[index]=true und es kann
     // kein weiterer Button betätigt werden
     if(this.disabledBtn[index] == false) {
       if (this.running) {
+        this.log.debug(`Start timer for modul '${this.module[index].name}'`)
         this.timer = window.setInterval(() => {
           seconds = this.updateSeconds(seconds);
           this.updateSecondsOnModulUI(fachId, seconds)
@@ -107,9 +108,10 @@ export class ModuleComponent implements OnInit{
         clearInterval(this.timer)
         this.clearRunningBtn()
         this.service.postNewSeconds(fachId, this.sessionSecondsLearned).subscribe()
-        this.sessionSecondsLearned = 0
         this.switchButtonStyle(fachId, 1, index);
         this.running = true;
+        this.log.debug(`Finished timer of modul '${this.module[index].name}' with sessionSecondsLearned: '${this.sessionSecondsLearned}'`)
+        this.sessionSecondsLearned = 0
       }
     }
   }
@@ -143,7 +145,3 @@ export class ModuleComponent implements OnInit{
     return false
   }
 }
-function provideLogger(arg0: { level: any; serverLogLevel: any; }): import("@angular/core").Provider[] | undefined {
-    throw new Error('Function not implemented.');
-}
-

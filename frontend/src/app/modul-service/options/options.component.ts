@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {ModuleService} from '../module/module-service';
 import {Modul} from '../module/domain';
 import { CommonModule } from '@angular/common';
-import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatFormField, MatLabel} from '@angular/material/input';
 import {MatSelect, MatSelectChange} from '@angular/material/select';
 import {MatOption} from '@angular/material/core';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
+import { ModuleApiService } from '../module/module-api.service';
 
 @Component({
   selector: 'app-options',
@@ -21,7 +21,7 @@ export class OptionsComponent implements OnInit{
   module : Modul[] = []
   modulFachId : string = ''
 
-  constructor(private service : ModuleService,
+  constructor(private service : ModuleApiService,
               private fb : FormBuilder,
               private snackbar : MatSnackBar) {}
 

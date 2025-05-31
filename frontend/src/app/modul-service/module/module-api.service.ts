@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment'
 @Injectable({
   providedIn: 'root' // macht den Service global verfügbar
 })
-export class ModuleService {
+export class ModuleApiService {
   private MODUL_BASE_API = environment.modulServiceUrl
   private headerService = inject(HeaderService)
   private http = inject(HttpClient)
