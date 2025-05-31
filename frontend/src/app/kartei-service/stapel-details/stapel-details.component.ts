@@ -61,7 +61,7 @@ export class StapelDetailsComponent implements OnInit{
   }
 
   loadStapel() : void {
-    this.karteiService.getStapelByFachId(this.stapelId).subscribe({
+    this.karteiService.getStapelWithAllKarteikartenByFachId(this.stapelId).subscribe({
       next: (data : Stapel) => {
         this.stapel = data
         this.karteikarten.data = data.karteikarten ?? []

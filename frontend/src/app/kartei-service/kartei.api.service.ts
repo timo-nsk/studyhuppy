@@ -26,7 +26,12 @@ export class KarteiApiService {
 
   getStapelByFachId(fachId: string | null | undefined) : Observable<Stapel> {
     const headers = this.headerService.createAuthHeader()
-    return this.http.post<Stapel>( this.BASE_API_URL + "/get-stapel-by-fachid",fachId,  {headers})
+    return this.http.post<Stapel>( this.BASE_API_URL + "/get-stapel-with-faellige-karteikarten-by-fachid",fachId,  {headers})
+  }
+
+  getStapelWithAllKarteikartenByFachId(fachId: string | null | undefined) : Observable<Stapel> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.post<Stapel>( this.BASE_API_URL + "/get-stapel-with-all-karteikarten-by-fachid",fachId,  {headers})
   }
 
   updateKarte(data : UpdateInfo) : Observable<any> {

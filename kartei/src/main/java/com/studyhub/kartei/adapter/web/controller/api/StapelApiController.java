@@ -56,8 +56,13 @@ public class StapelApiController {
 		return ResponseEntity.ok(res);
 	}
 
-	@PostMapping("/get-stapel-by-fachid")
+	@PostMapping("/get-stapel-with-faellige-karteikarten-by-fachid")
 	public ResponseEntity<Stapel> getStapelByFachid(@RequestBody String fachId) {
 		return ResponseEntity.ok(stapelService.findByFachIdWithFaelligeKarten(fachId, LocalDateTime.now()));
+	}
+
+	@PostMapping("/get-stapel-with-all-karteikarten-by-fachid")
+	public ResponseEntity<Stapel> getStapelWithAllKarteikartenByFachid(@RequestBody String fachId) {
+		return ResponseEntity.ok(stapelService.findByFachId(fachId));
 	}
 }
