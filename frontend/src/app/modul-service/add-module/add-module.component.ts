@@ -38,7 +38,6 @@ export class AddModuleComponent {
         }
       })
     } else {
-      console.log("nope")
     }
   }
 
