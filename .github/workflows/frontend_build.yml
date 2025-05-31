@@ -21,4 +21,4 @@ jobs:
         run: |
           cd frontend
           npm install
-          npx ng run build -- --configuration production
+          npx ng run build --configuration production
