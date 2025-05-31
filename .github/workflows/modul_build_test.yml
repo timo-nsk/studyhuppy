@@ -23,12 +23,12 @@ jobs:
       - name: Create .env file for service
         run: |
           echo "PG_PORT=${PG_PORT}" >> .env
-          echo "MODUL_DB_HOST_PORT=${MODUL_DB_HOST_PORT}" >> .env
-          echo "SERVER_PORT=${SERVER_PORT}" >> .env
-          echo "JWT_SECRET=${JWT_SECRET}" >> .env
-          echo "MODUL_DB=${MODUL_DB}" >> .env
-          echo "MODUL_DB_USER=${MODUL_DB_USER}" >> .env
-          echo "MODUL_DB_PASS=${MODUL_DB_PASS}" >> .env
+          echo "MODUL_DB_HOST_PORT=${MODUL_DB_HOST_PORT}" >> track/.env
+          echo "SERVER_PORT=${SERVER_PORT}" >> track/.env
+          echo "JWT_SECRET=${JWT_SECRET}" >track/.env
+          echo "MODUL_DB=${MODUL_DB}" >> track/.env
+          echo "MODUL_DB_USER=${MODUL_DB_USER}" >> track/.env
+          echo "MODUL_DB_PASS=${MODUL_DB_PASS}" >> track/.env
 
       - name: Start service with Docker Compose
         run: docker compose -f track/docker-compose.yaml up -d --build
