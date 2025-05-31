@@ -14,7 +14,7 @@ import {MatSlideToggle} from '@angular/material/slide-toggle';
   imports: [CommonModule, ReactiveFormsModule, FormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatSlideToggle],
   templateUrl: './options.component.html',
   standalone: true,
-  styleUrls: ['./options.component.scss', '../../color.scss']
+  styleUrls: ['./options.component.scss', '../../color.scss', '../../general.scss']
 })
 export class OptionsComponent implements OnInit{
 

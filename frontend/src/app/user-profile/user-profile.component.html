@@ -42,8 +42,8 @@
         <td class="col-wd-300 td-border-l m-accent-font">
           <ng-container>
             <mat-slide-toggle (change)="toggleEmailSubscription()" [checked]="userData.notificationSubscription">
-                <span *ngIf="userData.notificationSubscription">deaktivieren</span>
-                <span *ngIf="!userData.notificationSubscription">aktivieren</span>
+                <span *ngIf="userData.notificationSubscription" class="ff-outfit">deaktivieren</span>
+                <span *ngIf="!userData.notificationSubscription" class="ff-outfit">aktivieren</span>
               </mat-slide-toggle>
           </ng-container>
         </td>

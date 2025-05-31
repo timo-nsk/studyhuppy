@@ -25,7 +25,7 @@ import {KarteImportComponent} from './karte-import/karte-import.component';
   imports: [NgIf, KarteBearbeitenComponent, KarteErstellenComponent, KarteImportComponent, MatTable, MatHeaderCell, MatColumnDef, MatCell, MatCellDef, MatHeaderRow, MatRow, MatRowDef, MatHeaderCellDef, MatHeaderRowDef, MatAnchor, FragetypFormatPipe, DatePipe, NgClass],
   templateUrl: './stapel-details.component.html',
   standalone: true,
-  styleUrl: './stapel-details.component.scss',
+  styleUrls: ['./stapel-details.component.scss', '../../general.scss'],
   animations: [
     trigger('slideDown', [
       transition(':enter', [

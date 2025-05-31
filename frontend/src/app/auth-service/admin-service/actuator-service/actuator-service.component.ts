@@ -32,7 +32,7 @@ import {RouterLink, RouterOutlet} from '@angular/router';
   ],
   templateUrl: './actuator-service.component.html',
   standalone: true,
-  styleUrls: ['./actuator-service.component.scss', '../../../color.scss']
+  styleUrls: ['./actuator-service.component.scss', '../../../color.scss', '../../../general.scss']
 })
 export class ActuatorServiceComponent implements OnInit{
   apiService = inject(ActuatorApiService)
