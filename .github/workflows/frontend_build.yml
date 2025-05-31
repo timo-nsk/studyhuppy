@@ -17,11 +17,8 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Change directory to frontend
-        run: cd frontend
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build Angular app
-        run: npx build --configuration production
+      - name: Install and build Angular app
+        run: |
+          cd frontend
+          npm install
+          ng run build -- --configuration production
