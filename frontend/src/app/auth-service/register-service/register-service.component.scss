@@ -1,3 +1,11 @@
+#register-container {
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+  margin-bottom: 15vh;
+  margin-top: 10vh;
+}
+
 #register-form {
   width: 100%;
   min-width: 30vw !important;

@@ -11,7 +11,7 @@ import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
   ],
   templateUrl: './register-service.component.html',
   standalone: true,
-  styleUrls: ['./register-service.component.scss', '../../general.scss', '../../forms.scss']
+  styleUrls: ['./register-service.component.scss', '../../general.scss', '../../forms.scss', '../../color.scss']
 })
 export class RegisterServiceComponent {
 

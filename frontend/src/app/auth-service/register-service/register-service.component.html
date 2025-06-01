@@ -1,45 +1,52 @@
-<div class="main-container">
-  <div id="form-container">
-    <a [routerLink]="'/login'">Zurück zum Login</a>
-    <form id="register-form" class="sh-form" [formGroup]="registerForm" (ngSubmit)="submitRegister()">
+<div class="main-auth-container">
+  <div id="register-container">
+    <div id="form-container">
+      <a [routerLink]="'/login'">Zurück zum Login</a>
+      <form id="register-form" class="sh-form m-accent-font" [formGroup]="registerForm" (ngSubmit)="submitRegister()">
 
-      <div id="registration-form-header">
-        <h3>Registrieren</h3>
-      </div>
+        <div id="registration-form-header">
+          <h3>Registrieren</h3>
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label" for="mail">E-Mail:</label>
-        <input id="mail" class="form-control" type="email" formControlName="mail">
-      </div>
+        <div class="mb-3">
+          <label class="sh-form-lbl" for="mail">E-Mail<span class="hint-star">*</span></label>
+          <input id="mail" class="form-control" type="email" formControlName="mail">
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label" for="username">Username:</label>
-        <input id="username" class="form-control" type="text" formControlName="username">
-      </div>
+        <div class="mb-3">
+          <label class="sh-form-lbl" for="username">Username<span class="hint-star">*</span></label>
+          <input id="username" class="form-control" type="text" formControlName="username">
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label" for="password">Passwort:</label>
-        <input id="password" class="form-control" style="--bs-focus-ring-color: rgba(229, 209, 208, .40)" type="password" formControlName="password">
-      </div>
+        <div class="mb-3">
+          <label class="sh-form-lbl" for="password">Passwort<span class="hint-star">*</span></label>
+          <input id="password" class="form-control" style="--bs-focus-ring-color: rgba(229, 209, 208, .40)" type="password" formControlName="password">
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label" for="semester">Fachsemester:</label>
-        <input id="semester" class="form-control" type="number" formControlName="semester">
-      </div>
+        <div class="mb-3">
+          <label class="sh-form-lbl" for="semester">Fachsemester</label>
+          <input id="semester" class="form-control" type="number" formControlName="semester">
+        </div>
 
-      <div class="form-check">
-        <input id="subscription" class="form-check-input" type="checkbox" formControlName="notificationSubscription">
-        <label class="form-check-label" for="subscription">Benachrichtigungen aktivieren</label>
-      </div>
+        <div class="form-check">
+          <input id="subscription" class="form-check-input sh-form-lbl" type="checkbox" formControlName="notificationSubscription">
+          <label class="form-check-label" for="subscription">Benachrichtigungen aktivieren</label>
+        </div>
 
-      <div class="form-check">
-        <input id="agb"  class="form-check-input"  type="checkbox" formControlName="acceptedAgb">
-        <label class="form-check-label" for="agb" ><a href="#">AGB</a> akzeptieren</label>
-      </div>
-      <div id="register-btn-container" class="mb-3">
-        <button type="submit" class="btn btn-primary">Konto erstellen</button>
-      </div>
-    </form>
+        <div class="form-check">
+          <input id="agb"  class="form-check-input sh-form-lbl"  type="checkbox" formControlName="acceptedAgb">
+          <label class="form-check-label" for="agb" ><a href="#">AGB</a> akzeptieren<span class="hint-star">*</span></label>
+        </div>
+        <div>
+          <button class="sh-form-btn">
+            <span type="submit" class="sh-form-btn-content">Konto erstellen</span>
+          </button>
+        </div>
+        <div>
+          <p>*Pflichtfelder</p>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 
