@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import {FooterComponent} from '../footer.component';
+import {RouterLink} from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-agb',
-  imports: [FooterComponent],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './agb.component.html',
-  styleUrls: ['./agb.component.scss', '../../../general.scss']
+  styleUrls: ['./agb.component.scss', '../../../general.scss', '../../../color.scss']
 })
 export class AgbComponent {
 

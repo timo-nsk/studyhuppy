@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
-import {FooterComponent} from '../footer.component';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-impressum',
-  imports: [FooterComponent],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './impressum.component.html',
-  styleUrls: ['./impressum.component.scss', '../../../general.scss']
+  standalone: true,
+  styleUrls: ['./impressum.component.scss', '../../../general.scss', '../../../color.scss']
 })
 export class ImpressumComponent {
 

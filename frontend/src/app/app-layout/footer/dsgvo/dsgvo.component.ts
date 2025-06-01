@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-
-import {FooterComponent} from '../footer.component';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-dsgvo',
-  imports: [FooterComponent],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './dsgvo.component.html',
-  styleUrls: ['./dsgvo.component.scss', '../../../general.scss']
+  standalone: true,
+  styleUrls: ['./dsgvo.component.scss', '../../../general.scss', '../../../color.scss']
 })
 export class DsgvoComponent {
 

@@ -1,12 +1,19 @@
-<div class="main-container">
-  <div>
-    <h1>Datenschutzerklärung</h1>
-    <section>
-      <h2>1. Verantwortlicher</h2>
-        <p>Siehe Impressum</p>
+<div class="bg-lightgrey m-accent-font">
+  <div id="container">
+    <div id="back-link">
+      <a [routerLink]="'/module'">zurück</a>
+    </div>
+    <section id="section-header">
+      <h2>
+        Datenschutzerklärung
+      </h2>
     </section>
-    <section>
-      <h2>2. Erhebung und Verarbeitung personenbezogener Daten</h2>
+    <section class="dsgvo-section">
+      <h3>1. Verantwortlicher</h3>
+        <p>Siehe <a [routerLink]="'/impressum'">Impressum</a></p>
+    </section>
+    <section class="dsgvo-section">
+      <h3>2. Erhebung und Verarbeitung personenbezogener Daten</h3>
       <section>
         <p>a) Registrierung und Nutzung der App</p>
 
@@ -29,12 +36,12 @@
 
       </section>
     </section>
-    <section>
-      <h2>3. Server-Logdaten</h2>
+    <section class="dsgvo-section">
+      <h3>3. Server-Logdaten</h3>
       <p>Beim Zugriff auf die App können automatisch technische Informationen erfasst werden (z. B. IP-Adresse, Browsertyp). Diese dienen ausschließlich der technischen Sicherheit und Fehlerbehebung und werden nicht verarbeitet oder dauerhaft gespeichert.</p>
     </section>
-    <section>
-      <h2>4. Ihre Rechte</h2>
+    <section class="dsgvo-section">
+      <h3>4. Ihre Rechte</h3>
       <p>Sie haben jederzeit das Recht auf:
       <ul>
         <li><p>Auskunft über Ihre gespeicherten Daten (Art. 15 DSGVO)</p></li>
@@ -46,28 +53,26 @@
       </ul>
       <p>Zur Ausübung Ihrer Rechte genügt eine formlose E-Mail an: [studyhub&#64;web.de]</p>
     </section>
-    <section>
-      <h2>5. Datenschutz bei Kindern</h2>
+    <section class="dsgvo-section">
+      <h3>5. Datenschutz bei Kindern</h3>
       <p>Die Nutzung der App ist nur Personen ab 16 Jahren gestattet, sofern keine Einwilligung der Erziehungsberechtigten vorliegt.</p>
     </section>
-    <section>
-      <h2>6. Sicherheit</h2>
+    <section class="dsgvo-section">
+      <h3>6. Sicherheit</h3>
       <p>Wir setzen technische und organisatorische Maßnahmen ein, um Ihre Daten bestmöglich zu schützen – insbesondere gegen Verlust, Manipulation oder unbefugten Zugriff.</p>
     </section>
-    <section>
-      <h2>7. Aufsichtsbehörde</h2>
+    <section class="dsgvo-section">
+      <h3>7. Aufsichtsbehörde</h3>
       <p>Sie haben das Recht, sich bei einer Datenschutzaufsichtsbehörde zu beschweren. Zuständig ist z. B.:</p>
       <address>
         <p>Der Landesbeauftragte für Datenschutz und Informationsfreiheit</p>
         <p>Nordrhein-Westfalen</p>
         <a href="https://www.ldi.nrw.de">https://www.ldi.nrw.de</a>
       </address>
-
     </section>
-    <section>
-      <h2>8. Änderungen</h2>
+    <section class="dsgvo-section">
+      <h3>8. Änderungen</h3>
       <p>Diese Datenschutzerklärung kann angepasst werden. Die jeweils aktuelle Version ist jederzeit in der App abrufbar.</p>
     </section>
     </div>
 </div>
-<app-footer></app-footer>
