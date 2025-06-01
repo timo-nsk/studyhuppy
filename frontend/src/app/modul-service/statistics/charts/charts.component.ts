@@ -1,41 +1,51 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {StatisticApiService} from '../statistic.service';
-import {
-  Chart,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  BarController
-} from 'chart.js';
+import { Chart,  CategoryScale,  LinearScale,  BarElement, Title, Tooltip, Legend, BarController} from 'chart.js';
 import {NgIf} from '@angular/common';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {LoggingService} from '../../../logging.service';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, BarController);
 
+type Dataset = {
+  label: string;
+  data: number[];
+  backgroundColor: string;
+};
+
 @Component({
   selector: 'app-charts',
-  imports: [
-    NgIf,
-    MatProgressSpinner
-  ],
+  imports: [NgIf, MatProgressSpinner],
   templateUrl: './charts.component.html',
   standalone: true,
   styleUrl: './charts.component.scss'
 })
 export class ChartsComponent implements  OnInit {
+  log = new LoggingService("ChartsComponent", "modul")
+
   isLoading : boolean = true
 
   chartStats: { [date: string]: { modulName: string; secondsLearned: string }[] } = {};
 
   service = inject(StatisticApiService)
 
+  printChartData(data : any) {
+    this.log.debug("Got data...")
+    for (const date in this.chartStats) {
+      this.log.debug(`- Date: ${date}`)
+      for (const entry of this.chartStats[date]) {
+        this.log.debug(`- Modul: ${entry.modulName}, Sekunden: ${entry.secondsLearned}`)
+      }
+    }
+  }
+
   ngOnInit(): void {
     this.service.getChartLastDays().subscribe( {
       next: (value) => {
         this.chartStats = value;
+
+        this.printChartData(this.chartStats)
+
         this.isLoading = false
       },
       complete: () => {
@@ -57,7 +67,6 @@ export class ChartsComponent implements  OnInit {
       }
     });
   }
-
 
   initChartOverall(label : string, labels : any, data : any, elementId : any) {
     const ctx = document.getElementById(elementId) as HTMLCanvasElement;
@@ -106,7 +115,7 @@ export class ChartsComponent implements  OnInit {
   }
 
   getOverallLabels(data : any) {
-    return Object.keys(data).map(e => this.formatToGermanDate(e)).reverse();
+    return Object.keys(data).map(e => this.formatToGermanDate(e))
   }
 
   getOverallDataMinutes(data : any) {
@@ -125,33 +134,49 @@ export class ChartsComponent implements  OnInit {
   }
 
   getEachLabels(data : any) {
-    return Object.keys(data).map(e => this.formatToGermanDate(e)).reverse();
+    return Object.keys(data).map(e => this.formatToGermanDate(e))
   }
 
-  getDatasets(data: any) {
-    const datasets :any[] = [];
+  getModulNamen(data: { [date: string]: { modulName: string; secondsLearned: string }[] }) {
+    const modulNamenSet = new Set<string>();
+    Object.values(data).forEach(entries => {
+      entries.forEach((entry: { modulName: string; secondsLearned: string }) => {
+        modulNamenSet.add(entry.modulName);
+      });
+    });
+    return Array.from(modulNamenSet);
+  }
 
+  prepareDataSets(modulNamen : string[], colors : string[]) : Dataset[] {
+    return modulNamen.map((modulName, index) => ({
+      label: modulName,
+      data: [],
+      backgroundColor: colors[index % colors.length]
+    }));
+  }
+
+  getDatasets(data: { [date: string]: { modulName: string; secondsLearned: string }[] }) {
+    this.log.debug("Process data...")
     let colors : string[] = []
-
     for (let i = 0; i < 10; i++) colors.push(this.generateRgba())
 
-    let colorIndex = 0;
+    const modulNamen = this.getModulNamen(data)
 
-    Object.keys(data).forEach(date => {
-      data[date].forEach((entry : any) => {
-        let dataset = datasets.find(ds => ds.label === entry.modulName);
+    const datasets : Dataset[] = this.prepareDataSets(modulNamen, colors)
 
-        if (!dataset) {
-          dataset = {
-            label: entry.modulName,
-            data: [],
-            backgroundColor: colors[colorIndex % colors.length]
-          };
-          datasets.push(dataset);
+    // Für jedes Datum für die secondsLearned des Moduls ein.
+    // Wenn keine Statistik für das Modul an dem Datum vorhanden ist, setze 0 (Array-Längen müssen gleich sein)
+    Object.keys(data).sort().forEach(date => {
+
+      modulNamen.forEach(modulName => {
+        const entry = data[date].find((e: any) => e.modulName === modulName);
+        const dataset  = datasets.find(ds => ds.label === modulName);
+
+        if (entry) {
+          dataset!.data.push(parseFloat(String(parseInt(entry.secondsLearned) / 60)));
+        } else {
+          dataset!.data.push(0);
         }
-        colorIndex++;
-
-        dataset.data.push(parseInt(entry.secondsLearned) / 60);
       });
     });
 
