@@ -1,26 +1,27 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet} from '@angular/router';
-import {Title} from '@angular/platform-browser';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FooterComponent } from './app-layout/footer/footer.component';
+import { HeaderMainComponent } from './app-layout/header/header-main.component';
 
 @Component({
   selector: 'app-root',
   imports: [
     CommonModule,
     RouterOutlet,
-    MatSnackBarModule
+    MatSnackBarModule,
+    HeaderMainComponent,
+    FooterComponent
   ],
   templateUrl: './app.component.html',
   standalone: true,
   styleUrls: ['./app.component.scss', './general.scss', './app-layout/side-navbar.scss']
 })
-export class AppComponent implements  OnInit{
-  isAdmin : boolean = true
-  constructor( private titleService : Title) {
-  }
+export class AppComponent {
+  isLoggedIn : boolean = false
 
-  ngOnInit() {
-    this.titleService.setTitle('Studyhub');
+  receiveLoggedInEvent($event: boolean) {
+    this.isLoggedIn = $event
   }
 }

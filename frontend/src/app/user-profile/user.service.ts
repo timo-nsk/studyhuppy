@@ -2,7 +2,6 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Observable, Subscription} from 'rxjs';
 import {User} from './user';
-import {HeaderAuthComponent} from '../app-layout/header-auth/header-auth.component';
 import {HeaderService} from '../header.service';
 import { environment } from '../../environments/environment'
 

@@ -1,26 +1,26 @@
-import {Component, inject} from '@angular/core';
+import {Component, EventEmitter, Output, inject} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {AuthApiService} from '../auth.service';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router, RouterLink} from '@angular/router';
 import {NgIf} from '@angular/common';
-import { HeaderAuthComponent} from '../../app-layout/header-auth/header-auth.component';
-import {FooterComponent} from '../../app-layout/footer/footer.component'
+import { LoggingService } from '../../logging.service';
+import { LoginStatusService } from './login-status.service'
 
 @Component({
   selector: 'app-login-service',
   imports: [
     ReactiveFormsModule,
     RouterLink,
-    NgIf,
-    HeaderAuthComponent,
-    FooterComponent
+    NgIf
   ],
   templateUrl: './login-service.component.html',
   standalone: true,
   styleUrls: ['./login-service.component.scss', '../../general.scss', '../../color.scss', '../../links.scss', '../../button.scss', '../../forms.scss']
 })
 export class LoginServiceComponent {
+  loginStatusService = inject(LoginStatusService)
+  log : LoggingService = new LoggingService("LoginServiceComponent", "auth-service")
   router : Router = inject(Router)
   http : HttpClient = inject(HttpClient)
   authService : AuthApiService = inject(AuthApiService)
@@ -38,11 +38,11 @@ export class LoginServiceComponent {
     this.authService.login(data).subscribe({
       next: (token: string) => {
         localStorage.setItem("auth_token", token);
-        //console.log("success validating credentials");
+        this.loginStatusService.login()
         this.router.navigateByUrl("module");
       },
       error: (err) => {
-
+        this.loginStatusService.logout()
         if(err.status == 404) {
           //console.log("no user found")
           this.userNotExists = true

@@ -2,16 +2,12 @@ import {Component, inject} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {AuthApiService} from '../auth.service';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {HeaderAuthComponent} from '../../app-layout/header-auth/header-auth.component';
-import {FooterComponent} from '../../app-layout/footer/footer.component'
 
 @Component({
   selector: 'app-register-service',
   imports: [
     RouterLink,
-    ReactiveFormsModule,
-    HeaderAuthComponent,
-    FooterComponent
+    ReactiveFormsModule
   ],
   templateUrl: './register-service.component.html',
   standalone: true,
