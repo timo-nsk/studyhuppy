@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import {Observable } from 'rxjs';
 import {HeaderService} from '../../header.service';
 import { environment } from '../../../environments/environment'
+import {jwtDecode} from 'jwt-decode';
 
 // TODO: need to handle errors when backend htorws exception for almost every method here
 @Injectable({

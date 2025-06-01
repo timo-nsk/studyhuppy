@@ -110,7 +110,8 @@ public class ModulApiController {
 	public ResponseEntity<Void> newModule(@RequestBody ModulForm modulForm, HttpServletRequest request) {
 		//int semester = authenticationService.getSemesterOfUser(jwtService.extractUsername("token"));
 		int semester = 6;
-		Modul modul = modulForm.newModulFromFormData(modulForm, semester);
+		String username = jwtService.extractUsernameFromHeader(request);
+		Modul modul = modulForm.newModulFromFormData(modulForm, username, semester);
 		/**
 		 if (Optional.ofNullable(modulForm.stapelCheckbox()).orElse(false)) {
 		 CreateNewStapelRequest request = new CreateNewStapelRequest(modul.getFachId().toString(), modulForm.stapelName(), modulForm.beschreibung(), modulForm.lernstufen(), jwtService.extractUsername(token));
