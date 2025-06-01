@@ -34,7 +34,7 @@ public class ModulEventService {
 
 	public Map<LocalDate, List<ModulStat>> getStatisticsForRecentDays(int days, String username) {
 		List<Modul> modules = modulRepository.findByUsername(username);
-		Map<LocalDate, List<ModulStat>> dataMap = new HashMap<>();
+		Map<LocalDate, List<ModulStat>> dataMap = new TreeMap<>();
 
 		for (int i = 0; i < days; i++) {
 			LocalDate date = dateProvider.getTodayDate().minusDays(i);
