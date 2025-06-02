@@ -65,11 +65,11 @@
               <label for="add-klausur">Klausurdatum hinzufügen:</label>
             </th>
             <td class="col-wd-300 td-border-l m-accent-font">
-              <form id="form-klausur">
+              <form id="form-klausur" [formGroup]="addKlausurDate">
                 <div id="option-add-klausur-date">
-                  <input id="add-klausur" class="inp form-control" type="date">
-                  <input type="time" class="inp form-control">
-                  <a>hinzufügen</a>
+                  <input id="add-klausur" class="inp form-control" type="date" formControlName="date">
+                  <input type="time" class="inp form-control" formControlName="time">
+                  <button (click)="sendKlausurDateData()">hinzufügen</button>
                 </div>
               </form>
             </td>

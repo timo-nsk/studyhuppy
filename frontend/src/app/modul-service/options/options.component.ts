@@ -26,6 +26,12 @@ export class OptionsComponent implements OnInit{
     time: new FormControl("", Validators.required)
   })
 
+  addKlausurDate = new FormGroup({
+    fachId: new FormControl("", Validators.required),
+    date: new FormControl("", Validators.required),
+    time: new FormControl("", Validators.required)
+  })
+
   constructor(private service : ModuleApiService,
               private fb : FormBuilder,
               private snackbar : MatSnackBar) {}
@@ -79,8 +85,12 @@ export class OptionsComponent implements OnInit{
     }
   }
 
-  sendKlausurDateData(index : number, name : string) {
-
+  sendKlausurDateData() {
+    this.addKlausurDate.patchValue({fachId: this.modulFachId})
+    if(this.addKlausurDate.valid) {
+      let data = this.addKlausurDate.value
+      this.service.sendKlausurDateData(data)
+    }
   }
 
   showConfirmation(message: string, duration : number, cssClass : string) : void   {
