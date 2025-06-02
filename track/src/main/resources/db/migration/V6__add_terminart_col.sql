@@ -1,0 +1,1 @@
+ALTER TABLE modultermin ADD COLUMN terminart VARCHAR(25);
