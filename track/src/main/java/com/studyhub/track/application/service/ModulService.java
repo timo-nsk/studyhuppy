@@ -233,4 +233,23 @@ public class ModulService {
 		modul.putNewModulTermin(termin);
 		repo.save(modul);
 	}
+
+	public Map<Integer, List<Modul>> getFachsemesterModuleMap(String username) {
+		List<Modul> module = repo.findActiveModuleByUsername(true, username);
+		Map<Integer, List<Modul>> moduleMap = new TreeMap<>();
+		Set<Integer> fachsemester = new HashSet<>();
+
+		for (Modul m : module) {
+			fachsemester.add(m.getSemesterstufe());
+		}
+
+		System.out.println(fachsemester);
+
+		for (Integer fachsem : fachsemester) {
+			List<Modul> listForMap = module.stream().filter( e -> e.getSemesterstufe() == fachsem).toList();
+			moduleMap.put(fachsem, listForMap);
+		}
+
+		return moduleMap;
+	}
 }

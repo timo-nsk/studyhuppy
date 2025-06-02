@@ -12,7 +12,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import static com.studyhub.track.util.ModulMother.initModul;
+
+import static com.studyhub.track.util.ModulMother.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -179,5 +180,36 @@ public class ModulServiceTest {
 		boolean allowed = modulService.modulCanBeCreated("peter", 10);
 
 		assertThat(allowed).isFalse();
+	}
+
+	@Test
+	@DisplayName("getFachsemesterModuleMap baut die Datenstruktur Map<Integer, List<Modul>> korrekt zusammen")
+	void test_17() {
+		List<Modul> modulList = ModulMother.modulListWithSemester();
+		when(repo.findActiveModuleByUsername(true, "peter")).thenReturn(modulList);
+		Map<Integer, List<Modul>> expectedMap = new TreeMap<>();
+		List<Modul> l1 = List.of(
+				new Modul(UUID.randomUUID(), "m1", 1000, DEFAULT_KREDITPUNKTE, "peter", true, 3, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE) ,
+				new Modul(UUID.randomUUID(), "m2", 2000, DEFAULT_KREDITPUNKTE, "peter", true, 3, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE));
+		expectedMap.put(3, l1);
+		List<Modul> l2 = List.of(new Modul(UUID.randomUUID(), "m3", 1000, DEFAULT_KREDITPUNKTE, "peter", true, 4, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE));
+		expectedMap.put(4, l2);
+		List<Modul> l3 = List.of(
+				new Modul(UUID.randomUUID(), "m4", 500, DEFAULT_KREDITPUNKTE, "peter", true, 5, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE),
+				new Modul(UUID.randomUUID(), "m5", 500, DEFAULT_KREDITPUNKTE, "peter", true, 5, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE),
+				new Modul(UUID.randomUUID(), "m6", 4000, DEFAULT_KREDITPUNKTE, "peter", true, 5, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE));
+		expectedMap.put(5, l3);
+
+		Map<Integer, List<Modul>> actualMap = modulService.getFachsemesterModuleMap("peter");
+
+		assertThat(actualMap.get(3)).hasSize(2);
+		assertThat(actualMap.get(3).get(0).getName()).isEqualTo("m1");
+		assertThat(actualMap.get(3).get(1).getName()).isEqualTo("m2");
+		assertThat(actualMap.get(4)).hasSize(1);
+		assertThat(actualMap.get(4).get(0).getName()).isEqualTo("m3");
+		assertThat(actualMap.get(5)).hasSize(3);
+		assertThat(actualMap.get(5).get(0).getName()).isEqualTo("m4");
+		assertThat(actualMap.get(5).get(1).getName()).isEqualTo("m5");
+		assertThat(actualMap.get(5).get(2).getName()).isEqualTo("m6");
 	}
 }

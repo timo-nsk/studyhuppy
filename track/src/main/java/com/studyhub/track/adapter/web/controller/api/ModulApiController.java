@@ -174,4 +174,12 @@ public class ModulApiController {
 		modulService.saveNewModultermin(req);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
+
+	@AngularApi
+	@GetMapping("/get-active-module2")
+	public ResponseEntity<Map<Integer, List<Modul>>> getActiveModule2(HttpServletRequest request) {
+		String username = jwtService.extractUsernameFromHeader(request);
+		Map<Integer, List<Modul>> resultMap = modulService.getFachsemesterModuleMap(username);
+		return ResponseEntity.ok(resultMap);
+	}
 }
