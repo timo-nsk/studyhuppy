@@ -74,7 +74,7 @@ public class ModulApiControllerTest {
 
 		when(jwtService.extractUsernameFromHeader(request)).thenReturn("peter");
 		when(modulService.modulCanBeCreated("peter", MAX_MODULE)).thenReturn(true);
-		when(modulForm.newModulFromFormData(any(ModulForm.class), anyInt())).thenReturn(m);
+		when(modulForm.newModulFromFormData(any(ModulForm.class), "peter", anyInt())).thenReturn(m);
 
 		modulApiController.newModule(modulForm, request);
 
@@ -90,7 +90,7 @@ public class ModulApiControllerTest {
 
 		when(jwtService.extractUsernameFromHeader(request)).thenReturn("peter");
 		when(modulService.modulCanBeCreated("peter", MAX_MODULE)).thenReturn(false);
-		when(modulForm.newModulFromFormData(any(ModulForm.class), anyInt())).thenReturn(m);
+		when(modulForm.newModulFromFormData(any(ModulForm.class), "peter", anyInt())).thenReturn(m);
 
 		modulApiController.newModule(modulForm, request);
 
