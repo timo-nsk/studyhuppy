@@ -1,4 +1,3 @@
-version: '3.8'
 name: studyhub_actuator
 services:
   actuator-service:
