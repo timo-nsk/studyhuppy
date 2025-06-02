@@ -3,12 +3,13 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Modultermin} from '../domain';
 import {HeaderService} from '../../../header.service';
+import { environment} from '../../../../environments/environment';
 
 @Injectable({
   providedIn: "root"
 })
 export class ModultermineApiService {
-  private MODUL_BASE_API = 'http://localhost:9080/api';
+  private MODUL_BASE_API = environment.modulServiceUrl
 
   http = inject(HttpClient)
   headerService = inject(HeaderService)
