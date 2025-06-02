@@ -14,5 +14,6 @@ public class Modultermin {
 	private LocalDateTime startDate;
 	private LocalDateTime endeDate;
 	private String notiz;
+	private Terminart terminArt;
 	private Terminfrequenz terminfrequenz;
 }
