@@ -12,6 +12,7 @@ import com.studyhub.track.application.service.dto.NeuerModulterminRequest;
 import com.studyhub.track.application.service.ModulEventService;
 import com.studyhub.track.application.service.ModulService;
 import com.studyhub.track.domain.model.modul.Modul;
+import com.studyhub.track.domain.model.modul.Terminart;
 import com.studyhub.track.domain.model.modul.Terminfrequenz;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -331,6 +332,7 @@ public class ModulApiControllerTest {
 				LocalDateTime.now(),
 				LocalDateTime.now().plusHours(1),
 				"notiz",
+				Terminart.SONSTIGES,
 				Terminfrequenz.EINMALIG
 		);
 
@@ -351,6 +353,7 @@ public class ModulApiControllerTest {
 				LocalDateTime.now(),
 				LocalDateTime.now().plusHours(1),
 				"notiz",
+				Terminart.SONSTIGES,
 				Terminfrequenz.EINMALIG
 		);
 

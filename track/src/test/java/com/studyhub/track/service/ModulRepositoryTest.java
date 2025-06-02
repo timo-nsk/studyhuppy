@@ -5,6 +5,7 @@ import com.studyhub.track.adapter.db.modul.ModulRepositoryImpl;
 import com.studyhub.track.application.service.ModulRepository;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.Modultermin;
+import com.studyhub.track.domain.model.modul.Terminart;
 import com.studyhub.track.domain.model.modul.Terminfrequenz;
 import com.studyhub.track.util.ModulMother;
 import org.flywaydb.core.FlywayExecutor;
@@ -225,6 +226,7 @@ public class ModulRepositoryTest {
 				LocalDateTime.of(2024, 5, 15, 10, 0),
 				LocalDateTime.of(2024, 5, 15, 12, 0),
 				"Raum A",
+				Terminart.SONSTIGES,
 				Terminfrequenz.EINMALIG);
 
 		boolean success = repository.addModultermin(fachId, neuerTermin);
@@ -241,6 +243,7 @@ public class ModulRepositoryTest {
 				LocalDateTime.of(2024, 5, 15, 10, 0),
 				LocalDateTime.of(2024, 5, 15, 12, 0),
 				"Raum A",
+				Terminart.SONSTIGES,
 				Terminfrequenz.EINMALIG);
 		boolean success1 = repository.addModultermin(fachId1, neuerTermin1);
 
@@ -258,7 +261,7 @@ public class ModulRepositoryTest {
 		UUID fachId = UUID.fromString("b8f6e2f5-91a0-4e6d-91b0-ff4e6932a82a");
 		LocalDateTime ldt1 = LocalDateTime.of(2024, 3, 30, 14, 30, 0);
 		LocalDateTime ldt2 = LocalDateTime.of(2024, 4, 30, 14, 30, 0);
-		Modultermin oldTermin = new Modultermin("T6", ldt1, ldt2, null, Terminfrequenz.EINMALIG);
+		Modultermin oldTermin = new Modultermin("T6", ldt1, ldt2, null, Terminart.SONSTIGES,Terminfrequenz.EINMALIG);
 
 		boolean success = repository.deleteModultermin(fachId, oldTermin);
 
@@ -274,7 +277,7 @@ public class ModulRepositoryTest {
 		UUID fachId1 = null;
 		LocalDateTime ldt1 = LocalDateTime.of(2024, 3, 30, 14, 30, 0);
 		LocalDateTime ldt2 = LocalDateTime.of(2024, 4, 30, 14, 30, 0);
-		Modultermin oldTermin1 = new Modultermin("T6", ldt1, ldt2, null, Terminfrequenz.EINMALIG);
+		Modultermin oldTermin1 = new Modultermin("T6", ldt1, ldt2, null, Terminart.SONSTIGES, Terminfrequenz.EINMALIG);
 		boolean success1 = repository.deleteModultermin(fachId1, oldTermin1);
 
 		assertThat(success1).isFalse();

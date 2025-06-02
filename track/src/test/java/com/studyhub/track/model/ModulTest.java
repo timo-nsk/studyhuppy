@@ -1,9 +1,6 @@
 package com.studyhub.track.model;
 
-import com.studyhub.track.domain.model.modul.Kreditpunkte;
-import com.studyhub.track.domain.model.modul.Modul;
-import com.studyhub.track.domain.model.modul.Modultermin;
-import com.studyhub.track.domain.model.modul.Terminfrequenz;
+import com.studyhub.track.domain.model.modul.*;
 import com.studyhub.track.domain.model.semester.Semester;
 import com.studyhub.track.domain.model.semester.SemesterTyp;
 import com.studyhub.track.util.ModulMother;
@@ -162,7 +159,7 @@ public class ModulTest {
 	@DisplayName("Ein Modultermin kann erfolgreich hinzugefügt und entfernt werden")
 	void test_13() {
 		Modul m = ModulMother.initModulWithoutTermine();
-		Modultermin modultermin = new Modultermin("T1",LocalDateTime.now(), null, "Testtermin", Terminfrequenz.EINMALIG);
+		Modultermin modultermin = new Modultermin("T1",LocalDateTime.now(), null, "Testtermin", Terminart.SONSTIGES,Terminfrequenz.EINMALIG);
 
 		boolean added = m.putNewModulTermin(modultermin);
 		assertTrue(added);

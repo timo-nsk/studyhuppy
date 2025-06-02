@@ -50,6 +50,7 @@ export class AddTerminComponent implements OnInit{
       beginn: new FormControl("", Validators.required),
       ende: new FormControl(""),
       notiz: new FormControl(""),
+      terminart: new FormControl(""),
       repeat: new FormControl("", Validators.required)
     })
   }

@@ -28,6 +28,27 @@
       <label class="form-label">Bemerkung</label>
       <input class="form-control" type="text" formControlName="notiz">
     </div>
+
+    <div class="mb-3">
+      <select class="form-select" aria-label="Default select example" formControlName="terminart">
+        <option value="SONSTIGES" selected>Sonstiges</option>
+        <option value="KLAUSUR">Klausur</option>
+        <option value="TESTAT">Testat</option>
+        <option value="MÜNDLICHE_PRÜFUNG">Mündliche Prüfung</option>
+        <option value="ABGABE">Abgabe</option>
+        <option value="PRAKTIKUM">Praktikum</option>
+        <option value="SEMINAR">Seminar</option>
+        <option value="ÜBUNG">Übung</option>
+        <option value="PROJEKTMEETING">Projektmeeting</option>
+        <option value="KOLLOQUIUM">Kolloquium</option>
+        <option value="EXKURSION">Exkursion</option>
+      </select>
+      <span class="text-danger"
+            *ngIf="neuerTerminForm.controls['terminart'].errors?.['required'] && neuerTerminForm.controls['terminart'].touched">
+              Wählen Sie eine Terminart ein
+      </span>
+    </div>
+
     <div class="mb-3">
       <select class="form-select" aria-label="Default select example" formControlName="repeat">
         <option value="" selected disabled>Wiederholen*</option>

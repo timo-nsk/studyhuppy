@@ -5,6 +5,7 @@ import com.studyhub.track.application.JWTService;
 import com.studyhub.track.application.service.dto.NeuerModulterminRequest;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.Modultermin;
+import com.studyhub.track.domain.model.modul.Terminart;
 import com.studyhub.track.domain.model.modul.Terminfrequenz;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -163,7 +164,7 @@ public class ModulService {
 	}
 
 	public void addKlausurDate(UUID uuid, LocalDate date, String time) {
-		NeuerModulterminRequest neuerTermin = new NeuerModulterminRequest(uuid, "Klausur", LocalDateTime.of(date, TimeConverter.getLocalTimeFromString(time)), null, null, Terminfrequenz.EINMALIG);
+		NeuerModulterminRequest neuerTermin = new NeuerModulterminRequest(uuid, "Klausur", LocalDateTime.of(date, TimeConverter.getLocalTimeFromString(time)), null, null, Terminart.KLAUSUR, Terminfrequenz.EINMALIG);
 		saveNewModultermin(neuerTermin);
 	}
 

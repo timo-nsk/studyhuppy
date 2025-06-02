@@ -1,6 +1,7 @@
 package com.studyhub.track.application.service.dto;
 
 import com.studyhub.track.domain.model.modul.Modultermin;
+import com.studyhub.track.domain.model.modul.Terminart;
 import com.studyhub.track.domain.model.modul.Terminfrequenz;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,7 @@ public class NeuerModulterminRequest {
 	private LocalDateTime beginn;
 	private LocalDateTime ende;
 	private String notiz;
+	private Terminart terminart;
 	private Terminfrequenz repeat;
 
 	public Modultermin toModultermin() {
@@ -24,6 +26,7 @@ public class NeuerModulterminRequest {
 				beginn,
 				ende,
 				notiz,
+				terminart,
 				repeat
 		);
 	}
