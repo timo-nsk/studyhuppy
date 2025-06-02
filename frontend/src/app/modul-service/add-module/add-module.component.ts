@@ -23,7 +23,7 @@ export class AddModuleComponent {
   onSubmit() : void {
     const form = this.newModulForm.value
 
-    if(this.checkKlausurFormData()) {
+
       this.service.postFormData(form).subscribe({
         next: () => {
           this.snackbar.open("Modul erfolgreich erstellt", "dismiss", {
@@ -37,19 +37,7 @@ export class AddModuleComponent {
           })
         }
       })
-    } else {
-    }
-  }
 
-  checkKlausurFormData() : boolean {
-    if(this.newModulForm.controls['klausurDatum'].value == "" && this.newModulForm.controls['time'].value != "") {
-      console.log("falseeeeee")
-      return false
-    } else if(this.newModulForm.controls['klausurDatum'].value != "" && this.newModulForm.controls['time'].value == "") {
-      console.log("falseeeeee")
-      return false
-    }
-    return true
   }
 
   toggleLerntageCheckbox() {
@@ -69,7 +57,6 @@ export class AddModuleComponent {
       creditPoints: new FormControl(5, [Validators.required, Validators.min(0)]),
       kontaktzeitStunden: new FormControl(1, [Validators.required, Validators.min(1)]),
       selbststudiumStunden: new FormControl(1, [Validators.required, Validators.min(1)]),
-      klausurDatum: new FormControl(""),
       time: new FormControl(""),
       mondays: new FormControl(false),
       tuesdays: new FormControl(false),
