@@ -52,10 +52,10 @@
               <label>Zeit hinzufügen (hh:mm):</label>
             </th>
             <td class="col-wd-300 td-border-l m-accent-font">
-              <form id="form-add-time">
+              <form id="form-add-time" [formGroup]="addTimeForm">
                 <div id="option-add-time">
-                  <input id="time-inp" type="time" class="inp form-control">
-                  <a>hinzufügen</a>
+                  <input id="time-inp" type="time" class="inp form-control" formControlName="time">
+                  <button (click)="sendAddTimeData()" >hinzufügen</button>
                 </div>
               </form>
             </td>

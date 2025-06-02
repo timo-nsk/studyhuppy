@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Modul} from '../module/domain';
 import { CommonModule } from '@angular/common';
-import {FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatFormField, MatLabel} from '@angular/material/input';
 import {MatSelect, MatSelectChange} from '@angular/material/select';
@@ -20,6 +20,11 @@ export class OptionsComponent implements OnInit{
 
   module : Modul[] = []
   modulFachId : string = ''
+
+  addTimeForm = new FormGroup({
+    fachId: new FormControl("", Validators.required),
+    time: new FormControl("", Validators.required)
+  })
 
   constructor(private service : ModuleApiService,
               private fb : FormBuilder,
@@ -66,8 +71,12 @@ export class OptionsComponent implements OnInit{
     })
   }
 
-  sendAddTimeData(index : number, name : string) {
-
+  sendAddTimeData() {
+    this.addTimeForm.patchValue({fachId: this.modulFachId})
+    if(this.addTimeForm.valid) {
+      let data = this.addTimeForm.value
+      this.service.sendAddTimeData(data)
+    }
   }
 
   sendKlausurDateData(index : number, name : string) {
