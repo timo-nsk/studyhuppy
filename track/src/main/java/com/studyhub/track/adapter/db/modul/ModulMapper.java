@@ -14,7 +14,6 @@ public class ModulMapper {
 				modul.isActive(),
 				modul.getSemesterstufe(),
 				modul.getSemester(),
-				modul.getKlausurDate(),
 				modul.getLerntage(),
 				modul.getModultermine());
 	}
@@ -29,7 +28,6 @@ public class ModulMapper {
 				dto.active(),
 				dto.semesterstufe(),
 				dto.semester(),
-				dto.klausurDate(),
 				dto.lerntage(),
 				dto.modultermine());
 	}
@@ -44,7 +42,6 @@ public class ModulMapper {
 				modul.isActive(),
 				modul.getSemesterstufe(),
 				modul.getSemester(),
-				modul.getKlausurDate(),
 				modul.getLerntage(),
 				modul.getModultermine());
 	}

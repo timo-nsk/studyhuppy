@@ -64,44 +64,6 @@ public class ModulTest {
 	}
 
 	@Test
-	@DisplayName("Wenn ein Modul kein Datum für eine Klausur eingetragen hat, wird false zurückgegeben")
-	void test_6() {
-		Modul m = new Modul(UUID.randomUUID(), "modul1",
-				10000,
-				null,
-				"peter44",
-				true,
-				2,
-				null,
-				null,
-				null,
-				null);
-
-		boolean klausurEingetragen = m.klausurDatumEingetragen();
-
-		assertFalse(klausurEingetragen);
-	}
-
-	@Test
-	@DisplayName("Wenn ein Modul ein Datum für eine Klausur eingetragen hat, wird true zurückgegeben")
-	void test_7() {
-		Modul m = new Modul(UUID.randomUUID(), "modul1",
-				10000,
-				null,
-				"peter44",
-				true,
-				2,
-				null,
-				LocalDateTime.MAX,
-				null,
-				null);
-
-		boolean klausurEingetragen = m.klausurDatumEingetragen();
-
-		assertTrue(klausurEingetragen);
-	}
-
-	@Test
 	@DisplayName("Wenn das Semester, in dem das Modul stattfindet keine Datum-Angaben für den Vorlesungsbeginn und -ende hat wird false zurückgegeben")
 	void test_8() {
 		Semester s = new Semester(1, 1, SemesterTyp.WINTERSEMESTER, null, null, null, null);
@@ -112,7 +74,6 @@ public class ModulTest {
 				true,
 				2,
 				s,
-				null,
 				null,
 				null);
 
@@ -133,7 +94,6 @@ public class ModulTest {
 				2,
 				s,
 				null,
-				null,
 				null);
 
 		boolean vorlesungEingetragen = m.vorlesungDatumangabenEingetragen();
@@ -152,7 +112,6 @@ public class ModulTest {
 				true,
 				2,
 				s,
-				null,
 				null,
 				null);
 
@@ -173,7 +132,6 @@ public class ModulTest {
 				2,
 				s,
 				null,
-				null,
 				null);
 
 		boolean vorlesungEingetragen = m.vorlesungDatumangabenEingetragen();
@@ -191,7 +149,6 @@ public class ModulTest {
 				"peter44",
 				true,
 				2,
-				null,
 				null,
 				null,
 				null);

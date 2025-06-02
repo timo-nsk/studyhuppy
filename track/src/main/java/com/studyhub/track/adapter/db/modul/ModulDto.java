@@ -22,7 +22,6 @@ public record ModulDto(@Id Integer id,
                        boolean active,
                        int semesterstufe,
                        Semester semester,
-                       LocalDateTime klausurDate,
                        Lerntage lerntage,
                        List<Modultermin> modultermine) {
 }

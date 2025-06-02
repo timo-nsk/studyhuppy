@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Service
+//TODO muss refactored werden, weil kein klausrDate mehr gesepichert wird
 public class KlausurReminderService {
 
 	private final ModulRepository repo;
@@ -29,7 +30,7 @@ public class KlausurReminderService {
 			if(userModule.isEmpty()) continue;
 
 			for (Modul modul : userModule) {
-				if (!modul.klausurDatumEingetragen()) {
+				if (false) {
 					KlausurReminderDto dto = new KlausurReminderDto(modul.getName(), user);
 					res.add(dto);
 				}

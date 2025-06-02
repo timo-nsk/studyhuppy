@@ -28,12 +28,6 @@ public class LernzeitEstimationService {
 				to = modul.getSemester().getVorlesungEnde();
 				break;
 			}
-			case KLAUSUR: {
-				if(!modul.klausurDatumEingetragen()) return 0;
-				from = modul.getSemester().getVorlesungEnde();
-				to = modul.getKlausurDate().toLocalDate();
-				break;
-			}
 			default: return 0;
 		}
 

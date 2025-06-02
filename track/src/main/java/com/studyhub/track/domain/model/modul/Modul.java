@@ -24,7 +24,6 @@ public class Modul {
 	private boolean active;
 	private int semesterstufe;
 	private Semester semester;
-	private LocalDateTime klausurDate;
 	private Lerntage lerntage;
 	private List<Modultermin> modultermine;
 
@@ -38,10 +37,6 @@ public class Modul {
 
 	public boolean überschreitetSelbststudiumaufwand() {
 		return secondsLearned >= kreditpunkte.getSelbststudiumStunden()*60*60;
-	}
-
-	public boolean klausurDatumEingetragen() {
-		return klausurDate != null;
 	}
 
 	public boolean vorlesungDatumangabenEingetragen() {

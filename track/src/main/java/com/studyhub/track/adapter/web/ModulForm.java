@@ -55,7 +55,7 @@ public record ModulForm(
 		if (klausurDatum != null) {
 			actualKlausurDatum = LocalDateTime.of(modulForm.klausurDatum(), TimeConverter.getLocalTimeFromString(time));
 		}
-		return new Modul(UUID.randomUUID(), name, 0, kreditpunkte, username, true, semester, new Semester(), actualKlausurDatum, lerntage, null);
+		return new Modul(UUID.randomUUID(), name, 0, kreditpunkte, username, true, semester, new Semester(), lerntage, null);
 	}
 
 	/** OLD METHOD

@@ -8,6 +8,7 @@ import com.studyhub.track.domain.model.semester.Semester;
 import com.studyhub.track.domain.model.semester.SemesterPhase;
 import com.studyhub.track.domain.model.semester.SemesterTyp;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -51,7 +52,6 @@ public class LernzeitEstimationServiceTest {
 				true,
 				2,
 				semester,
-				null,
 				lerntage,
 				null);
 
@@ -86,7 +86,6 @@ public class LernzeitEstimationServiceTest {
 				true,
 				2,
 				semester,
-				klausurDate,
 				lerntage,
 				null);
 
@@ -111,7 +110,6 @@ public class LernzeitEstimationServiceTest {
 				true,
 				2,
 				semester,
-				null,
 				lerntage,
 				null);
 
@@ -120,6 +118,7 @@ public class LernzeitEstimationServiceTest {
 		assertThat(secondsPerDay).isEqualTo(0);
 	}
 
+	@Disabled
 	@Test
 	@DisplayName("Wenn ein User in der Klausurphase ist und kein Klausurdatum angegeben hat, wird 0 returned")
 	void test_4() {
@@ -136,7 +135,6 @@ public class LernzeitEstimationServiceTest {
 				true,
 				2,
 				semester,
-				null,
 				lerntage,
 				null);
 

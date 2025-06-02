@@ -17,34 +17,34 @@ public class ModulMother {
 	public static List<Modultermin> DEFAULT_MODULTERMINE = List.of(new Modultermin("Klausur", LocalDateTime.now(), null, "Klausur Notiz", Terminfrequenz.EINMALIG));
 
 	public static Modul initModul() {
-		return new Modul(UUID.randomUUID(), "Modul", 1000, DEFAULT_KREDITPUNKTE, "user123",true,1, DEFAULT_SEMESTER, LocalDateTime.now(), DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
+		return new Modul(UUID.randomUUID(), "Modul", 1000, DEFAULT_KREDITPUNKTE, "user123",true,1, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
 	}
 
 	public static Modul initModulWithName(String name) {
-		return new Modul(UUID.randomUUID(), name, 1000, DEFAULT_KREDITPUNKTE,  "user123",true,1, DEFAULT_SEMESTER, LocalDateTime.now(), DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
+		return new Modul(UUID.randomUUID(), name, 1000, DEFAULT_KREDITPUNKTE,  "user123",true,1, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
 	}
 
 	public static Modul initModulWithCp(Kreditpunkte kreditpunkte) {
-		return new Modul(UUID.randomUUID(), "Modul", 1000, kreditpunkte, "user123",true, 1, DEFAULT_SEMESTER, LocalDateTime.now(), DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
+		return new Modul(UUID.randomUUID(), "Modul", 1000, kreditpunkte, "user123",true, 1, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
 	}
 
 	public static Modul initModulWithCpAndSecondsLearned(Kreditpunkte kreditpunkte, int secondLearned) {
-		return new Modul(UUID.randomUUID(), "Modul", secondLearned, kreditpunkte, "user123",true,1 , DEFAULT_SEMESTER, LocalDateTime.now(), DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
+		return new Modul(UUID.randomUUID(), "Modul", secondLearned, kreditpunkte, "user123",true,1 , DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
 	}
 
 	public static Modul initModulWithNameAndUsername(String name, String username) {
-		return new Modul(UUID.randomUUID(), name, 1000, DEFAULT_KREDITPUNKTE,  username,true,1 , DEFAULT_SEMESTER, LocalDateTime.now(), DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
+		return new Modul(UUID.randomUUID(), name, 1000, DEFAULT_KREDITPUNKTE,  username,true,1 , DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
 	}
 
 	public static List<Modul> modulListWithSemester() {
-		Modul m1 = new Modul(UUID.randomUUID(), "m1", 1000, DEFAULT_KREDITPUNKTE, "peter", true, 3, DEFAULT_SEMESTER, LocalDateTime.now(), DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
-		Modul m2 = new Modul(UUID.randomUUID(), "m2", 2000, DEFAULT_KREDITPUNKTE, "peter", true, 3, DEFAULT_SEMESTER, LocalDateTime.now(), DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
+		Modul m1 = new Modul(UUID.randomUUID(), "m1", 1000, DEFAULT_KREDITPUNKTE, "peter", true, 3, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
+		Modul m2 = new Modul(UUID.randomUUID(), "m2", 2000, DEFAULT_KREDITPUNKTE, "peter", true, 3, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
 
-		Modul m3 = new Modul(UUID.randomUUID(), "m3", 1000, DEFAULT_KREDITPUNKTE, "peter", true, 4, DEFAULT_SEMESTER, LocalDateTime.now(), DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
+		Modul m3 = new Modul(UUID.randomUUID(), "m3", 1000, DEFAULT_KREDITPUNKTE, "peter", true, 4, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
 
-		Modul m4 = new Modul(UUID.randomUUID(), "m4", 500, DEFAULT_KREDITPUNKTE, "peter", true, 5, DEFAULT_SEMESTER, LocalDateTime.now(), DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
-		Modul m5 = new Modul(UUID.randomUUID(), "m5", 500, DEFAULT_KREDITPUNKTE, "peter", true, 5, DEFAULT_SEMESTER, LocalDateTime.now(), DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
-		Modul m6 = new Modul(UUID.randomUUID(), "m6", 4000, DEFAULT_KREDITPUNKTE, "peter", true, 5, DEFAULT_SEMESTER, LocalDateTime.now(), DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
+		Modul m4 = new Modul(UUID.randomUUID(), "m4", 500, DEFAULT_KREDITPUNKTE, "peter", true, 5, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
+		Modul m5 = new Modul(UUID.randomUUID(), "m5", 500, DEFAULT_KREDITPUNKTE, "peter", true, 5, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
+		Modul m6 = new Modul(UUID.randomUUID(), "m6", 4000, DEFAULT_KREDITPUNKTE, "peter", true, 5, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE);
 		return List.of(m1, m2, m3, m4, m5, m6);
 	}
 
@@ -59,7 +59,7 @@ public class ModulMother {
 	}
 
 	public static Modul initModulWithoutTermine() {
-		return new Modul(UUID.randomUUID(), "Modul", 1, DEFAULT_KREDITPUNKTE, "user123", true, 1, DEFAULT_SEMESTER, LocalDateTime.now(), DEFAULT_LERNTAGE, new LinkedList<>());
+		return new Modul(UUID.randomUUID(), "Modul", 1, DEFAULT_KREDITPUNKTE, "user123", true, 1, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, new LinkedList<>());
 	}
 
 }
