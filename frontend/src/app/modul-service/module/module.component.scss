@@ -3,18 +3,26 @@ p {
 }
 
 .modul-container {
-  width: 85vw;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
+  flex-direction: column;
   gap: 10px;
-  padding-left: 40px;
-  padding-right: 35px;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.modul-fachsemester-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
 }
 
 .modul-card {
   flex: 0 0 calc(22.5% - 10px);
-  min-width: 280px;
+  min-width: 295px;
   background-color: rgb(16, 45, 92);
   height: 125px;
   margin: 8px 8px 8px 18px;
