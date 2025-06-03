@@ -12,18 +12,12 @@ import { ModuleApiService } from './module-api.service';
   templateUrl: './module.component.html',
   styleUrls: ['./module.component.scss', '../../loading.scss', '../../accordion.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    TimeFormatPipe,
-    MatProgressBar,
-    RouterLink
-  ]
+  imports: [ CommonModule, TimeFormatPipe, MatProgressBar, RouterLink ]
 })
 export class ModuleComponent implements OnInit{
   service = inject(ModuleApiService)
   log : LoggingService = new LoggingService("ModuleComponent", "modul-service")
   pipe : TimeFormatPipe = new TimeFormatPipe()
-  //module: Modul[] = [];
   module: { [key: number]: Modul[] } = {}
 
   sessionSecondsLearned : number = 0;
@@ -34,30 +28,16 @@ export class ModuleComponent implements OnInit{
   openPanels: boolean[] = []
 
   ngOnInit(): void {
-    /**
-    this.service.getActiveModuleByUsername().subscribe({
-      next: (data) => {
-        this.module = data;
-        this.isLoading = false
-        this.initDisabledBtn()
-        this.log.debug("Got active module")
-      },
-      error: (err) => {
-        console.error(err);
-      }
-    });
-      **/
     this.service.getModuleByFachsemester().subscribe({
       next: (data) => {
         this.module = data
         this.isLoading = false
         this.initDisabledBtn()
         this.initOpenPanels()
-        console.log(this.module)
         this.log.debug("Got active module")
       },
       error: (err) => {
-        console.error(err);
+        this.log.error(err)
       }
     });
   }
@@ -71,6 +51,7 @@ export class ModuleComponent implements OnInit{
   }
 
   initDisabledBtn() {
+    //Sortieren, damit hohe Fachsemester oben angezeigt werden
     const sortedKeys = Object.keys(this.module)
       .map(key => parseInt(key, 10))
       .sort((a, b) => b - a);
@@ -92,7 +73,6 @@ export class ModuleComponent implements OnInit{
         this.disabledBtn[k][l] = !(k === i && l === j);
       }
     }
-    console.log(this.disabledBtn)
     this.log.debug(`Set disabledBtn to 'true', except at index [${i}][${j}]`)
   }
 
@@ -106,9 +86,8 @@ export class ModuleComponent implements OnInit{
   }
 
   updateSeconds(seconds: number): number {
-    seconds++;
     this.sessionSecondsLearned++;
-    return seconds;
+    return seconds++;
   }
 
   updateSecondsOnModulUI(fachId: string, seconds: number): void {
@@ -119,21 +98,16 @@ export class ModuleComponent implements OnInit{
     }
   }
 
-
-  async startTimer(fachId: string, i : number, j: number): Promise<void> {
+  startTimer(fachId: string, i : number, j: number) {
     let seconds : number;
 
-    this.service.getSeconds(fachId).subscribe({
-      next: (data) => {
-        seconds = data
-      }
-    })
+    this.service.getSeconds(fachId).subscribe({ next: (data) => { seconds = data } })
 
     // Wurde noch kein Button betätigt wurde, dann kann Timer starten, sonst wäre disabledBtn[index]=true und es kann
     // kein weiterer Button betätigt werden
     if(!this.disabledBtn[i][j]) {
       if (this.running) {
-        //this.log.debug(`Start timer for modul '${this.module[index].name}'`)
+        this.log.debug(`Start timer for modul '${this.module[i][j].name}'`)
         this.timer = window.setInterval(() => {
           seconds = this.updateSeconds(seconds);
           this.updateSecondsOnModulUI(fachId, seconds)
@@ -147,7 +121,7 @@ export class ModuleComponent implements OnInit{
         this.service.postNewSeconds(fachId, this.sessionSecondsLearned).subscribe()
         this.switchButtonStyle(fachId, 1, i);
         this.running = true;
-        //this.log.debug(`Finished timer of modul '${this.module[index].name}' with sessionSecondsLearned: '${this.sessionSecondsLearned}'`)
+        this.log.debug(`Finished timer of modul '${this.module[i][j].name}' with sessionSecondsLearned: '${this.sessionSecondsLearned}'`)
         this.sessionSecondsLearned = 0
       }
     }
@@ -187,10 +161,8 @@ export class ModuleComponent implements OnInit{
   }
 
   showAccordionElement(i : number) {
-    console.log("bplub")
     this.openPanels[i] = !this.openPanels[i];
   }
-
 
   protected readonly Object = Object;
 }
