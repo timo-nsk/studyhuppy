@@ -6,6 +6,7 @@ import {ModultermineApiService} from './termine.service';
 import {ActivatedRoute} from '@angular/router';
 import {Modultermin} from '../domain';
 import {SortbarComponent} from '../../../sortbar/sortbar.component';
+import {LoggingService} from '../../../logging.service';
 
 @Component({
   selector: 'app-termine-details',
@@ -15,7 +16,7 @@ import {SortbarComponent} from '../../../sortbar/sortbar.component';
   styleUrls: ['./termine-details.component.scss', '../../../general.scss', '../../../forms.scss']
 })
 export class TermineDetailsComponent implements OnInit{
-
+  log = new LoggingService("TermineDetailsComponent", "modul-service")
   termineService = inject(ModultermineApiService)
   route = inject(ActivatedRoute)
 
@@ -35,7 +36,6 @@ export class TermineDetailsComponent implements OnInit{
 
   ngOnInit(): void {
     this.initComponentData()
-    console.log("termine-details: " + this.modulId)
   }
 
   initComponentData() {
@@ -44,10 +44,10 @@ export class TermineDetailsComponent implements OnInit{
     this.termineService.getTermine(this.modulId).subscribe({
       next: (data) => {
         this.modultermine = data
-        console.log(this.modultermine)
+        this.log.debug(`Got termine data=${this.modultermine}`)
       },
       error: (err) => {
-        console.log(err.status)
+        this.log.error(err)
       }
     })
   }
@@ -57,8 +57,6 @@ export class TermineDetailsComponent implements OnInit{
   }
 
   sortByAttribut(event: [string, boolean]) {
-    //console.log("sorting by attribut=" + event)
-    //console.log(this.modultermine)
     const sortAttribut = event[0]
     const asc = event[1]
 
@@ -75,7 +73,5 @@ export class TermineDetailsComponent implements OnInit{
         this.modultermine.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
       }
     }
-    //console.log("done sorting")
-    //console.log(this.modultermine)
   }
 }
