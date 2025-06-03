@@ -23,6 +23,7 @@ export class ModuleComponent implements OnInit{
   service = inject(ModuleApiService)
   log : LoggingService = new LoggingService("ModuleComponent", "modul-service")
   pipe : TimeFormatPipe = new TimeFormatPipe()
+  //module: Modul[] = [];
   module: { [key: number]: Modul[] } = {}
 
   sessionSecondsLearned : number = 0;
@@ -33,12 +34,26 @@ export class ModuleComponent implements OnInit{
   openPanels: boolean[] = []
 
   ngOnInit(): void {
+    /**
+    this.service.getActiveModuleByUsername().subscribe({
+      next: (data) => {
+        this.module = data;
+        this.isLoading = false
+        this.initDisabledBtn()
+        this.log.debug("Got active module")
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+      **/
     this.service.getModuleByFachsemester().subscribe({
       next: (data) => {
         this.module = data
         this.isLoading = false
         this.initDisabledBtn()
         this.initOpenPanels()
+        console.log(this.module)
         this.log.debug("Got active module")
       },
       error: (err) => {
@@ -77,6 +92,7 @@ export class ModuleComponent implements OnInit{
         this.disabledBtn[k][l] = !(k === i && l === j);
       }
     }
+    console.log(this.disabledBtn)
     this.log.debug(`Set disabledBtn to 'true', except at index [${i}][${j}]`)
   }
 
@@ -171,6 +187,10 @@ export class ModuleComponent implements OnInit{
   }
 
   showAccordionElement(i : number) {
+    console.log("bplub")
     this.openPanels[i] = !this.openPanels[i];
   }
+
+
+  protected readonly Object = Object;
 }
