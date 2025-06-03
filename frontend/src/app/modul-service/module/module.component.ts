@@ -10,7 +10,7 @@ import { ModuleApiService } from './module-api.service';
 @Component({
   selector: 'app-module',
   templateUrl: './module.component.html',
-  styleUrls: ['./module.component.scss', '../../loading.scss'],
+  styleUrls: ['./module.component.scss', '../../loading.scss', '../../accordion.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -23,14 +23,18 @@ export class ModuleComponent implements OnInit{
   service = inject(ModuleApiService)
   log : LoggingService = new LoggingService("ModuleComponent", "modul-service")
   pipe : TimeFormatPipe = new TimeFormatPipe()
-  module: Modul[] = [];
+  //module: Modul[] = [];
+  module: { [key: number]: Modul[] } = {}
+
   sessionSecondsLearned : number = 0;
   timer: number = 0
   running: boolean = true
-  disabledBtn : boolean [] = []
+  disabledBtn : boolean[][] = []
   isLoading: boolean = true
+  openPanels: boolean[] = [true, false]
 
   ngOnInit(): void {
+    /**
     this.service.getActiveModuleByUsername().subscribe({
       next: (data) => {
         this.module = data;
@@ -42,28 +46,58 @@ export class ModuleComponent implements OnInit{
         console.error(err);
       }
     });
+      **/
+    this.service.getModuleByFachsemester().subscribe({
+      next: (data) => {
+        this.module = data
+        this.isLoading = false
+        this.initDisabledBtn()
+        //this.initOpenPanels()
+        console.log(this.module)
+        this.log.debug("Got active module")
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+  initOpenPanels() {
+    this.openPanels.push(true)
+    for (let i = 1; i < Object.keys(this.module).length; i++) {
+      this.openPanels.push(false)
+    }
+    this.log.debug("Initialized openPanels: " + this.openPanels)
   }
 
   initDisabledBtn() {
-    for(let i = 0; i < this.module.length; i++) {
-      this.disabledBtn.push(false)
+    for (const key in this.module) {
+      if (this.module.hasOwnProperty(key)) {
+        const semester = parseInt(key, 10);
+        const moduleListe = this.module[semester];
+        let fachSemesterBtn = Array(moduleListe.length).fill(false)
+        this.disabledBtn.push(fachSemesterBtn)
+      }
     }
+
     this.log.debug("Initialized disabledBtn: " + this.disabledBtn)
   }
 
-  setRunningBtn(index : number){
-
-    for (let i = 0; i < this.module.length; i++) {
-      if(i != index) {
-        this.disabledBtn[i] = true
+  setRunningBtn(i : number, j: number){
+    for (let k = 0; k < this.disabledBtn.length; k++) {
+      for (let l = 0; l < this.disabledBtn[k].length; l++) {
+        this.disabledBtn[k][l] = !(k === i && l === j);
       }
     }
-    this.log.debug(`Set disabledBtn to 'true', except at index ${index}`)
+    console.log(this.disabledBtn)
+    this.log.debug(`Set disabledBtn to 'true', except at index [${i}][${j}]`)
   }
 
   clearRunningBtn() {
-    for(let i = 0; i < this.module.length; i++) {
-      this.disabledBtn[i] = false
+    for (let i = 0; i < this.disabledBtn.length; i++) {
+      for (let j = 0; j < this.disabledBtn[i].length; j++) {
+        this.disabledBtn[i][j] = false
+      }
     }
     this.log.debug("Cleared disabledBtn array")
   }
@@ -83,7 +117,7 @@ export class ModuleComponent implements OnInit{
   }
 
 
-  async startTimer(fachId: string, index : number): Promise<void> {
+  async startTimer(fachId: string, i : number, j: number): Promise<void> {
     let seconds : number;
 
     this.service.getSeconds(fachId).subscribe({
@@ -94,23 +128,23 @@ export class ModuleComponent implements OnInit{
 
     // Wurde noch kein Button betätigt wurde, dann kann Timer starten, sonst wäre disabledBtn[index]=true und es kann
     // kein weiterer Button betätigt werden
-    if(this.disabledBtn[index] == false) {
+    if(!this.disabledBtn[i][j]) {
       if (this.running) {
-        this.log.debug(`Start timer for modul '${this.module[index].name}'`)
+        //this.log.debug(`Start timer for modul '${this.module[index].name}'`)
         this.timer = window.setInterval(() => {
           seconds = this.updateSeconds(seconds);
           this.updateSecondsOnModulUI(fachId, seconds)
         }, 1000);
-        this.switchButtonStyle(fachId, 0, index);
+        this.switchButtonStyle(fachId, 0, i);
         this.running = false;
-        this.setRunningBtn(index)
+        this.setRunningBtn(i, j)
       } else {
         clearInterval(this.timer)
         this.clearRunningBtn()
         this.service.postNewSeconds(fachId, this.sessionSecondsLearned).subscribe()
-        this.switchButtonStyle(fachId, 1, index);
+        this.switchButtonStyle(fachId, 1, i);
         this.running = true;
-        this.log.debug(`Finished timer of modul '${this.module[index].name}' with sessionSecondsLearned: '${this.sessionSecondsLearned}'`)
+        //this.log.debug(`Finished timer of modul '${this.module[index].name}' with sessionSecondsLearned: '${this.sessionSecondsLearned}'`)
         this.sessionSecondsLearned = 0
       }
     }
@@ -144,4 +178,16 @@ export class ModuleComponent implements OnInit{
     }
     return false
   }
+
+  getModuleForSemester(semester: number): Modul[] {
+    return this.module[semester] || [];
+  }
+
+  showAccordionElement(i : number) {
+    console.log("bplub")
+    this.openPanels[i] = !this.openPanels[i];
+  }
+
+
+  protected readonly Object = Object;
 }

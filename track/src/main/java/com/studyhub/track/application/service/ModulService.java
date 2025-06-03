@@ -236,14 +236,12 @@ public class ModulService {
 
 	public Map<Integer, List<Modul>> getFachsemesterModuleMap(String username) {
 		List<Modul> module = repo.findActiveModuleByUsername(true, username);
-		Map<Integer, List<Modul>> moduleMap = new TreeMap<>();
+		Map<Integer, List<Modul>> moduleMap = new TreeMap<>(Comparator.reverseOrder());
 		Set<Integer> fachsemester = new HashSet<>();
 
 		for (Modul m : module) {
 			fachsemester.add(m.getSemesterstufe());
 		}
-
-		System.out.println(fachsemester);
 
 		for (Integer fachsem : fachsemester) {
 			List<Modul> listForMap = module.stream().filter( e -> e.getSemesterstufe() == fachsem).toList();

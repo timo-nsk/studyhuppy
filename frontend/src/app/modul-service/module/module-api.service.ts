@@ -28,6 +28,11 @@ export class ModuleApiService {
     return this.http.get<Modul[]>(this.MODUL_BASE_API + '/get-active-modules', {headers});
   }
 
+  getModuleByFachsemester(): Observable<{ [key: number]: Modul[] }> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.get<{ [key: number]: Modul[] }>(this.MODUL_BASE_API + '/get-active-module2', {headers});
+  }
+
   getAllModulesByUsername(): Observable<Modul[]> {
     const headers = this.headerService.createAuthHeader()
     return this.http.get<Modul[]>(this.MODUL_BASE_API + '/get-all-by-username', { headers });
