@@ -10,7 +10,7 @@
     </div>
     <div>
       <div *ngIf="Object.keys(module).length > 0" class="modul-container">
-          <div *ngFor="let fachsemester of Object.keys(module); let i = index">
+          <div *ngFor="let fachsemester of Object.keys(module).reverse(); let i = index">
             <div>
               <button class="accordion m-accent-font" (click)="showAccordionElement(i)">
                 <span class="accordion-header">Fachsemester {{fachsemester}}</span>

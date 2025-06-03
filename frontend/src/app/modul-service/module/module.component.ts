@@ -23,7 +23,6 @@ export class ModuleComponent implements OnInit{
   service = inject(ModuleApiService)
   log : LoggingService = new LoggingService("ModuleComponent", "modul-service")
   pipe : TimeFormatPipe = new TimeFormatPipe()
-  //module: Modul[] = [];
   module: { [key: number]: Modul[] } = {}
 
   sessionSecondsLearned : number = 0;
@@ -31,29 +30,15 @@ export class ModuleComponent implements OnInit{
   running: boolean = true
   disabledBtn : boolean[][] = []
   isLoading: boolean = true
-  openPanels: boolean[] = [true, false]
+  openPanels: boolean[] = []
 
   ngOnInit(): void {
-    /**
-    this.service.getActiveModuleByUsername().subscribe({
-      next: (data) => {
-        this.module = data;
-        this.isLoading = false
-        this.initDisabledBtn()
-        this.log.debug("Got active module")
-      },
-      error: (err) => {
-        console.error(err);
-      }
-    });
-      **/
     this.service.getModuleByFachsemester().subscribe({
       next: (data) => {
         this.module = data
         this.isLoading = false
         this.initDisabledBtn()
-        //this.initOpenPanels()
-        console.log(this.module)
+        this.initOpenPanels()
         this.log.debug("Got active module")
       },
       error: (err) => {
@@ -71,10 +56,13 @@ export class ModuleComponent implements OnInit{
   }
 
   initDisabledBtn() {
-    for (const key in this.module) {
+    const sortedKeys = Object.keys(this.module)
+      .map(key => parseInt(key, 10))
+      .sort((a, b) => b - a);
+
+    for (const key of sortedKeys) {
       if (this.module.hasOwnProperty(key)) {
-        const semester = parseInt(key, 10);
-        const moduleListe = this.module[semester];
+        const moduleListe = this.module[key];
         let fachSemesterBtn = Array(moduleListe.length).fill(false)
         this.disabledBtn.push(fachSemesterBtn)
       }
@@ -89,7 +77,6 @@ export class ModuleComponent implements OnInit{
         this.disabledBtn[k][l] = !(k === i && l === j);
       }
     }
-    console.log(this.disabledBtn)
     this.log.debug(`Set disabledBtn to 'true', except at index [${i}][${j}]`)
   }
 
@@ -184,10 +171,6 @@ export class ModuleComponent implements OnInit{
   }
 
   showAccordionElement(i : number) {
-    console.log("bplub")
     this.openPanels[i] = !this.openPanels[i];
   }
-
-
-  protected readonly Object = Object;
 }

@@ -4,11 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import {Observable } from 'rxjs';
 import {HeaderService} from '../../header.service';
 import { environment } from '../../../environments/environment'
-import {jwtDecode} from 'jwt-decode';
 
 // TODO: need to handle errors when backend htorws exception for almost every method here
 @Injectable({
-  providedIn: 'root' // macht den Service global verfügbar
+  providedIn: 'root'
 })
 export class ModuleApiService {
   private MODUL_BASE_API = environment.modulServiceUrl
@@ -21,11 +20,6 @@ export class ModuleApiService {
     params: {
     fachId: fachId}
     });
-  }
-
-  getActiveModuleByUsername(): Observable<Modul[]> {
-    const headers = this.headerService.createAuthHeader()
-    return this.http.get<Modul[]>(this.MODUL_BASE_API + '/get-active-modules', {headers});
   }
 
   getModuleByFachsemester(): Observable<{ [key: number]: Modul[] }> {
