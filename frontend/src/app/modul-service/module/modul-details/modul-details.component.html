@@ -24,11 +24,6 @@
         <td class="col-wd-300 td-border-l m-accent-font">{{semesterTyp  | capitalize}} {{semesterJahr}}</td>
       </tr>
       <tr>
-        <th class="col-wd m-accent-font">Klausur</th>
-        <td *ngIf="klausurDate == null" class="col-wd-300 td-border-l m-accent-font">kein Klausurtermin eingetragen</td>
-        <td *ngIf="klausurDate" class="col-wd-300 td-border-l m-accent-font">{{klausurDate | date:'dd.MM.yyyy, HH.mm'}}h</td>
-      </tr>
-      <tr>
         <th class="col-wd m-accent-font">Lerntage</th>
         <td class="col-wd-300 td-border-l m-accent-font">{{computeLerntageString()}}</td>
       </tr>

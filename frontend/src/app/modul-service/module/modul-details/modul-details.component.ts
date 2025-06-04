@@ -3,21 +3,18 @@ import {ActivatedRoute} from '@angular/router';
 import {TimeFormatPipe} from '../time-format.pipe';
 import {DatePipe, NgIf} from '@angular/common';
 import {CapitalizePipe} from '../capitalize.pipe';
-import {Lerntage} from '../domain';
+import {LoggingService} from '../../../logging.service';
 
 @Component({
   selector: 'app-modul-details',
-  imports: [
-    NgIf,
-    TimeFormatPipe,
-    DatePipe,
-    CapitalizePipe
-  ],
+  imports: [ NgIf, TimeFormatPipe, DatePipe, CapitalizePipe ],
   templateUrl: './modul-details.component.html',
   standalone: true,
   styleUrls: ['./modul-details.component.scss', '../../../general.scss', '../../../button.scss', '../../../color.scss']
 })
 export class ModulDetailsComponent implements  OnInit{
+  log = new LoggingService("ModulDetailsComponent", "modul-service")
+
   name!: string
   secondsLearned!: number
   kreditpunkte!: number
@@ -26,15 +23,12 @@ export class ModulDetailsComponent implements  OnInit{
   semesterstufe!: number
   semesterTyp!: string
   semesterJahr: string = '2000'
-  klausurDate!: Date | null
   lerntage!: string[]
 
   route = inject(ActivatedRoute)
 
-
   ngOnInit(): void {
     this.initComponentWithQueryParamData()
-
   }
 
   initComponentWithQueryParamData() {
@@ -47,7 +41,6 @@ export class ModulDetailsComponent implements  OnInit{
       this.semesterstufe = params['semesterstufe']
       this.semesterTyp = params['semesterTyp']
       this.semesterJahr = this.getSemesterJahr(this.semesterTyp)
-      this.klausurDate = params['klausurDate']
       this.lerntage = params['lerntage']
 
       this.queryParamLog()
@@ -55,14 +48,13 @@ export class ModulDetailsComponent implements  OnInit{
   }
 
   queryParamLog() {
-    console.log("name: " + this.name)
-    console.log("seconds: " + this.secondsLearned)
-    console.log("kp: " + this.kreditpunkte)
-    console.log("semesterstufe: " + this.semesterstufe)
-    console.log("semesterTyp: " + this.semesterTyp)
-    console.log("semesterJahr: " + this.semesterJahr)
-    console.log("klausur: " + this.klausurDate)
-    console.log("lernage:" + this.lerntage)
+    this.log.debug("name: " + this.name)
+    this.log.debug("seconds: " + this.secondsLearned)
+    this.log.debug("kp: " + this.kreditpunkte)
+    this.log.debug("semesterstufe: " + this.semesterstufe)
+    this.log.debug("semesterTyp: " + this.semesterTyp)
+    this.log.debug("semesterJahr: " + this.semesterJahr)
+    this.log.debug("lernage:" + this.lerntage)
   }
 
   getSemesterJahr(semesterTyp: string | undefined): string {
