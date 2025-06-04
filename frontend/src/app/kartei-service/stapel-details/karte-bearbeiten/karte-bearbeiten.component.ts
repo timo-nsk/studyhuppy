@@ -14,6 +14,8 @@ import {NgIf} from '@angular/common';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {KarteiApiService} from '../../kartei.api.service';
 import {Karteikarte, FrageTyp} from '../../domain';
+import {LoggingService} from '../../../logging.service';
+import {SnackbarService} from '../../../snackbar.service';
 
 @Component({
   selector: 'app-karte-bearbeiten',
@@ -37,11 +39,12 @@ import {Karteikarte, FrageTyp} from '../../domain';
   standalone: true,
   styleUrls: ['./karte-bearbeiten.component.scss', '../../../button.scss', '../../../forms.scss', '../../../general.scss']
 })
-export class KarteBearbeitenComponent implements OnInit, AfterViewInit{
+export class KarteBearbeitenComponent implements OnInit{
   protected readonly FrageTyp = FrageTyp
 
+  log = new LoggingService("KarteBearbeitenComponent", "kartei-service")
   karteiService = inject(KarteiApiService)
-  snackbar = inject(MatSnackBar)
+  sb = inject(SnackbarService)
 
   @Input() stapelId! : string | null
   @Input() karteToEdit!: Karteikarte
@@ -64,6 +67,7 @@ export class KarteBearbeitenComponent implements OnInit, AfterViewInit{
       antwort: new FormControl(this.karteToEdit.antwort, [Validators.required, Validators.maxLength(this.MAX_CHARACTERS-1)]),
       notiz: new FormControl(this.karteToEdit.notiz, Validators.maxLength(this.MAX_CHARACTERS-1))
     })
+
     this.editNormaleFrageForm.valueChanges.subscribe(formValue => {
       const origFrage = this.karteToEdit.frage
       const origAntwort = this.karteToEdit.antwort
@@ -105,20 +109,20 @@ export class KarteBearbeitenComponent implements OnInit, AfterViewInit{
     switch (frageTyp) {
       case 'n': {
         if(this.editNormaleFrageForm.invalid) {
+          this.log.debug("normale frage form is INVALID")
           this.editNormaleFrageForm.markAsTouched()
           return
         } else {
+          this.log.debug("normale frage form is VALID")
           const data = this.editNormaleFrageForm.value
           this.karteiService.putNormalKarteEditedData(data).subscribe({
             next: () => {
-              this.snackbar.open("Karteikarte erfolgreich geändert", "schließen", {
-                duration: 3500
-              })
+              this.sb.openInfo("Karteikarte erfolgreich geändert")
+              this.log.debug("successfully edited normale karteikarte")
             },
-            error: () => {
-              this.snackbar.open("Karteikarte konnte nicht geändert werden", "schließen", {
-                duration: 3500
-              })
+            error: err => {
+              this.sb.openError("Karteikarte konnte nicht geändert werden")
+              this.log.error(`error while editing normale karteikarte. reason: ${err}`)
             }
           })
         }
@@ -126,20 +130,20 @@ export class KarteBearbeitenComponent implements OnInit, AfterViewInit{
       }
       case 'c': {
         if(this.editChoiceFrageForm.invalid) {
+          this.log.debug("choice frage form is INVALID")
           this.editChoiceFrageForm.markAsTouched()
           return
         } else {
+          this.log.debug("choice frage form is VALID")
           const data = this.editChoiceFrageForm.value
           this.karteiService.putChoiceKarteEditedData(data).subscribe({
             next: () => {
-              this.snackbar.open("Karteikarte erfolgreich geändert", "schließen", {
-                duration: 3500
-              })
+              this.sb.openInfo("Karteikarte erfolgreich geändert")
+              this.log.debug("successfully edited coice karteikarte")
             },
-            error: () => {
-              this.snackbar.open("Karteikarte konnte nicht geändert werden", "schließen", {
-                duration: 3500
-              })
+            error: err => {
+              this.sb.openError("Karteikarte konnte nicht geändert werden")
+              this.log.error(`error while editing choice karteikarte. reason: ${err}`)
             }
           })
         }
@@ -151,14 +155,12 @@ export class KarteBearbeitenComponent implements OnInit, AfterViewInit{
   removeAntwort(i: number) {
     this.karteiService.removeAntwortFromKarte(this.stapelId, this.karteToEdit.fachId, i).subscribe({
       next: () => {
-        this.snackbar.open("Antwort wurde erfolgreich entfernt", "schließen", {
-          duration: 3500
-        })
+        this.log.info("removed antwort from karteikarte at index")
+        this.sb.openInfo("Antwort wurde erfolgreich entfernt")
       },
-      error: () => {
-        this.snackbar.open("Antwort konnte nicht entfernt werden", "schließen", {
-          duration: 3500
-        })
+      error: err => {
+        this.log.error(`error while removing antwort from karteikarte. reason: ${err}`)
+        this.sb.openError("Antwort konnte nicht entfernt werden")
       }
     })
   }
@@ -175,6 +177,7 @@ export class KarteBearbeitenComponent implements OnInit, AfterViewInit{
       antwort: new FormControl(text, Validators.required)
     });
     antworten.push(neueAntwort);
+    this.log.debug(`added antwort to kartei choice form. ${this.antwortenArray}`);
   }
 
   get antwortenArray(): FormArray {
@@ -195,12 +198,7 @@ export class KarteBearbeitenComponent implements OnInit, AfterViewInit{
     });
   }
 
-  ngAfterViewInit(): void {
-    console.log(this.antwortenArrayRes)
-  }
-
   updateCharsLeft(type : string) {
-
     if(type == 'frage') {
       let charsUsed = this.editNormaleFrageForm.get('frage')?.value.length
       this.frageCharsLeft = this.MAX_CHARACTERS - charsUsed
@@ -211,6 +209,5 @@ export class KarteBearbeitenComponent implements OnInit, AfterViewInit{
       let charsUsed = this.editNormaleFrageForm.get('notiz')?.value.length
       this.notizCharsLeft = this.MAX_CHARACTERS - charsUsed
     }
-
   }
 }
