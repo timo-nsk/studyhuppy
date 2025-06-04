@@ -19,6 +19,8 @@ import {FragetypFormatPipe} from '../fragetyp-format.pipe';
 import {KarteBearbeitenComponent} from './karte-bearbeiten/karte-bearbeiten.component';
 import {KarteErstellenComponent} from './karte-erstellen/karte-erstellen.component';
 import {KarteImportComponent} from './karte-import/karte-import.component';
+import {SnackbarService} from '../../snackbar.service';
+import {LoggingService} from '../../logging.service';
 
 @Component({
   selector: 'app-stapel-details',
@@ -39,6 +41,7 @@ import {KarteImportComponent} from './karte-import/karte-import.component';
   ]
 })
 export class StapelDetailsComponent implements OnInit{
+  log = new LoggingService("StapelDetailsComponent", "kartei-service")
 
   showErstellenForm = false
   showBearbeitenForm = false
@@ -53,11 +56,23 @@ export class StapelDetailsComponent implements OnInit{
   route = inject(ActivatedRoute)
   router = inject(Router)
   karteiService = inject(KarteiApiService)
-  snackbar = inject(MatSnackBar)
+  sb = inject(SnackbarService)
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => { this.stapelId = params.get('fachId'); });
+    this.getRouteParams()
     this.loadStapel()
+  }
+
+  getRouteParams() {
+    this.route.paramMap.subscribe({
+      next: params => {
+        this.stapelId = params.get('fachId');
+        this.log.debug("Successfully retrieved route params")
+      },
+      error: err => {
+        this.log.error(`Error retrieving route params. Reason: ${err}`)
+      }
+    })
   }
 
   loadStapel() : void {
@@ -65,10 +80,27 @@ export class StapelDetailsComponent implements OnInit{
       next: (data : Stapel) => {
         this.stapel = data
         this.karteikarten.data = data.karteikarten ?? []
+        this.log.debug(`got stapel data: ${data}`)
+      },
+      error: err => {
+        this.log.error(`error getting stapel data. reason: ${err}`)
       }
     })
   }
 
+  deleteKarte(stapelId: string | null, karteId: string) {
+    this.karteiService.deleteKarte(stapelId, karteId).subscribe({
+      next: () => {
+        this.log.debug(`deleted karteikarte from stapel ${stapelId}`)
+        this.sb.openInfo("karteikarte erfolgreich gelöscht")
+        this.loadStapel()
+      },
+      error: err => {
+        this.log.error(`error deleting karteikarte from stapel. reason: ${err}`)
+        this.sb.openError("karteikarte konnte nicht gelöscht werden")
+      }
+    })
+  }
 
   showKarteErstellenForm() {
     this.showErstellenForm = !this.showErstellenForm
@@ -78,32 +110,15 @@ export class StapelDetailsComponent implements OnInit{
     this.showImportForm = !this.showImportForm
   }
 
-  deleteKarte(stapelId: string | null, karteId: string) {
-    this.karteiService.deleteKarte(stapelId, karteId).subscribe({
-      next: () => {
-        this.snackbar.open("karteikarte erfolgreich gelöscht", "schließen", {
-          duration: 3500
-        })
-        this.loadStapel()
-      },
-      error: () => {
-        this.snackbar.open("karteikarte konnte nicht gelöscht werden", "schließen", {
-          duration: 3500
-        })
-      }
-    })
-  }
-
   showKarteBearbeitenForm(withKarte : Karteikarte) {
     this.showBearbeitenForm = !this.showBearbeitenForm
     this.karteToEdit = withKarte
   }
-
-  protected readonly FrageTyp = FrageTyp;
 
   isFaellig(faelligAm: string | Date): boolean {
     const date = new Date(faelligAm);
     return date.getTime() < Date.now();
   }
 
+  protected readonly FrageTyp = FrageTyp;
 }

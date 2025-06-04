@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import {KarteiApiService} from '../kartei.api.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
+import {LoggingService} from '../../logging.service';
+import {SnackbarService} from '../../snackbar.service';
 
 @Component({
   selector: 'app-stapel-erstellen',
@@ -13,6 +15,8 @@ import {Router} from '@angular/router';
   styleUrls: ['./stapel-erstellen.component.scss', '../../button.scss', '../../color.scss', '../../forms.scss', '../../general.scss']
 })
 export class StapelErstellenComponent {
+  log = new LoggingService("StapelErstellenComponent", "kartei-service")
+  sb = inject(SnackbarService)
   karteiService = inject(KarteiApiService)
   snackbar = inject(MatSnackBar)
   router = inject(Router)
@@ -30,19 +34,19 @@ export class StapelErstellenComponent {
   submitForm() {
     if (this.newStapelForm.invalid) {
       this.newStapelForm.markAsTouched()
+      this.log.debug("form data is INVALID")
     } else {
+      this.log.debug("form data is VALID")
       const data : any = this.newStapelForm.value
       this.karteiService.postNewStapel(data).subscribe({
         next: () => {
+          this.log.debug("new stapel data sucessfully sent")
           this.router.navigateByUrl("/kartei")
-          this.snackbar.open("Stapel erfolgreich erstellt", "schließen", {
-            duration: 3500
-          })
+          this.sb.openInfo("Stapel erfolgreich erstellt")
         },
-        error: () => {
-          this.snackbar.open("Stapel konnte nicht erstellt werden", "schließen", {
-            duration: 3500
-          })
+        error: err => {
+          this.log.debug(`error sending form data. reason ${err}`)
+          this.sb.openError("Stapel konnte nicht erstellt werden")
         }
       })
     }
