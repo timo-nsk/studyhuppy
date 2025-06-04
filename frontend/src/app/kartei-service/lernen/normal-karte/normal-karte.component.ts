@@ -4,23 +4,22 @@ import {Stapel, UpdateInfo} from '../../domain';
 import {KarteiApiService} from '../../kartei.api.service';
 import {LernzeitTimer} from '../lernzeit-timer.service';
 import {Router} from '@angular/router';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {SnackbarService} from '../../../snackbar.service';
+import {LoggingService} from '../../../logging.service';
 
 @Component({
   selector: 'app-normal-karte',
-  imports: [
-    NgIf,
-    NgForOf
-  ],
+  imports: [NgIf, NgForOf],
   templateUrl: './normal-karte.component.html',
   standalone: true,
   styleUrls: ['./normal-karte.component.scss', '../lernen.component.scss', '../../../button.scss']
 })
 export class NormalKarteComponent implements OnInit{
+  log = new LoggingService("NormalKarteComponent", "kartei-service")
 
   karteiService = inject(KarteiApiService)
   router = inject(Router)
-  snackbar = inject(MatSnackBar)
+  sb = inject(SnackbarService)
 
   @Input() stapelData: Stapel | undefined
   @Input() btnDataList : any[] | undefined
@@ -36,7 +35,6 @@ export class NormalKarteComponent implements OnInit{
   frage: string | undefined;
   antwort: string | undefined;
   n: number | undefined
-
 
   ngOnInit(): void {
     this.init()
@@ -65,7 +63,16 @@ export class NormalKarteComponent implements OnInit{
       schwierigkeit: this.btnDataList?.[i].schwierigkeit,
       secondsNeeded: this.lernzeitTimer!.getLernzeitCurrentKarte
     }
-    this.karteiService.updateKarte(data).subscribe()
+
+    this.karteiService.updateKarte(data).subscribe({
+      next: () => {
+        this.log.debug("Karteikarte updated successfully")
+      },
+      error: err => {
+        this.log.error(`error updating Karteikarte. reason: ${err}`)
+      }
+    })
+
     this.showBtnGroup = !this.showBtnGroup
 
     let m = this.n ?? 0
@@ -76,9 +83,8 @@ export class NormalKarteComponent implements OnInit{
       this.lernzeitTimer!.clearCurrentTimer()
       //and navigate to the kartei overview
       this.router.navigate(['/kartei'])
-      this.snackbar.open("Stapel lernen beendet", "schließen", {
-        duration: 3500
-      })
+      this.sb.openInfo("Stapel lernen beendet")
+      this.log.debug("Stapel lernen beendet, navigated to /kartei")
     } else {
       // No, then clear the current timer
       this.lernzeitTimer!.clearCurrentTimer()
@@ -90,6 +96,7 @@ export class NormalKarteComponent implements OnInit{
       // The Parent initialized itself with the next karteikarte and gives the new index to this component with new ButtonData
       // this component needs to initialize itself again with the new data
       this.init()
+      this.log.debug(`Next karteikarte at index=${this.currentKartenIndex}`)
     }
   }
 }
