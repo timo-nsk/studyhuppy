@@ -2,6 +2,8 @@ import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/c
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {ModultermineApiService} from '../termine.service';
+import {LoggingService} from '../../../../logging.service';
+import {SnackbarService} from '../../../../snackbar.service';
 
 @Component({
   selector: 'app-add-termin',
@@ -14,6 +16,8 @@ import {ModultermineApiService} from '../termine.service';
   styleUrls: ['./add-termin.component.scss', '../../../../forms.scss', '../../../../color.scss']
 })
 export class AddTerminComponent implements OnInit{
+  log = new LoggingService("AddTerminComponent", "modul-service")
+  sb = inject(SnackbarService)
 
   @Input() modulId!: string;
   @Output() terminErstellt = new EventEmitter<void>();
@@ -21,8 +25,6 @@ export class AddTerminComponent implements OnInit{
 
   terminService = inject(ModultermineApiService);
 
-
-  // TODO FIX: nachdem termin angelegt wurde ist fachId null wenn man noch eins angelen will außer man läd seite neu
   sendTerminFormData() {
     const data = this.neuerTerminForm.value;
     if(this.neuerTerminForm.invalid) {
@@ -31,19 +33,25 @@ export class AddTerminComponent implements OnInit{
     } else {
       this.terminService.postNeuerTermin(data).subscribe({
         next: () => {
-          console.log("Termin erfolgreich erstellt");
+          this.log.debug("Termin successfully created")
+          this.sb.openInfo("Termin erfolgreich erstellt")
           this.terminErstellt.emit()
-          this.neuerTerminForm.reset();
+          this.initTerminForm()
         },
         error: (err) => {
-          console.error("Fehler beim Erstellen des Termins:", err)
+          this.initTerminForm()
+          this.log.error("Could not create termin")
+          this.sb.openInfo("Fehler beim erstellen des Termins")
         }
       })
     }
-
   }
 
   ngOnInit(): void {
+    this.initTerminForm()
+  }
+
+  initTerminForm() {
     this.neuerTerminForm = new FormGroup({
       modulId: new FormControl(this.modulId),
       titel: new FormControl("", [Validators.required, Validators.maxLength(200)]),
@@ -55,4 +63,3 @@ export class AddTerminComponent implements OnInit{
     })
   }
 }
-
