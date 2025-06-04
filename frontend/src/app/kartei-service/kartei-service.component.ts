@@ -4,6 +4,8 @@ import {KarteiApiService} from './kartei.api.service';
 import {RouterLink} from '@angular/router';
 import {MatProgressBar} from "@angular/material/progress-bar";
 import { LernzeitFormatPipe } from './lernzeit-format.pipe';
+import {LoggingService} from '../logging.service';
+import {Stapel} from './domain';
 
 @Component({
   selector: 'app-kartei-service',
@@ -13,13 +15,11 @@ import { LernzeitFormatPipe } from './lernzeit-format.pipe';
   styleUrls: ['./kartei-service.component.scss', '../loading.scss', '../color.scss']
 })
 export class KarteiServiceComponent implements OnInit{
+  log = new LoggingService("KarteiServiceComponent", "kartei-service")
+  karteiService = inject(KarteiApiService)
   isLoading : boolean = true
   karteiSetsAvailable : boolean = false
-
-  karteiService = inject(KarteiApiService)
-
-  stapel : any = []
-  anzahlFaelligeKarten : number | undefined;
+  stapel : Stapel[] = []
 
   ngOnInit(): void {
     this.checkSetsAvailable()
@@ -30,6 +30,10 @@ export class KarteiServiceComponent implements OnInit{
     this.karteiService.checkSetsAvailable().subscribe({
       next: (result) => {
         this.karteiSetsAvailable = result
+        this.log.info(`got check sets available: ${result}`)
+      },
+      error: err => {
+        this.log.error(`error getting result checking sets are available. reason: ${err}`)
       }
     })
   }
@@ -39,6 +43,10 @@ export class KarteiServiceComponent implements OnInit{
       next: (data) => {
         this.stapel = data
         this.isLoading = false
+        this.log.debug(`got stapel by username: ${data}`)
+      },
+      error: err => {
+        this.log.error(`error getting stapel by username. reason: ${err}`)
       }
     })
   }
