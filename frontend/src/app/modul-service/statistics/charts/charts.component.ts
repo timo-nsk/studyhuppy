@@ -22,12 +22,10 @@ type Dataset = {
 })
 export class ChartsComponent implements  OnInit {
   log = new LoggingService("ChartsComponent", "modul")
+  service = inject(StatisticApiService)
 
   isLoading : boolean = true
-
   chartStats: { [date: string]: { modulName: string; secondsLearned: string }[] } = {};
-
-  service = inject(StatisticApiService)
 
   printChartData(data : any) {
     this.log.debug("Got data...")
@@ -43,10 +41,12 @@ export class ChartsComponent implements  OnInit {
     this.service.getChartLastDays().subscribe( {
       next: (value) => {
         this.chartStats = value;
-
+        this.log.info("Got chart data...")
         this.printChartData(this.chartStats)
-
         this.isLoading = false
+      },
+      error: (err) => {
+        this.log.info(`Error getting chart data. Reason: ${err}`)
       },
       complete: () => {
         setTimeout(() => {
@@ -56,6 +56,7 @@ export class ChartsComponent implements  OnInit {
             this.getOverallDataMinutes(this.chartStats),
             "chart-total"
           );
+          this.log.info("initiated overall module chart")
 
           this.initChartEachModule(
             "time learned per modul",
@@ -63,6 +64,7 @@ export class ChartsComponent implements  OnInit {
             this.getDatasets(this.chartStats),
             "chart-each"
           );
+          this.log.info("initiated each module chart")
         }, 1);
       }
     });
