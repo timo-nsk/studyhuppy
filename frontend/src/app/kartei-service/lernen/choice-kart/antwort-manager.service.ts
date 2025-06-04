@@ -1,6 +1,8 @@
 import {Antwort, FrageTyp} from '../../domain';
+import {LoggingService} from '../../../logging.service';
 
 export class AntwortManager {
+  log = new LoggingService("AntwortManager", "kartei-service")
 
   userAntworten : boolean[] = []
   expectedAntworten : Antwort[]
@@ -11,19 +13,16 @@ export class AntwortManager {
     for(let i = 0; i < c; i++) {
       this.userAntworten.push(false)
     }
-    //console.log("antwort manager init with userAntworten: " + this.userAntworten)
-
     this.expectedAntworten = exptectedAntworten ?? []
   }
 
   setAntwort(i : number) : void {
     this.userAntworten[i] = !this.userAntworten[i]
-    //console.log("user set antwort at index " + i + " to: " + this.userAntworten[i])
-  }
+    this.log.debug(`set antwort in AntwortManager at index=${i}`)}
 
   compareAntworten(frageTyp : FrageTyp | undefined) : boolean[] {
-    //console.log("expected: " + this.expectedAntworten)
-    //console.log("actual: " + this.userAntworten)
+    this.log.debug(`expected antworten: ${this.expectedAntworten}`)
+    this.log.debug(`actual antworten: ${this.userAntworten}`)
     if(this.userAntworten) {
       for(let i = 0; i < this.userAntworten.length; i++) {
         let expectedAntwort = this.expectedAntworten[i].wahrheit
@@ -35,10 +34,6 @@ export class AntwortManager {
             } else {
               this.result.push(false)
             }
-            // false : true -> result false
-            // true : false -> result false
-            // false : false -> result true
-            // true : true -> result true
             break
           }
           case FrageTyp.MULTIPLE_CHOICE: {
@@ -57,8 +52,7 @@ export class AntwortManager {
       }
     }
 
-    //console.log("compared antworten with result: " + this.result)
+    this.log.debug(`compared antworten with result: ${this.result}`)
     return this.result
   }
-
 }

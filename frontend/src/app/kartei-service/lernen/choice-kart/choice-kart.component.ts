@@ -8,17 +8,12 @@ import {LernzeitTimer} from '../lernzeit-timer.service';
 import {KarteiApiService} from '../../kartei.api.service';
 import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {SnackbarService} from '../../../snackbar.service';
+import {LoggingService} from '../../../logging.service';
 
 @Component({
   selector: 'app-choice-kart',
-  imports: [
-    MatCheckbox,
-    NgForOf,
-    NgIf,
-    NgClass,
-    MatRadioGroup,
-    MatRadioButton
-  ],
+  imports: [MatCheckbox, NgForOf, NgIf, NgClass, MatRadioGroup, MatRadioButton],
   templateUrl: './choice-kart.component.html',
   standalone: true,
   styleUrls: ['./choice-kart.component.scss','../lernen.component.scss', '../../../button.scss']
@@ -26,9 +21,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class ChoiceKartComponent implements OnInit{
   protected readonly FrageTyp = FrageTyp;
 
+  log = new LoggingService("ChoiceKartComponent", "kartei-service")
+
   karteiService = inject(KarteiApiService)
   router = inject(Router)
-  snackbar = inject(MatSnackBar)
+  sb = inject(SnackbarService)
 
   @Input() stapelData : Stapel | undefined
   @Input() btnDataList : any[] | undefined
@@ -61,7 +58,6 @@ export class ChoiceKartComponent implements OnInit{
     this.showAntwortBtn = true
     this.showBtnGroup = false
     this.am = new AntwortManager(this.stapelData?.karteikarten?.[this.currentKartenIndex!].antworten?.length, this.expectedAntworten)
-
   }
 
   setAntwort(i: number) {
@@ -81,7 +77,16 @@ export class ChoiceKartComponent implements OnInit{
       schwierigkeit: this.btnDataList?.[i].schwierigkeit,
       secondsNeeded: this.lernzeitTimer!.getLernzeitCurrentKarte
     }
-    this.karteiService.updateKarte(data).subscribe()
+
+    this.karteiService.updateKarte(data).subscribe({
+      next: () => {
+        this.log.debug("Karteikarte updated successfully")
+      },
+      error: err => {
+        this.log.error(`error updating Karteikarte. reason: ${err}`)
+      }
+    })
+
     this.lernzeitTimer!.startCurrentKarteTimer()
     this.showBtnGroup = !this.showBtnGroup
 
@@ -93,9 +98,8 @@ export class ChoiceKartComponent implements OnInit{
       this.lernzeitTimer!.clearCurrentTimer()
       //and navigate to the kartei overview
       this.router.navigate(['/kartei'])
-      this.snackbar.open("Stapel lernen beendet", "schließen", {
-        duration: 3500
-      })
+      this.sb.openInfo("Stapel lernen beendet")
+      this.log.debug("Stapel lernen beendet, navigated to /kartei")
     } else {
       // No, then clear the current timer
       this.lernzeitTimer!.clearCurrentTimer()
@@ -107,6 +111,7 @@ export class ChoiceKartComponent implements OnInit{
       // The Parent initialized itself with the next karteikarte and gives the new index to this component with new ButtonData
       // this component needs to initialize itself again with the new data
       this.init()
+      this.log.debug(`Next karteikarte at index=${this.currentKartenIndex}`)
     }
   }
 }
