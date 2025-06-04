@@ -9,6 +9,8 @@ import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
 import {NormalKarteComponent} from './normal-karte/normal-karte.component';
 import {ChoiceKartComponent} from './choice-kart/choice-kart.component';
 import {LernzeitTimer} from './lernzeit-timer.service';
+import {LoggingService} from '../../logging.service';
+import {SnackbarService} from '../../snackbar.service';
 
 
 @Component({
@@ -21,6 +23,13 @@ import {LernzeitTimer} from './lernzeit-timer.service';
 export class LernenComponent implements OnInit {
   protected readonly FrageTyp = FrageTyp;
 
+  log = new LoggingService("LernenComponent", "kartei-service")
+
+  route = inject(ActivatedRoute)
+  router = inject(Router)
+  karteiService = inject(KarteiApiService)
+  sb = inject(SnackbarService)
+
   startedOverallTimer: boolean = false
   lernzeitTimer : LernzeitTimer | undefined
 
@@ -29,11 +38,6 @@ export class LernenComponent implements OnInit {
 
   kartenIndex = 0
   btnDataList : any[] = []
-
-  route = inject(ActivatedRoute)
-  router = inject(Router)
-  karteiService = inject(KarteiApiService)
-  snackbar = inject(MatSnackBar)
   gen!: ButtonDataGenerator
 
   ngOnInit(): void {
@@ -42,16 +46,27 @@ export class LernenComponent implements OnInit {
   }
 
   getStapelIdFromRoute(): string | null {
-    let id: string | null = '';
-    this.route.paramMap.subscribe(params => { id = params.get('fachId'); });
-    return id;
+    let id: string | null = ''
+    this.route.paramMap.subscribe({
+      next: params => {
+        id = params.get('fachId')
+        this.log.debug(`Retrieved stapelId from route parameters: ${id}`)
+        return id
+      },
+      error: err => {
+        this.log.error(`Error retrieving stapelId from route parameters. reason: ${err}`)
+        this.sb.openError('Fehler beim Laden des Stapels')
+        return id
+      }
+    })
+    return id
   }
 
   initLearnSession(id: string | null | undefined) {
     this.karteiService.getStapelByFachId(id).subscribe({
       next: (data : Stapel) => {
+        this.log.info(`got data for stapel: ${data}`)
         this.stapel = data
-        console.log(this.stapel.karteikarten)
         this.stapelId = data.fachId
         let n = this.stapel.karteikarten?.length ?? 0
         if(!this.startedOverallTimer) {
@@ -70,10 +85,10 @@ export class LernenComponent implements OnInit {
 
   updateKartenIndexFromChild(updatedIndex: number) {
     let before = this.kartenIndex
-    this.kartenIndex = updatedIndex;
+    this.kartenIndex = updatedIndex
 
     this.initLearnSession(this.stapelId)
-    console.log("--- updated karten index from child: " + this.kartenIndex + " before: " + before)
+    this.log.debug(`--- updated karten index from child. before ${before}, after: ${this.kartenIndex}`)
   }
 
   frageTyp(karteIndex: number): FrageTyp | undefined {
