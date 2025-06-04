@@ -1,13 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {Modul} from '../module/domain';
 import { CommonModule } from '@angular/common';
-import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormField, MatLabel} from '@angular/material/input';
 import {MatSelect, MatSelectChange} from '@angular/material/select';
 import {MatOption} from '@angular/material/core';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
 import { ModuleApiService } from '../module/module-api.service';
+import {LoggingService} from '../../logging.service';
+import {SnackbarService} from '../../snackbar.service';
 
 @Component({
   selector: 'app-options',
@@ -17,6 +18,9 @@ import { ModuleApiService } from '../module/module-api.service';
   styleUrls: ['./options.component.scss', '../../color.scss', '../../general.scss']
 })
 export class OptionsComponent implements OnInit{
+  log = new LoggingService("OptionsComponent", "modul-service")
+  sb = inject(SnackbarService)
+  service = inject(ModuleApiService)
 
   module : Modul[] = []
   modulFachId : string = ''
@@ -32,34 +36,34 @@ export class OptionsComponent implements OnInit{
     time: new FormControl("", Validators.required)
   })
 
-  constructor(private service : ModuleApiService,
-              private fb : FormBuilder,
-              private snackbar : MatSnackBar) {}
-
   ngOnInit(): void {
     this.service.getAllModulesByUsername().subscribe({
       next: (data) => {
         this.module = data;
-
+        this.log.debug(`Got data: ${data}`)
       },
       error: (err) => {
-        console.error('Fehler beim Laden:', err);
+        this.log.error("Could not get data for service")
       }
     });
   }
 
-
   resetTimer() {
     this.service.resetTimer(this.modulFachId).subscribe({
-      next: () => this.showConfirmation("Timer zurückgesetzt", 2500, ""),
-      error: () => this.showConfirmation("Timer von konnte nicht zurückgesetzt werden", 2500, ""),
+      next: () => this.sb.openInfo("Timer wurde erfolgreich zurückgesetzt"),
+      error: () => this.sb.openError("Timer von konnte nicht zurückgesetzt werden"),
     })
   }
 
   deleteModul(): void {
-    this.service.deleteModul(this.modulFachId).subscribe(() => {
-      this.module = this.module.filter(modul => modul.fachId !== this.modulFachId);
-      this.showConfirmation("Modul erfolgreich gelöscht", 2500, "")
+    this.service.deleteModul(this.modulFachId).subscribe({
+      next: () => {
+        this.module = this.module.filter(modul => modul.fachId !== this.modulFachId);
+        this.sb.openInfo("Modul erfolgreich gelöscht")
+      },
+      error: (err) => {
+        this.sb.openError(`Modul konnte nicht gelöscht werden. Grund: ${err}`)
+      }
     });
   }
 
@@ -70,10 +74,10 @@ export class OptionsComponent implements OnInit{
           this.module = data;
         },
         error: (err) => {
-          console.error('Fehler beim Laden:', err);
+          this.sb.openError("Fehler beim Laden der Daten für Methode 'putAktivStatus'")
         }
       });
-      this.showConfirmation("Modulaktivität geändert", 2500, "success-snack")
+      this.sb.openInfo("Modulaktivität geändert")
     })
   }
 
@@ -81,7 +85,16 @@ export class OptionsComponent implements OnInit{
     this.addTimeForm.patchValue({fachId: this.modulFachId})
     if(this.addTimeForm.valid) {
       let data = this.addTimeForm.value
-      this.service.sendAddTimeData(data)
+      this.service.sendAddTimeData(data).subscribe({
+        next: () => {
+          this.log.debug("time data successfully sent")
+          this.sb.openInfo("Zeit erfolgreich hinzugefügt")
+        },
+        error: (err) => {
+          this.log.debug(`error sending time data. reason: ${err}`)
+          this.sb.openError("Zeit konnte nicht hinzugefügt werden")
+        }
+      })
     }
   }
 
@@ -89,26 +102,27 @@ export class OptionsComponent implements OnInit{
     this.addKlausurDate.patchValue({fachId: this.modulFachId})
     if(this.addKlausurDate.valid) {
       let data = this.addKlausurDate.value
-      this.service.sendKlausurDateData(data)
+      this.service.sendKlausurDateData(data).subscribe({
+        next: () => {
+          this.log.debug("klausur date data successfully sent")
+          this.sb.openInfo("Klausurdatum-Daten erfolgreich versendet")
+        },
+        error: (err) => {
+          this.log.debug(`error sending klausur date data. reason: ${err}`)
+          this.sb.openError("Klausurdatum konnte nicht eingetragen werden")
+        }
+      })
     }
-  }
-
-  showConfirmation(message: string, duration : number, cssClass : string) : void   {
-    this.snackbar.open(message, "",  {
-      duration: duration,
-      panelClass: cssClass,
-      horizontalPosition: 'end'
-    })
   }
 
   selectModule(fachId: MatSelectChange<string>) {
     this.modulFachId = fachId.value;
+    this.log.debug(`selected modul: ${this.modulFachId}`)
   }
 
   getActiveStatus(fachId: string) {
-    const modul = this.module.find(mod => mod.fachId === fachId);
+    const modul = this.module.find(m => m.fachId === fachId);
     let isActive : boolean = modul ? modul.active : false
-    //console.log("is active: " + isActive)
     return isActive
   }
 }

@@ -87,7 +87,7 @@ export class ModuleComponent implements OnInit{
 
   updateSeconds(seconds: number): number {
     this.sessionSecondsLearned++;
-    return seconds++;
+    return ++seconds;
   }
 
   updateSecondsOnModulUI(fachId: string, seconds: number): void {
@@ -107,7 +107,7 @@ export class ModuleComponent implements OnInit{
     // kein weiterer Button betätigt werden
     if(!this.disabledBtn[i][j]) {
       if (this.running) {
-        this.log.debug(`Start timer for modul '${this.module[i][j].name}'`)
+        //this.log.debug(`Start timer for modul '${this.module[i][j].name}'`)
         this.timer = window.setInterval(() => {
           seconds = this.updateSeconds(seconds);
           this.updateSecondsOnModulUI(fachId, seconds)
@@ -121,7 +121,7 @@ export class ModuleComponent implements OnInit{
         this.service.postNewSeconds(fachId, this.sessionSecondsLearned).subscribe()
         this.switchButtonStyle(fachId, 1, i);
         this.running = true;
-        this.log.debug(`Finished timer of modul '${this.module[i][j].name}' with sessionSecondsLearned: '${this.sessionSecondsLearned}'`)
+        //this.log.debug(`Finished timer of modul '${this.module[i][j].name}' with sessionSecondsLearned: '${this.sessionSecondsLearned}'`)
         this.sessionSecondsLearned = 0
       }
     }

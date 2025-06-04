@@ -88,15 +88,15 @@ export class ModuleApiService {
       })
   }
 
-  sendAddTimeData(data: any) {
+  sendAddTimeData(data: any) : Observable<void> {
     this.log.debug(`Try sending additional time...`)
     const headers = this.headerService.createAuthHeader()
-    this.http.post(this.MODUL_BASE_API + '/add-time', data, {headers}).subscribe()
+    return this.http.post<void>(this.MODUL_BASE_API + '/add-time', data, {headers})
   }
 
-  sendKlausurDateData(data: any) {
+  sendKlausurDateData(data: any) : Observable<void> {
     this.log.debug(`Try sending klausur date...`)
     const headers = this.headerService.createAuthHeader()
-    this.http.post(this.MODUL_BASE_API + '/add-klausur-date', data ,{headers}).subscribe()
+    return this.http.post<void>(this.MODUL_BASE_API + '/add-klausur-date', data ,{headers})
   }
 }
