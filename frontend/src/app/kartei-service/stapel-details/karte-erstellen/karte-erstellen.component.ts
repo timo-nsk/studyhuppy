@@ -11,9 +11,10 @@ import {
   MatHeaderRowDef,
   MatRow, MatRowDef, MatTable
 } from '@angular/material/table';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
 import {KarteiApiService} from '../../kartei.api.service';
+import {SnackbarService} from '../../../snackbar.service';
+import {LoggingService} from '../../../logging.service';
 
 @Component({
   selector: 'app-karte-erstellen',
@@ -23,24 +24,24 @@ import {KarteiApiService} from '../../kartei.api.service';
   styleUrls: ['./karte-erstellen.component.scss', '../../../button.scss', '../../../forms.scss', '../../../general.scss']
 })
 export class KarteErstellenComponent implements OnInit{
+  log = new LoggingService("KarteErstellenComponent", "kartei-service")
   karteiService = inject(KarteiApiService)
-  snackbar = inject(MatSnackBar)
+  sb = inject(SnackbarService)
   router = inject(Router)
+
+  @Input() stapelId!: string | null;
 
   MAX_CHARACTERS : number = 2000
   frageCharsLeft : number = this.MAX_CHARACTERS
   antwortCharsLeft : number = this.MAX_CHARACTERS
   notizCharsLeft: number = this.MAX_CHARACTERS;
-
   chosenFragenTyp : string = "n"
-  @Input() stapelId!: string | null;
 
   neueNormaleFrageForm : FormGroup = new FormGroup({});
-
   neueChoiceFrageForm : FormGroup = new FormGroup({});
   antwortenChoiceForm: FormGroup = new FormGroup({})
-  displayedColumns: string[] = ['idx','wahr', 'antwort', 'option'];
 
+  displayedColumns: string[] = ['idx','wahr', 'antwort', 'option'];
 
   ngOnInit(): void {
     this.neueNormaleFrageForm = new FormGroup({
@@ -103,28 +104,25 @@ export class KarteErstellenComponent implements OnInit{
 
     this.antwortenArray.push(antwortGroup);
     this.antwortenChoiceForm.reset({ wahrheit: false, antwort: '' });
+    this.log.debug(`added antwort to kartei choice form. ${this.antwortenArray}`);
   }
 
-
   sendNeuekarteData(kartenTyp : string) {
-    //console.log("ping sendNeueKarteData")
     if (kartenTyp == 'n') {
       if(this.neueNormaleFrageForm.invalid) {
-        //console.log("invalid inputs for normalefrageform")
+        this.log.debug("normale frage form is INVALID")
         this.neueNormaleFrageForm.markAllAsTouched()
       } else {
-        //console.log("valid inputs for normalefrageform")
+        this.log.debug("normale frage form is VALID")
         const data = this.neueNormaleFrageForm.value
         this.karteiService.sendNeuekarteData(data, 'n').subscribe({
           next: () => {
-            this.snackbar.open("Karteikarte erstellt", "schließen", {
-              duration: 3500
-            })
+            this.sb.openInfo("Karteikarte erstellt")
+            this.log.debug("successfully created normale karteikarte")
           },
-          error: () => {
-            this.snackbar.open("Karteikarte konnte nicht erstellt werden", "schießen", {
-              duration: 3500
-            })
+          error: err => {
+            this.log.error(`error while creating normale karteikarte. reason: ${err}`)
+            this.sb.openError("Karteikarte konnte nicht erstellt werden")
           },
           complete: () => {
             this.router.navigateByUrl('/stapel-details/' + this.stapelId)
@@ -133,22 +131,21 @@ export class KarteErstellenComponent implements OnInit{
       }
     } else if(kartenTyp == 'c') {
       if(this.neueChoiceFrageForm.invalid) {
-        //console.log("invalid inputs for neuechoicefrageform")
+        this.neueChoiceFrageForm.markAsTouched()
+        this.log.debug("choice frage form is INVALID")
       } else {
-        //console.log("valid inputs for neuechoicefrageform")
+        this.log.debug("choice frage form is VALID")
         const frageTyp = this.decideFrageTyp(this.antwortenArrayRes)
         this.neueChoiceFrageForm.patchValue({ frageTyp: frageTyp });
         const data = this.neueChoiceFrageForm.value
         this.karteiService.sendNeuekarteData(data, 'c').subscribe({
           next: () => {
-            this.snackbar.open("Karteikarte erstellt", "schließen", {
-              duration: 3500
-            })
+            this.log.debug("successfully created choice karteikarte")
+            this.sb.openInfo("Karteikarte erstellt")
           },
-          error: () => {
-            this.snackbar.open("Karteikarte konnte nicht erstellt werden", "schießen", {
-              duration: 3500
-            })
+          error: err => {
+            this.log.error(`error while creating choice karteikarte. reason: ${err}`)
+            this.sb.openError("Karteikarte konnte nicht erstellt werden")
           },
           complete: () => {
             this.router.navigateByUrl('/stapel-details/' + this.stapelId)
@@ -156,13 +153,11 @@ export class KarteErstellenComponent implements OnInit{
         })
       }
     }
-
-
   }
 
   removeAntwort(i: number) {
     (this.neueChoiceFrageForm.get('antworten') as FormArray).removeAt(i)
-    console.log("removed antwort at index:" + i)
+    this.log.info(`removed antwort from form at index: ${i}}`)
   }
 
   countTrueAnswers(arr: [boolean, string][]) {
@@ -179,9 +174,7 @@ export class KarteErstellenComponent implements OnInit{
     return 'MULTIPLE_CHOICE'
   }
 
-
   updateCharsLeft(type : string) {
-
     if(type == 'frage') {
       let charsUsed = this.neueNormaleFrageForm.get('frage')?.value.length
       this.frageCharsLeft = this.MAX_CHARACTERS - charsUsed
@@ -192,6 +185,5 @@ export class KarteErstellenComponent implements OnInit{
       let charsUsed = this.neueNormaleFrageForm.get('notiz')?.value.length
       this.notizCharsLeft = this.MAX_CHARACTERS - charsUsed
     }
-
   }
 }
