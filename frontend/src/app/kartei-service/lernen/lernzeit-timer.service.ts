@@ -9,7 +9,7 @@ export class LernzeitTimer {
   currentTimerId: any;
   sessionRunning : boolean = false
 
-  constructor() {
+  constructor(private n : number) {
     //If the object is initialized, it will start its overall timers
     if(!this.isSessionRunning) {
       this.lernzeitGesamt = 0
@@ -21,7 +21,7 @@ export class LernzeitTimer {
 
   startOverallTimer(): void {
     this.overallTimerId= setInterval(() => {
-      this.lernzeitGesamt!++
+      this.lernzeitGesamt = (this.lernzeitGesamt ?? 0) + 1;
     }, 1000)
     this.sessionRunning = true
     this.log.info(`starting OVERALL timer, id: ${this.overallTimerId}`)
@@ -35,7 +35,7 @@ export class LernzeitTimer {
 
   startCurrentKarteTimer(): void {
     this.currentTimerId = setInterval(() => {
-      this.lernzeitCurrentKarte!++
+      this.lernzeitGesamt = (this.lernzeitGesamt ?? 0) + 1;
       }, 1000)
     this.log.info(`starting CURRENT timer, id: ${this.currentTimerId}`)
   }
