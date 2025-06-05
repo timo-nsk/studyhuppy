@@ -1,0 +1,14 @@
+services:
+  neo4j:
+    image: neo4j:5
+    container_name: neo4j
+    ports:
+      - "${WEB_UI_PORT}:${WEB_UI_PORT}"
+      - "${DB_PORT}:${DB_PORT}" #Bolt
+    environment:
+      - NEO4J_AUTH=${MINDMAP_USER}/${MINDMAP_PASS}
+      - NEO4J_dbms_default__database=${MINDMAP_DB}
+    volumes:
+      - neo4j_data:/data
+volumes:
+  neo4j_data:
