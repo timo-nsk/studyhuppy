@@ -1,13 +1,12 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TimeFormatPipe} from '../time-format.pipe';
-import {DatePipe, NgIf} from '@angular/common';
 import {CapitalizePipe} from '../capitalize.pipe';
 import {LoggingService} from '../../../logging.service';
 
 @Component({
   selector: 'app-modul-details',
-  imports: [ NgIf, TimeFormatPipe, DatePipe, CapitalizePipe ],
+  imports: [ TimeFormatPipe, CapitalizePipe ],
   templateUrl: './modul-details.component.html',
   standalone: true,
   styleUrls: ['./modul-details.component.scss', '../../../general.scss', '../../../button.scss', '../../../color.scss']

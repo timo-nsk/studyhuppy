@@ -19,7 +19,7 @@ export class KarteiServiceComponent implements OnInit{
   karteiService = inject(KarteiApiService)
   isLoading : boolean = true
   karteiSetsAvailable : boolean = false
-  stapel : Stapel[] = []
+  stapel : any = []
 
   ngOnInit(): void {
     this.checkSetsAvailable()

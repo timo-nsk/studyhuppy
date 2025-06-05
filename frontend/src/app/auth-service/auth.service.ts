@@ -4,39 +4,38 @@ import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { environment } from '../../environments/environment'
+import {SnackbarService} from '../snackbar.service';
+import {LoggingService} from '../logging.service';
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthApiService {
-
   BASE_API_URL= environment.authServiceUrl
+
+  log = new LoggingService("AuthApiService", "auth-service")
 
   router : Router = inject(Router)
   http : HttpClient = inject(HttpClient)
-  snackbar : MatSnackBar = inject(MatSnackBar)
+  sb= inject(SnackbarService)
 
   login(data : any) : Observable<string>  {
+    this.log.debug("try logging in...")
     return this.http.post(this.BASE_API_URL + "/login", data, { responseType: 'text' })
   }
 
   logoff() : void {
     localStorage.removeItem('auth_token')
+    this.log.debug("logoff successfull")
+    this.sb.openInfo("Sie wurden abgemeldet")
   }
 
-  register(data: any) {
-    this.http.post(this.BASE_API_URL + "/register", data).subscribe((r:any)=> {
-      if(r.success) {
-        console.log("registering complete")
-        this.router.navigateByUrl("module")
-      } else {
-        console.log("internal server error")
-        this.router.navigateByUrl("register")
-      }
-    })
+  register(data: any) : Observable<void>{
+     return this.http.post<void>(this.BASE_API_URL + "/register", data)
   }
 
   pwReset(data: any): Observable<HttpResponse<any>> {
+    this.log.debug("try reseting password in...")
     return this.http.post(this.BASE_API_URL + "/password-reset", data, { observe: 'response' });
   }
 }

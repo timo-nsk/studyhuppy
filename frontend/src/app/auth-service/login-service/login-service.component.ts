@@ -6,13 +6,12 @@ import {Router, RouterLink} from '@angular/router';
 import {NgIf} from '@angular/common';
 import { LoggingService } from '../../logging.service';
 import { LoginStatusService } from './login-status.service'
+import {SnackbarService} from '../../snackbar.service';
+import {jwtDecode} from 'jwt-decode';
 
 @Component({
   selector: 'app-login-service',
-  imports: [
-    ReactiveFormsModule,
-    RouterLink,
-    NgIf
+  imports: [ReactiveFormsModule, RouterLink, NgIf
   ],
   templateUrl: './login-service.component.html',
   standalone: true,
@@ -24,6 +23,7 @@ export class LoginServiceComponent {
   router : Router = inject(Router)
   http : HttpClient = inject(HttpClient)
   authService : AuthApiService = inject(AuthApiService)
+  sb = inject(SnackbarService)
 
   userNotExists : boolean = false
   badCredentials : boolean = false
@@ -34,25 +34,37 @@ export class LoginServiceComponent {
   })
 
   submitLogin() : void {
-    const data = this.loginForm.value
-    this.authService.login(data).subscribe({
-      next: (token: string) => {
-        localStorage.setItem("auth_token", token);
-        this.loginStatusService.login()
-        this.router.navigateByUrl("module");
-      },
-      error: (err) => {
-        this.loginStatusService.logout()
-        if(err.status == 404) {
-          //console.log("no user found")
-          this.userNotExists = true
-          this.badCredentials = false
-        } else if (err.status == 401) {
-          //console.log("error validating credentials");
-          this.badCredentials = true
-          this.userNotExists = false
+
+    if(this.loginForm.valid) {
+      this.log.debug("form data VALID")
+      const data = this.loginForm.value
+      this.authService.login(data).subscribe({
+        next: (token: string) => {
+          localStorage.setItem("auth_token", token);
+          this.loginStatusService.login()
+          this.router.navigateByUrl("module");
+          this.log.debug(`user authentication SUCCESS. created auth_token: ${token} and saved in localStorage`)
+          let decode = jwtDecode(token)
+          let username = decode.sub
+          this.sb.openInfo(`Erfolgreich angemeldet. Willkommen ${username}!`)
+        },
+        error: (err) => {
+          this.loginStatusService.logout()
+          if(err.status == 404) {
+            this.log.error("user not found")
+            this.userNotExists = true
+            this.badCredentials = false
+          } else if (err.status == 401) {
+            this.log.error("error validating credentials")
+            this.badCredentials = true
+            this.userNotExists = false
+          } else {
+            this.log.error(`error occured while login try. reason: ${err}`)
+          }
         }
-      }
-    });
+      });
+    } else {
+      this.log.debug("form data INVALID")
+    }
   }
 }
