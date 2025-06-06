@@ -27,6 +27,7 @@ import { DsgvoComponent } from './app-layout/footer/dsgvo/dsgvo.component'
 import {
   MetricServiceComponent
 } from './auth-service/admin-service/actuator-service/metric-service/metric-service.component';
+import {MindmapServiceComponent} from './mindmap-service/mindmap-service.component';
 
 export const routes: Routes = [
   {
@@ -139,6 +140,10 @@ export const routes: Routes = [
           path: 'stapel-details/:fachId',
           component: StapelDetailsComponent,
           canActivate: [authenticationGuard]
+        },
+        {
+          path: 'mindmap',
+          component: MindmapServiceComponent
         }]
   },
   { path: '**', redirectTo: 'login' }
