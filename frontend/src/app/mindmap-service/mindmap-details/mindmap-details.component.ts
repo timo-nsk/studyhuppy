@@ -3,11 +3,13 @@ import {ActivatedRoute} from '@angular/router';
 import {MindmapNode} from '../MindmapNode';
 import {MindmapApiService} from '../mindmap-api.service';
 
+declare var LeaderLine: any;
+
 @Component({
   selector: 'app-mindmap-details',
   imports: [],
   templateUrl: './mindmap-details.component.html',
-  styleUrls: ['./mindmap-details.component.scss', '../../general.scss']
+  styleUrls: ['./mindmap-details.component.scss', '../../general.scss', 'node.scss']
 })
 export class MindmapDetailsComponent implements OnInit{
   route = inject(ActivatedRoute)
@@ -16,6 +18,7 @@ export class MindmapDetailsComponent implements OnInit{
   mindmap : MindmapNode | any;
 
   ngOnInit(): void {
+    this.drawLine()
     this.route.paramMap.subscribe(params => {
       let modulId = params.get('modulId')!;
       this.service.getMindmapByModulId(modulId).subscribe({
@@ -28,6 +31,13 @@ export class MindmapDetailsComponent implements OnInit{
         }
       })
     });
+  }
+
+  drawLine()  {
+    let node1 = document.getElementById("node-1")
+    let node2 = document.getElementById("node-2")
+
+    new LeaderLine(node1, node2)
   }
 
 }
