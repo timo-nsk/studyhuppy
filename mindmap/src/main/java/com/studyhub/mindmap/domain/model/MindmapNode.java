@@ -19,17 +19,19 @@ public class MindmapNode {
     private String text;
     private NodeType nodeType;
     private NodeRole nodeRole;
+    private String username;
 
     @Relationship(type = "LINKS_TO", direction = Relationship.Direction.OUTGOING)
     private List<MindmapNode> childNodes;
 
-    public MindmapNode(UUID modulId, String title, String text, NodeType nodeType, NodeRole nodeRole) {
+    public MindmapNode(UUID modulId, String title, String text, NodeType nodeType, NodeRole nodeRole, String username) {
         this.nodeId = null;
         this.modulId = modulId;
         this.title = title;
         this.text = text;
         this.nodeType = nodeType;
         this.nodeRole = nodeRole;
+        this.username = username;
         this.childNodes = new ArrayList<>();
     }
 
@@ -43,8 +45,8 @@ public class MindmapNode {
         this.childNodes = new ArrayList<>();
     }
 
-    public static MindmapNode initRootNode(UUID modulId, String title, String text, NodeType nodeType) {
-        return new MindmapNode(modulId, title, text, nodeType, NodeRole.ROOT);
+    public static MindmapNode initRootNode(UUID modulId, String title, String text, NodeType nodeType, String username) {
+        return new MindmapNode(modulId, title, text, nodeType, NodeRole.ROOT, username);
     }
 
     public static MindmapNode initChildNode(String title, String text, NodeType nodeType) {

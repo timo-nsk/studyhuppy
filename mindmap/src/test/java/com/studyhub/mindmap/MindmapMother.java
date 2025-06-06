@@ -21,7 +21,7 @@ public class MindmapMother {
         UUID id7 = UUID.fromString("6ba7b810-9dad-11d1-80b4-00c04fd430c8");
 
 
-        MindmapNode root = MindmapNode.initRootNode(modulId, "ROOT", "blabla", NodeType.SUBJECT);
+        MindmapNode root = MindmapNode.initRootNode(modulId, "ROOT", "blabla", NodeType.SUBJECT, "peter77");
 
         MindmapNode child1 = initChildNode(id2, "ch1", "bla", NodeType.SUBJECT);
         MindmapNode child11 = initChildNode(id4, "ch11", "bla", NodeType.SUBJECT);
@@ -40,7 +40,7 @@ public class MindmapMother {
     }
 
     public static MindmapNode initBasicMindmapWithModulId(UUID modulId, String nodeTitel) {
-        MindmapNode root = MindmapNode.initRootNode(modulId, nodeTitel, "blabla", NodeType.SUBJECT);
+        MindmapNode root = MindmapNode.initRootNode(modulId, nodeTitel, "blabla", NodeType.SUBJECT, "peter77");
 
         MindmapNode child1 = initChildNode(UUID.randomUUID(), "ch1", "bla", NodeType.SUBJECT);
         MindmapNode child11 = initChildNode(UUID.randomUUID(), "ch11", "bla", NodeType.SUBJECT);
@@ -52,6 +52,18 @@ public class MindmapMother {
 
         child1.setChildNodes(of(child11, child12));
         child2.setChildNodes(of(child21, child22));
+
+        root.setChildNodes(of(child1, child2));
+
+        return root;
+    }
+
+    public static MindmapNode initBasicMindmapForUser(String username) {
+        MindmapNode root = MindmapNode.initRootNode(UUID.randomUUID(), "subj", "blabla", NodeType.SUBJECT, username);
+
+        MindmapNode child1 = initChildNode(UUID.randomUUID(), "ch1", "bla", NodeType.SUBJECT);
+
+        MindmapNode child2 = initChildNode(UUID.randomUUID(), "ch2", "bla", NodeType.SUBJECT);
 
         root.setChildNodes(of(child1, child2));
 

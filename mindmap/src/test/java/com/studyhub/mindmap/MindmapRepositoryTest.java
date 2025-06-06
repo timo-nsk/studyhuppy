@@ -81,5 +81,37 @@ public class MindmapRepositoryTest {
         assertThat(finalRes.size()).isEqualTo(8);
         assertThat(mindmapRepository.findByModulId(rootId).get().findChildNode(newChild.getNodeId()).getTitle()).isEqualTo("newchild");
     }
-}
 
+    @Test
+    @DisplayName("Alle Mindmaps werden für einen User gefunden")
+    void test4() {
+        MindmapNode mm1 = MindmapMother.initBasicMindmapForUser("peter77");
+        MindmapNode mm2 = MindmapMother.initBasicMindmapForUser("susi83746");
+        MindmapNode mm3 = MindmapMother.initBasicMindmapForUser("peter77");
+        MindmapNode mm4 = MindmapMother.initBasicMindmapForUser("flutschfinger1");
+
+        mindmapRepository.save(mm1);
+        mindmapRepository.save(mm2);
+        mindmapRepository.save(mm3);
+        mindmapRepository.save(mm4);
+
+        assertThat(mindmapRepository.findAllByUsername("peter77").get()).hasSize(2);
+    }
+
+    @Test
+    @DisplayName("Wenn keine Mindmaps für einen User existieren, wird ein leeres Set zurückgegeben")
+    void test5() {
+        MindmapNode mm1 = MindmapMother.initBasicMindmapForUser("peter77");
+        MindmapNode mm2 = MindmapMother.initBasicMindmapForUser("susi83746");
+        MindmapNode mm3 = MindmapMother.initBasicMindmapForUser("peter77");
+        MindmapNode mm4 = MindmapMother.initBasicMindmapForUser("flutschfinger1");
+
+        mindmapRepository.save(mm1);
+        mindmapRepository.save(mm2);
+        mindmapRepository.save(mm3);
+        mindmapRepository.save(mm4);
+
+        assertThat(mindmapRepository.findAllByUsername("peter").get()).isNotNull();
+        assertThat(mindmapRepository.findAllByUsername("peter").get()).hasSize(0);
+    }
+}
