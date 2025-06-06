@@ -9,5 +9,5 @@ import java.util.UUID;
 
 public interface MindmapNodeRepository extends Neo4jRepository<MindmapNode, UUID> {
 
-    MindmapNode findByModulId(UUID modulId);
+    Optional<MindmapNode> findByModulId(UUID modulId);
 }

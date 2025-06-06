@@ -60,7 +60,7 @@ public class MindmapRepositoryTest {
         mindmapRepository.save(mm2);
         mindmapRepository.save(mm3);
 
-        MindmapNode res = mindmapRepository.findByModulId(modulId2);
+        MindmapNode res = mindmapRepository.findByModulId(modulId2).get();
 
         assertThat(res.getTitle()).isEqualTo("rootyroot");
         assertThat(res.size()).isEqualTo(7);
@@ -73,13 +73,13 @@ public class MindmapRepositoryTest {
         UUID rootId = UUID.fromString("b4a1fe90-8d8f-4c6d-bb38-0e5fcac1c1c0");
         UUID parentId = UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6");
         mindmapRepository.save(mindmap);
-        MindmapNode res = mindmapRepository.findByModulId(rootId);
+        MindmapNode res = mindmapRepository.findByModulId(rootId).get();
 
         res.addChildNode(parentId, newChild);
 
         MindmapNode finalRes = mindmapRepository.save(res);
         assertThat(finalRes.size()).isEqualTo(8);
-        assertThat(mindmapRepository.findByModulId(rootId).findChildNode(newChild.getNodeId()).getTitle()).isEqualTo("newchild");
+        assertThat(mindmapRepository.findByModulId(rootId).get().findChildNode(newChild.getNodeId()).getTitle()).isEqualTo("newchild");
     }
 }
 
