@@ -1,9 +1,8 @@
 package com.studyhub.mindmap;
 
-import com.studyhub.mindmap.domain.model.ChildMindmapNode;
 import com.studyhub.mindmap.domain.model.MindmapNode;
+import com.studyhub.mindmap.domain.model.NodeRole;
 import com.studyhub.mindmap.domain.model.NodeType;
-import com.studyhub.mindmap.domain.model.RootMindmapNode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,8 +11,8 @@ import java.util.UUID;
 
 public class MindmapMother {
 
-    public static RootMindmapNode initBasicMindmap() {
-        UUID id1 = UUID.fromString("b4a1fe90-8d8f-4c6d-bb38-0e5fcac1c1c0");
+    public static MindmapNode initBasicMindmap() {
+        UUID modulId = UUID.fromString("b4a1fe90-8d8f-4c6d-bb38-0e5fcac1c1c0");
         UUID id2 = UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6");
         UUID id3 = UUID.fromString("c0a80123-4567-89ab-cdef-1234567890ab");
         UUID id4 = UUID.fromString("e1d7c0e3-2bc0-4af2-9f25-9a3bb9db88ec");
@@ -22,15 +21,15 @@ public class MindmapMother {
         UUID id7 = UUID.fromString("6ba7b810-9dad-11d1-80b4-00c04fd430c8");
 
 
-        RootMindmapNode root = new RootMindmapNode(id1, "ROOT", "SOME INFOS");
+        MindmapNode root = MindmapNode.initRootNode(modulId, "ROOT", "blabla", NodeType.SUBJECT);
 
-        ChildMindmapNode child1 = new ChildMindmapNode(id2, "ch1", NodeType.SUBJECT);
-        ChildMindmapNode child2 = new ChildMindmapNode(id3, "ch2", NodeType.SUBJECT);
+        MindmapNode child1 = initChildNode(id2, "ch1", "bla", NodeType.SUBJECT);
+        MindmapNode child11 = initChildNode(id4, "ch11", "bla", NodeType.SUBJECT);
+        MindmapNode child12 = initChildNode(id5, "ch12", "bla", NodeType.SUBJECT);
 
-        ChildMindmapNode child11 = new ChildMindmapNode(id4, "ch11", NodeType.SUBJECT);
-        ChildMindmapNode child12 = new ChildMindmapNode(id5, "ch12", NodeType.SUBJECT);
-        ChildMindmapNode child21 = new ChildMindmapNode(id6, "ch21", NodeType.SUBJECT);
-        ChildMindmapNode child22 = new ChildMindmapNode(id7, "ch22", NodeType.SUBJECT);
+        MindmapNode child2 = initChildNode(id3, "ch2", "bla", NodeType.SUBJECT);
+        MindmapNode child21 = initChildNode(id6, "ch21", "bla", NodeType.SUBJECT);
+        MindmapNode child22 = initChildNode(id7, "ch22", "bla", NodeType.SUBJECT);
 
         child1.setChildNodes(of(child11, child12));
         child2.setChildNodes(of(child21, child22));
@@ -40,8 +39,31 @@ public class MindmapMother {
         return root;
     }
 
-    private static List<MindmapNode> of(ChildMindmapNode... childs) {
+    public static MindmapNode initBasicMindmapWithModulId(UUID modulId, String nodeTitel) {
+        MindmapNode root = MindmapNode.initRootNode(modulId, nodeTitel, "blabla", NodeType.SUBJECT);
+
+        MindmapNode child1 = initChildNode(UUID.randomUUID(), "ch1", "bla", NodeType.SUBJECT);
+        MindmapNode child11 = initChildNode(UUID.randomUUID(), "ch11", "bla", NodeType.SUBJECT);
+        MindmapNode child12 = initChildNode(UUID.randomUUID(), "ch12", "bla", NodeType.SUBJECT);
+
+        MindmapNode child2 = initChildNode(UUID.randomUUID(), "ch2", "bla", NodeType.SUBJECT);
+        MindmapNode child21 = initChildNode(UUID.randomUUID(), "ch21", "bla", NodeType.SUBJECT);
+        MindmapNode child22 = initChildNode(UUID.randomUUID(), "ch22", "bla", NodeType.SUBJECT);
+
+        child1.setChildNodes(of(child11, child12));
+        child2.setChildNodes(of(child21, child22));
+
+        root.setChildNodes(of(child1, child2));
+
+        return root;
+    }
+
+    private static List<MindmapNode> of(MindmapNode... childs) {
         return new ArrayList<>(Arrays.asList(childs));
+    }
+
+    public static MindmapNode initChildNode(UUID nodeId, String titel, String text, NodeType nodeType) {
+        return new MindmapNode(nodeId, null, titel, text, nodeType, NodeRole.CHILD);
     }
 
 }

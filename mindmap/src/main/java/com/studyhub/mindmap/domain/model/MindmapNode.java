@@ -1,7 +1,6 @@
 package com.studyhub.mindmap.domain.model;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Relationship;
@@ -11,33 +10,49 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 public class MindmapNode {
     @Id
     @GeneratedValue
     private UUID nodeId;
+    private UUID modulId;
     private String title;
     private String text;
     private NodeType nodeType;
+    private NodeRole nodeRole;
 
     @Relationship(type = "LINKS_TO", direction = Relationship.Direction.OUTGOING)
     private List<MindmapNode> childNodes;
 
-    public MindmapNode(String title, String text, NodeType nodeType) {
+    public MindmapNode(UUID modulId, String title, String text, NodeType nodeType, NodeRole nodeRole) {
         this.nodeId = null;
+        this.modulId = modulId;
         this.title = title;
         this.text = text;
         this.nodeType = nodeType;
+        this.nodeRole = nodeRole;
         this.childNodes = new ArrayList<>();
     }
 
-    public MindmapNode(UUID nodeId, String title, String text, NodeType nodeType) {
+    public MindmapNode(UUID nodeId, UUID modulId, String title, String text, NodeType nodeType, NodeRole nodeRole) {
         this.nodeId = nodeId;
+        this.modulId = modulId;
         this.title = title;
         this.text = text;
         this.nodeType = nodeType;
+        this.nodeRole = nodeRole;
         this.childNodes = new ArrayList<>();
     }
+
+    public static MindmapNode initRootNode(UUID modulId, String title, String text, NodeType nodeType) {
+        return new MindmapNode(modulId, title, text, nodeType, NodeRole.ROOT);
+    }
+
+    public static MindmapNode initChildNode(String title, String text, NodeType nodeType) {
+        return new MindmapNode(null, null, title, text, nodeType, NodeRole.CHILD);
+    }
+
+
+    public MindmapNode() {}
 
     public int size() {
         int c = 1;
@@ -122,6 +137,26 @@ public class MindmapNode {
 
     public void setChildNodes(List<MindmapNode> childNodes) {
         this.childNodes = childNodes;
+    }
+
+    public UUID getModulId() {
+        return modulId;
+    }
+
+    public void setModulId(UUID modulId) {
+        this.modulId = modulId;
+    }
+
+    public NodeRole getNodeRole() {
+        return nodeRole;
+    }
+
+    public void setNodeRole(NodeRole nodeRole) {
+        this.nodeRole = nodeRole;
+    }
+
+    public UUID getNodeId() {
+        return nodeId;
     }
 
     @Override

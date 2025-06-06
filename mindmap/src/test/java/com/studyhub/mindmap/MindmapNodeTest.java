@@ -1,9 +1,7 @@
 package com.studyhub.mindmap;
 
-import com.studyhub.mindmap.domain.model.ChildMindmapNode;
 import com.studyhub.mindmap.domain.model.MindmapNode;
 import com.studyhub.mindmap.domain.model.NodeType;
-import com.studyhub.mindmap.domain.model.RootMindmapNode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class MindmapNodeTest {
 
-    private RootMindmapNode mindmap = MindmapMother.initBasicMindmap();
+    private MindmapNode mindmap = MindmapMother.initBasicMindmap();
 
     @Test
     @DisplayName("Ein Kindknoten wird im Baum gefunden")
@@ -60,7 +58,7 @@ public class MindmapNodeTest {
     void test5() {
         UUID parentId = UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6");
         UUID childId = UUID.fromString("550e8401-e29b-41d4-a716-446655440000");
-        ChildMindmapNode newChild = new ChildMindmapNode(childId, "im new", NodeType.SUBJECT);
+        MindmapNode newChild = MindmapNode.initChildNode("im new", "bla",NodeType.SUBJECT);
 
         mindmap.addChildNode(parentId, newChild);
 
