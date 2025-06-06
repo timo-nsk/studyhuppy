@@ -38,7 +38,8 @@
               "src/styles/custom-theme.scss"
             ],
             "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "src/assets/js/leader-line.min.js"
             ]
           },
           "configurations": {
