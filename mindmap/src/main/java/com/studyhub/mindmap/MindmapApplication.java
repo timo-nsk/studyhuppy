@@ -11,20 +11,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MindmapApplication implements CommandLineRunner {
-
-	@Autowired
-	MindmapRepository mindmapRepository;
-
+public class MindmapApplication{
 	public static void main(String[] args) {
 		SpringApplication.run(MindmapApplication.class, args);
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-		MindmapNode root = new RootMindmapNode("Pokemon", null);
-		MindmapNode adj = new ChildMindmapNode("Glurak", "so cooooool", NodeType.SUBJECT);
-
-		mindmapRepository.save(root);
 	}
 }
