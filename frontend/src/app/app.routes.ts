@@ -28,6 +28,7 @@ import {
   MetricServiceComponent
 } from './auth-service/admin-service/actuator-service/metric-service/metric-service.component';
 import {MindmapServiceComponent} from './mindmap-service/mindmap-service.component';
+import {MindmapDetailsComponent} from './mindmap-service/mindmap-details/mindmap-details.component';
 
 export const routes: Routes = [
   {
@@ -144,6 +145,10 @@ export const routes: Routes = [
         {
           path: 'mindmap',
           component: MindmapServiceComponent
+        },
+        {
+          path: 'mindmap/:modulId',
+          component: MindmapDetailsComponent
         }]
   },
   { path: '**', redirectTo: 'login' }
