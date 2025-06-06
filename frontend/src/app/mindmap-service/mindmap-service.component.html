@@ -1,8 +1,12 @@
 <div class="main-container">
-  <div>
+  <div *ngIf="emptyMindmaps()">
     <p>Keine Mindmaps vorhanden</p>
   </div>
-  <div>
-    <p>Hier Mindmaps</p>
+  <div *ngIf="!emptyMindmaps()">
+    <ul>
+      <li *ngFor="let mindmap of mindmaps">
+        <a [routerLink]="['/mindmap', mindmap.modulId]">Titel: {{ mindmap.title }} - Modul: {{mindmap.modulId}}</a>
+      </li>
+    </ul>
   </div>
 </div>

@@ -17,4 +17,13 @@ export class MindmapApiService {
     const header = this.headerService.createAuthHeader();
     return this.http.get(`${this.BASE_API_URL}/get-all-mindmaps-by-username`, { headers: header });
   }
+
+  getMindmapByModulId(modulId: string) : Observable<any> {
+    const header = this.headerService.createAuthHeader();
+    return this.http.get<any>(`${this.BASE_API_URL}/get-mindmap-by-modulid`, {
+      headers: header,
+      params: {modulId: modulId}
+    })
+
+  }
 }

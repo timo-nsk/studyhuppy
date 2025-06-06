@@ -34,9 +34,9 @@ public class MindmapApiController {
 	}
 
 	@GetMapping("/get-mindmap-by-modulid")
-	public ResponseEntity<MindmapNode> getMindmapByModulid(@RequestBody UUID modulid) {
+	public ResponseEntity<MindmapNode> getMindmapByModulid(@RequestParam("modulId") UUID modulId) {
 		try {
-			MindmapNode res =  mindmapService.getMindmapByModulId(modulid);
+			MindmapNode res =  mindmapService.getMindmapByModulId(modulId);
 			return ResponseEntity.ok(res);
 		} catch (MindmapNotExistsException e) {
 			System.out.println(e.getMessage());
