@@ -1,5 +1,6 @@
 package com.studyhub.mindmap.domain.model;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Data
 @NoArgsConstructor
 public class MindmapNode {
     @Id
@@ -29,8 +31,51 @@ public class MindmapNode {
         this.childNodes = new ArrayList<>();
     }
 
-    public boolean addChildNode(MindmapNode node) {
-        return childNodes.add(node);
+    public MindmapNode(UUID nodeId, String title, String text, NodeType nodeType) {
+        this.nodeId = nodeId;
+        this.title = title;
+        this.text = text;
+        this.nodeType = nodeType;
+        this.childNodes = new ArrayList<>();
+    }
+
+    public int size() {
+        int c = 1;
+        for (MindmapNode childNode : childNodes) {
+            c += childNode.size();
+        }
+        return c;
+    }
+
+    public boolean addChildNode(UUID parentId, MindmapNode node) {
+        MindmapNode parent = findChildNode(parentId);
+        return parent.getChildNodes().add(node);
+    }
+
+    public boolean removeSubtreeAt(UUID nodeId) {
+        MindmapNode toRemove = findChildNode(nodeId);
+        return childNodes.remove(toRemove);
+    }
+
+    public boolean removeChildNode(UUID parentId, UUID childId) {
+        MindmapNode parent = findChildNode(parentId);
+        MindmapNode child = findChildNode(childId);
+        return parent.getChildNodes().remove(child);
+    }
+
+    public void setChildNodeTitel(UUID nodeId, String title) {
+        MindmapNode node = findChildNode(nodeId);
+        node.setTitle(title);
+    }
+
+    public void setChildNodeText(UUID nodeId, String text) {
+        MindmapNode node = findChildNode(nodeId);
+        node.setText(text);
+    }
+
+    public void setChildNodeType(UUID nodeId, NodeType nodeType) {
+        MindmapNode node = findChildNode(nodeId);
+        node.setNodeType(nodeType);
     }
 
     public MindmapNode findChildNode(UUID uuid) {
@@ -47,4 +92,46 @@ public class MindmapNode {
         return null;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public NodeType getNodeType() {
+        return nodeType;
+    }
+
+    public void setNodeType(NodeType nodeType) {
+        this.nodeType = nodeType;
+    }
+
+    public List<MindmapNode> getChildNodes() {
+        return childNodes;
+    }
+
+    public void setChildNodes(List<MindmapNode> childNodes) {
+        this.childNodes = childNodes;
+    }
+
+    @Override
+    public String toString() {
+        return "MindmapNode{" +
+                "nodeId=" + nodeId +
+                ", title='" + title + '\'' +
+                ", text='" + text + '\'' +
+                ", nodeType=" + nodeType +
+                ", childNodes=" + childNodes +
+                '}';
+    }
 }

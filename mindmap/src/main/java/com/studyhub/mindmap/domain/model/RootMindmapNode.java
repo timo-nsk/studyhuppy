@@ -12,6 +12,15 @@ public class RootMindmapNode extends MindmapNode{
 
     public RootMindmapNode(String title, String text) {
         super(title, text, NodeType.SUBJECT);
-        this.modulId = UUID.randomUUID();
+        this.modulId = null;
+    }
+
+    public RootMindmapNode(UUID modulId, String title, String text) {
+        super(title, text, NodeType.SUBJECT);
+        this.modulId = modulId;
+    }
+
+    public UUID getModulId() {
+        return modulId;
     }
 }
