@@ -3,7 +3,7 @@ export interface MindmapNode {
   modulId : string;
   title : string;
   text : string;
-  pnodeType : NodeType;
+  nodeType : NodeType;
   nodeRole : NodeRole;
   username : string;
   childNodes : MindmapNode[];

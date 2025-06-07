@@ -26,4 +26,10 @@ export class MindmapApiService {
     })
 
   }
+
+  postNewNode(data: any): Observable<any> {
+    const header = this.headerService.createAuthHeader();
+    return this.http.post<any>(`${this.BASE_API_URL}/create-new-node`, data, { headers: header });
+
+  }
 }

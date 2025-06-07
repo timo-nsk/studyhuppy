@@ -1,5 +1,16 @@
 <div class="main-container">
   <button type="submit" (click)="switchBearbeitenModus()">bearbeiten</button>
+  <form [formGroup]="newNodeForm" (ngSubmit)="sendNewNodeData()">
+    <input type="hidden" >
+    <label>Titel</label>
+    <input formControlName="title" type="text">
+    <select formControlName="nodeType" type="text">
+      <option selected value="SUBJECT">Thema</option>
+      <option value="PROCESS">Prozess</option>
+    </select>
+    <button type="submit">hinzufügen</button>
+  </form>
   <div id="mindmap-container">
+    <!-- Hier dynamisch Nodes rendern -->
   </div>
 </div>

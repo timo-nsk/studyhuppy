@@ -4,12 +4,16 @@ import {MindmapNode} from '../MindmapNode';
 import {MindmapApiService} from '../mindmap-api.service';
 import {LoggingService} from '../../logging.service';
 import {NodeFactoryService} from './node-factory.service';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {NodeCreationSignalService} from './node-creation-signal.service';
 
 declare var LeaderLine: any;
 
 @Component({
   selector: 'app-mindmap-details',
-  imports: [],
+  imports: [
+    ReactiveFormsModule
+  ],
   templateUrl: './mindmap-details.component.html',
   standalone: true,
   styleUrls: ['./mindmap-details.component.scss', '../../general.scss', 'node.scss'],
@@ -20,7 +24,14 @@ export class MindmapDetailsComponent implements OnInit{
   route = inject(ActivatedRoute)
   mindmapApiService = inject(MindmapApiService)
   nodeFactory = inject(NodeFactoryService)
+  nodeCreationSignalService = inject(NodeCreationSignalService)
   bearbeitenModus = false
+
+  newNodeForm = new FormGroup({
+    parentNodeId: new FormControl("", Validators.required),
+    title: new FormControl("", Validators.required),
+    nodeType: new FormControl("", Validators.required)
+  })
 
   mindmap : MindmapNode | any;
 
@@ -96,6 +107,33 @@ export class MindmapDetailsComponent implements OnInit{
     for (let i = 0; i < btns.length; i++) {
       btns[i].classList.toggle("hide-btn", !show);
       btns[i].classList.toggle("display-btn", show);
+    }
+  }
+
+  sendNewNodeData() {
+    const parentId = this.nodeCreationSignalService.parentIdSignal();
+    this.newNodeForm.patchValue({"parentNodeId": parentId});
+
+    if(this.newNodeForm.valid) {
+      this.log.debug("form data VALID")
+      console.log(this.newNodeForm.value)
+      const data = this.newNodeForm.value
+
+      this.mindmapApiService.postNewNode(data).subscribe({
+        next: () => {
+          this.log.debug("New node created successfully");
+          this.newNodeForm.reset();
+          this.nodeCreationSignalService.setParentId('');
+          this.renderNodes();
+        },
+        error: err => {
+          this.log.error("Error creating new node:");
+          console.log(err)
+        }
+      })
+    } else {
+      this.log.debug("form data INVALID")
+      this.newNodeForm.markAllAsTouched();
     }
   }
 }

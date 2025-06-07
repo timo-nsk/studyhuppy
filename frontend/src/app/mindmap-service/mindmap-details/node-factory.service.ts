@@ -1,12 +1,14 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {MindmapNode} from '../MindmapNode';
 import {LoggingService} from '../../logging.service';
+import {NodeCreationSignalService} from './node-creation-signal.service';
 
 @Injectable({
   providedIn: "root"
 })
 export class NodeFactoryService {
   log = new LoggingService("NodeFactoryService", "mindmap-service")
+  nodeCreationSignalService = inject(NodeCreationSignalService)
 
   createNodeDivElement(node : MindmapNode, x : number, y : number) {
     /** STRUCTURE
@@ -74,8 +76,9 @@ export class NodeFactoryService {
 
     // Link bauen
     const link = document.createElement("a");
+
     link.addEventListener("click", () => {
-      this.log.debug(`erstelle neuen child mit modulId: ${nodeId}`)
+      this.nodeCreationSignalService.setParentId(nodeId);
     });
 
 
