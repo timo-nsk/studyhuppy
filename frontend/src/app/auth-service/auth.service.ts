@@ -21,7 +21,7 @@ export class AuthApiService {
 
   login(data : any) : Observable<string>  {
     this.log.debug("try logging in...")
-    return this.http.post(this.BASE_API_URL + "/login", data, { responseType: 'text' })
+    return this.http.post("/api/v1/login", data, { responseType: 'text' })
   }
 
   logoff() : void {
