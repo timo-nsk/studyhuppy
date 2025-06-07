@@ -67,6 +67,8 @@ public class SecurityConfig {
 				"http://127.0.0.1:8080",
 				"http://49.12.242.124:8080",
 				"http://49.12.242.124:4200",
+				"https://49.12.242.124:8443",
+				"https://49.12.242.124:4200",
 				"https://studyhuppy.de",
 				"https://www.studyhuppy.de"
 		));
