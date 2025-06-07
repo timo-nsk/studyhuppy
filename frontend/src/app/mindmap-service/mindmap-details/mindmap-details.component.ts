@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, inject, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MindmapNode} from '../MindmapNode';
 import {MindmapApiService} from '../mindmap-api.service';
@@ -19,7 +19,7 @@ declare var LeaderLine: any;
   styleUrls: ['./mindmap-details.component.scss', '../../general.scss', 'node.scss'],
   encapsulation: ViewEncapsulation.None // Damit node.scss für dynamisch erstellte DOM-Elemente greift
 })
-export class MindmapDetailsComponent implements OnInit{
+export class MindmapDetailsComponent implements OnInit, OnDestroy{
   log = new LoggingService("MindmapDetailsComponent", "mindmap-service")
   route = inject(ActivatedRoute)
   mindmapApiService = inject(MindmapApiService)
@@ -38,6 +38,10 @@ export class MindmapDetailsComponent implements OnInit{
 
   ngOnInit(): void {
     this.loadMindmap()
+  }
+
+  ngOnDestroy(): void {
+    this.clearEdges()
   }
 
   loadMindmap() {
@@ -104,6 +108,10 @@ export class MindmapDetailsComponent implements OnInit{
 
     let edge = new LeaderLine(from, to)
     this.edges.push(edge)
+  }
+
+  clearEdges() {
+    this.edges.forEach(e => e.remove());
   }
 
   switchBearbeitenModus() {
@@ -187,4 +195,5 @@ export class MindmapDetailsComponent implements OnInit{
     });
 
   }
+
 }
