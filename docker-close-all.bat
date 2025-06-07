@@ -21,6 +21,10 @@ echo [%date% !hh!:!mm!:!ss!] Schließe Track-Service...
 docker compose  -f track/docker-compose.yaml down
 echo [%date% !hh!:!mm!:!ss!] Track-Service geschlossen.
 
+echo [%date% !hh!:!mm!:!ss!] Schließe Mindmap-Service...
+docker compose  -f mindmap/docker-compose.yaml down
+echo [%date% !hh!:!mm!:!ss!] Mindmap-Service geschlossen.
+
 echo [%date% !hh!:!mm!:!ss!] Schließe Authentication-Service...
 docker compose  -f authentication/docker-compose.yaml down
 echo [%date% !hh!:!mm!:!ss!] Authentication-Service geschlossen.

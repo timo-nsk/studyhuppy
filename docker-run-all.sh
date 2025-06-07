@@ -13,6 +13,10 @@ echo "[$(date '+%d.%m.%Y %H:%M:%S')] Starte Track-Service..."
 docker compose --env-file track/.env -f track/docker-compose.yaml up -d --build
 echo "[$(date '+%d.%m.%Y %H:%M:%S')] Track-Service gestartet."
 
+echo "[$(date '+%d.%m.%Y %H:%M:%S')] Starte Mindmap-Service..."
+docker compose --env-file mindmap/.env -f mindmap/docker-compose.yaml up -d --build
+echo "[$(date '+%d.%m.%Y %H:%M:%S')] Mindmap-Service gestartet."
+
 echo "[$(date '+%d.%m.%Y %H:%M:%S')] Starte Authentication-Service..."
 docker compose --env-file authentication/.env -f authentication/docker-compose.yaml up -d --build
 echo "[$(date '+%d.%m.%Y %H:%M:%S')] Authentication-Service gestartet."

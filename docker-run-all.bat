@@ -21,6 +21,10 @@ echo [%date% !hh!:!mm!:!ss!] Starte Track-Service...
 docker compose --env-file track/.env -f track/docker-compose.yaml up -d --build
 echo [%date% !hh!:!mm!:!ss!] Track-Service gestartet.
 
+echo [%date% !hh!:!mm!:!ss!] Starte Mindmap-Service...
+docker compose --env-file mindmap/.env -f mindmap/docker-compose.yaml up -d --build
+echo [%date% !hh!:!mm!:!ss!] Mindmap-Service gestartet.
+
 echo [%date% !hh!:!mm!:!ss!] Starte Authentication-Service...
 docker compose --env-file authentication/.env -f authentication/docker-compose.yaml up -d --build
 echo [%date% !hh!:!mm!:!ss!] Authentication-Service gestartet.

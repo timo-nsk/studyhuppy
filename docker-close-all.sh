@@ -13,6 +13,10 @@ echo "[$(date '+%d.%m.%Y %H:%M:%S')] Schließe Track-Service..."
 docker compose -f track/docker-compose.yaml down
 echo "[$(date '+%d.%m.%Y %H:%M:%S')] Track-Service geschlossen."
 
+echo "[$(date '+%d.%m.%Y %H:%M:%S')] Schließe Mindmap-Service..."
+docker compose -f mindmap/docker-compose.yaml down
+echo "[$(date '+%d.%m.%Y %H:%M:%S')] Mindmap-Service geschlossen."
+
 echo "[$(date '+%d.%m.%Y %H:%M:%S')] Schließe Authentication-Service..."
 docker compose -f authentication/docker-compose.yaml down
 echo "[$(date '+%d.%m.%Y %H:%M:%S')] Authentication-Service geschlossen."
