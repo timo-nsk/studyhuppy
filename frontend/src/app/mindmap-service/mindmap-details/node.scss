@@ -5,10 +5,11 @@
   height: 100%;
 }
 .node-wrapper {
+  border-radius: 6px;
   width: 150px;
   height: 70px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   flex-direction: column;
   position: absolute;

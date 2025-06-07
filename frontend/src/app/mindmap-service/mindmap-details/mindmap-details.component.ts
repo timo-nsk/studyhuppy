@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, inject, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MindmapNode} from '../MindmapNode';
 import {MindmapApiService} from '../mindmap-api.service';
@@ -33,15 +33,21 @@ export class MindmapDetailsComponent implements OnInit{
     nodeType: new FormControl("", Validators.required)
   })
 
-  mindmap : MindmapNode | any;
+  mindmap : MindmapNode | any
+  edges : any[] = []
 
   ngOnInit(): void {
+    this.loadMindmap()
+  }
+
+  loadMindmap() {
     this.route.paramMap.subscribe(params => {
       let modulId = params.get('modulId')!;
       this.mindmapApiService.getMindmapByModulId(modulId).subscribe({
         next: data => {
           this.mindmap = data;
           this.renderNodes()
+          this.dragNode()
         },
         error: err => {
           console.log(err)
@@ -96,7 +102,8 @@ export class MindmapDetailsComponent implements OnInit{
     let from = document.getElementById(v.nodeId)
     let to = document.getElementById(w.nodeId)
 
-    new LeaderLine(from, to)
+    let edge = new LeaderLine(from, to)
+    this.edges.push(edge)
   }
 
   switchBearbeitenModus() {
@@ -124,7 +131,7 @@ export class MindmapDetailsComponent implements OnInit{
           this.log.debug("New node created successfully");
           this.newNodeForm.reset();
           this.nodeCreationSignalService.setParentId('');
-          this.renderNodes();
+          this.refreshNodes()
         },
         error: err => {
           this.log.error("Error creating new node:");
@@ -135,5 +142,49 @@ export class MindmapDetailsComponent implements OnInit{
       this.log.debug("form data INVALID")
       this.newNodeForm.markAllAsTouched();
     }
+  }
+
+  refreshNodes() {
+    const mindmapDiv = document.getElementById("mindmap-container")
+    while (mindmapDiv?.firstChild) {
+      mindmapDiv.removeChild(mindmapDiv.firstChild);
+    }
+    this.loadMindmap()
+    this.renderNodes()
+  }
+
+  dragNode() {
+    const draggableDivs = document.querySelectorAll<HTMLElement>('.dragable');
+
+    let isDragging = false;
+    let currentDiv: HTMLElement | null = null;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    draggableDivs.forEach(div => {
+      div.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        currentDiv = div;
+        offsetX = e.clientX - div.offsetLeft;
+        offsetY = e.clientY - div.offsetTop;
+      });
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging || !currentDiv) return;
+
+      currentDiv.style.left = `${e.clientX - offsetX}px`;
+      currentDiv.style.top = `${e.clientY - offsetY}px`;
+
+      for( let edge of this.edges) {
+        edge.position()
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+      currentDiv = null;
+    });
+
   }
 }
