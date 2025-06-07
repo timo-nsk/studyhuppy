@@ -55,6 +55,14 @@ public class MindmapApiController {
 		System.out.println("init placeholder mindmap");
 
 		return ResponseEntity.ok().build();
+	}
 
+	@PostMapping("/create-new-node")
+	public ResponseEntity<Void> createNewNode(@RequestBody NewNodeRequest req) {
+		System.out.println(req.toString());
+
+		mindmapService.createNewNode(req);
+
+		return ResponseEntity.ok().build();
 	}
 }

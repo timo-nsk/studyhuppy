@@ -1,5 +1,6 @@
 package com.studyhub.mindmap.application.service;
 
+import com.studyhub.mindmap.adapter.web.api.NewNodeRequest;
 import com.studyhub.mindmap.domain.model.MindmapNode;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -45,5 +46,15 @@ public class MindmapService {
 
 	public void saveMindmap(MindmapNode res) {
 		mindmapNodeRepository.save(res);
+	}
+
+	public void createNewNode(NewNodeRequest req) {
+		MindmapNode newChildNode = req.toChildNode();
+		UUID parentId = req.getParentId();
+
+		MindmapNode parentNode = mindmapNodeRepository.findById(parentId).get();
+		parentNode.getChildNodes().add(newChildNode);
+
+		mindmapNodeRepository.save(parentNode);
 	}
 }
