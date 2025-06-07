@@ -1,7 +1,6 @@
 <div class="main-container">
   <button type="submit" (click)="switchBearbeitenModus()">bearbeiten</button>
   <form [formGroup]="newNodeForm" (ngSubmit)="sendNewNodeData()">
-    <input type="hidden" >
     <label>Titel</label>
     <input formControlName="title" type="text">
     <select formControlName="nodeType" type="text">
