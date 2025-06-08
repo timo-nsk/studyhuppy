@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: mindmap-service
+  neo4j:
+    uri: bolt://neo4j:7687
+    authentication:
+      username: ${MINDMAP_USER}
+      password: ${MINDMAP_PASS}
+server:
+  port: ${SERVER_PORT}
+  address: ${SERVER_ADRESS}
+jwt:
+  secret: ${JWT_SECRET}
