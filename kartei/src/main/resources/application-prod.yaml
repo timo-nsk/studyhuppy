@@ -28,5 +28,6 @@ management:
       access: read_only
 server:
   port: ${SERVER_PORT}
+  address: ${SERVER_ADRESS}
 jwt:
   secret: ${JWT_SECRET}

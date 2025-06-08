@@ -24,6 +24,7 @@ info:
     version: "1.0.0"
 server:
   port: ${SERVER_PORT}
+  address: ${SERVER_ADRESS}
 app:
   metrics:
     track: http://localhost:9080/actuator/metrics/http.server.requests

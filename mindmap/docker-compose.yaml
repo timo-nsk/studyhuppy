@@ -20,6 +20,7 @@ services:
       - "${SERVER_PORT}:${SERVER_PORT}"
     environment:
       - SERVER_PORT=${SERVER_PORT}
+      - SERVER_ADRESS=${SERVER_ADRESS}
       - MINDMAP_USER=${MINDMAP_USER}
       - MINDMAP_PASS=${MINDMAP_PASS}
       - JWT_SECRET=${JWT_SECRET}
