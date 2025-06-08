@@ -5,5 +5,6 @@ export const environment = {
   authServiceUrl: `https://${DOMAIN}:9084/api/v1`,
   modulServiceUrl: `http://${DOMAIN}:9080/api/v1`,
   karteiServiceUrl: `http://${DOMAIN}:9081/api/v1`,
-  actuatorServiceUrl: `http://${DOMAIN}:9085/api/v1`
+  actuatorServiceUrl: `http://${DOMAIN}:9085/api/v1`,
+  apiUrl: '/api/v1'
 };
