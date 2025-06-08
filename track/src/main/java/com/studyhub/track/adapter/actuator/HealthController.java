@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/api/modul/v1")
 public class HealthController {
 
 	private final ModulService modulService;

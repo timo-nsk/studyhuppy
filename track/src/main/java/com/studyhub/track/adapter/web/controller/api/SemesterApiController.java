@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/api/v1")
+@RequestMapping("/api/modul/v1")
 public class SemesterApiController {
 
 	private ModulService modulService;
