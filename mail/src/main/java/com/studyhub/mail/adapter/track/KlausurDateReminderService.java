@@ -51,7 +51,7 @@ public class KlausurDateReminderService {
 	private List<KlausurReminderDto> findKlausurDates(List<String> list) {
 		return WebClient.create()
 				.post()
-				.uri("http://localhost:8080/api/data-klausur-reminding")
+				.uri("http://localhost:9080/api/modul/v1/data-klausur-reminding")
 				.bodyValue(list)
 				.retrieve()
 				.bodyToMono(new ParameterizedTypeReference<List<KlausurReminderDto>>() {})

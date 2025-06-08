@@ -33,7 +33,7 @@ public class KarteiRequestService {
 	//@Scheduled(cron = "0 18 * * * ?")
 	//@Scheduled(fixedRate = 10000)
 	public void pollFaelligeKarteikartenOfStapel() {
-		String uri = "http://localhost:8081/api//get-faelligeKarten";
+		String uri = "http://localhost:9081/api/kartei/v1/get-faelligeKarten";
 
 		CompletableFuture<Map> amountOfFaelligeKarteikarten = WebClient.create()
 				.get()
