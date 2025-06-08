@@ -59,7 +59,8 @@ export class LoginServiceComponent {
             this.badCredentials = true
             this.userNotExists = false
           } else {
-            this.log.error(`error occured while login try. reason: ${err}`)
+            this.log.error(`error occured while login try.`)
+            console.log(err)
           }
         }
       });
