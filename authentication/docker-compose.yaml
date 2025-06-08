@@ -29,6 +29,7 @@ services:
       - "${SERVER_PORT}:${SERVER_PORT}"
     environment:
       - SERVER_PORT=${SERVER_PORT}
+      - SERVER_ADRESS=${SERVER_ADRESS}
       - SPRING_DATASOURCE_USERNAME=${AUTH_DB_USER}
       - SPRING_DATASOURCE_PASSWORD=${AUTH_DB_PASS}
     env_file:
