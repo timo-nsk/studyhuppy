@@ -38,7 +38,7 @@ public class SecurityConfig {
 			//.requiresChannel().anyRequest().requiresSecure().and()
 			.authorizeHttpRequests(auth -> auth
 					.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-					.requestMatchers("/api/v1/get-db-health", "/actuator/health").permitAll().anyRequest().authenticated())
+					.requestMatchers("/api/kartei/v1/get-db-health", "/actuator/health").permitAll().anyRequest().authenticated())
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 			.build();
