@@ -30,12 +30,14 @@ import java.util.List;
 public class SecurityConfig {
 
 	private final JwtAuthFilter jwtAuthFilter;
+	private final CorsLoggingFilter corsFilter;
 	private final AppUserDetailsService userDetailsService;
 	private final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
 
-	public SecurityConfig(JwtAuthFilter jwtAuthFilter, AppUserDetailsService userDetailsService) {
+	public SecurityConfig(JwtAuthFilter jwtAuthFilter, CorsLoggingFilter corsFilter, AppUserDetailsService userDetailsService) {
 		this.jwtAuthFilter = jwtAuthFilter;
-		this.userDetailsService = userDetailsService;
+        this.corsFilter = corsFilter;
+        this.userDetailsService = userDetailsService;
 	}
 
 	@Bean
@@ -51,6 +53,7 @@ public class SecurityConfig {
 						.requestMatchers("/api/v1/login", "/api/v1/register", "/api/v1/password-reset", "/api/get-db-health", "/actuator/health").permitAll()
 						.anyRequest().authenticated())
 				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.addFilterBefore(corsFilter, JwtAuthFilter.class)
 				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
 	}
