@@ -3,12 +3,13 @@ import {LoggingService} from '../logging.service';
 import {HttpClient} from '@angular/common/http';
 import {HeaderService} from '../header.service';
 import {Observable} from 'rxjs';
+import { environment } from '../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
 })
 export class MindmapApiService {
-  BASE_API_URL = 'http://localhost:9087/api/v1';
+  BASE_API_URL = environment.apiUrl
   log = new LoggingService("MindmapApiService", "mindmap-service");
   http = inject(HttpClient);
   headerService = inject(HeaderService)
