@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment'
   providedIn: "root"
 })
 export class UserApiService {
-  BASE_API_URL : string = environment.authServiceUrl
+  BASE_API_URL : string = environment.apiUrl
 
   http = inject(HttpClient)
   headerService = inject(HeaderService)
