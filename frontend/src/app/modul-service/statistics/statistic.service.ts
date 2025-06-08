@@ -9,7 +9,7 @@ import {LoggingService} from '../../logging.service';
   providedIn: "root"
 })
 export class StatisticApiService {
-  BASE_API_URL : string = environment.apiUrl
+  BASE_API_URL : string = environment.modulApiUrl
   log = new LoggingService("StatisticApiService", "modul-service")
   http = inject(HttpClient)
   headerService = inject(HeaderService)

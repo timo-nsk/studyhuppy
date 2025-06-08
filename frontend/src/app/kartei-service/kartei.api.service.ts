@@ -10,7 +10,7 @@ import {LoggingService} from '../logging.service';
   providedIn: 'root'
 })
 export class KarteiApiService {
-  BASE_API_URL : string = environment.apiUrl
+  BASE_API_URL : string = environment.karteiApiUrl
   log = new LoggingService("KarteiApiService", "kartei-service")
   http = inject(HttpClient)
   headerService = inject(HeaderService)

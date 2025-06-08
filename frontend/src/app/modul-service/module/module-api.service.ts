@@ -10,7 +10,7 @@ import {LoggingService} from '../../logging.service';
   providedIn: 'root'
 })
 export class ModuleApiService {
-  private MODUL_BASE_API = environment.apiUrl
+  private MODUL_BASE_API = environment.modulApiUrl
   private headerService = inject(HeaderService)
   private http = inject(HttpClient)
   private log = new LoggingService("ModuleApiService", "modul-service")

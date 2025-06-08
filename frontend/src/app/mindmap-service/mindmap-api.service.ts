@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment'
   providedIn: 'root'
 })
 export class MindmapApiService {
-  BASE_API_URL = environment.apiUrl
+  BASE_API_URL = environment.mindmapApiUrl
   log = new LoggingService("MindmapApiService", "mindmap-service");
   http = inject(HttpClient);
   headerService = inject(HeaderService)
