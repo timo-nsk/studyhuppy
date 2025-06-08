@@ -19,6 +19,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/api/v1/")
+@CrossOrigin(origins = "https://studyhuppy.de")
 public class AuthenticationController {
 
 	private final AuthenticationService authenticationService;
