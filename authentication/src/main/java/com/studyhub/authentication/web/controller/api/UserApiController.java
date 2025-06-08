@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/auth/v1/")
 public class UserApiController {
 	private final AccountService accountService;
 	private final JWTService jwtService;

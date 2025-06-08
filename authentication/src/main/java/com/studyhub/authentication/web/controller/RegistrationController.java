@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/auth/v1/")
 public class RegistrationController {
 
 	private final RegistrationService registrationService;

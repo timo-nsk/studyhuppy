@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/auth/v1/")
 //@CrossOrigin(origins = "https://studyhuppy.de")
 public class AuthenticationController {
 

@@ -11,7 +11,7 @@ import {LoggingService} from '../logging.service';
   providedIn: "root"
 })
 export class AuthApiService {
-  BASE_API_URL= environment.apiUrl
+  BASE_API_URL= environment.authApiUrl
 
   log = new LoggingService("AuthApiService", "auth-service")
 

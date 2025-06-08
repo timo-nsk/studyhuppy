@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Controller
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/auth/v1/")
 public class ChangeAccountDetailsController {
 
 	private final AccountService accountService;
