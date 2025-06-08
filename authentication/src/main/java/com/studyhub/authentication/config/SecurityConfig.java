@@ -30,13 +30,11 @@ import java.util.List;
 public class SecurityConfig {
 
 	private final JwtAuthFilter jwtAuthFilter;
-	private final CorsLoggingFilter corsFilter;
 	private final AppUserDetailsService userDetailsService;
 	private final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
 
-	public SecurityConfig(JwtAuthFilter jwtAuthFilter, CorsLoggingFilter corsFilter, AppUserDetailsService userDetailsService) {
+	public SecurityConfig(JwtAuthFilter jwtAuthFilter, AppUserDetailsService userDetailsService) {
 		this.jwtAuthFilter = jwtAuthFilter;
-        this.corsFilter = corsFilter;
         this.userDetailsService = userDetailsService;
 	}
 
