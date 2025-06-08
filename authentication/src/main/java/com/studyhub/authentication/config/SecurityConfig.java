@@ -53,8 +53,7 @@ public class SecurityConfig {
 						.requestMatchers("/api/v1/login", "/api/v1/register", "/api/v1/password-reset", "/api/get-db-health", "/actuator/health").permitAll()
 						.anyRequest().authenticated())
 				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-				//.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
 	}
 
