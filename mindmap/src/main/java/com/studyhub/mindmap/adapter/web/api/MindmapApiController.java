@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/mindmap/v1")
 public class MindmapApiController {
 
 	private final MindmapService mindmapService;
