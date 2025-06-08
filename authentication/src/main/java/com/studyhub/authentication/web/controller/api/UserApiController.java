@@ -43,6 +43,7 @@ public class UserApiController {
 			String authToken = jwtService.extractTokenFromHeader(authHeader);
 			String username = jwtService.extractUsername(authToken);
 			AppUser user = accountService.findByUsername(username);
+			System.out.println(user);
 
 			if (user != null) return ResponseEntity.ok(UserMapper.toDto(user));
 			else return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
