@@ -28,3 +28,5 @@ jwt:
 maxModule: 30
 kartei:
   api_url: http://localhost:9081/api/kartei/v1
+auth:
+  api-url:  http://localhost:9084/api/auth/v1

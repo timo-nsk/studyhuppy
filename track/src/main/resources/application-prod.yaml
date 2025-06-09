@@ -23,3 +23,5 @@ jwt:
 maxModule: 30
 kartei:
   api_url: https://studyhuppy.de/api/kartei/v1
+auth:
+  api-url: https://studyhuppy.de/api/auth/v1

@@ -1,5 +1,6 @@
 package com.studyhub.track.adapter.web.controller.api;
 
+import com.studyhub.track.adapter.authentication.AuthenticationService;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.adapter.db.modul.ModulDto;
 import com.studyhub.track.adapter.db.modul.ModulMapper;
@@ -32,13 +33,15 @@ public class ModulApiController {
 
 	private final ModulService modulService;
 	private final ModulEventService modulEventService;
+	private final AuthenticationService authenticationService;
 	private final KlausurReminderService klausurReminderService;
 	private final JWTService jwtService;
 
-	public ModulApiController(ModulService service, ModulEventService modulEventService, KlausurReminderService klausurReminderService, JWTService jwtService) {
+	public ModulApiController(ModulService service, ModulEventService modulEventService, AuthenticationService authenticationService, KlausurReminderService klausurReminderService, JWTService jwtService) {
 		this.modulService = service;
 		this.modulEventService = modulEventService;
-		this.klausurReminderService = klausurReminderService;
+        this.authenticationService = authenticationService;
+        this.klausurReminderService = klausurReminderService;
 		this.jwtService = jwtService;
     }
 
@@ -108,8 +111,8 @@ public class ModulApiController {
 	@AngularApi
 	@PostMapping("/new-modul")
 	public ResponseEntity<Void> newModule(@RequestBody ModulForm modulForm, HttpServletRequest request) {
-		//int semester = authenticationService.getSemesterOfUser(jwtService.extractUsername("token"));
-		int semester = 6;
+		int semester = authenticationService.getSemesterOfUser(jwtService.extractUsernameFromHeader(request));
+
 		String username = jwtService.extractUsernameFromHeader(request);
 		Modul modul = modulForm.newModulFromFormData(modulForm, username, semester);
 		/**
