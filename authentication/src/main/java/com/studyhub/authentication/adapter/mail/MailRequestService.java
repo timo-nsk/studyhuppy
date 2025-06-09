@@ -48,4 +48,9 @@ public class MailRequestService {
 				.retryWhen(Retry.fixedDelay(3, Duration.ofSeconds(10)))  // 3 Retries, dann Exception
 				.then();
 	}
+
+	public boolean sendDeleteAllRequest(String username) {
+		//TODO IMPLEMENT: when user deletes account, all data should be deleted
+		return true;
+	}
 }
