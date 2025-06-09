@@ -21,6 +21,6 @@ application:
   mail:
     address: ${MAIL_MAIN_EMAIL}
 kartei:
-  api-url: http://studyhuppy.de/api/kartei/v1
+  api-url: https://studyhuppy.de/api/kartei/v1
 auth:
-  api-url: http://studyhuppy.de/api/auth/v1
+  api-url: https://studyhuppy.de/api/auth/v1
