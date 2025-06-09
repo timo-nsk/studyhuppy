@@ -2,6 +2,7 @@ package com.studyhub.authentication.adapter.mail;
 
 import com.studyhub.authentication.model.AppUser;
 import com.studyhub.authentication.web.EmailChangeRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
@@ -9,14 +10,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.util.retry.Retry;
-
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 
 @Service
 public class MailRequestService {
+	@Value("mail.api-url")
+	private String mailApiUrl;
+
 	public Mono<Void> sendRegistrationConfirmation(AppUser user) {
-		String uri = "http://localhost:9083/new-user-registration";
+		String uri = "%s/new-user-registration".formatted(mailApiUrl);
 
 		return WebClient.create()
 				.post()
@@ -32,7 +34,7 @@ public class MailRequestService {
 	}
 
 	public Mono<Void> sendChangeMailInformation(EmailChangeRequest request) {
-		String uri = "http://localhost:9083/user-change-mail";
+		String uri = "%s/user-change-mail".formatted(mailApiUrl);
 
 		return WebClient.create()
 				.post()

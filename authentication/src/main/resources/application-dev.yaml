@@ -17,3 +17,5 @@ jwt:
   role:
     admin:
       username: ${ADMIN}
+mail:
+  api-url: http://localhost:9083/api/mail/v1
