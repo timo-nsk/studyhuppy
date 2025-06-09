@@ -19,10 +19,10 @@ jwt:
     admin:
       username: ${ADMIN}
 mail:
-  api-url: http://studyhuppy.de/api/mail/v1
+  api-url: https://studyhuppy.de/api/mail/v1
 kartei:
-  api-url: http://studyhuppy.de/api/kartei/v1
+  api-url: https://studyhuppy.de/api/kartei/v1
 modul:
-  api-url: http://studyhuppy.de/api/modul/v1
+  api-url: https://studyhuppy.de/api/modul/v1
 mindmap:
-  api-url: http://studyhuppy.de/api/mindmap/v1
+  api-url: https://studyhuppy.de/api/mindmap/v1
