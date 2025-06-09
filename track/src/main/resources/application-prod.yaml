@@ -21,3 +21,5 @@ server:
 jwt:
   secret: ${JWT_SECRET}
 maxModule: 30
+kartei:
+  api_url: https://studyhuppy.de/api/kartei/v1

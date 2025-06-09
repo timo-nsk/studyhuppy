@@ -26,3 +26,5 @@ server:
 jwt:
   secret: ${JWT_SECRET}
 maxModule: 30
+kartei:
+  api_url: http://localhost:9081/api/kartei/v1
