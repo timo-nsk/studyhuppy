@@ -30,4 +30,8 @@ public class StapelRequestService {
 
 		log.info("CreateNewStapelRequest sent to: %s ".formatted(uri));
 	}
+
+	public void setKarteiApiUrl(String url) {
+		this.karteiApiUrl = url;
+	}
 }

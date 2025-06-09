@@ -145,7 +145,6 @@ public class ModulRepositoryImpl implements ModulRepository {
 	@Override
 	public boolean deleteModultermin(UUID fachId, Modultermin modultermin) {
 		if (modultermin == null || fachId == null) return false;
-
 		Optional<ModulDto> dto = modulDao.findByFachId(fachId);
 
 		if (dto.isPresent()) {

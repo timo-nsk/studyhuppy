@@ -60,6 +60,7 @@ public class LernzeitEstimationServiceTest {
 		assertThat(secondsPerDay).isEqualTo(16400);
 	}
 
+	@Disabled("Case SemesterPhase.KLAUSUR muss refactored werden, weil ken klausurdate mehr gespeichert wird")
 	@Test
 	@DisplayName("""
 			Wenn ein User:

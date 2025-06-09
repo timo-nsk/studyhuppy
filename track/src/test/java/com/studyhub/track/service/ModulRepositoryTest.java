@@ -1,12 +1,11 @@
 package com.studyhub.track.service;
 
 import com.studyhub.track.adapter.db.modul.ModulDao;
+import com.studyhub.track.adapter.db.modul.ModulDto;
 import com.studyhub.track.adapter.db.modul.ModulRepositoryImpl;
 import com.studyhub.track.application.service.ModulRepository;
-import com.studyhub.track.domain.model.modul.Modul;
-import com.studyhub.track.domain.model.modul.Modultermin;
-import com.studyhub.track.domain.model.modul.Terminart;
-import com.studyhub.track.domain.model.modul.Terminfrequenz;
+import com.studyhub.track.domain.model.modul.*;
+import com.studyhub.track.domain.model.semester.Semester;
 import com.studyhub.track.util.ModulMother;
 import org.flywaydb.core.FlywayExecutor;
 import org.flywaydb.core.internal.jdbc.JdbcTemplate;
@@ -20,24 +19,50 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.TestcontainersConfiguration;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import(TestcontainersConfiguration.class)
+@Testcontainers
 @DataJdbcTest
-@ActiveProfiles("test")
 @Rollback(false)
 @Sql(scripts = "drop.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "init_modul_db_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@TestPropertySource(properties = {
+		"spring.datasource.url=jdbc:postgresql://localhost:${container.port}/modultest",
+		"spring.datasource.username=timo",
+		"spring.datasource.password=1234"
+})
 public class ModulRepositoryTest {
+
+	@Container
+	static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15.2")
+			.withDatabaseName("modultest")
+			.withUsername("timo")
+			.withPassword("1234");
+
+	@DynamicPropertySource
+	static void overrideProps(DynamicPropertyRegistry registry) {
+		registry.add("spring.datasource.url", postgres::getJdbcUrl);
+		registry.add("spring.datasource.username", postgres::getUsername);
+		registry.add("spring.datasource.password", postgres::getPassword);
+	}
 
 	@Autowired
 	ModulDao modulRepository;
@@ -182,26 +207,6 @@ public class ModulRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("Das Klausur-Datum eines existierenden Moduls wird gefunden")
-	void test_15() {
-		UUID fachId = UUID.fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479");
-
-		String foundKlausurDate = modulRepository.findKlausurDateByFachId(fachId);
-
-		assertThat(foundKlausurDate).isEqualTo("2025-03-23 14:30:00");
-	}
-
-	@Test
-	@DisplayName("Falls kein Klausur-Datum für ein existierendes Modul eingetragen wurde, wird null zurückgegeben")
-	void test_16() {
-		UUID fachId = UUID.fromString("f48ac10c-58cc-4372-a537-0e02b2c3d479");
-
-		String foundKlausurDate = modulRepository.findKlausurDateByFachId(fachId);
-
-		assertThat(foundKlausurDate).isEqualTo(null);
-	}
-
-	@Test
 	@DisplayName("Anzahl aktiver Module für einen User wird zurückgegeben")
 	void test_17() {
 		int anz = repository.countActiveModules("user123");
@@ -261,7 +266,7 @@ public class ModulRepositoryTest {
 		UUID fachId = UUID.fromString("b8f6e2f5-91a0-4e6d-91b0-ff4e6932a82a");
 		LocalDateTime ldt1 = LocalDateTime.of(2024, 3, 30, 14, 30, 0);
 		LocalDateTime ldt2 = LocalDateTime.of(2024, 4, 30, 14, 30, 0);
-		Modultermin oldTermin = new Modultermin("T6", ldt1, ldt2, null, Terminart.SONSTIGES,Terminfrequenz.EINMALIG);
+		Modultermin oldTermin = new Modultermin("T6", ldt1, ldt2, null, null,Terminfrequenz.EINMALIG);
 
 		boolean success = repository.deleteModultermin(fachId, oldTermin);
 
@@ -272,7 +277,7 @@ public class ModulRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("Löschen eines Modultermins mit ungültigen Parametern ist ncniht möglich")
+	@DisplayName("Löschen eines Modultermins mit ungültigen Parametern ist nicht möglich")
 	void test_22() {
 		UUID fachId1 = null;
 		LocalDateTime ldt1 = LocalDateTime.of(2024, 3, 30, 14, 30, 0);
