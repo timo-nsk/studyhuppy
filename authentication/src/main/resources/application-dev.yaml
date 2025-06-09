@@ -19,3 +19,9 @@ jwt:
       username: ${ADMIN}
 mail:
   api-url: http://localhost:9083/api/mail/v1
+kartei:
+  api-url: http://localhost:9081/api/kartei/v1
+modul:
+  api-url: http://localhost:9080/api/modul/v1
+mindmap:
+  api-url: http://localhost:9087/api/mindmap/v1
