@@ -1,5 +1,6 @@
 package com.studyhub.track.adapter.web.controller;
 
+import com.studyhub.track.adapter.authentication.AuthenticationService;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.adapter.mail.KlausurReminderService;
 import com.studyhub.track.adapter.security.SecurityConfig;
@@ -11,9 +12,11 @@ import com.studyhub.track.adapter.web.controller.api.ModulApiController;
 import com.studyhub.track.application.service.dto.NeuerModulterminRequest;
 import com.studyhub.track.application.service.ModulEventService;
 import com.studyhub.track.application.service.ModulService;
+import com.studyhub.track.domain.model.modul.Lerntage;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.Terminart;
 import com.studyhub.track.domain.model.modul.Terminfrequenz;
+import com.studyhub.track.domain.model.semester.SemesterPhase;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,6 +27,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,8 +46,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(ModulApiController.class)
 @Import(SecurityConfig.class)
+@TestPropertySource(properties = "maxModule=30")
+@ActiveProfiles("application-dev.yaml")
 public class ModulApiControllerTest {
-
 	@Value("${maxModule}")
 	private int MAX_MODULE;
 
@@ -61,6 +67,9 @@ public class ModulApiControllerTest {
 	private ModulEventService modulEventService;
 
 	@MockitoBean
+	private AuthenticationService authenticationService;
+
+	@MockitoBean
 	private KlausurReminderService klausurReminderService;
 
 	@Autowired
@@ -70,14 +79,15 @@ public class ModulApiControllerTest {
 	@DisplayName("Wenn ein neues Modul erstellt werden soll und der User noch welche erstellen kann, wird das Modul gespeichert")
 	void test_01() {
 		ModulForm modulForm = mock(ModulForm.class);
+		ModulForm dataForNewModul = new ModulForm("m1", 10, 90, 210, LocalDate.now(), "10:00", true, true, true, true, true, true, true);
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		Modul m = new Modul();
 
 		when(jwtService.extractUsernameFromHeader(request)).thenReturn("peter");
 		when(modulService.modulCanBeCreated("peter", MAX_MODULE)).thenReturn(true);
-		when(modulForm.newModulFromFormData(any(ModulForm.class), "peter", anyInt())).thenReturn(m);
+		when(modulForm.newModulFromFormData(dataForNewModul, "peter", 2)).thenReturn(m);
 
-		modulApiController.newModule(modulForm, request);
+		modulApiController.newModule(dataForNewModul, request);
 
 		verify(modulService).saveNewModul(any(Modul.class));
 	}
@@ -86,14 +96,15 @@ public class ModulApiControllerTest {
 	@DisplayName("Wenn ein neues Modul erstellt werden soll und der User schon die maximale Anzahl erstellter Module erreich hat, wird das Modul nicht gespeichert")
 	void test_02() {
 		ModulForm modulForm = mock(ModulForm.class);
+		ModulForm dataForNewModul = new ModulForm("m1", 10, 90, 210, LocalDate.now(), "10:00", true, true, true, true, true, true, true);
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		Modul m = new Modul();
 
 		when(jwtService.extractUsernameFromHeader(request)).thenReturn("peter");
 		when(modulService.modulCanBeCreated("peter", MAX_MODULE)).thenReturn(false);
-		when(modulForm.newModulFromFormData(any(ModulForm.class), "peter", anyInt())).thenReturn(m);
+		when(modulForm.newModulFromFormData(dataForNewModul, "peter", 2)).thenReturn(m);
 
-		modulApiController.newModule(modulForm, request);
+		modulApiController.newModule(dataForNewModul, request);
 
 		verify(modulService, times(0)).saveNewModul(any(Modul.class));
 	}
@@ -113,7 +124,7 @@ public class ModulApiControllerTest {
 	@WithMockUser(username="testuser", roles = "USER")
 	void test_04() throws Exception {
 		ModulUpdateRequest modulUpdateRequest = new ModulUpdateRequest(UUID.randomUUID().toString(), 20, 10);
-		mvc.perform(post("/api/update")
+		mvc.perform(post("/api/modul/v1/update")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(modulUpdateRequest)))
 				.andExpect(status().isOk());
@@ -122,7 +133,7 @@ public class ModulApiControllerTest {
 	@Test
 	@DisplayName("Get-Request auf /get-seconds ist nicht als unauthentifizierte Person möglich")
 	void test_05() throws Exception {
-		mvc.perform(get("/api/get-seconds"))
+		mvc.perform(get("/api/modul/v1/get-seconds"))
 				.andExpect(status().isForbidden());
 	}
 
@@ -130,7 +141,7 @@ public class ModulApiControllerTest {
 	@DisplayName("Get-Request auf /get-seconds ist als authentifizierte Person möglich")
 	@WithMockUser(username="testuser", roles = "USER")
 	void test_06() throws Exception {
-		mvc.perform(get("/api/get-seconds")
+		mvc.perform(get("/api/modul/v1/get-seconds")
 						.queryParam("fachId", UUID.randomUUID().toString()))
 				.andExpect(status().isOk());
 	}
@@ -138,7 +149,7 @@ public class ModulApiControllerTest {
 	@Test
 	@DisplayName("Get-Request auf /module-map ist nicht als unauthentifizierte Person möglich")
 	void test_7() throws Exception {
-		mvc.perform(get("/api/module-map"))
+		mvc.perform(get("/api/modul/v1/module-map"))
 				.andExpect(status().isForbidden());
 	}
 
@@ -146,14 +157,14 @@ public class ModulApiControllerTest {
 	@DisplayName("Get-Request auf /module-map ist als authentifizierte Person möglich")
 	@WithMockUser(username="testuser", roles = "USER")
 	void test_8() throws Exception {
-		mvc.perform(get("/api/module-map"))
+		mvc.perform(get("/api/modul/v1/module-map"))
 				.andExpect(status().isOk());
 	}
 
 	@Test
 	@DisplayName("Get-Request auf /module-name ist nicht als unauthentifizierte Person möglich")
 	void test_9() throws Exception {
-		mvc.perform(get("/api/module-name"))
+		mvc.perform(get("/api/modul/v1/module-name"))
 				.andExpect(status().isForbidden());
 	}
 
@@ -161,7 +172,7 @@ public class ModulApiControllerTest {
 	@DisplayName("Get-Request auf /module-name ist nicht als unauthentifizierte Person möglich")
 	@WithMockUser(username="testuser", roles = "USER")
 	void test_10() throws Exception {
-		mvc.perform(get("/api/module-name")
+		mvc.perform(get("/api/modul/v1/module-name")
 						.param("modulFachId", UUID.randomUUID().toString()))
 				.andExpect(status().isOk());
 	}
@@ -169,7 +180,7 @@ public class ModulApiControllerTest {
 	@Test
 	@DisplayName("Post-Request auf /data-klausur-reminding ist nicht als unauthentifizierte Person möglich")
 	void test_11() throws Exception {
-		mvc.perform(post("/api/data-klausur-reminding"))
+		mvc.perform(post("/api/modul/v1/data-klausur-reminding"))
 				.andExpect(status().isForbidden());
 	}
 
@@ -178,7 +189,7 @@ public class ModulApiControllerTest {
 	@WithMockUser(username="testuser", roles = "USER")
 	void test_12() throws Exception {
 		List<String> l = List.of("user1", "user2");
-		mvc.perform(post("/api/data-klausur-reminding")
+		mvc.perform(post("/api/modul/v1/data-klausur-reminding")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(objectMapper.writeValueAsString(l)))
 				.andExpect(status().isOk());
@@ -187,7 +198,7 @@ public class ModulApiControllerTest {
 	@Test
 	@DisplayName("Put-Request auf /reset ist nicht als unauthentifizierte Person möglich")
 	void test_13() throws Exception {
-		mvc.perform(put("/api/reset"))
+		mvc.perform(put("/api/modul/v1/reset"))
 				.andExpect(status().isForbidden());
 	}
 
@@ -195,7 +206,7 @@ public class ModulApiControllerTest {
 	@DisplayName("Put-Request auf /reset ist als authentifizierte Person möglich")
 	@WithMockUser(username="testuser", roles = "USER")
 	void test_14() throws Exception {
-		mvc.perform(put("/api/reset")
+		mvc.perform(put("/api/modul/v1/reset")
 						.param("fachId", UUID.randomUUID().toString()))
 				.andExpect(status().isOk());
 	}
@@ -203,7 +214,7 @@ public class ModulApiControllerTest {
 	@Test
 	@DisplayName("Delete-Request auf /delete ist nicht als unauthentifizierte Person möglich")
 	void test_15() throws Exception {
-		mvc.perform(delete("/api/delete"))
+		mvc.perform(delete("/api/modul/v1/delete"))
 				.andExpect(status().isForbidden());
 	}
 
@@ -211,7 +222,7 @@ public class ModulApiControllerTest {
 	@DisplayName("Delete-Request auf /delete ist als authentifizierte Person möglich")
 	@WithMockUser(username="testuser", roles = "USER")
 	void test_16() throws Exception {
-		mvc.perform(delete("/api/delete")
+		mvc.perform(delete("/api/modul/v1/delete")
 						.param("fachId", UUID.randomUUID().toString()))
 				.andExpect(status().isNoContent());
 	}
@@ -219,7 +230,7 @@ public class ModulApiControllerTest {
 	@Test
 	@DisplayName("Get-Request auf /get-active-modules ist nicht als unauthentifizierte Person möglich")
 	void test_17() throws Exception {
-		mvc.perform(get("/api/get-active-modules"))
+		mvc.perform(get("/api/modul/v1/get-active-modules"))
 				.andExpect(status().isForbidden());
 	}
 
@@ -227,14 +238,14 @@ public class ModulApiControllerTest {
 	@DisplayName("Get-Request auf /get-active-modules ist als authentifizierte Person möglich")
 	@WithMockUser(username="testuser", roles = "USER")
 	void test_18() throws Exception {
-		mvc.perform(get("/api/get-active-modules"))
+		mvc.perform(get("/api/modul/v1/get-active-modules"))
 				.andExpect(status().isOk());
 	}
 
 	@Test
 	@DisplayName("Get-Request auf /get-all-by-username ist nicht als unauthentifizierte Person möglich")
 	void test_19() throws Exception {
-		mvc.perform(get("/api/get-all-by-username"))
+		mvc.perform(get("/api/modul/v1/get-all-by-username"))
 				.andExpect(status().isForbidden());
 	}
 
@@ -242,14 +253,14 @@ public class ModulApiControllerTest {
 	@DisplayName("Get-Request auf /get-all-by-username ist als authentifizierte Person möglich")
 	@WithMockUser(username="testuser", roles = "USER")
 	void test_20() throws Exception {
-		mvc.perform(get("/api/get-all-by-username"))
+		mvc.perform(get("/api/modul/v1/get-all-by-username"))
 				.andExpect(status().isOk());
 	}
 
 	@Test
 	@DisplayName("Put-Request auf /change-active ist nicht als unauthentifizierte Person möglich")
 	void test_21() throws Exception {
-		mvc.perform(put("/api/change-active"))
+		mvc.perform(put("/api/modul/v1/change-active"))
 				.andExpect(status().isForbidden());
 	}
 
@@ -257,7 +268,7 @@ public class ModulApiControllerTest {
 	@DisplayName("Put-Request auf /change-active ist als authentifizierte Person möglich")
 	@WithMockUser(username="testuser", roles = "USER")
 	void test_22() throws Exception {
-		mvc.perform(put("/api/change-active")
+		mvc.perform(put("/api/modul/v1/change-active")
 						.param("fachId", UUID.randomUUID().toString()))
 				.andExpect(status().isOk());
 	}
@@ -266,7 +277,7 @@ public class ModulApiControllerTest {
 	@DisplayName("Post-Request auf /add-time ist nicht als unauthentifizierte Person möglich")
 	void test_23() throws Exception {
 		AddTimeRequest req = new AddTimeRequest(UUID.randomUUID().toString(), "01:30");
-		mvc.perform(post("/api/add-time")
+		mvc.perform(post("/api/modul/v1/add-time")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(objectMapper.writeValueAsString(req)))
 				.andExpect(status().isForbidden());
@@ -277,7 +288,7 @@ public class ModulApiControllerTest {
 	@WithMockUser(username="testuser", roles = "USER")
 	void test_24() throws Exception {
 		AddTimeRequest req = new AddTimeRequest(UUID.randomUUID().toString(), "01:30");
-		mvc.perform(post("/api/add-time")
+		mvc.perform(post("/api/modul/v1/add-time")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(objectMapper.writeValueAsString(req)))
 				.andExpect(status().isOk());
@@ -287,7 +298,7 @@ public class ModulApiControllerTest {
 	@DisplayName("Post-Request auf /add-klausur-dat ist nicht als unauthentifizierte Person möglich")
 	void test_25() throws Exception {
 		KlausurDateRequest req = new KlausurDateRequest(UUID.randomUUID().toString(), LocalDate.now(), "00:30");
-		mvc.perform(post("/api/add-klausur-date")
+		mvc.perform(post("/api/modul/v1/add-klausur-date")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(objectMapper.writeValueAsString(req)))
 				.andExpect(status().isForbidden());
@@ -301,7 +312,7 @@ public class ModulApiControllerTest {
 
 		KlausurDateRequest req = new KlausurDateRequest(UUID.randomUUID().toString(), LocalDate.now(), "00:30");
 		System.out.println(objectMapper.writeValueAsString(req));
-		mvc.perform(post("/api/add-klausur-date")
+		mvc.perform(post("/api/modul/v1/add-klausur-date")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(objectMapper.writeValueAsString(req)))
 				.andExpect(status().isOk());
@@ -310,7 +321,7 @@ public class ModulApiControllerTest {
 	@Test
 	@DisplayName("Get-Request auf /getModultermine ist nicht als unauthentifizierte Person möglich")
 	void test_27() throws Exception {
-		mvc.perform(get("/api/getModultermine"))
+		mvc.perform(get("/api/modul/v1/getModultermine"))
 				.andExpect(status().isForbidden());
 	}
 
@@ -318,7 +329,7 @@ public class ModulApiControllerTest {
 	@DisplayName("Get-Request auf /getModultermine ist als authentifizierte Person möglich")
 	@WithMockUser(username="testuser", roles = "USER")
 	void test_28() throws Exception {
-		mvc.perform(get("/api/getModultermine")
+		mvc.perform(get("/api/modul/v1/getModultermine")
 						.param("modulId", UUID.randomUUID().toString()))
 				.andExpect(status().isOk());
 	}
@@ -336,7 +347,7 @@ public class ModulApiControllerTest {
 				Terminfrequenz.EINMALIG
 		);
 
-		mvc.perform(post("/api/addModultermin")
+		mvc.perform(post("/api/modul/v1/addModultermin")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(objectMapper.writeValueAsString(req)))
 				.andExpect(status().isForbidden());
@@ -357,7 +368,7 @@ public class ModulApiControllerTest {
 				Terminfrequenz.EINMALIG
 		);
 
-		mvc.perform(post("/api/addModultermin")
+		mvc.perform(post("/api/modul/v1/addModultermin")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(objectMapper.writeValueAsString(req)))
 				.andExpect(status().isCreated());
