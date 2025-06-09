@@ -12,7 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.TestcontainersConfiguration;
 
 import java.time.LocalDateTime;
@@ -21,10 +27,28 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Testcontainers
 @Import(TestcontainersConfiguration.class)
 @DataJdbcTest
+@TestPropertySource(properties = {
+		"spring.datasource.url=jdbc:postgresql://localhost:${container.port}/karteitest",
+		"spring.datasource.username=timo",
+		"spring.datasource.password=1234"
+})
 public class KarteikarteGelerntEventRepositoryTest {
+
+	@Container
+	static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15.2")
+			.withDatabaseName("modultest")
+			.withUsername("timo")
+			.withPassword("1234");
+
+	@DynamicPropertySource
+	static void overrideProps(DynamicPropertyRegistry registry) {
+		registry.add("spring.datasource.url", postgres::getJdbcUrl);
+		registry.add("spring.datasource.username", postgres::getUsername);
+		registry.add("spring.datasource.password", postgres::getPassword);
+	}
 
 	@Autowired
 	KarteikarteGelerntEventDao dao;
