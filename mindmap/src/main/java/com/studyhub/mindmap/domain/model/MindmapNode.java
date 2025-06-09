@@ -86,7 +86,7 @@ public class MindmapNode {
         Tuple<List<String>, Boolean> resTuple = checkConsistency(UUID.randomUUID(), title, nodeType, "dummy");
 
         if (!resTuple._2()) {
-            throw new IllegalRootConsistencyException(resTuple._1().stream().toString());
+            throw new IllegalChildConsistencyException(resTuple._1().stream().toString());
         }
 
         return new MindmapNode(UUID.randomUUID(), null, title, text, nodeType, NodeRole.CHILD);
