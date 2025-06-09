@@ -9,7 +9,7 @@ import { environment } from '../../../../environments/environment'
   providedIn: "root"
 })
 export class ActuatorApiService {
-  BASE_API_URL = environment.actuatorServiceUrl
+  BASE_API_URL = environment.actuatorApiUrl
   http : HttpClient = inject(HttpClient)
   headerService = inject(HeaderService)
 
