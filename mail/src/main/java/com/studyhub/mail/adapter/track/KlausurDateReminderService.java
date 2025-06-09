@@ -1,6 +1,7 @@
 package com.studyhub.mail.adapter.track;
 
 import com.studyhub.mail.application.service.TemplateMailService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,9 @@ import java.util.Map;
 
 @Service
 public class KlausurDateReminderService {
+
+	@Value("${auth.api-url}")
+	private String authApiUrl;
 
 	private final TemplateMailService templateMailService;
 
@@ -63,7 +67,7 @@ public class KlausurDateReminderService {
 	private Map<String, String> getUsersWithNotificationOn() {
 		return WebClient.create()
 				.get()
-				.uri("http://localhost:8084/api/v1/get-users-notification")
+				.uri("%s/get-users-notification".formatted(authApiUrl))
 				.retrieve()
 				.bodyToMono(new ParameterizedTypeReference<Map<String, String>>() {})
 				.timeout(Duration.ofSeconds(5))

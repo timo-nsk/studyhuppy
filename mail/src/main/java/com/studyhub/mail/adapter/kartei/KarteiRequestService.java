@@ -4,6 +4,7 @@ import com.studyhub.mail.application.service.TemplateMailService;
 import jakarta.mail.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -16,6 +17,9 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public class KarteiRequestService {
+
+	@Value("${kartei.api-url}")
+	private String karteiApiUrl;
 
 	private TemplateMailService templateMailService;
 
@@ -33,7 +37,7 @@ public class KarteiRequestService {
 	//@Scheduled(cron = "0 18 * * * ?")
 	//@Scheduled(fixedRate = 10000)
 	public void pollFaelligeKarteikartenOfStapel() {
-		String uri = "http://localhost:9081/api/kartei/v1/get-faelligeKarten";
+		String uri = "%s/get-faelligeKarten".formatted(karteiApiUrl);
 
 		CompletableFuture<Map> amountOfFaelligeKarteikarten = WebClient.create()
 				.get()

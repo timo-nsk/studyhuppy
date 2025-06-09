@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: mail
+  mail:
+    host: localhost
+    port: 1025
+    username: timo
+    password: 1234
+  datasource:
+    password: ${MAIL_DB_PASS}
+    username: ${MAIL_DB_USER}
+    url: jdbc:postgresql://localhost:6435/${MAIL_DB}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+server:
+  port: 9083
+application:
+  mail:
+    address: ${MAIL_MAIN_EMAIL}
+kartei:
+  api-url: http://localhost:9081/api/kartei/v1
+auth:
+  api-url: http://localhost:9084/api/auth/v1
