@@ -3,6 +3,8 @@ package com.studyhub.track.adapter.authentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import java.time.Duration;
@@ -14,15 +16,20 @@ public class AuthenticationService {
 
 	private Logger log = LoggerFactory.getLogger(AuthenticationService.class);
 
-	public Integer getSemesterOfUser(String username) {
+	public Integer getSemesterOfUser(String username, String token) {
 		log.info("Try get fachsemester of user '%s' from authentication service.", username);
-		return WebClient.create()
+		System.out.println(token);
+		return WebClient.builder()
+				.baseUrl(authAiUrl)
+				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE)
+				.build()
 				.post()
-				.uri("%s/get-semester".formatted(authAiUrl))
+				.uri("/get-semester")
+				.header("Authorization", "Bearer " + token)
 				.bodyValue(username)
 				.retrieve()
 				.bodyToMono(Integer.class)
-				.timeout(Duration.ofSeconds(5))
 				.block();
+
 	}
 }

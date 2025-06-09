@@ -111,9 +111,9 @@ public class ModulApiController {
 	@AngularApi
 	@PostMapping("/new-modul")
 	public ResponseEntity<Void> newModule(@RequestBody ModulForm modulForm, HttpServletRequest request) {
-		int semester = authenticationService.getSemesterOfUser(jwtService.extractUsernameFromHeader(request));
-
 		String username = jwtService.extractUsernameFromHeader(request);
+		int semester = authenticationService.getSemesterOfUser(username, jwtService.extractTokenFromHeader(request.getHeader("Authorization")));
+
 		Modul modul = modulForm.newModulFromFormData(modulForm, username, semester);
 		/**
 		 if (Optional.ofNullable(modulForm.stapelCheckbox()).orElse(false)) {
@@ -124,7 +124,7 @@ public class ModulApiController {
 		 }
 		 **/
 
-		if (modulService.modulCanBeCreated(jwtService.extractUsernameFromHeader(request), MAX_MODULE)) {
+		if (modulService.modulCanBeCreated(username, MAX_MODULE)) {
 			modulService.saveNewModul(modul);
 			return ResponseEntity.status(HttpStatus.CREATED).build();
 		} else {

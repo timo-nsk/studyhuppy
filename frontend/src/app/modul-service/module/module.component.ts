@@ -34,7 +34,8 @@ export class ModuleComponent implements OnInit{
         this.isLoading = false
         this.initDisabledBtn()
         this.initOpenPanels()
-        this.log.debug("Got active module")
+        this.log.debug("Got active module:")
+        console.log(this.module)
       },
       error: (err) => {
         this.log.error(err)
