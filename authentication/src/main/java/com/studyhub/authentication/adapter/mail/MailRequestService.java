@@ -19,7 +19,6 @@ public class MailRequestService {
 
 	public Mono<Void> sendRegistrationConfirmation(AppUser user) {
 		String uri = "%s/new-user-registration".formatted(mailApiUrl);
-		System.out.println(uri);
 
 		return WebClient.create()
 				.post()
