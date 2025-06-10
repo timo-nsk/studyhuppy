@@ -27,15 +27,23 @@ server:
   address: ${SERVER_ADRESS}
 app:
   metrics:
-    track: http://localhost:9080/actuator/metrics/http.server.requests
-    kartei: http://localhost:9081/actuator/metrics/http.server.requests
-    mail: http://localhost:9083/actuator/metrics/http.server.requests
-    authentication: http://localhost:9084/actuator/metrics/http.server.requests
-  services:
-    health:
-      track: http://localhost:9080/actuator/health
-      kartei: http://localhost:9081/actuator/health
-      mail: http://localhost:9083/actuator/health
-      authentication: http://localhost:9084/actuator/health
+    modul: https://studyhuppy.de/api/modul/v1/actuator/metrics/http.server.requests
+    kartei: https://studyhuppy.de/api/kartei/v1/actuator/metrics/http.server.requests
+    mail: https://studyhuppy.de/api/mail/v1/actuator/metrics/http.server.requests
+    authentication: https://studyhuppy.de/api/auth/v1/actuator/metrics/http.server.requests
+    mindmap: https://studyhuppy.de/api/mindmap/v1/actuator/metrics/http.server.requests
+  health:
+    service:
+      modul: https://studyhuppy.de/api/modul/v1/actuator/health
+      kartei: https://studyhuppy.de/api/kartei/v1/actuator/health
+      mail: https://studyhuppy.de/api/mail/v1/actuator/health
+      authentication: https://studyhuppy.de/api/auth/v1/actuator/health
+      mindmap: https://studyhuppy.de/api/mindmap/v1/actuator/health
+    db:
+      modul: https://studyhuppy.de/api/modul/v1/get-db-health
+      kartei: https://studyhuppy.de/api/kartei/v1/get-db-health
+      mail: https://studyhuppy.de/api/mail/v1/get-db-health
+      authentication: https://studyhuppy.de/api/auth/v1/get-db-health
+      mindmap: https://studyhuppy.de/api/mindmap/v1/get-db-health
   api:
     token: ${ACTUATOR_API_KEY}

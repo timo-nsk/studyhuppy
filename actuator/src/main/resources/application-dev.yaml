@@ -26,17 +26,23 @@ server:
   port: ${SERVER_PORT}
 app:
   metrics:
-    # TODO: später noch auch https ändern wenn das in den services eingeschaltet ist
-    track: http://localhost:9080/actuator/metrics/http.server.requests
-    kartei: http://localhost:9081/actuator/metrics/http.server.requests
-    mail: http://localhost:9083/actuator/metrics/http.server.requests
-    authentication: https://localhost:9084/actuator/metrics/http.server.requests
-  services:
-    health:
-      # TODO: später noch auch https ändern wenn das in den services eingeschaltet ist
-      track: http://localhost:9080/actuator/health
-      kartei: http://localhost:9081/actuator/health
-      mail: http://localhost:9083/actuator/health
-      authentication: https://localhost:9084/actuator/health
+    modul: http://studyhuppy.de/api/modul/v1/actuator/metrics/http.server.requests
+    kartei: http://studyhuppy.de/api/kartei/v1/actuator/metrics/http.server.requests
+    mail: http://studyhuppy.de/api/mail/v1/actuator/metrics/http.server.requests
+    authentication: http://studyhuppy.de/api/auth/v1/actuator/metrics/http.server.requests
+    mindmap: http://studyhuppy.de/api/mindmap/v1/actuator/metrics/http.server.requests
+  health:
+    service:
+      modul: http://studyhuppy.de/api/modul/v1/actuator/health
+      kartei: http://studyhuppy.de/api/kartei/v1/actuator/health
+      mail: http://studyhuppy.de/api/mail/v1/actuator/health
+      authentication: http://studyhuppy.de/api/auth/v1/actuator/health
+      mindmap: http://studyhuppy.de/api/mindmap/v1/actuator/health
+    db:
+      modul: http://studyhuppy.de/api/modul/v1/get-db-health
+      kartei: http://studyhuppy.de/api/kartei/v1/get-db-health
+      mail: http://studyhuppy.de/api/mail/v1/get-db-health
+      authentication: http://studyhuppy.de/api/auth/v1/get-db-health
+      mindmap: http://studyhuppy.de/api/mindmap/v1/get-db-health
   api:
     token: ${ACTUATOR_API_KEY}
