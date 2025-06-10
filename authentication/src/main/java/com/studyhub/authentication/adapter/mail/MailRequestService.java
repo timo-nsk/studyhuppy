@@ -14,11 +14,12 @@ import java.time.Duration;
 
 @Service
 public class MailRequestService {
-	@Value("mail.api-url")
+	@Value("${mail.api-url}")
 	private String mailApiUrl;
 
 	public Mono<Void> sendRegistrationConfirmation(AppUser user) {
 		String uri = "%s/new-user-registration".formatted(mailApiUrl);
+		System.out.println(uri);
 
 		return WebClient.create()
 				.post()
