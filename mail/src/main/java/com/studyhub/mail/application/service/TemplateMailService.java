@@ -1,5 +1,6 @@
 package com.studyhub.mail.application.service;
 
+import com.studyhub.mail.adapter.auth.ChangePasswordRequest;
 import com.studyhub.mail.adapter.auth.EmailChangeRequest;
 import com.studyhub.mail.adapter.auth.RegistrationRequest;
 import jakarta.mail.MessagingException;
@@ -56,5 +57,14 @@ public class TemplateMailService {
 		String text = templateEngine.process("mail/email-change/email-change", context);
 
 		mailService.sendEmailChangeConfirmation(text, emailChangeRequest.getNewMail());
+	}
+
+	public void preparePasswordChangeConfirmationTemplate(ChangePasswordRequest passwordChangeRequest) {
+		Context context = new Context();
+		context.setVariable("username", passwordChangeRequest.getUsername());
+
+		String text = templateEngine.process("mail/password-change/password-change", context);
+
+		mailService.sendPasswordChangeConfirmation(text, passwordChangeRequest.getMail());
 	}
 }

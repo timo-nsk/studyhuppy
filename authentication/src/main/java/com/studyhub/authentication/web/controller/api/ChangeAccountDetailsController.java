@@ -2,20 +2,18 @@ package com.studyhub.authentication.web.controller.api;
 
 import com.studyhub.authentication.adapter.mail.MailRequestService;
 import com.studyhub.authentication.config.JWTService;
+import com.studyhub.authentication.model.AppUser;
 import com.studyhub.authentication.service.EmailChangeException;
-import com.studyhub.authentication.web.ChangePasswordForm;
+import com.studyhub.authentication.web.ChangePasswordRequest;
 import com.studyhub.authentication.web.EmailChangeRequest;
 import com.studyhub.authentication.service.AccountService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @Controller
 @RequestMapping("/api/auth/v1/")
@@ -32,10 +30,15 @@ public class ChangeAccountDetailsController {
 	}
 
 	@PutMapping("/change-password")
-	public ResponseEntity<Void> tryChangePassword(@RequestBody ChangePasswordForm req) {
-		System.out.println(req);
-		if(accountService.validPassword(req.oldPw(), req.userId())) {
-			accountService.changePassword(req.newPw(), req.userId());
+	public ResponseEntity<Void> tryChangePassword(@RequestBody ChangePasswordRequest req, HttpServletRequest servletRequest) {
+		if(accountService.validPassword(req.getOldPw(), req.getUserId())) {
+			String username = jwtService.extractUsernameFromHeader(servletRequest);
+			AppUser user = accountService.findByUsername(username);
+			accountService.changePassword(req.getNewPw(), req.getUserId());
+			req.setUsername(jwtService.extractUsernameFromHeader(servletRequest));
+			req.setMail(user.getMail());
+			req.clearPasswords();
+			mailRequestService.sendChangePasswordInformation(req);
 			return ResponseEntity.ok().build();
 		} else {
 			return ResponseEntity.badRequest().build();

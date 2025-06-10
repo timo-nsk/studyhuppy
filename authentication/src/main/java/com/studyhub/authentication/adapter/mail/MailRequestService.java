@@ -1,6 +1,7 @@
 package com.studyhub.authentication.adapter.mail;
 
 import com.studyhub.authentication.model.AppUser;
+import com.studyhub.authentication.web.ChangePasswordRequest;
 import com.studyhub.authentication.web.EmailChangeRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,5 +64,27 @@ public class MailRequestService {
 	public boolean sendDeleteAllRequest(String username) {
 		//TODO IMPLEMENT: when user deletes account, all data should be deleted
 		return true;
+	}
+
+	public void sendChangePasswordInformation(ChangePasswordRequest request) {
+		String uri = "%s/user-change-password".formatted(mailApiUrl);
+
+		WebClient.create()
+				.post()
+				.uri(uri)
+				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+				.bodyValue(request)
+				.retrieve()
+				.onStatus(HttpStatusCode::isError, response -> Mono.error(new RuntimeException("Fehlerhafte Antwort: " + response.statusCode())))
+				.bodyToMono(String.class)
+				.timeout(Duration.ofSeconds(10))
+				.retryWhen(Retry.fixedDelay(3, Duration.ofSeconds(10)))  // 3 Retries, dann Exception
+				.doOnSuccess(s -> {
+					log.info("successfully sent ChangePasswordRequest to mail-service");
+				})
+				.doOnError(e -> {
+					log.error("failed to send ChangePasswordRequest to mail-service", e);
+				})
+				.subscribe();
 	}
 }

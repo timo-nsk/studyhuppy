@@ -1,5 +1,6 @@
 package com.studyhub.mail.adapter.web;
 
+import com.studyhub.mail.adapter.auth.ChangePasswordRequest;
 import com.studyhub.mail.adapter.auth.EmailChangeRequest;
 import com.studyhub.mail.adapter.auth.RegistrationRequest;
 import com.studyhub.mail.application.service.MailGesendetEventService;
@@ -50,4 +51,20 @@ public class MailController {
 			return ResponseEntity.internalServerError().build();
 		}
 	}
+
+	@PostMapping("/user-change-password")
+	public ResponseEntity<Void> sendChangedPasswordInformation(@RequestBody ChangePasswordRequest passwordChangeRequest) {
+		try {
+			templateMailService.preparePasswordChangeConfirmationTemplate(passwordChangeRequest);
+			mailGesendetEventService.prepareSavingEvent(MailTyp.USER_DATA_CHANGE, true);
+			log.info("Sent password change confirmation");
+			return ResponseEntity.ok().build();
+		} catch(MailException e) {
+			log.error("Failed to send password change confirmation", e);
+			mailGesendetEventService.prepareSavingEvent(MailTyp.USER_DATA_CHANGE, false);
+			return ResponseEntity.internalServerError().build();
+		}
+	}
+
+
 }

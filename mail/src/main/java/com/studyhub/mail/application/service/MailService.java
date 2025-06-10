@@ -67,4 +67,13 @@ public class MailService {
 		mailSender.send(mimeMessage);
 		mailGesendetEventService.prepareSavingEvent(MailTyp.USER_DATA_CHANGE, true);
 	}
+
+	public void sendPasswordChangeConfirmation(String text, String to) {
+		MimeMessage mimeMessage = prepareMimeMessage(mailSender, "Studyhuppy - Passwort geändert", text, appMailAddress, to);
+
+
+		mailSender.send(mimeMessage);
+		mailGesendetEventService.prepareSavingEvent(MailTyp.USER_DATA_CHANGE, true);
+
+	}
 }
