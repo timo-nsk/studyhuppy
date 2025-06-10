@@ -79,4 +79,23 @@ public class JWTService {
 		String token = extractTokenFromHeader(header);
 		return extractUsername(token);
 	}
+
+	public List<String> extractAuthorities(String token) {
+		try {
+			Claims claims = extractAllClaims(token);
+			Object authoritiesClaim = claims.get("authorities");
+
+			if (authoritiesClaim instanceof List<?>) {
+				List<?> rawList = (List<?>) authoritiesClaim;
+				return rawList.stream()
+						.map(Object::toString)
+						.collect(java.util.stream.Collectors.toList());
+			}
+		} catch (io.jsonwebtoken.JwtException e) {
+			System.err.println("Failed to extract authorities due to JWT exception: " + e.getMessage());
+		} catch (ClassCastException e) {
+			System.err.println("Authorities claim found but not in expected List<String> format: " + e.getMessage());
+		}
+		return List.of();
+	}
 }

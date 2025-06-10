@@ -14,6 +14,8 @@ import java.util.UUID;
 @Repository
 public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
 
+	List<AppUser> findAll();
+
 	AppUser findByUsername(String username);
 
 	@Query("select semester from users where username = :username")
