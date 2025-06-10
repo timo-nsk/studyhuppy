@@ -73,6 +73,8 @@ export class UserProfileComponent implements OnInit{
     const data = this.emailChangeForm.value
     this.userService.putNewEmail(data).subscribe({
       next: (response) => {
+        this.getUserData()
+        this.emailChangeForm.reset()
         this.snackbar.open("E-Mail-Adresse erfolgreich geändert!", "close", {
           duration: 4000
         })
@@ -86,6 +88,8 @@ export class UserProfileComponent implements OnInit{
 
     this.userService.putNewPassword(data).subscribe({
       next: (response) => {
+        this.getUserData()
+        this.changePassForm.reset()
         console.log("changed password success")
         this.changePassFail = false;
         this.snackbar.open("Passwort erfolgreich geändert!", "close", {
