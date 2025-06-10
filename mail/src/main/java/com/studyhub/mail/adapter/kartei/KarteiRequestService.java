@@ -1,6 +1,5 @@
 package com.studyhub.mail.adapter.kartei;
 
-import com.studyhub.mail.application.service.TemplateMailService;
 import jakarta.mail.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,19 +14,16 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+//TODO: refactor service
 @Service
 public class KarteiRequestService {
 
 	@Value("${kartei.api-url}")
 	private String karteiApiUrl;
 
-	private TemplateMailService templateMailService;
 
 	private Logger log = LoggerFactory.getLogger(KarteiRequestService.class);
 
-	public KarteiRequestService(TemplateMailService templateMailService) {
-		this.templateMailService = templateMailService;
-	}
 
 	// TODO: die Email soll nur abgeschickt werden, wennd er User auch Benachrichtigungen angeschaltet hat
 	/**
@@ -49,13 +45,11 @@ public class KarteiRequestService {
 
 		try {
 			Map<String, Integer> futureResult = (Map<String, Integer>) amountOfFaelligeKarteikarten.get();
-			templateMailService.prepareLernNotificationTemplating(futureResult);
+			//templateMailService.prepareLernNotificationTemplating(futureResult);
 			log.info("SUCCESS fetched amountOfFaelligeKarteikarten from: %s".formatted(uri));
 		} catch(CancellationException | ExecutionException | InterruptedException ex) {
 			System.out.println(ex.getMessage());
 			log.info("FAILED could not fetch from: %s".formatted(uri));
-		} catch (MessagingException e) {
-			throw new RuntimeException(e);
 		}
-	}
+    }
 }
