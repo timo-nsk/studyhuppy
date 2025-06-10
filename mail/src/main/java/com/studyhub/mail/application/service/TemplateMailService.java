@@ -53,7 +53,7 @@ public class TemplateMailService {
 		context.setVariable("newMailAddress", emailChangeRequest.getNewMail());
 		context.setVariable("username", emailChangeRequest.getUsername());
 
-		String text = templateEngine.process("/mail/email-change/email-change.html", context);
+		String text = templateEngine.process("mail/email-change/email-change", context);
 
 		mailService.sendEmailChangeConfirmation(text, emailChangeRequest.getNewMail());
 	}
