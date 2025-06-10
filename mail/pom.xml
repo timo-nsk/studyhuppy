@@ -146,6 +146,13 @@
             <version>0.12.6</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-resolver-dns-native-macos</artifactId>
+            <version>4.1.110.Final</version> <!-- oder passende Netty-Version -->
+            <classifier>osx-aarch_64</classifier> <!-- Wenn du auf Apple Silicon bist -->
+        </dependency>
+
     </dependencies>
 
     <build>
