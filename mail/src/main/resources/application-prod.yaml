@@ -2,7 +2,7 @@ spring:
   application:
     name: mail
   mail:
-    host: smtp.example.com
+    host: smtp.web.de
     port: 587
     username: ${MAIL_MAIN_EMAIL}
     password: ${MAIL_MAIN_PASS}
