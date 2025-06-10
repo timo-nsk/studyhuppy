@@ -8,6 +8,7 @@ import com.studyhub.authentication.web.ChangePasswordRequest;
 import com.studyhub.authentication.web.EmailChangeRequest;
 import com.studyhub.authentication.service.AccountService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,13 +48,15 @@ public class ChangeAccountDetailsController {
 
 	@PutMapping("/change-mail")
 	public ResponseEntity<Void> changeMail(@RequestBody EmailChangeRequest req, HttpServletRequest servletRequest) {
+		if(accountService.emailExists(req.getNewMail())) return ResponseEntity.status(HttpStatus.CONFLICT).build();
+
 		try {
 			accountService.changeMail(req);
 			req.setUsername(jwtService.extractUsernameFromHeader(servletRequest));
 			mailRequestService.sendChangeMailInformation(req);
 			return ResponseEntity.ok().build();
 		} catch (EmailChangeException e) {
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.internalServerError().build();
 		}
 	}
 

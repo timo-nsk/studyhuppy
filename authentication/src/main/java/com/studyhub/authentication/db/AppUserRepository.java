@@ -50,4 +50,6 @@ public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
 							@Param("userId") UUID userId);
 
 	AppUser findByUserId(UUID userId);
+
+	AppUser findByMail(String newMail);
 }

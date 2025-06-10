@@ -82,7 +82,7 @@ public class AccountService {
 	}
 
 	public boolean emailExists(String email) {
-		return false;
+		return appUserRepository.findByMail(email) != null;
 	}
 
 	public void changeMail(EmailChangeRequest req) {
@@ -91,7 +91,7 @@ public class AccountService {
 			log.info("SUCCESS changed email for user '%s'".formatted(req.getUsername()));
 		} else if (res == 0) {
 			log.error("Could not change email for user '%s'".formatted(req.getUsername()));
-			throw new EmailChangeException("could not change user email because likely an error in database occurred.");
+			throw new EmailChangeException("could not change user email because likely an error while updating in database occurred.");
 		}
 	}
 

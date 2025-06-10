@@ -35,6 +35,8 @@ export class UserProfileComponent implements OnInit{
     oldPw: new FormControl(null, [Validators.required, Validators.minLength(8)]),
     newPw: new FormControl(null, [Validators.required, Validators.minLength(8)])
   })
+  newMailAlreadyExists: boolean = false
+  internalServerError : boolean = false
 
   ngOnInit(): void {
     this.getUserData()
@@ -78,6 +80,13 @@ export class UserProfileComponent implements OnInit{
         this.snackbar.open("E-Mail-Adresse erfolgreich geändert!", "close", {
           duration: 4000
         })
+      },
+      error: (err) => {
+        if(err.status == 409) {
+          this.newMailAlreadyExists = true
+        } else {
+          this.internalServerError = true
+        }
       }
     })
   }
@@ -96,7 +105,7 @@ export class UserProfileComponent implements OnInit{
           duration: 4000
         })
       },
-      error: (error) => {
+      error: (err) => {
         console.log("could not change password")
         this.changePassFail = true;
       }
