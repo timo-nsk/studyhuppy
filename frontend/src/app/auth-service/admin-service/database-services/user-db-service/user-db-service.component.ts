@@ -37,6 +37,16 @@ export class UserDbServiceComponent implements OnInit{
   }
 
   deleteUser(userId: any) {
-    //TODO: implement
+    console.log(userId)
+    this.authService.deleteUserById(userId).subscribe({
+      next: () => {
+        this.log.info("user successfully deleted")
+        this.getUserData()
+      },
+      error: err => {
+        this.log.error("could not delete user from system. Reason:")
+        console.log(err)
+      }
+    })
   }
 }

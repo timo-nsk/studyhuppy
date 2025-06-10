@@ -45,4 +45,12 @@ export class AuthApiService {
     const headers = this.headerService.createAuthHeader()
     return this.http.get<any>(this.BASE_API_URL + "/get-all-users", { headers})
   }
+
+  deleteUserById(userId: string): Observable<any> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.delete<any>(this.BASE_API_URL + "/delete-user-by-id", {
+      headers,
+      params: {userId: userId}
+    })
+  }
 }

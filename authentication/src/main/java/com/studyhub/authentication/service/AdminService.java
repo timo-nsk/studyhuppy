@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AdminService {
@@ -20,5 +21,9 @@ public class AdminService {
 
     public List<AppUser> findAllAppUser() {
         return appUserRepository.findAll();
+    }
+
+    public void deleteUserById(UUID userId) {
+        appUserRepository.deleteByUserId(userId);
     }
 }
