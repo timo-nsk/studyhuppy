@@ -14,7 +14,7 @@ public record MailGesendetEvent(
 		) {
 
 	public static MailGesendetEvent createEventSuccess(MailTyp typ, boolean erfolgreichVersendet) {
-		// user id soll später auch korrekt gefetched werden
+		// TODO: userid soll später auch übergeben werden
 		return new MailGesendetEvent(null, UUID.randomUUID(), LocalDateTime.now(), typ, erfolgreichVersendet);
 	}
 

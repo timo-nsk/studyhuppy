@@ -63,6 +63,8 @@ public class MailService {
 	public void sendEmailChangeConfirmation(String text, String to) throws MessagingException {
 		MimeMessage mimeMessage = prepareMimeMessage(mailSender, "Studyhuppy - E-Mail-Addresse geändert", text, appMailAddress, to);
 
-        mailSender.send(mimeMessage);
+
+		mailSender.send(mimeMessage);
+		mailGesendetEventService.prepareSavingEvent(MailTyp.USER_DATA_CHANGE, true);
 	}
 }

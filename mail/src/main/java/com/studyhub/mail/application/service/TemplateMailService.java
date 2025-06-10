@@ -24,7 +24,7 @@ public class TemplateMailService {
 		Context context = new Context();
 		context.setVariable("futureResult", futureResult);
 
-		String text = templateEngine.process("/mail/lern-notification/lern-notification.html", context);
+		String text = templateEngine.process("mail/lern-notification/lern-notification", context);
 
 		mailService.sendLernNotification(text, "recipients@gmail.com");
 	}
@@ -33,7 +33,7 @@ public class TemplateMailService {
 		Context context = new Context();
 		context.setVariable("registrationRequest", registrationRequest);
 
-		String text = templateEngine.process("/mail/registration-confirmation/registration-confirmation.html", context);
+		String text = templateEngine.process("mail/registration-confirmation/registration-confirmation", context);
 
 		mailService.sendRegistrationConfirmation(text, registrationRequest.mail());
 	}
@@ -43,7 +43,7 @@ public class TemplateMailService {
 		context.setVariable("module", module);
 		context.setVariable("username", username);
 
-		String text = templateEngine.process("/mail/klausur-reminder/klausur-reminder.html", context);
+		String text = templateEngine.process("mail/klausur-reminder/klausur-reminder", context);
 
 		mailService.sendKlausurReminder(text, email);
 	}
