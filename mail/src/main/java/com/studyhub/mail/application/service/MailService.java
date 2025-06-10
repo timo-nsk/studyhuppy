@@ -1,6 +1,7 @@
 package com.studyhub.mail.application.service;
 
 import com.studyhub.mail.domain.model.MailTyp;
+import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
@@ -29,7 +30,7 @@ public class MailService {
 	}
 
 	public void sendLernNotification(String text, String to){
-		MimeMessage mimeMessage = prepareMimeMessage(mailSender, "Zeit zu lernen!", text, appMailAddress, to);
+		MimeMessage mimeMessage = prepareMimeMessage(mailSender, "Studyhuppy - Zeit zu lernen!", text, appMailAddress, to);
 
 		try {
 			mailSender.send(mimeMessage);
@@ -42,7 +43,7 @@ public class MailService {
 	}
 
 	public void sendRegistrationConfirmation(String text, String to) {
-		MimeMessage mimeMessage = prepareMimeMessage(mailSender, "Studyhub - Registrierung erfolgreich", text, appMailAddress, to);
+		MimeMessage mimeMessage = prepareMimeMessage(mailSender, "Studyhuppy - Registrierung erfolgreich", text, appMailAddress, to);
 
 		try {
 			mailSender.send(mimeMessage);
@@ -54,8 +55,14 @@ public class MailService {
 	}
 
 	public void sendKlausurReminder(String text, String to) {
-		MimeMessage mimeMessage = prepareMimeMessage(mailSender, "Studyhub - Klausuren?", text, appMailAddress, to);
+		MimeMessage mimeMessage = prepareMimeMessage(mailSender, "Studyhuppy - Klausuren?", text, appMailAddress, to);
 
 		mailSender.send(mimeMessage);
+	}
+
+	public void sendEmailChangeConfirmation(String text, String to) throws MessagingException {
+		MimeMessage mimeMessage = prepareMimeMessage(mailSender, "Studyhuppy - E-Mail-Addresse geändert", text, appMailAddress, to);
+
+        mailSender.send(mimeMessage);
 	}
 }

@@ -2,10 +2,13 @@ spring:
   application:
     name: mail
   mail:
-    host: localhost
-    port: 1025
-    username: timo
-    password: 1234
+    host: smtp.example.com
+    port: 587
+    username: ${MAIL_MAIN_EMAIL}
+    password: ${MAIL_MAIN_PASS}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
   datasource:
     password: ${MAIL_DB_PASS}
     username: ${MAIL_DB_USER}

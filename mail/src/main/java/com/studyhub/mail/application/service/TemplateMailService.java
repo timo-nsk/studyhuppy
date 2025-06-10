@@ -1,5 +1,6 @@
 package com.studyhub.mail.application.service;
 
+import com.studyhub.mail.adapter.auth.EmailChangeRequest;
 import com.studyhub.mail.adapter.auth.RegistrationRequest;
 import jakarta.mail.MessagingException;
 import org.springframework.stereotype.Service;
@@ -45,5 +46,15 @@ public class TemplateMailService {
 		String text = templateEngine.process("/mail/klausur-reminder/klausur-reminder.html", context);
 
 		mailService.sendKlausurReminder(text, email);
+	}
+
+	public void prepareEmailChangeConfirmationTemplate(EmailChangeRequest emailChangeRequest) throws MessagingException {
+		Context context = new Context();
+		context.setVariable("newMailAddress", emailChangeRequest.getNewMail());
+		context.setVariable("username", emailChangeRequest.getUsername());
+
+		String text = templateEngine.process("/mail/email-change/email-change.html", context);
+
+		mailService.sendEmailChangeConfirmation(text, emailChangeRequest.getNewMail());
 	}
 }

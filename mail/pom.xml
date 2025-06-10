@@ -152,6 +152,11 @@
             <version>4.1.110.Final</version> <!-- oder passende Netty-Version -->
             <classifier>osx-aarch_64</classifier> <!-- Wenn du auf Apple Silicon bist -->
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
     </dependencies>
 

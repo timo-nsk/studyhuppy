@@ -85,8 +85,14 @@ public class AccountService {
 		return false;
 	}
 
-	public int changeMail(EmailChangeRequest req) {
-		return appUserRepository.updateMailByUserId(req.newMail(), UUID.fromString(req.userId()));
+	public void changeMail(EmailChangeRequest req) {
+		int res = appUserRepository.updateMailByUserId(req.getNewMail(), UUID.fromString(req.getUserId()));
+		if(res == 1) {
+			log.info("SUCCESS changed email for user '%s'".formatted(req.getUsername()));
+		} else if (res == 0) {
+			log.error("Could not change email for user '%s'".formatted(req.getUsername()));
+			throw new EmailChangeException("could not change user email because likely an error in database occurred.");
+		}
 	}
 
 	public boolean validPassword(String sendPw, String userId) {

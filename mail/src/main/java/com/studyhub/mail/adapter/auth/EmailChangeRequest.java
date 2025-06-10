@@ -1,4 +1,4 @@
-package com.studyhub.authentication.web;
+package com.studyhub.mail.adapter.auth;
 
 import lombok.Data;
 
