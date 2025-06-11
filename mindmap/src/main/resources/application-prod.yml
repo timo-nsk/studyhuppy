@@ -6,6 +6,10 @@ spring:
     authentication:
       username: ${MINDMAP_USER}
       password: ${MINDMAP_PASS}
+management:
+  endpoints:
+    web:
+      base-path: /api/mindmap/v1/actuator
 server:
   port: ${SERVER_PORT}
   address: ${SERVER_ADRESS}

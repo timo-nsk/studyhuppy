@@ -16,6 +16,7 @@ spring:
 management:
   endpoints:
     web:
+      base-path: /api/mail/v1/actuator
       exposure:
         include: "*"
 server:
