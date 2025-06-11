@@ -1,1 +1,22 @@
-<p>kontakt works!</p>
+<form [formGroup]="kontaktForm" (ngSubmit)="sendMessage()">
+  <select formControlName="betreff">
+    <option value="" selected>Betreff*</option>
+    <option value="BUG">Etwas funktioniert nicht mehr, wie es sollte</option>
+    <option value="OTHER">Sonstiges</option>
+  </select>
+  <span class="text-danger"
+        *ngIf="kontaktForm.controls['betreff'].errors?.['required'] && kontaktForm.controls['betreff'].touched">
+              Wählen Sie ein Betreff aus
+        </span>
+  <label for="nachricht">Nachricht*</label>
+  <textarea id="nachricht" type="text" maxlength="2000" formControlName="nachricht"></textarea>
+  <span class="text-danger"
+        *ngIf="kontaktForm.controls['nachricht'].errors?.['required'] && kontaktForm.controls['nachricht'].touched">
+        Geben Sie eine Nachricht ein
+  </span>
+  <span class="text-danger"
+        *ngIf="kontaktForm.controls['nachricht'].errors?.['maxlength'] && kontaktForm.controls['nachricht'].touched">
+        Ihre Nachricht ist zu lang (max. 2000 Zeichen)
+  </span>
+  <button type="submit">abschicken</button>
+</form>

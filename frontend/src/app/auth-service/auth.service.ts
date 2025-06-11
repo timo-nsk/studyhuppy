@@ -53,4 +53,8 @@ export class AuthApiService {
       params: {userId: userId}
     })
   }
+
+  sendKontaktMessage(data: any) {
+    return this.http.post<any>(this.BASE_API_URL + '/kontakt-message', data)
+  }
 }
