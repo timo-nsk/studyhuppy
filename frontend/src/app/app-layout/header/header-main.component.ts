@@ -1,13 +1,13 @@
 import {Component, Input, inject} from '@angular/core';
 import { NgIf } from '@angular/common';
 import {AuthApiService} from '../../auth-service/auth.service';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import  { LoginStatusService } from '../../auth-service/login-service/login-status.service'
 
 @Component({
   selector: 'app-header-main',
-  imports: [NgIf],
+  imports: [NgIf, RouterLink],
   templateUrl: './header-main.component.html',
   standalone: true,
   styleUrls: ['./header-main.component.scss', '../../general.scss', '../../color.scss', '../../links.scss', '../../button.scss']

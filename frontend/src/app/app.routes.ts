@@ -29,6 +29,7 @@ import {
 } from './auth-service/admin-service/actuator-service/metric-service/metric-service.component';
 import {MindmapServiceComponent} from './mindmap-service/mindmap-service.component';
 import {MindmapDetailsComponent} from './mindmap-service/mindmap-details/mindmap-details.component';
+import {HelpComponent} from './app-layout/header/help/help.component';
 
 export const routes: Routes = [
   {
@@ -58,6 +59,10 @@ export const routes: Routes = [
   {
     path: 'datenschutz',
     component: DsgvoComponent
+  },
+  {
+    path: "hilfe",
+    component: HelpComponent
   },
   {
     path: '',
