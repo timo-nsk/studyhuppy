@@ -40,7 +40,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 		log.info("Try JwtAuthFilter ...");
 		String path = request.getRequestURI();
 		if (path.equals("/api/auth/v1/login") || path.equals("/api/auth/v1/register") || path.equals("/agb") || path.equals("/api/auth/v1/password-reset")
-				|| path.equals("/api/v1/get-db-health") || path.equals("/actuator/health")) {
+				|| path.equals("/api/v1/get-db-health") || path.equals("/actuator/health") || path.equals("/api/auth/v1/kontakt-message")) {
 			log.info("No need to filter request to path: " + path);
 			filterChain.doFilter(request, response);
 			return;

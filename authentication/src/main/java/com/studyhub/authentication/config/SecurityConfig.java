@@ -47,7 +47,7 @@ public class SecurityConfig {
 				.formLogin(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-						.requestMatchers("/api/auth/v1/login", "/api/auth/v1/register", "/api/auth/v1/password-reset", "/api/auth/v1/get-db-health", "/actuator/health").permitAll()
+						.requestMatchers("/api/auth/v1/login", "/api/auth/v1/register", "/api/auth/v1/password-reset","/api/auth/v1/kontakt-message", "/api/auth/v1/get-db-health", "/actuator/health").permitAll()
 						.anyRequest().authenticated())
 				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

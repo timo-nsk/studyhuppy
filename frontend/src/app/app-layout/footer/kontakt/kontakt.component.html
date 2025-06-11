@@ -1,22 +1,38 @@
-<form [formGroup]="kontaktForm" (ngSubmit)="sendMessage()">
-  <select formControlName="betreff">
-    <option value="" selected>Betreff*</option>
-    <option value="BUG">Etwas funktioniert nicht mehr, wie es sollte</option>
-    <option value="OTHER">Sonstiges</option>
-  </select>
-  <span class="text-danger"
-        *ngIf="kontaktForm.controls['betreff'].errors?.['required'] && kontaktForm.controls['betreff'].touched">
-              Wählen Sie ein Betreff aus
-        </span>
-  <label for="nachricht">Nachricht*</label>
-  <textarea id="nachricht" type="text" maxlength="2000" formControlName="nachricht"></textarea>
-  <span class="text-danger"
-        *ngIf="kontaktForm.controls['nachricht'].errors?.['required'] && kontaktForm.controls['nachricht'].touched">
+<div class="main-auth-container">
+  <div class="form-container">
+    <form  class="sh-form" [formGroup]="kontaktForm" (ngSubmit)="sendMessage()">
+      <div class="mb-5">
+        <h2>Kontakt</h2>
+      </div>
+      <div class="mb-3">
+        <select formControlName="betreff" class="form-select">
+          <option value="" selected>Betreff*</option>
+          <option value="BUG">Etwas funktioniert nicht mehr, wie es sollte</option>
+          <option value="OTHER">Sonstiges</option>
+        </select>
+        <span class="text-danger"
+              *ngIf="kontaktForm.controls['betreff'].errors?.['required'] && kontaktForm.controls['betreff'].touched">
+          Wählen Sie ein Betreff aus
+      </span>
+      </div>
+      <div class="mb-3">
+        <label class="sh-form-lbl" for="nachricht">Nachricht*</label>
+        <textarea id="nachricht"  class="form-control" type="text" maxlength="2000" formControlName="nachricht"></textarea>
+        <span class="text-danger"
+              *ngIf="kontaktForm.controls['nachricht'].errors?.['required'] && kontaktForm.controls['nachricht'].touched">
         Geben Sie eine Nachricht ein
-  </span>
-  <span class="text-danger"
-        *ngIf="kontaktForm.controls['nachricht'].errors?.['maxlength'] && kontaktForm.controls['nachricht'].touched">
+      </span>
+        <span class="text-danger"
+              *ngIf="kontaktForm.controls['nachricht'].errors?.['maxlength'] && kontaktForm.controls['nachricht'].touched">
         Ihre Nachricht ist zu lang (max. 2000 Zeichen)
-  </span>
-  <button type="submit">abschicken</button>
-</form>
+      </span>
+      </div>
+      <div class="mb-3">
+        <button class="sh-form-btn" type="submit">
+          <span class="sh-form-btn-content">abschicken</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
