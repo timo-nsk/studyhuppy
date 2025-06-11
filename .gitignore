@@ -24,6 +24,9 @@ mail/run-tests-mail.bat
 mail/mail-test.sh
 mail/target
 
+mindmap/mindmap-data
+mindmap/.env
+
 actuator/actuator-test.sh
 actuator/run-tests-actuator.bat
 actuator/target
