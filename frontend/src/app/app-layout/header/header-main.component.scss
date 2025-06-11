@@ -1,3 +1,12 @@
-#logout-a {
+#logout-a, #help-a {
   cursor: pointer;
 }
+
+.nav-svg {
+  fill: grey;
+}
+
+.nav-svg:hover {
+  fill: rgb(29, 76, 151);
+}
+
