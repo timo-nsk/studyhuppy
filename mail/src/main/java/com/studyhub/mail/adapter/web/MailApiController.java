@@ -35,7 +35,8 @@ public class MailApiController {
 			.withTemplatePath("mail/registration-confirmation/registration-confirmation")
 			.withMessage("Studyhuppy - Registrierung erfolgreich", appMailAddress, registrationRequest.mail())
 			.sendMail()
-			.saveMailGesendetEvent(MailTyp.REGISTRATION_CONFIRMATION, true);
+			.saveMailGesendetEvent(MailTyp.REGISTRATION_CONFIRMATION, true)
+			.close();
 
 		return ResponseEntity.ok().build();
 	}
@@ -48,7 +49,8 @@ public class MailApiController {
 				.withTemplatePath("mail/email-change/email-change")
 				.withMessage("Studyhuppy - E-Mail-Addresse geändert", appMailAddress, emailChangeRequest.getNewMail())
 				.sendMail()
-				.saveMailGesendetEvent(MailTyp.USER_DATA_CHANGE, true);
+				.saveMailGesendetEvent(MailTyp.USER_DATA_CHANGE, true)
+				.close();
 		return ResponseEntity.ok().build();
 	}
 
@@ -59,7 +61,8 @@ public class MailApiController {
 				.withTemplatePath("mail/password-change/password-change")
 				.withMessage("Studyhuppy - Passwort geändert", appMailAddress, passwordChangeRequest.getMail())
 				.sendMail()
-				.saveMailGesendetEvent(MailTyp.USER_DATA_CHANGE, true);
+				.saveMailGesendetEvent(MailTyp.USER_DATA_CHANGE, true)
+				.close();
 		return ResponseEntity.ok().build();
 	}
 }

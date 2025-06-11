@@ -65,10 +65,15 @@ public class MailingPipe {
         return null;
     }
 
-    public void saveMailGesendetEvent(MailTyp typ, boolean erfolgreichVersendet) {
+    public MailingPipe saveMailGesendetEvent(MailTyp typ, boolean erfolgreichVersendet) {
         checkState(MailingPipeState.MAIL_SENT);
         mailGesendetEventFilter.save(typ, erfolgreichVersendet);
         this.state = MailingPipeState.END;
+        return this;
+    }
+
+    public void close() {
+        this.state = MailingPipeState.START;
     }
 
     public void checkState(MailingPipeState... validStates) {
