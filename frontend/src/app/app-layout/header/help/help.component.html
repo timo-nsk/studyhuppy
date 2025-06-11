@@ -1,11 +1,46 @@
-<h2>Häufig gestellte Fragen</h2>
-
-<h3>Welche Benachrichtigungen erhalte ich per E-Mail, wenn ich sie ein-/ausschalte?</h3>
-<p>Du bekommst in jedem Fall eine Bestätigung, wenn du deine E-Mail-Adresse oder dein Passwort änderst – auch wenn Benachrichtigungen deaktiviert sind.</p>
-
-<h3>Ich habe mein Konto aus Versehen gelöscht. Kann ich meine alten Daten wiederherstellen?</h3>
-<p>Wird dein Konto über „Mein Profil“ gelöscht, werden sämtliche Daten dauerhaft gelöscht. Eine Wiederherstellung ist danach leider nicht mehr möglich.</p>
-
-<h3>Ein Service funktioniert nicht?</h3>
-<p>Das tut uns leid! Teile uns über das <a [routerLink]="'/kontakt'">Kontaktformular</a> mit, was genau nicht funktioniert – wir kümmern uns so schnell wie möglich darum.</p>
-
+<div class="main-auth-container m-accent-font">
+  <div>
+    <a [routerLink]="'/module'">zurück</a>
+  </div>
+  <div class="help-header">
+    <h2>Häufig gestellte Fragen</h2>
+  </div>
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h4 class="accordion-header">
+        <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Welche Benachrichtigungen erhalte ich per E-Mail, wenn ich sie ein-/ausschalte?
+        </button>
+      </h4>
+      <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <p>Du bekommst in jedem Fall eine Bestätigung, wenn du deine E-Mail-Adresse oder dein Passwort änderst – auch wenn Benachrichtigungen deaktiviert sind.</p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h4 class="accordion-header">
+        <button class="collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Ich habe mein Konto aus Versehen gelöscht. Kann ich meine alten Daten wiederherstellen?
+        </button>
+      </h4>
+      <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <p>Wird dein Konto über „Mein Profil“ gelöscht, werden sämtliche Daten dauerhaft gelöscht. Eine Wiederherstellung ist danach leider nicht mehr möglich.</p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h4 class="accordion-header">
+        <button class="collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Ein Service funktioniert nicht?
+        </button>
+      </h4>
+      <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <p>Das tut uns leid! Teile uns über das <a [routerLink]="'/kontakt'">Kontaktformular</a> mit, was genau nicht funktioniert – wir kümmern uns so schnell wie möglich darum.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,10 +5,8 @@ import {RouterLink} from '@angular/router';
   standalone: true,
   selector: 'app-help-service',
   templateUrl: './help.component.html',
-  styleUrl: './help.component.scss',
-  imports: [
-    RouterLink
-  ],
+  styleUrls: ['./help.component.scss', '../../../general.scss', '../../../color.scss'],
+  imports: [RouterLink],
 })
 export class HelpComponent {
 
