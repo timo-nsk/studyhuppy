@@ -5,9 +5,16 @@
     </button>
     <form [formGroup]="newNodeForm" (ngSubmit)="sendNewNodeData()" *ngIf="nodeCreationSignalService.showNewNodeForm()">
       <div id="newnode-form">
-        <div class="form-section">
+        <div id="header">
+          <p>Node erstellen</p>
+        </div>
+        <div id="title-input">
           <label for="title" type="hidden" style="display: none;"></label>
           <input id="title" class="form-control" formControlName="title" type="text" placeholder="Nodetitel">
+          <span class="text-danger"
+                *ngIf="newNodeForm.controls['title'].errors?.['required'] && newNodeForm.controls['title'].touched">
+                Geben Sie einen Titel ein
+          </span>
         </div>
         <div class="form-section">
           <label for="nodetyp" type="hidden" style="display: none;"></label>
@@ -16,6 +23,10 @@
             <option value="SUBJECT">Thema</option>
             <option value="PROCESS">Prozess</option>
           </select>
+          <span class="text-danger"
+                *ngIf="newNodeForm.controls['nodeType'].errors?.['required'] && newNodeForm.controls['nodeType'].touched">
+                Geben Sie einen Titel ein
+          </span>
         </div>
 
         <div class="form-section">
