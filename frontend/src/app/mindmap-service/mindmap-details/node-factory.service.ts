@@ -30,6 +30,7 @@ export class NodeFactoryService {
     //Prepare actual nodeDiv
     const newNodeDiv = document.createElement("div");
     newNodeDiv.classList.add("subject-node")
+    newNodeDiv.classList.add("node")
     const p = document.createElement("p");
     const span = document.createElement("span");
     span.textContent = node.title;

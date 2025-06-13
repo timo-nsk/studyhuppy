@@ -119,11 +119,13 @@ export class MindmapDetailsComponent implements OnInit, OnDestroy{
   switchBearbeitenModus() {
     this.bearbeitenModus = !this.bearbeitenModus;
     const btns = document.getElementsByClassName("addNodeBtn");
+    const nodes = document.getElementsByClassName("node");
     const show = this.bearbeitenModus;
 
     for (let i = 0; i < btns.length; i++) {
       btns[i].classList.toggle("hide-btn", !show);
       btns[i].classList.toggle("display-btn", show);
+      nodes[i].classList.toggle("editing")
     }
   }
 
