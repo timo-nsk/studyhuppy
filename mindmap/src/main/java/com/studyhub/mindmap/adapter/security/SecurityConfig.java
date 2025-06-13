@@ -43,7 +43,7 @@ public class SecurityConfig {
 				.cors(Customizer.withDefaults())
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-						.requestMatchers("/api/mindmap/v1/get-db-health", "/actuator/health").permitAll()
+						.requestMatchers("/api/mindmap/v1/get-db-health", "/actuator/health", "/api/mindmap/v1/create-mindmap-test").permitAll()
 						.anyRequest().authenticated())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

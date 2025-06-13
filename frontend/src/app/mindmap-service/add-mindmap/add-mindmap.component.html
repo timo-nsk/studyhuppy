@@ -1,0 +1,42 @@
+<div id="form-container">
+  <div>
+    <button class="shadow mindmap-expand-btn" type="button" (click)="expandForm()">
+      <div class="">
+        <svg *ngIf="!expanded"  xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 -960 960 960" width="36px" fill="#FFFFFF"><path d="M480-160v-80h120l180-240-180-240H160v200H80v-200q0-33 23.5-56.5T160-800h440q19 0 36 8.5t28 23.5l216 288-216 288q-11 15-28 23.5t-36 8.5H480Zm-10-320ZM200-120v-120H80v-80h120v-120h80v120h120v80H280v120h-80Z"/></svg>
+        <svg *ngIf="expanded" xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 -960 960 960" width="36px" fill="#FFFFFF"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+      </div>
+      <div id="btn-title">
+        <span *ngIf="!expanded">erstellen</span>
+        <span *ngIf="expanded">schließen</span>
+      </div>
+    </button>
+  </div>
+
+
+
+  <div *ngIf="expanded">
+    <div>
+      <form [formGroup]="mindmapForm" (ngSubmit)="sendNewMindmapRequest()">
+        <div id="form-elements-container">
+          <div>
+            <input class="form-control shadow height-40" placeholder="Title" formControlName="title">
+          </div>
+          <div>
+            <select class="form-select shadow height-40">
+              <option value="" selected disabled>Modul verlinken</option>
+              <option value="" selected>Ohne</option>
+              <option *ngFor="let opt of modulSelectData" (click)="setFormData(opt.modulId, opt.modulName)">{{opt.modulName}}</option>
+            </select>
+          </div>
+          <div>
+            <button id="add-mindmap-btn" class="shadow height-40" type="submit" title="Mindmap erstellen">
+              <svg xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 -960 960 960" width="36px" fill="#FFFFFF"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,40 @@
+.content-wrapper {
+  width: 90vw;
+}
+
+#header-div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: blue;
+  width: 100%;
+  height: 50px;
+}
+
+#sidenav-toggler {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: pink;
+  width: 50px;
+  height: 50px;
+}
+
+#mindmap-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+#mindmap-sidenav {
+  background-color: red;
+  height: 80vh;
+  width: 15vw;
+}
+
+#mindmap-detail {
+  background-color: green;
+  width: 100%;
+  height: 80vh;
+}
+
+

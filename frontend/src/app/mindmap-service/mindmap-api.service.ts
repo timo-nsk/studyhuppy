@@ -33,4 +33,15 @@ export class MindmapApiService {
     return this.http.post<any>(`${this.BASE_API_URL}/create-new-node`, data, { headers: header });
 
   }
+
+  postNewMindmap(data : any): Observable<any> {
+
+    const headers = this.headerService.createAuthHeader()
+    return this.http.post<any>(this.BASE_API_URL + '/create-mindmap', data, {headers})
+  }
+
+  getMindmapsGroupedByModule() : Observable<any>{
+    const header = this.headerService.createAuthHeader();
+    return this.http.get<any>(`${this.BASE_API_URL}/get-all-mindmaps-groupedby-module`, { headers: header });
+  }
 }

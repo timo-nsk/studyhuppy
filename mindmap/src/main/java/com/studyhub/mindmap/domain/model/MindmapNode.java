@@ -1,10 +1,12 @@
 package com.studyhub.mindmap.domain.model;
 
 import lombok.Data;
+import org.neo4j.driver.util.Pair;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Relationship;
 import org.yaml.snakeyaml.util.Tuple;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +18,7 @@ public class MindmapNode {
     @GeneratedValue
     private UUID nodeId;
     private UUID modulId;
+    private String modulTitel;
     private String title;
     private String text;
     private NodeType nodeType;
@@ -25,9 +28,10 @@ public class MindmapNode {
     @Relationship(type = "LINKS_TO", direction = Relationship.Direction.OUTGOING)
     private List<MindmapNode> childNodes;
 
-    public MindmapNode(UUID modulId, String title, String text, NodeType nodeType, NodeRole nodeRole, String username) {
+    public MindmapNode(UUID modulId, String modulTitel, String  title, String text, NodeType nodeType, NodeRole nodeRole, String username) {
         this.nodeId = UUID.randomUUID();
         this.modulId = modulId;
+        this.modulTitel = modulTitel;
         this.title = title;
         this.text = text;
         this.nodeType = nodeType;
@@ -36,9 +40,10 @@ public class MindmapNode {
         this.childNodes = new ArrayList<>();
     }
 
-    public MindmapNode(UUID nodeId, UUID modulId, String title, String text, NodeType nodeType, NodeRole nodeRole) {
+    public MindmapNode(UUID nodeId, UUID modulId, String modulTitel, String title, String text, NodeType nodeType, NodeRole nodeRole) {
         this.nodeId = nodeId;
         this.modulId = modulId;
+        this.modulTitel = modulTitel;
         this.title = title;
         this.text = text;
         this.nodeType = nodeType;
@@ -61,14 +66,14 @@ public class MindmapNode {
      * @throws IllegalRootConsistencyException when parameters are invalid
      */
     @RootFactoryMethod
-    public static MindmapNode initRootNode(UUID modulId, String title, String text, NodeType nodeType, String username) {
+    public static MindmapNode initRootNode(UUID modulId, String modulTitel, String title, String text, NodeType nodeType, String username) {
         Tuple<List<String>, Boolean> resTuple = checkConsistency(modulId, title, nodeType, username);
 
         if (!resTuple._2()) {
             throw new IllegalRootConsistencyException(resTuple._1().stream().toString());
         }
 
-        return new MindmapNode(modulId, title, text, nodeType, NodeRole.ROOT, username);
+        return new MindmapNode(modulId, modulTitel, title, text, nodeType, NodeRole.ROOT, username);
     }
 
     /**
@@ -89,7 +94,7 @@ public class MindmapNode {
             throw new IllegalChildConsistencyException(resTuple._1().stream().toString());
         }
 
-        return new MindmapNode(UUID.randomUUID(), null, title, text, nodeType, NodeRole.CHILD);
+        return new MindmapNode(UUID.randomUUID(), null, null, title, text, nodeType, NodeRole.CHILD);
     }
 
 

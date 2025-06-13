@@ -1,0 +1,55 @@
+#form-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin-left: 10px;
+}
+
+.mindmap-expand-btn {
+  background-color: #4193ef;
+  height: 40px;
+  min-width: 150px;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  border-style: none;
+  border-radius: 8.5px;
+}
+
+.mindmap-add-btn:hover {
+  cursor: pointer;
+  background-color: #96cef4;
+}
+
+#btn-title {
+  padding-bottom: 3px;
+  margin-left: 10px;
+}
+
+#add-mindmap-btn {
+  background-color: lightgreen;
+  border-style: none;
+  border-radius: 20px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#add-mindmap-btn:hover {
+  background-color: limegreen;
+  cursor: pointer;
+}
+
+#form-elements-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 5px;
+  margin-left: 5px;
+}
+
+.height-40 {
+  height: 40px;
+}

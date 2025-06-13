@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.yaml.snakeyaml.util.Tuple;
 
 import java.util.List;
 import java.util.Map;
@@ -184,5 +185,13 @@ public class ModulApiController {
 		String username = jwtService.extractUsernameFromHeader(request);
 		Map<Integer, List<Modul>> resultMap = modulService.getFachsemesterModuleMap(username);
 		return ResponseEntity.ok(resultMap);
+	}
+
+	@AngularApi
+	@GetMapping("/get-modul-select-data")
+	public ResponseEntity<List<ModulSelectDto>> getModulSelectData(HttpServletRequest request) {
+		String username = jwtService.extractUsernameFromHeader(request);
+		List<ModulSelectDto> data = modulService.getModulSelectData(username);
+		return ResponseEntity.ok(data);
 	}
 }

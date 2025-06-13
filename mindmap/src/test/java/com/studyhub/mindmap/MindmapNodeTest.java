@@ -167,7 +167,7 @@ public class MindmapNodeTest {
         String username = "peter";
 
         assertThrows(IllegalRootConsistencyException.class, () -> {
-            MindmapNode root = MindmapNode.initRootNode(null, titel, "info", nodeType, username);
+            MindmapNode root = MindmapNode.initRootNode(null, null, titel, "info", nodeType, username);
         });
     }
 
@@ -180,7 +180,7 @@ public class MindmapNodeTest {
         String username = "peter";
 
         assertThrows(IllegalRootConsistencyException.class, () -> {
-            MindmapNode root = MindmapNode.initRootNode(modulId, titel, "info", nodeType, username);
+            MindmapNode root = MindmapNode.initRootNode(modulId, null, titel, "info", nodeType, username);
         });
     }
 
@@ -193,7 +193,7 @@ public class MindmapNodeTest {
         String username = "peter";
 
         assertThrows(IllegalRootConsistencyException.class, () -> {
-            MindmapNode root = MindmapNode.initRootNode(modulId, titel, "info", nodeType, username);
+            MindmapNode root = MindmapNode.initRootNode(modulId, null,  titel, "info", nodeType, username);
         });
     }
 
@@ -206,7 +206,7 @@ public class MindmapNodeTest {
         String username = null;
 
         assertThrows(IllegalRootConsistencyException.class, () -> {
-            MindmapNode root = MindmapNode.initRootNode(modulId, titel, "info", nodeType, username);
+            MindmapNode root = MindmapNode.initRootNode(modulId, null, titel, "info", nodeType, username);
         });
     }
 }

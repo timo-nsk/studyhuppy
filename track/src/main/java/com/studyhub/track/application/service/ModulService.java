@@ -1,6 +1,7 @@
 package com.studyhub.track.application.service;
 
 
+import com.studyhub.track.adapter.web.controller.api.ModulSelectDto;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.application.service.dto.NeuerModulterminRequest;
 import com.studyhub.track.domain.model.modul.Modul;
@@ -249,5 +250,14 @@ public class ModulService {
 		}
 
 		return moduleMap;
+	}
+
+	public List<ModulSelectDto> getModulSelectData(String username) {
+		List<ModulSelectDto> res = new LinkedList<>();
+		List<Modul> module = repo.findByUsername(username);
+		for (Modul m : module) {
+			res.add(new ModulSelectDto(m.getFachId(), m.getName()));
+		}
+		return res;
 	}
 }

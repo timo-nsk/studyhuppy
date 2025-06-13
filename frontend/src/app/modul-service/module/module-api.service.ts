@@ -99,4 +99,9 @@ export class ModuleApiService {
     const headers = this.headerService.createAuthHeader()
     return this.http.post<void>(this.MODUL_BASE_API + '/add-klausur-date', data ,{headers})
   }
+
+  getModulSelectData() {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.get<any>(this.MODUL_BASE_API + '/get-modul-select-data', {headers})
+  }
 }
