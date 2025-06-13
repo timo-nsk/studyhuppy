@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, EventEmitter, inject, OnInit, Output} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
 import {MindmapApiService} from '../mindmap-api.service';
 import {ModuleApiService} from '../../modul-service/module/module-api.service';
@@ -30,6 +30,8 @@ export class AddMindmapComponent implements OnInit{
     modulName: new FormControl("")
   });
 
+  @Output() savedMindmap = new EventEmitter<boolean>();
+
 
   expandForm() {
     this.expanded = !this.expanded
@@ -56,6 +58,7 @@ export class AddMindmapComponent implements OnInit{
       this.mindmapService.postNewMindmap(this.mindmapForm.value).subscribe({
         next: () => {
           this.log.debug("new mindmap request sent")
+          this.savedMindmap.emit(true)
         },
         error: err => {
           console.log(err)

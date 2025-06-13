@@ -72,4 +72,10 @@ export class MindmapServiceComponent implements OnInit{
     }
     return true
   }
+
+  forceReload($event: boolean) {
+      if($event) {
+        this.ngOnInit()
+      }
+  }
 }
