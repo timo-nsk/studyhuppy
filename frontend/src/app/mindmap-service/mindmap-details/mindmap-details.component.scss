@@ -6,4 +6,35 @@
   display: flex;
   justify-content: flex-start;
   flex-direction: row;
+  background-color: yellow;
+}
+
+#newnode-form {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+}
+
+.form-section {
+  margin-left: 10px;
+}
+
+.main-container {
+  flex-direction: column;
+}
+
+#add-mindmap-btn {
+  background-color: lightgreen;
+  border-style: none;
+  border-radius: 20px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#add-mindmap-btn:hover {
+  background-color: limegreen;
+  cursor: pointer;
 }

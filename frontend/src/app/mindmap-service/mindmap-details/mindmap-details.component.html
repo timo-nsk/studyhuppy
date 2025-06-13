@@ -4,13 +4,26 @@
       <svg class="edit-mindmap-svg" xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 -960 960 960" width="36px" fill="#434343"><path d="M160-400v-80h280v80H160Zm0-160v-80h440v80H160Zm0-160v-80h440v80H160Zm360 560v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q8 9 12.5 20t4.5 22q0 11-4 22.5T863-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z"/></svg>
     </button>
     <form [formGroup]="newNodeForm" (ngSubmit)="sendNewNodeData()" *ngIf="nodeCreationSignalService.showNewNodeForm()">
-      <label>Titel</label>
-      <input formControlName="title" type="text">
-      <select formControlName="nodeType" type="text">
-        <option selected value="SUBJECT">Thema</option>
-        <option value="PROCESS">Prozess</option>
-      </select>
-      <button type="submit">hinzufügen</button>
+      <div id="newnode-form">
+        <div class="form-section">
+          <label for="title" type="hidden" style="display: none;"></label>
+          <input id="title" class="form-control" formControlName="title" type="text" placeholder="Nodetitel">
+        </div>
+        <div class="form-section">
+          <label for="nodetyp" type="hidden" style="display: none;"></label>
+          <select id="nodetyp" class="form-select" formControlName="nodeType" type="text">
+            <option value="" selected disabled>Nodetyp auswählen</option>
+            <option value="SUBJECT">Thema</option>
+            <option value="PROCESS">Prozess</option>
+          </select>
+        </div>
+
+        <div class="form-section">
+          <button id="add-mindmap-btn" class="shadow height-40" type="submit" title="Mindmap erstellen">
+            <svg xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 -960 960 960" width="36px" fill="#FFFFFF"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+          </button>
+        </div>
+      </div>
     </form>
   </div>
   <div id="mindmap-container">
