@@ -6,13 +6,15 @@ import {LoggingService} from '../../logging.service';
 import {NodeFactoryService} from './node-factory.service';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NodeCreationSignalService} from './node-creation-signal.service';
+import {NgIf} from '@angular/common';
 
 declare var LeaderLine: any;
 
 @Component({
   selector: 'app-mindmap-details',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf
   ],
   templateUrl: './mindmap-details.component.html',
   standalone: true,

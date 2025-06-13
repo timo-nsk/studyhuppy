@@ -81,6 +81,7 @@ export class NodeFactoryService {
 
     link.addEventListener("click", () => {
       this.nodeCreationSignalService.setParentId(nodeId);
+      this.nodeCreationSignalService.setShowNewNodeForm()
     });
 
 
