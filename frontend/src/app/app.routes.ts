@@ -154,11 +154,14 @@ export const routes: Routes = [
         },
         {
           path: 'mindmap',
-          component: MindmapServiceComponent
-        },
-        {
-          path: 'mindmap/:modulId',
-          component: MindmapDetailsComponent
+          component: MindmapServiceComponent,
+          canActivate: [authenticationGuard],
+          children: [
+            {
+              path: "map-details/:modulId",
+              component: MindmapDetailsComponent
+            }
+          ]
         }]
   },
   { path: '**', redirectTo: 'login' }
