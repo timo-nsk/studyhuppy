@@ -26,8 +26,8 @@ export class AddMindmapComponent implements OnInit{
   modulSelectData : any;
   mindmapForm: FormGroup = new FormGroup({
     title: new FormControl("", Validators.required),
-    modulId: new FormControl("", Validators.required),
-    modulName: new FormControl("", Validators.required)
+    modulId: new FormControl(""),
+    modulName: new FormControl("")
   });
 
 

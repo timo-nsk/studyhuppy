@@ -76,6 +76,14 @@ public class MindmapNode {
         return new MindmapNode(modulId, modulTitel, title, text, nodeType, NodeRole.ROOT, username);
     }
 
+    @RootFactoryMethod
+    public static MindmapNode initNoneModulRootNode(String title, String text, NodeType nodeType, String username) {
+
+        return new MindmapNode(null, null, title, text, nodeType, NodeRole.ROOT, username);
+    }
+
+
+
     /**
      * A child mindmap node does not have a module ID.
      * It can be found in the tree by its node ID.
@@ -153,6 +161,14 @@ public class MindmapNode {
         return null;
     }
 
+    public boolean hasModulId() {
+        return modulId != null;
+    }
+
+    public boolean hasModulTitel() {
+        return modulTitel != null && !modulTitel.equals("");
+    }
+
     public String getTitle() {
         return title;
     }
@@ -209,9 +225,13 @@ public class MindmapNode {
     public String toString() {
         return "MindmapNode{" +
                 "nodeId=" + nodeId +
+                ", modulId=" + modulId +
+                ", modulTitel='" + modulTitel + '\'' +
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
                 ", nodeType=" + nodeType +
+                ", nodeRole=" + nodeRole +
+                ", username='" + username + '\'' +
                 ", childNodes=" + childNodes +
                 '}';
     }

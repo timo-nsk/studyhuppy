@@ -14,9 +14,9 @@ export class MindmapApiService {
   http = inject(HttpClient);
   headerService = inject(HeaderService)
 
-  getAllMindmapsByUsername() : Observable<any> {
+  getOtherMindmapsByUsername() : Observable<any> {
     const header = this.headerService.createAuthHeader();
-    return this.http.get(`${this.BASE_API_URL}/get-all-mindmaps-by-username`, { headers: header });
+    return this.http.get(`${this.BASE_API_URL}/get-all-other-mindmaps-by-username`, { headers: header });
   }
 
   getMindmapByModulId(modulId: string) : Observable<any> {

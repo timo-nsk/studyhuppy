@@ -24,16 +24,16 @@ export class MindmapServiceComponent implements OnInit{
   log = new LoggingService("MindmapServiceComponent", "mindmap-service");
 
   service = inject(MindmapApiService);
-  mindmaps : MindmapNode[] = []
-  module: { [key: string]: MindmapNode[] } = {}
+  moduleMindmaps: { [key: string]: MindmapNode[] } = {}
+  otherMindmaps: any;
 
 
   ngOnInit(): void {
-    this.service.getAllMindmapsByUsername().subscribe({
+    this.service.getOtherMindmapsByUsername().subscribe({
       next: (data) => {
-        this.mindmaps = data;
-        this.log.debug("Got data:")
-        console.log(this.mindmaps)
+        this.otherMindmaps = data;
+        this.log.debug("Got Others data:")
+        console.log(this.otherMindmaps)
       },
       error: (err) => {
         this.log.error(`Error while getting mindmaps: Reason: ${err}`);
@@ -42,9 +42,9 @@ export class MindmapServiceComponent implements OnInit{
     this.service.getMindmapsGroupedByModule().subscribe({
       next: (data : { [key: string]: MindmapNode[] }
       ) => {
-        this.module = data;
-        this.log.debug("Got data:")
-        console.log(this.module)
+        this.moduleMindmaps = data;
+        this.log.debug("Got MODUL data:")
+        console.log(this.moduleMindmaps)
       },
       error: (err) => {
         this.log.error(`Error while getting mindmaps: Reason: ${err}`);
@@ -53,6 +53,23 @@ export class MindmapServiceComponent implements OnInit{
   }
 
   emptyMindmaps(): boolean {
-    return this.mindmaps.length === 0
+    if(this.moduleMindmaps && this.otherMindmaps) {
+      return Object.keys(this.moduleMindmaps).length === 0 && this.otherMindmaps.length === 0
+    }
+    return true
+
+  }
+
+  emptyModulMindmaps() {
+    console.log("module length: " + Object.keys(this.moduleMindmaps).length)
+    return Object.keys(this.moduleMindmaps).length === 0
+  }
+
+  emptyOtherMindmaps() {
+    if (this.otherMindmaps){
+      console.log("others length: " + this.otherMindmaps.length)
+      return this.otherMindmaps.length === 0
+    }
+    return true
   }
 }

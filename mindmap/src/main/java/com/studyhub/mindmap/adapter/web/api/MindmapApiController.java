@@ -45,6 +45,12 @@ public class MindmapApiController {
 		return ResponseEntity.ok(res);
 	}
 
+	@GetMapping("/get-all-other-mindmaps-by-username")
+	public ResponseEntity<List<MindmapNode>> getAllOtherMindmapsByUsername(HttpServletRequest request) {
+		List<MindmapNode> res = mindmapService.getAllOtherMindmapsByUsername(request);
+		return ResponseEntity.ok(res);
+	}
+
 	@GetMapping("/get-mindmap-by-modulid")
 	public ResponseEntity<MindmapNode> getMindmapByModulid(@RequestParam("modulId") UUID modulId) {
 		try {

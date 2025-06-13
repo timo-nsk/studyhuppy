@@ -1,24 +1,39 @@
 <div class="content-wrapper">
   <div id="header-div">
-    <div id="sidenav-toggler" *ngIf="!emptyMindmaps()">
+    <div id="sidenav-toggler" *ngIf="(moduleMindmaps && otherMindmaps) || emptyMindmaps()">
       <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="M120-240v-66.67h720V-240H120Zm0-206.67v-66.66h720v66.66H120Zm0-206.66V-720h720v66.67H120Z"/></svg>
     </div>
     <app-add-mindmap></app-add-mindmap>
   </div>
   <div id="mindmap-wrapper">
-    <div id="mindmap-sidenav" *ngIf="!emptyMindmaps()">
-      <h5>Module</h5>
-      <div *ngFor="let entry of module | keyvalue">
-        <p>{{ entry.key }}</p>
-        <ul>
-          <li *ngFor="let node of entry.value">
-            <a [routerLink]="['map-details', node.modulId]">
-              {{ node.title }}
-            </a>
-          </li>
-        </ul>
+    <div id="mindmap-sidenav" *ngIf="(moduleMindmaps && otherMindmaps) || emptyMindmaps()">
+      <div *ngIf="!emptyModulMindmaps()">
+        <h5>Module</h5>
+        <div *ngFor="let entry of moduleMindmaps | keyvalue">
+          <p>{{ entry.key }}</p>
+          <ul>
+            <li *ngFor="let node of entry.value">
+              <a [routerLink]="['map-details', node.modulId]">
+                {{ node.title }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div *ngIf="!emptyOtherMindmaps()">
+        <h5>Andere</h5>
+        <div>
+          <ul>
+            <li *ngFor="let mindmap of otherMindmaps">
+              <a [routerLink]="['map-details', mindmap.nodeId]">
+                {{ mindmap.title }}
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
+
     <div id="mindmap-detail">
       <div *ngIf="emptyMindmaps()">
         <p>Keine Mindmaps vorhanden</p>
