@@ -16,7 +16,7 @@ import { HeaderMainComponent } from './app-layout/header/header-main.component';
   ],
   templateUrl: './app.component.html',
   standalone: true,
-  styleUrls: ['./app.component.scss', './general.scss', './app-layout/side-navbar.scss']
+  styleUrls: ['./app.component.scss', './general.scss', './app-layout/side-navbar.scss', 'color.scss']
 })
 export class AppComponent {
   isLoggedIn : boolean = false
