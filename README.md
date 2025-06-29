@@ -9,6 +9,7 @@
 - Overview of study time for each university module
 - Statistics and visualizations of learning time
 - Flashcard learning using spaced repetition
+- Basic creation of Mindmaps
 
 ### Planned
 
@@ -19,6 +20,8 @@
 
 ### Modul Dash
 ![Module Screenshot](./screenshots/modul_1.png)
+
+### Statistics
 
 ![Statistic Screenshot](./screenshots/modul_2.png)
 
