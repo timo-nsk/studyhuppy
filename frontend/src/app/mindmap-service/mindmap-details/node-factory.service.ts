@@ -22,7 +22,7 @@ export class NodeFactoryService {
     const nodeWrapper = document.createElement("div")
     nodeWrapper.classList.add("node-wrapper")
     nodeWrapper.classList.add("dragable")
-    nodeWrapper.classList.add("shd")
+    //nodeWrapper.classList.add("shd")
     nodeWrapper.id = node.nodeId;
     nodeWrapper.style.left = x + "px";
     nodeWrapper.style.top = y + "px";
