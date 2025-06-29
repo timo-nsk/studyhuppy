@@ -6,7 +6,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  background-color: blue;
+  /* background-color: blue; */
   width: 100%;
   height: 50px;
 }
@@ -15,7 +15,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: pink;
+  /* background-color: pink; */
   width: 50px;
   height: 50px;
 }
@@ -26,14 +26,14 @@
 }
 
 #mindmap-sidenav {
-  background-color: red;
+  /* background-color: red; */
   height: 80vh;
   width: 300px;
   min-width: 150px;
 }
 
 #mindmap-detail {
-  background-color: green;
+  /* background-color: green; */
   width: 100%;
   height: 80vh;
 }

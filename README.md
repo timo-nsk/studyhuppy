@@ -20,6 +20,8 @@
 ### Modul Dash
 ![Module Screenshot](./screenshots/modul_1.png)
 
+![Statistic Screenshot](./screenshots/modul_2.png)
+
 ### Flashcard Dash
 ![Flashcard Screenshot](./screenshots/kartei_1.png)
 
@@ -28,6 +30,9 @@
 
 ### Flashcard Learning
 ![Flashcard Screenshot](./screenshots/kartei_3.png)
+
+### Inside Mindmap
+![Mindmap Screenshot](./screenshots/mindmap_1.png)
 
 ## Tech Stack
 
