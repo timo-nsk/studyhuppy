@@ -5,3 +5,11 @@ Feature: User-Authentifizierung
     And der Benutzer gibt "12345678" als Passwort ein
     And der Benutzer klickt auf den Login-Button
     Then landet der User auf "/module"
+
+  Scenario: Ein unregistrierter Benutzer versucht sich anzumelden
+    Given Der Benutzer ruft "/login" auf
+    When der Benutzer gibt "nichtregistriert" als Benutzernamen ein
+    And der Benutzer gibt "12345678" als Passwort ein
+    And der Benutzer klickt auf den Login-Button
+    Then landet der User nicht auf "/module"
+    Then der Fehler "Benutzer nicht gefunden" wird auf der Seite angezeigt

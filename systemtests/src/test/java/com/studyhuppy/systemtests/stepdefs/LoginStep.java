@@ -7,7 +7,9 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,5 +54,18 @@ public class LoginStep {
     public void landetDerUserAuf(String res) {
         boolean landed = loginPage.landetOnUrl(res);
         assertThat(landed).isTrue();
+    }
+
+    @Then("landet der User nicht auf {string}")
+    public void landetDerUserNichtAuf(String res) {
+        boolean landed = loginPage.landetOnUrl(res);
+        assertThat(landed).isFalse();
+    }
+
+    @Then("der Fehler {string} wird auf der Seite angezeigt")
+    public void derFehlerWirdAufDerSeiteAngezeigt(String error) throws InterruptedException {
+        Thread.sleep(100);
+        String span = driver.findElement(By.id("user-not-found-error")).getText();
+        assertThat(span).isEqualTo(error);
     }
 }
