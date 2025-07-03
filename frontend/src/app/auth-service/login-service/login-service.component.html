@@ -30,8 +30,8 @@
           </button>
           <a class="std-link m-accent-font" [routerLink]="'/register'">registrieren</a>
         </div>
-        <span *ngIf="userNotExists" id="user-not-found-error" class="danger">Benutzer nicht gefunden</span>
-        <span *ngIf="badCredentials" class="danger">Passwort ungültg</span>
+        <span *ngIf="userNotExists" class="danger bad-credentials-error">Benutzer nicht gefunden</span>
+        <span *ngIf="badCredentials" class="danger bad-credentials-error">Passwort ungültg</span>
       </form>
     </div>
   </div>

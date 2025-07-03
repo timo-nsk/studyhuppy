@@ -65,7 +65,7 @@ public class LoginStep {
     @Then("der Fehler {string} wird auf der Seite angezeigt")
     public void derFehlerWirdAufDerSeiteAngezeigt(String error) throws InterruptedException {
         Thread.sleep(100);
-        String span = driver.findElement(By.id("user-not-found-error")).getText();
+        String span = driver.findElement(By.className("bad-credentials-error")).getText();
         assertThat(span).isEqualTo(error);
     }
 }
