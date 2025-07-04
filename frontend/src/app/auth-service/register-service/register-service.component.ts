@@ -1,5 +1,5 @@
 import {Component, inject} from '@angular/core';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {AuthApiService} from '../auth.service';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {LoggingService} from '../../logging.service';
@@ -19,6 +19,7 @@ export class RegisterServiceComponent {
   log = new LoggingService("RegisterServiceComponent", "auth-service")
   authService : AuthApiService = inject(AuthApiService)
   sb = inject(SnackbarService)
+  router = inject(Router)
 
   //TODO: add validation, need to check if username is available in backend
   registerForm : FormGroup = new FormGroup({
@@ -37,7 +38,10 @@ export class RegisterServiceComponent {
       this.authService.register(data).subscribe({
         next: () => {
           this.log.debug("person registration successfull")
-          this.sb.openInfo("Ihr Benutzerkonto wurde erfolgreich angelegt. Sie können sich nun anmelden.")
+          this.router.navigateByUrl("/login")
+            .then(() => {
+              this.sb.openInfo("Ihr Benutzerkonto wurde erfolgreich angelegt. Sie können sich nun anmelden.")
+            })
         },
         error: err => {
           this.log.error(`error during user registration. reason: ${err}`)
