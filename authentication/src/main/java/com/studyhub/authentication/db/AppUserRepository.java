@@ -52,4 +52,6 @@ public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
 	AppUser findByUserId(UUID userId);
 
 	AppUser findByMail(String newMail);
+
+    boolean existsByUsername(String username);
 }

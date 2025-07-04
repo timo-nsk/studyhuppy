@@ -22,6 +22,7 @@ export class RegisterServiceComponent {
   authService : AuthApiService = inject(AuthApiService)
   sb = inject(SnackbarService)
   router = inject(Router)
+  userAlreadyExists = false
 
   //TODO: add validation, need to check if username is available in backend
   registerForm : FormGroup = new FormGroup({
@@ -46,8 +47,10 @@ export class RegisterServiceComponent {
             })
         },
         error: err => {
-          this.log.error(`error during user registration. reason: ${err}`)
-          this.sb.openError("Registrierung fehlgeschlagen. Versuchen Sie es später erneut.")
+          if(err.status == 400) {
+            this.userAlreadyExists = true
+            this.log.error(`error during user registration. reason: ${err}`)
+          }
         }
       })
     } else {

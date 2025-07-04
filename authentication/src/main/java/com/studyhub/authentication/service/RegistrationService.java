@@ -20,17 +20,15 @@ public class RegistrationService {
 	}
 
 	public boolean register(AppUser newUser)  {
-		AppUser savedUser = appUserRepository.save(newUser);
+		if (appUserRepository.existsByUsername(newUser.getUsername())) return false;
 
-		if (savedUser != null) {
-			log.info("User registered successfully (%s)".formatted(newUser));
-			mailRequestService.sendRegistrationConfirmation(newUser)
-					.doOnError(e -> System.out.println("Endgültig fehlgeschlagen: " + e.getMessage()))
-					.subscribe();;
-			return true;
-		} else {
-			log.error("Failed registring new user with data: %s".formatted(newUser));
-			return false;
-		}
+		appUserRepository.save(newUser);
+
+		log.info("User registered successfully (%s)".formatted(newUser));
+		mailRequestService.sendRegistrationConfirmation(newUser)
+			.doOnError(e -> System.out.println("E-Mail-Registration-Confirmatioon fehlgeschlagen: " + e.getMessage()))
+			.subscribe();
+
+		return true;
 	}
 }

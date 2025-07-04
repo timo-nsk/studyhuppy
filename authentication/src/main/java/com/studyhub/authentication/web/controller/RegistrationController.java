@@ -23,13 +23,13 @@ public class RegistrationController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<Map<String, Object>> registerNewUser(@RequestBody RegisterRequest registerRequest) {
+	public ResponseEntity<Void> registerNewUser(@RequestBody RegisterRequest registerRequest) {
 		boolean success = registrationService.register(registerRequest.toAppUser());
 
-		Map<String, Object> response = new HashMap<>();
-		response.put("success", success);
-
-		if (success) return ResponseEntity.ok(response);
-		else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+		if(success) {
+			return ResponseEntity.status(HttpStatus.CREATED).build();
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
 	}
 }

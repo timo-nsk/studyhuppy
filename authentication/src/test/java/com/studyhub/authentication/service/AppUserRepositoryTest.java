@@ -132,4 +132,20 @@ public class AppUserRepositoryTest {
 		assertThat(foundUser.getUserId()).isEqualTo(userId);
 		assertThat(foundUser.getUsername()).isEqualTo("grace_hopper");
 	}
+
+	@Test
+	@DisplayName("Ein User kann auf Existenz abgefragt werden")
+	void test_12() {
+		boolean res = appUserRepository.existsByUsername("bob_the_builder");
+
+		assertThat(res).isTrue();
+	}
+
+	@Test
+	@DisplayName("Ein User kann auf Nicht-Existenz abgefragt werden")
+	void test_13() {
+		boolean res = appUserRepository.existsByUsername("angelamerkel");
+
+		assertThat(res).isFalse();
+	}
 }

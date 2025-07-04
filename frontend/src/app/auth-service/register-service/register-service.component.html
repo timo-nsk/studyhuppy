@@ -29,6 +29,10 @@
                 Geben Sie einen Benutzernamen ein
           </span>
           <span class="text-danger"
+                *ngIf="userAlreadyExists">
+                Dieser Benutzername ist bereits vergeben
+          </span>
+          <span class="text-danger"
                 *ngIf="registerForm.controls['username'].errors?.['minlength'] && registerForm.controls['username'].touched">
                 Benutzername muss mindestens 3 Zeichen enthalten
           </span>
