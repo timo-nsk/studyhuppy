@@ -20,4 +20,4 @@ Feature: Neue Benutzer können einen Benutzeraccount registrieren
     And Ich Benachrichtigungen akzeptiere
     And Ich die AGB akzeptiere
     And Ich auf den Button zum Registrieren klicke
-    Then Öffnet sich ein Popup mit dem Text "Registrierung fehlgeschlagen"
+    Then Erscheint eine Fehlermeldung auf der Seite mit der Nachricht "Dieser Benutzername ist bereits vergeben"

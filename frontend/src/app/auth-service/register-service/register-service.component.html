@@ -28,7 +28,7 @@
                 *ngIf="registerForm.controls['username'].errors?.['required'] && registerForm.controls['username'].touched">
                 Geben Sie einen Benutzernamen ein
           </span>
-          <span class="text-danger"
+          <span id="user-exists-err" class="text-danger"
                 *ngIf="userAlreadyExists">
                 Dieser Benutzername ist bereits vergeben
           </span>

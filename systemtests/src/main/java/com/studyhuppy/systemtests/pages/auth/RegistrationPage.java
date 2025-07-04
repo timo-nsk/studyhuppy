@@ -2,6 +2,7 @@ package com.studyhuppy.systemtests.pages.auth;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class RegistrationPage {
 
@@ -50,5 +51,9 @@ public class RegistrationPage {
     public boolean showsRegistationMessage(String message) {
         String m = driver.findElement(By.className("cdk-overlay-container")).getText();
         return m.contains(message);
+    }
+
+    public WebElement findUserAlreadyExistsSpan() {
+        return driver.findElement(By.id("user-exists-err"));
     }
 }

@@ -9,6 +9,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -87,5 +88,11 @@ public class RegistrationStep {
     public void öffnetSichEinConfirmationPopupMitDemText(String message) {
         boolean popupShows = registrationPage.showsRegistationMessage(message);
         assertThat(popupShows).isTrue();
+    }
+
+    @Then("Erscheint eine Fehlermeldung auf der Seite mit der Nachricht {string}")
+    public void erscheintEineFehlermeldungAufDerSeiteMitDerNachricht(String message) {
+        WebElement err = registrationPage.findUserAlreadyExistsSpan();
+        assertThat(err.getText().contains(message)).isTrue();
     }
 }
