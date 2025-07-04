@@ -25,7 +25,7 @@ export class RegisterServiceComponent {
 
   //TODO: add validation, need to check if username is available in backend
   registerForm : FormGroup = new FormGroup({
-    mail: new FormControl(""),
+    mail: new FormControl("", [Validators.required, Validators.email]),
     username: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
     password: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
     semester: new FormControl(""),

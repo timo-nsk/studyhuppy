@@ -11,6 +11,14 @@
         <div class="mb-3">
           <label class="sh-form-lbl" for="mail">E-Mail<span class="hint-star">*</span></label>
           <input id="mail" class="form-control" type="email" formControlName="mail">
+          <span class="text-danger"
+                *ngIf="registerForm.controls['mail'].errors?.['required'] && registerForm.controls['mail'].touched">
+                Geben Sie ihre E-Mail-Adresse ein
+          </span>
+          <span class="text-danger"
+                *ngIf="registerForm.controls['mail'].errors?.['email'] && registerForm.controls['mail'].touched">
+                Ungültige E-Mail-Adresse
+          </span>
         </div>
 
         <div class="mb-3">
