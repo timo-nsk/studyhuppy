@@ -16,11 +16,35 @@
         <div class="mb-3">
           <label class="sh-form-lbl" for="username">Username<span class="hint-star">*</span></label>
           <input id="username" class="form-control" type="text" formControlName="username">
+          <span class="text-danger"
+                *ngIf="registerForm.controls['username'].errors?.['required'] && registerForm.controls['username'].touched">
+                Geben Sie einen Benutzernamen ein
+          </span>
+          <span class="text-danger"
+                *ngIf="registerForm.controls['username'].errors?.['minlength'] && registerForm.controls['username'].touched">
+                Benutzername muss mindestens 3 Zeichen enthalten
+          </span>
+          <span class="text-danger"
+                *ngIf="registerForm.controls['username'].errors?.['maxlength'] && registerForm.controls['username'].touched">
+                Benutzername darf höchstens 30 Zeichen enthalten
+          </span>
         </div>
 
         <div class="mb-3">
           <label class="sh-form-lbl" for="password">Passwort<span class="hint-star">*</span></label>
           <input id="password" class="form-control" style="--bs-focus-ring-color: rgba(229, 209, 208, .40)" type="password" formControlName="password">
+          <span class="text-danger"
+                *ngIf="registerForm.controls['password'].errors?.['required'] && registerForm.controls['password'].touched">
+                Geben Sie ein Passwort ein
+          </span>
+          <span class="text-danger"
+                *ngIf="registerForm.controls['password'].errors?.['minlength'] && registerForm.controls['password'].touched">
+                Passwort muss mindestens 8 Zeichen enthalten
+          </span>
+          <span class="text-danger"
+                *ngIf="registerForm.controls['password'].errors?.['maxlength'] && registerForm.controls['password'].touched">
+                Passwort darf höchstens 20 Zeichen enthalten
+          </span>
         </div>
 
         <div class="mb-3">
@@ -28,16 +52,20 @@
           <input id="semester" class="form-control" type="number" formControlName="semester">
         </div>
 
-        <div class="form-check">
+        <div class="form-check mb-3">
           <input id="subscription" class="form-check-input sh-form-lbl" type="checkbox" formControlName="notificationSubscription">
           <label class="form-check-label" for="subscription">Benachrichtigungen aktivieren</label>
         </div>
 
-        <div class="form-check">
+        <div class="form-check mb-3">
           <input id="agb"  class="form-check-input sh-form-lbl"  type="checkbox" formControlName="acceptedAgb">
           <label class="form-check-label" for="agb" ><a href="#">AGB</a> akzeptieren<span class="hint-star">*</span></label>
+          <span class="text-danger"
+                *ngIf="registerForm.controls['acceptedAgb'].errors?.['required'] && registerForm.controls['acceptedAgb'].touched">
+                Bitte akzeptieren Sie die AGB
+          </span>
         </div>
-        <div>
+        <div class="mb-3">
           <button class="sh-form-btn">
             <span type="submit" class="sh-form-btn-content">Konto erstellen</span>
           </button>

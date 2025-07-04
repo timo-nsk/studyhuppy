@@ -1,15 +1,17 @@
 import {Component, inject} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import {AuthApiService} from '../auth.service';
-import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LoggingService} from '../../logging.service';
 import {SnackbarService} from '../../snackbar.service';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-register-service',
   imports: [
     RouterLink,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf
   ],
   templateUrl: './register-service.component.html',
   standalone: true,
@@ -24,11 +26,11 @@ export class RegisterServiceComponent {
   //TODO: add validation, need to check if username is available in backend
   registerForm : FormGroup = new FormGroup({
     mail: new FormControl(""),
-    username: new FormControl(""),
-    password: new FormControl(""),
+    username: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+    password: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
     semester: new FormControl(""),
     notificationSubscription: new FormControl(""),
-    acceptedAgb: new FormControl("")
+    acceptedAgb: new FormControl("", Validators.required)
   })
 
   submitRegister() {
@@ -50,6 +52,7 @@ export class RegisterServiceComponent {
       })
     } else {
       this.log.debug("form data INVALID")
+      this.registerForm.markAllAsTouched()
     }
   }
 }
