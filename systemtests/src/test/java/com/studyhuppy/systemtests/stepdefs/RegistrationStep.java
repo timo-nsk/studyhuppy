@@ -83,7 +83,7 @@ public class RegistrationStep {
         assertThat(landedLogin).isTrue();
     }
 
-    @Then("öffnet sich ein Confirmation-Popup mit dem Text {string}")
+    @Then("Öffnet sich ein Popup mit dem Text {string}")
     public void öffnetSichEinConfirmationPopupMitDemText(String message) {
         boolean popupShows = registrationPage.showsRegistationMessage(message);
         assertThat(popupShows).isTrue();
