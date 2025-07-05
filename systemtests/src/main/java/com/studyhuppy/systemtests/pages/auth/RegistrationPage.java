@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+
 public class RegistrationPage {
 
     private WebDriver driver;
@@ -54,6 +56,10 @@ public class RegistrationPage {
     }
 
     public WebElement findUserAlreadyExistsSpan() {
-        return driver.findElement(By.id("user-exists-err"));
+        return driver.findElement(By.className("text-danger"));
+    }
+
+    public List<WebElement> findErrors() {
+        return driver.findElements(By.className("text-danger"));
     }
 }

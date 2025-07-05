@@ -12,6 +12,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RegistrationStep {
@@ -94,5 +96,11 @@ public class RegistrationStep {
     public void erscheintEineFehlermeldungAufDerSeiteMitDerNachricht(String message) {
         WebElement err = registrationPage.findUserAlreadyExistsSpan();
         assertThat(err.getText().contains(message)).isTrue();
+    }
+
+    @Then("Erscheinen Fehlermeldungen für die EIngabefelder")
+    public void erscheinenFehlermeldungenFürDieEingabefelder() {
+        List<WebElement> elements = registrationPage.findErrors();
+        assertThat(elements).hasSize(4);
     }
 }
