@@ -125,4 +125,15 @@ public class ModulStep {
         boolean popupShows = modulPage.showsPopupMessage(text);
         assertThat(popupShows).isTrue();
     }
+
+    @Then("Erscheinen Fehlermeldungen für die Eingabefelder")
+    public void erscheinenFehlermeldungenFürDieEingabefelder() {
+        boolean res = modulPage.hasErrorMessages(4);
+        assertThat(res).isTrue();
+    }
+
+    @Then("Erscheint eine Fehlmledung mit dem Text {string}")
+    public boolean erscheintEineFehlmledungMitDemText(String text) {
+        return modulPage.showsErrorMessage(text);
+    }
 }

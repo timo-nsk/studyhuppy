@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class ModulPage {
 
@@ -81,5 +82,14 @@ public class ModulPage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("mat-mdc-button")));
         WebElement popup = driver.findElement(By.className("mat-mdc-button"));
         driver.findElement(By.className("mat-mdc-button")).click();
+    }
+
+    public boolean hasErrorMessages(int count) {
+        List<WebElement> errors = driver.findElements(By.className("text-danger"));
+        return errors.size() == count;
+    }
+
+    public boolean showsErrorMessage(String text) {
+        return driver.findElement(By.className("text-danger")).getText().contains(text);
     }
 }

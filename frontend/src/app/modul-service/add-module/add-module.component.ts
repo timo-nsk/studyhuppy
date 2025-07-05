@@ -37,6 +37,7 @@ export class AddModuleComponent {
         }
       })
     } else {
+      this.newModulForm.markAllAsTouched()
       this.log.debug("newModulForm data INVALID")
     }
   }
@@ -55,9 +56,9 @@ export class AddModuleComponent {
   initForm() : FormGroup {
     return new FormGroup({
       name: new FormControl("", [Validators.required]),
-      creditPoints: new FormControl(5, [Validators.required, Validators.min(0)]),
-      kontaktzeitStunden: new FormControl(1, [Validators.required, Validators.min(1)]),
-      selbststudiumStunden: new FormControl(1, [Validators.required, Validators.min(1)]),
+      creditPoints: new FormControl("", [Validators.required, Validators.min(0)]),
+      kontaktzeitStunden: new FormControl("", [Validators.required, Validators.min(1)]),
+      selbststudiumStunden: new FormControl("", [Validators.required, Validators.min(1)]),
       time: new FormControl(""),
       mondays: new FormControl(false),
       tuesdays: new FormControl(false),

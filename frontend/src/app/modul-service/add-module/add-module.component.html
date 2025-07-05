@@ -8,7 +8,7 @@
 
         <span class="text-danger"
               *ngIf="newModulForm.controls['name'].errors?.['required'] && newModulForm.controls['name'].touched">
-              Geben Sie einen Namen ein
+              Bitte geben Sie einen Modulnamen ein
         </span>
       </div>
       <div class="mb-4">
@@ -21,7 +21,7 @@
 
         <span class="text-danger"
               *ngIf="newModulForm.controls['creditPoints'].errors?.['required'] && newModulForm.controls['creditPoints'].touched">
-              Geben Sie Kreditpunkte ein
+              Bitte geben Sie Kreditpunkte ein
         </span>
       </div>
 
@@ -30,11 +30,11 @@
         <input id="kontaktzeit" class="form-control" type="number" formControlName="kontaktzeitStunden" min="1">
         <span class="text-danger"
               *ngIf="newModulForm.controls['kontaktzeitStunden'].errors?.['required'] && newModulForm.controls['kontaktzeitStunden'].touched">
-              Bitte geben Sie die Kontaktzeitstuden an
+              Bitte geben Sie Kontaktzeitstuden an
         </span>
         <span class="text-danger"
               *ngIf="newModulForm.controls['kontaktzeitStunden'].errors?.['min'] && newModulForm.controls['kontaktzeitStunden'].touched">
-              Stunden müssen mindestens '1' betragen
+              Kontaktzeitstuden müssen mindestens '1' betragen
         </span>
       </div>
 
@@ -47,7 +47,7 @@
         </span>
         <span class="text-danger"
               *ngIf="newModulForm.controls['selbststudiumStunden'].errors?.['min'] && newModulForm.controls['selbststudiumStunden'].touched">
-              Stunden müssen mindestens '1' betragen
+              Selbststudiumstunden müssen mindestens '1' betragen
         </span>
       </div>
 
@@ -170,7 +170,7 @@
       </div>
       -->
       <div class="mb-4">
-        <button class="sh-form-btn" [disabled]="!newModulForm.valid">
+        <button class="sh-form-btn">
           <span class="sh-form-btn-content">Modul hinzufügen</span>
         </button>
       </div>
