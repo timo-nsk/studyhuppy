@@ -11,11 +11,18 @@ spring:
       password: none
       role: none
 management:
+  server:
+    port: 9080
   endpoints:
     web:
-      base-path: /api/modul/v1/actuator
+      base-path: /actuator
       exposure:
-        include: "*"
+        include: metrics, health, info, prometheus
+  metrics:
+    enable:
+      all: true
+  security:
+    enabled: true
 server:
   port: ${SERVER_PORT}
 jwt:

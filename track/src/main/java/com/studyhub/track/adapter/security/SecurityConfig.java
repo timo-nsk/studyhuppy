@@ -45,7 +45,7 @@ public class SecurityConfig {
 				//.requiresChannel().anyRequest().requiresSecure().and()
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-						.requestMatchers("/api/modul/v1/get-db-health", "/actuator/health").permitAll()
+						.requestMatchers("/api/modul/v1/get-db-health", "/actuator/**").permitAll()
 						.anyRequest().authenticated())
 				//.csrf(csrf -> csrf
 				//		.csrfTokenRequestHandler(requestHandler)

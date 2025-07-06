@@ -167,6 +167,18 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
+
+        <!-- Micrometer Core (für Counter, Timer, ... API) -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-core</artifactId>
+        </dependency>
+
+        <!-- Prometheus Registry (damit Micrometer mit Prometheus sprechen kann) -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
