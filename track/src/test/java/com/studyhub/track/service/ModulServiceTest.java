@@ -112,40 +112,6 @@ public class ModulServiceTest {
 	}
 
 	@Test
-	@DisplayName("Das Klausur-Datum eines Moduls wird aus der Datenbank geholt und korrekt in das deutsche Format geparsed")
-	void test_11() {
-		UUID fachId = UUID.randomUUID();
-		String eng = "2025-03-27 10:00:00";
-		when(repo.findKlausurDateByFachId(any(UUID.class))).thenReturn(eng);
-
-		String ger = modulService.findKlausurDateByFachId(fachId);
-
-		assertThat(ger).isEqualTo("27.03.2025, 10:00");
-	}
-
-	@Test
-	@DisplayName("Die Tage bis zur Klausur werden korrekt berechnet")
-	void test_12() {
-		LocalDateTime klausur = LocalDateTime.of(2025, 5,10, 10, 0);
-		LocalDateTime today = LocalDateTime.of(2025, 5,1, 10, 0);
-
-		int diff = modulService.computeDayDifference(today, klausur);
-
-		assertThat(diff).isEqualTo(9);
-	}
-
-	@Test
-	@DisplayName("Die Tage bis zur Klausur über Monatsgrenzen werden korrekt berechnet")
-	void test_13() {
-		LocalDateTime klausur = LocalDateTime.of(2025, 5,10, 10, 0);
-		LocalDateTime today = LocalDateTime.of(2025, 2,10, 10, 0);
-
-		int diff = modulService.computeDayDifference(today, klausur);
-
-		assertThat(diff).isEqualTo(89);
-	}
-
-	@Test
 	@DisplayName("Für einen User wird die lernzeit pro Fachsemester als Map berechnet")
 	void test_14() {
 		List<Modul> modulList = ModulMother.modulListWithSemester();

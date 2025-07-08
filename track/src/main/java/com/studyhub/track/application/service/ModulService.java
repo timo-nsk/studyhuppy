@@ -164,11 +164,6 @@ public class ModulService {
 		return repo.isModulDbHealthy();
 	}
 
-	public void addKlausurDate(UUID uuid, LocalDate date, String time) {
-		TimeConverter tc = new TimeConverter();
-		NeuerModulterminRequest neuerTermin = new NeuerModulterminRequest(uuid, "Klausur", LocalDateTime.of(date, tc.getLocalTimeFromString(time)), null, null, Terminart.KLAUSUR, Terminfrequenz.EINMALIG);
-		saveNewModultermin(neuerTermin);
-	}
 
 	public String dateStringGer(String zeitString) {
 		try {
@@ -180,30 +175,6 @@ public class ModulService {
 			return dateTime.format(outputFormatter);
 		} catch (Exception e) {
 			return "Ungültiges Datums-/Zeitformat";
-		}
-	}
-
-	public int daysLeftToKlausur(UUID fachId) {
-		String dateString = repo.findKlausurDateByFachId(fachId);
-		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		LocalDateTime end = LocalDateTime.parse(dateString, inputFormatter);
-
-		LocalDateTime start = LocalDateTime.now();
-
-		return computeDayDifference(start, end);
-	}
-
-	public int computeDayDifference(LocalDateTime start, LocalDateTime end) {
-		return (int) ChronoUnit.DAYS.between(start, end);
-	}
-
-	public String findKlausurDateByFachId(UUID fachId) {
-		String dateString = repo.findKlausurDateByFachId(fachId);
-
-		if(dateString != null) {
-			return dateStringGer(dateString);
-		} else {
-			return null;
 		}
 	}
 
