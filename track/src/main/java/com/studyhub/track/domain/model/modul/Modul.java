@@ -7,9 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -60,5 +58,27 @@ public class Modul {
 			return true;
 		}
 		return false;
+	}
+
+	public boolean hasKlausurdate() {
+		int c = 0;
+		for (Modultermin modultermin : modultermine) {
+			if(modultermin.getTerminart() == Terminart.KLAUSUR)  c++;
+		}
+
+		return c > 0;
+	}
+
+	public Modultermin[] getKlauurtermine() {
+		if (hasKlausurdate()) {
+			List<Modultermin> l = new ArrayList<>();
+			for (Modultermin modultermin : modultermine) {
+				if (modultermin.getTerminart() == Terminart.KLAUSUR) {
+					l.add(modultermin);
+				}
+			}
+			return l.toArray(new Modultermin[0]);
+		}
+		return null;
 	}
 }

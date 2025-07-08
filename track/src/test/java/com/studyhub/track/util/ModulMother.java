@@ -62,4 +62,9 @@ public class ModulMother {
 		return new Modul(UUID.randomUUID(), "Modul", 1, DEFAULT_KREDITPUNKTE, "user123", true, 1, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, new LinkedList<>());
 	}
 
+	public static Modul initModulWithKlausurtermin() {
+		List<Modultermin> l = List.of(new Modultermin("Klausr 1", null, null, "notiz", Terminart.KLAUSUR, Terminfrequenz.EINMALIG));
+		return new Modul(UUID.randomUUID(), "Modul", 1, DEFAULT_KREDITPUNKTE, "user123", true, 1, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, l);
+	}
+
 }
