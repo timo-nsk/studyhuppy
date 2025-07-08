@@ -165,7 +165,8 @@ public class ModulService {
 	}
 
 	public void addKlausurDate(UUID uuid, LocalDate date, String time) {
-		NeuerModulterminRequest neuerTermin = new NeuerModulterminRequest(uuid, "Klausur", LocalDateTime.of(date, TimeConverter.getLocalTimeFromString(time)), null, null, Terminart.KLAUSUR, Terminfrequenz.EINMALIG);
+		TimeConverter tc = new TimeConverter();
+		NeuerModulterminRequest neuerTermin = new NeuerModulterminRequest(uuid, "Klausur", LocalDateTime.of(date, tc.getLocalTimeFromString(time)), null, null, Terminart.KLAUSUR, Terminfrequenz.EINMALIG);
 		saveNewModultermin(neuerTermin);
 	}
 

@@ -49,11 +49,11 @@ public record ModulForm(
 	public Modul newModulFromFormData(ModulForm modulForm, String username, int semester) {
 		Kreditpunkte kreditpunkte = new Kreditpunkte(modulForm.creditPoints(), modulForm.kontaktzeitStunden(), modulForm.selbststudiumStunden());
 		Lerntage lerntage = new Lerntage(mondays, tuesdays, wednesdays, thursdays, fridays, saturdays, sundays, SemesterPhase.VORLESUNG);
-
+        TimeConverter tc = new TimeConverter();
 		LocalDateTime actualKlausurDatum = null;
 
 		if (klausurDatum != null) {
-			actualKlausurDatum = LocalDateTime.of(modulForm.klausurDatum(), TimeConverter.getLocalTimeFromString(time));
+			actualKlausurDatum = LocalDateTime.of(modulForm.klausurDatum(), tc.getLocalTimeFromString(time));
 		}
 		return new Modul(UUID.randomUUID(), name, 0, kreditpunkte, username, true, semester, new Semester(), lerntage, null);
 	}
