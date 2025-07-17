@@ -1,6 +1,7 @@
 package com.studyhub.track.adapter.web.controller.api;
 
 import com.studyhub.track.adapter.authentication.AuthenticationService;
+import com.studyhub.track.adapter.metric.PrometheusMetrics;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.adapter.db.modul.ModulDto;
 import com.studyhub.track.adapter.db.modul.ModulMapper;
@@ -14,6 +15,8 @@ import com.studyhub.track.application.service.dto.ModulUpdateRequest;
 import com.studyhub.track.application.service.dto.NeuerModulterminRequest;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.Modultermin;
+import io.micrometer.core.instrument.Metrics;
+import io.micrometer.core.instrument.Counter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -37,13 +40,15 @@ public class ModulApiController {
 	private final AuthenticationService authenticationService;
 	private final KlausurReminderService klausurReminderService;
 	private final JWTService jwtService;
+	private final PrometheusMetrics metrics;
 
-	public ModulApiController(ModulService service, ModulEventService modulEventService, AuthenticationService authenticationService, KlausurReminderService klausurReminderService, JWTService jwtService) {
+	public ModulApiController(ModulService service, ModulEventService modulEventService, AuthenticationService authenticationService, KlausurReminderService klausurReminderService, JWTService jwtService, PrometheusMetrics metrics) {
 		this.modulService = service;
 		this.modulEventService = modulEventService;
         this.authenticationService = authenticationService;
         this.klausurReminderService = klausurReminderService;
 		this.jwtService = jwtService;
+        this.metrics = metrics;
     }
 
 	@AngularApi
@@ -55,6 +60,7 @@ public class ModulApiController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
+		metrics.incrementTotalRequests();
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
@@ -156,13 +162,6 @@ public class ModulApiController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-		return ResponseEntity.status(HttpStatus.OK).build();
-	}
-
-	@AngularApi
-	@PostMapping("/add-klausur-date")
-	public ResponseEntity<Void> addKlausurDate(@RequestBody KlausurDateRequest req) {
-		modulService.addKlausurDate(UUID.fromString(req.getFachId()), req.getDate(), req.getTime());
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
