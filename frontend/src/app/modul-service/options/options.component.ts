@@ -1,12 +1,12 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {Modul} from '../module/domain';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormField, MatLabel} from '@angular/material/input';
-import {MatSelect, MatSelectChange} from '@angular/material/select';
+import {MatSelect} from '@angular/material/select';
 import {MatOption} from '@angular/material/core';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
-import { ModuleApiService } from '../module/module-api.service';
+import {ModuleApiService} from '../module/module-api.service';
 import {LoggingService} from '../../logging.service';
 import {SnackbarService} from '../../snackbar.service';
 
@@ -115,8 +115,9 @@ export class OptionsComponent implements OnInit{
     }
   }
 
-  selectModule(fachId: MatSelectChange<string>) {
-    this.modulFachId = fachId.value;
+  selectModule(fachId: Event) {
+    const selectElement = fachId.target as HTMLSelectElement;
+    this.modulFachId = selectElement.value
     this.log.debug(`selected modul: ${this.modulFachId}`)
   }
 

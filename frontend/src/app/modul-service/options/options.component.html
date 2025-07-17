@@ -6,14 +6,12 @@
   <div *ngIf="module.length > 0">
     <div>
       <div>
-        <mat-form-field class="ff-outfit">
-          <mat-label class="ff-outfit">Modul auswählen</mat-label>
-          <mat-select class="ff-outfit" (selectionChange)="selectModule($event)">
-            @for (modul of module; track modul) {
-              <mat-option class="ff-outfit" [value]="modul.fachId">{{modul.name}}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
+        <select id="module-dropwdown" class="form-select" (change)="selectModule($event)">
+          <option selected value="">Modul auswählen</option>
+          @for (modul of module; track modul) {
+            <option class="ff-outfit" [value]="modul.fachId">{{modul.name}}</option>
+          }
+        </select>
 
       </div>
       <div id="option-table-container">
