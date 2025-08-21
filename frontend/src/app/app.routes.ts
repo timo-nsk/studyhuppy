@@ -31,6 +31,7 @@ import {MindmapServiceComponent} from './mindmap-service/mindmap-service.compone
 import {MindmapDetailsComponent} from './mindmap-service/mindmap-details/mindmap-details.component';
 import {HelpComponent} from './app-layout/header/help/help.component';
 import {KontaktComponent} from './app-layout/footer/kontakt/kontakt.component';
+import {SessionComponent} from './modul-service/session/session.component';
 
 export const routes: Routes = [
   {
@@ -108,6 +109,10 @@ export const routes: Routes = [
             },
             { path: 'add-modul',
               component: AddModuleComponent,
+            },
+            {
+              path: 'session',
+              component: SessionComponent
             },
             {
               path: 'einstellungen',
