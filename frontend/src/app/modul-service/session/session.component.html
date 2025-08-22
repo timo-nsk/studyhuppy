@@ -1,1 +1,24 @@
-<p>session component</p>
+<p>Vorhandene Session-Konfiguration wählen</p>
+
+<div class="session-config-container">
+  <p>Lern-Session konfigurieren</p>
+  <form>
+    <label>Anzahl Blöcke:</label>
+    <select [(ngModel)]="anzahlBloecke" name="blocke-select" (click)="print()">
+      <option [value]="1">1</option>
+      <option [value]="2" selected>2</option>
+      <option [value]="3">3</option>
+      <option [value]="4">4</option>
+      <option [value]="5">5</option>
+    </select>
+  </form>
+  <div>
+    <p *ngFor="let i of [].constructor(anzahlBloecke); let index = index">
+      Block {{ index + 1 }}
+    </p>
+  </div>
+</div>
+
+
+<button>Session speichern</button>
+<button>Session starten</button>
