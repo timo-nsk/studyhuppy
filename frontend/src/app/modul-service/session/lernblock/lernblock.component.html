@@ -1,0 +1,11 @@
+<div class="block-container">
+  <select>
+    <option>Lernblock</option>
+    <option>Pausenblock</option>
+  </select>
+  <select>
+    <option *ngFor="let modul of module" [value]="modul.fachId">{{modul.name}}</option>
+  </select>
+  <p>Zeit: 45min</p>
+  <p>Pause: 5min</p>
+</div>
