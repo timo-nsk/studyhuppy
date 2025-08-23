@@ -23,7 +23,7 @@
 
 ### Sessions
 
-![Session Screenshot](./screenshots/session-1.png)
+![Session Screenshot](./screenshots/session_1.png)
 
 ### Statistics
 
