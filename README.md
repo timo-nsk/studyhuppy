@@ -21,6 +21,10 @@
 ### Modul Dash
 ![Module Screenshot](./screenshots/modul_1.png)
 
+### Sessions
+
+![Session Screenshot](./screenshots/session-1.png)
+
 ### Statistics
 
 ![Statistic Screenshot](./screenshots/modul_2.png)
