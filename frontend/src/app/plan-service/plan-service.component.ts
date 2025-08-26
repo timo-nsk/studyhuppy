@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-plan-service',
-  imports: [],
+  imports: [
+    NgIf
+  ],
   templateUrl: './plan-service.component.html',
-  styleUrl: './plan-service.component.scss'
+  standalone: true,
+  styleUrls: ['./plan-service.component.scss', '../general.scss', '../button.scss']
 })
 export class PlanServiceComponent {
 
