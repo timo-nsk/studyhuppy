@@ -56,3 +56,9 @@ export class Session {
     return true
   }
 }
+
+export interface SessionInfoDto {
+  fachId : string,
+  name : string,
+  zeit : string
+}
