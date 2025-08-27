@@ -13,4 +13,10 @@ public class Session {
 	private String titel;
 	private String beschreibung;
 	private List<Block> blocks;
+
+	public Integer getTotalZeit() {
+		return blocks.stream()
+				.mapToInt(block -> block.getLernzeitSeconds() + block.getPausezeitSeconds())
+				.sum();
+	}
 }
