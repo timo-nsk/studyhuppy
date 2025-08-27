@@ -3,7 +3,7 @@ import {inject, Injectable} from '@angular/core';
 import {HeaderService} from '../../header.service';
 import {HttpClient} from '@angular/common/http';
 import {LoggingService} from '../../logging.service';
-import {Session} from './session-domain';
+import {Session, SessionInfoDto} from './session-domain';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -32,5 +32,10 @@ export class SessionApiService {
       headers,
       body: { fachId }
     })
+  }
+
+  getLernplanSessionData() {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.get<SessionInfoDto[]>(this.SESSION_BASE_API + '/get-lernplan-session-data', {headers})
   }
 }
