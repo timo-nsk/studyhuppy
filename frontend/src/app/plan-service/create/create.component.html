@@ -25,6 +25,10 @@
                 </td>
                 <td>
                   <input type="time" formControlName="beginn" class="form-control time-picker">
+                  <span class="text-danger"
+                        *ngIf="day.get('beginn')?.errors?.['required'] && day.get('beginn')?.touched">
+                        Bitte geben Sie eine Uhrzeit an
+                  </span>
                 </td>
                 <td></td>
               </tr>
@@ -37,6 +41,10 @@
                     <option selected value="none">{{day.value.weekday}} keine Session</option>
                     <option *ngFor="let sessionInfo of sessionData" [value]="sessionInfo.fachId">{{sessionInfo.name}}</option>
                   </select>
+                  <span class="text-danger"
+                        *ngIf="day.get('session')?.errors?.['required'] && day.get('session')?.touched">
+                        Bitte geben Sie eine Lernkonfiguration aus
+                  </span>
                 </td>
                 <td class="zeit-cell">
                   <p *ngIf="getSessionInfo(day.get('session')?.value) as info">

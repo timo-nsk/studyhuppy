@@ -55,8 +55,8 @@ export class PlanCreateComponent implements OnInit {
   createDayForm(day: string): FormGroup {
     return this.fb.group({
       weekday: [day],
-      beginn: [''],
-      session: ['none']
+      beginn: ['', Validators.required],
+      session: ['none', Validators.required]
     });
   }
 
@@ -69,14 +69,28 @@ export class PlanCreateComponent implements OnInit {
   }
 
   save() {
+    let invalid = 0
 
     if (this.titelForm.invalid) {
       this.titelForm.markAllAsTouched()
-      console.log("invalid lernplan titel")
-      return
+      invalid++
     }
 
-    console.log(this.form.value);
+    for(let i = 0; i < this.days.length; i++) {
+      const currForm = this.days.at(i);
+      if(currForm.invalid) {
+        currForm.markAllAsTouched()
+        invalid++
+      }
+    }
+
+    if (invalid > 0) {
+      return
+    } else {
+      // TODO send data to backend
+    }
+
+
     /*
     [
       { weekday: 'Montag', beginn: '08:00', session: 'Montags intensiv', dauer: '99h 30min' },
