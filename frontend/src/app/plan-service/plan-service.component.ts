@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import {NgIf} from '@angular/common';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-plan-service',
   imports: [
-    NgIf
+    NgIf,
+    RouterLink
   ],
   templateUrl: './plan-service.component.html',
   standalone: true,
