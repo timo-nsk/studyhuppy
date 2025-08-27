@@ -2,13 +2,16 @@
   <div class="lernplan-container bordered-b">
     <h2>Lernplan erstellen</h2>
     <div class="weekday-container bordered-g">
-      <form class="mb-4">
+      <form class="mb-4" [formGroup]="titelForm">
         <label class="form-label">Titel</label>
-        <input class="form-control">
+        <input class="form-control" formControlName="lernplanTitel">
+        <span class="text-danger"
+              *ngIf="titelForm.controls['lernplanTitel'].errors?.['required'] && titelForm.controls['lernplanTitel'].touched">
+              Bitte geben Sie einen Lernplantitel ein
+        </span>
       </form>
     </div>
-
-
+    <div>
       <form [formGroup]="form" (ngSubmit)="save()">
         <div formArrayName="days">
           <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i" class="weekday-container bordered-g">
@@ -45,10 +48,8 @@
             </table>
           </div>
         </div>
-
         <button type="submit" class="sh-btn">Speichern</button>
       </form>
-
-
+    </div>
   </div>
 </div>

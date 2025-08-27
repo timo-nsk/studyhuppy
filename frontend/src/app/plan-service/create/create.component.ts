@@ -1,6 +1,14 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
-import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import {Session, SessionInfoDto} from '../../modul-service/session/session-domain';
 import {SessionApiService} from '../../modul-service/session/session-api.service';
 import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
@@ -11,7 +19,8 @@ import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
     NgForOf,
     ReactiveFormsModule,
     NgIf,
-    TimeFormatPipe
+    TimeFormatPipe,
+    FormsModule
   ],
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss', '../../general.scss', '../../button.scss']
@@ -21,6 +30,9 @@ export class PlanCreateComponent implements OnInit {
   weekdays = ['Montags', 'Dienstags', 'Mittwochs', 'Donnerstags', 'Freitags', 'Samstags', 'Sonntags'];
   sessionData : SessionInfoDto[] = []
   form!: FormGroup;
+  titelForm = new FormGroup({
+    lernplanTitel: new FormControl("", Validators.required)
+  })
 
   constructor(private fb: FormBuilder) {}
 
@@ -57,6 +69,13 @@ export class PlanCreateComponent implements OnInit {
   }
 
   save() {
+
+    if (this.titelForm.invalid) {
+      this.titelForm.markAllAsTouched()
+      console.log("invalid lernplan titel")
+      return
+    }
+
     console.log(this.form.value);
     /*
     [
