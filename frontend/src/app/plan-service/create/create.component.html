@@ -31,13 +31,14 @@
                 </td>
                 <td>
                   <select formControlName="session" class="form-select">
-                    <option>Keine Session</option>
-                    <option>Montags intensiv</option>
-                    <option>Dienstags intensiv</option>
+                    <option selected value="none">{{day.value.weekday}} keine Session</option>
+                    <option *ngFor="let sessionInfo of sessionData" [value]="sessionInfo.fachId">{{sessionInfo.name}}</option>
                   </select>
                 </td>
                 <td class="zeit-cell">
-                  <p>99h 99min</p>
+                  <p *ngIf="getSessionInfo(day.get('session')?.value) as info">
+                    {{info.zeit | timeFormat}}
+                  </p>
                 </td>
               </tr>
               </tbody>

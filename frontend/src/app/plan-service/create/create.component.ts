@@ -1,14 +1,17 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Session, SessionInfoDto} from '../../modul-service/session/session-domain';
 import {SessionApiService} from '../../modul-service/session/session-api.service';
+import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
 
 @Component({
   selector: 'app-create',
   imports: [
     NgForOf,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf,
+    TimeFormatPipe
   ],
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss', '../../general.scss', '../../button.scss']
@@ -41,12 +44,16 @@ export class PlanCreateComponent implements OnInit {
     return this.fb.group({
       weekday: [day],
       beginn: [''],
-      session: ['']
+      session: ['none']
     });
   }
 
   get days(): FormArray {
     return this.form.get('days') as FormArray;
+  }
+
+  getSessionInfo(fachId: string) {
+    return this.sessionData.find(s => s.fachId === fachId);
   }
 
   save() {
