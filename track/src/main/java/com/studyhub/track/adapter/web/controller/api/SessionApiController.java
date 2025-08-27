@@ -1,6 +1,7 @@
 package com.studyhub.track.adapter.web.controller.api;
 
 import com.studyhub.track.adapter.web.controller.request.dto.SessionDeleteRequest;
+import com.studyhub.track.adapter.web.controller.request.dto.SessionInfoDto;
 import com.studyhub.track.adapter.web.controller.request.dto.SessionRequest;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.application.service.SessionService;
@@ -32,6 +33,18 @@ public class SessionApiController {
 			return ResponseEntity.noContent().build();
 		} else {
 			return ResponseEntity.ok(sessions);
+		}
+	}
+
+	@GetMapping("/get-lernplan-session-data")
+	public ResponseEntity<List<SessionInfoDto>> getLernplanSessionData(HttpServletRequest request) {
+		String username = jwtService.extractUsernameFromHeader(request);
+		List<SessionInfoDto> sessionInfo = sessionService.getLernplanSessionDataOfUser(username);
+
+		if (sessionInfo.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		} else {
+			return ResponseEntity.ok(sessionInfo);
 		}
 	}
 

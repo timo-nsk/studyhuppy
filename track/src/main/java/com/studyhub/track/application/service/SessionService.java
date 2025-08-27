@@ -1,5 +1,6 @@
 package com.studyhub.track.application.service;
 
+import com.studyhub.track.adapter.web.controller.request.dto.SessionInfoDto;
 import com.studyhub.track.domain.model.session.Session;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +27,16 @@ public class SessionService {
 
 	public void deleteSession(UUID fachId) {
 		sessionRepository.deleteByFachId(fachId);
+	}
+
+	public List<SessionInfoDto> getLernplanSessionDataOfUser(String username) {
+		List<Session> sessions = sessionRepository.findAllByUsername(username);
+		return sessions.stream()
+				.map(session -> new SessionInfoDto(
+						session.getFachId().toString(),
+						session.getTitel(),
+						session.getTotalZeit()
+				))
+				.toList();
 	}
 }
