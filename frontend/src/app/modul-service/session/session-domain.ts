@@ -60,5 +60,5 @@ export class Session {
 export interface SessionInfoDto {
   fachId : string,
   name : string,
-  zeit : string
+  zeit : number
 }
