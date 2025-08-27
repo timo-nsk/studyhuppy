@@ -1,0 +1,52 @@
+.bordered-r {
+  border-style: solid;
+  border-color: red;
+  border-width: 3px;
+}
+
+.bordered-b {
+  border-style: solid;
+  border-color: blue;
+  border-width: 3px;
+}
+
+.bordered-g {
+  border-style: solid;
+  border-color: green;
+  border-width: 3px;
+}
+
+.weekday-container {
+  width: 100%;
+  padding: 5px;
+}
+
+.weekday-table {
+  width: 100%;
+}
+
+.label-cell {
+  width: 15%;
+}
+
+.zeit-cell {
+  width: 15%;
+  align-content: center;
+  text-align: center;
+}
+
+.time-picker {
+  width: 80px;
+}
+
+.lernplan-container {
+  width: 700px;
+}
+
+p {
+  margin: 0;
+}
+
+td {
+  border-width: 0;
+}

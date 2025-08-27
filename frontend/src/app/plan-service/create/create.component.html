@@ -1,1 +1,53 @@
-<p>create works!</p>
+<div class="main-container bordered-r">
+  <div class="lernplan-container bordered-b">
+    <h2>Lernplan erstellen</h2>
+    <div class="weekday-container bordered-g">
+      <form class="mb-4">
+        <label class="form-label">Titel</label>
+        <input class="form-control">
+      </form>
+    </div>
+
+
+      <form [formGroup]="form" (ngSubmit)="save()">
+        <div formArrayName="days">
+          <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i" class="weekday-container bordered-g">
+            <h4>{{ day.value.weekday }}</h4>
+
+            <table class="weekday-table">
+              <tbody>
+              <tr>
+                <td class="label-cell">
+                  <label>Beginn:</label>
+                </td>
+                <td>
+                  <input type="time" formControlName="beginn" class="form-control time-picker">
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="label-cell">
+                  <label>Session:</label>
+                </td>
+                <td>
+                  <select formControlName="session" class="form-select">
+                    <option>Keine Session</option>
+                    <option>Montags intensiv</option>
+                    <option>Dienstags intensiv</option>
+                  </select>
+                </td>
+                <td class="zeit-cell">
+                  <p>99h 99min</p>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <button type="submit" class="sh-btn">Speichern</button>
+      </form>
+
+
+  </div>
+</div>
