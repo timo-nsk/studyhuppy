@@ -16,4 +16,8 @@ public class LernplanService {
 		Lernplan saved = lernplanRepository.save(lernplan);
 		return saved != null;
 	}
+
+	public Lernplan getActiveLernplanByUsername(String username) {
+		return lernplanRepository.findActiveByUsername(username);
+	}
 }

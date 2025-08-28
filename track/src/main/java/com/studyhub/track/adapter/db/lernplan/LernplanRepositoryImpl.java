@@ -21,4 +21,9 @@ public class LernplanRepositoryImpl implements LernplanRepository {
 		LernplanDto dto = toDto(lernplan);
 		return  toDomain(lernplanDao.save(dto));
 	}
+
+	@Override
+	public Lernplan findActiveByUsername(String username) {
+		return null;
+	}
 }

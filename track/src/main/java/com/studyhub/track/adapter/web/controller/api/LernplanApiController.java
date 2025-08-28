@@ -6,10 +6,7 @@ import com.studyhub.track.application.service.LernplanService;
 import com.studyhub.track.domain.model.lernplan.Lernplan;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/plan/v1")
@@ -32,6 +29,17 @@ public class LernplanApiController {
 			return ResponseEntity.ok().build();
 		} else {
 			return ResponseEntity.internalServerError().build();
+		}
+	}
+	@GetMapping("/get-active-lernplan")
+	public ResponseEntity<Lernplan> getActiveLernplan(HttpServletRequest httpRequest) {
+		String username = jwtService.extractUsernameFromHeader(httpRequest);
+		Lernplan lernplan = lernplanService.getActiveLernplanByUsername(username);
+
+		if (lernplan != null) {
+			return ResponseEntity.ok(lernplan);
+		} else {
+			return ResponseEntity.notFound().build();
 		}
 	}
 }
