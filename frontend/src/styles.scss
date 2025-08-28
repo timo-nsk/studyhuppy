@@ -83,5 +83,12 @@ body {
   font-size: 17px;
 }
 
+.form-select:focus, .form-control:focus {
+  border-color: rgb(16, 45, 92);
+  outline: 0;
+  box-shadow: 0 0 0 .15rem rgba(28, 81, 159, 0.5);
+  background-color: rgba(0, 177, 255, 0.05);
+}
+
 
 
