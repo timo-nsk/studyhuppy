@@ -18,4 +18,8 @@ export class PlanApiService {
     return this.http.post<any>(this.PLAN_BASE_API + '/create', lernplan, {headers: header})
   }
 
+  getActiveLernplan() : Observable<any> {
+    const header = this.headerService.createAuthHeader()
+    return this.http.get<LernplanRequest>(this.PLAN_BASE_API + '/get-active-lernplan', {headers: header})
+  }
 }

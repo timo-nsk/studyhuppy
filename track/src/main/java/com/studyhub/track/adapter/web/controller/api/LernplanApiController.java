@@ -1,6 +1,7 @@
 package com.studyhub.track.adapter.web.controller.api;
 
 import com.studyhub.track.adapter.web.controller.request.dto.LernplanRequest;
+import com.studyhub.track.adapter.web.controller.request.dto.LernplanResponse;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.application.service.LernplanService;
 import com.studyhub.track.domain.model.lernplan.Lernplan;
@@ -32,9 +33,9 @@ public class LernplanApiController {
 		}
 	}
 	@GetMapping("/get-active-lernplan")
-	public ResponseEntity<Lernplan> getActiveLernplan(HttpServletRequest httpRequest) {
+	public ResponseEntity<LernplanResponse> getActiveLernplan(HttpServletRequest httpRequest) {
 		String username = jwtService.extractUsernameFromHeader(httpRequest);
-		Lernplan lernplan = lernplanService.getActiveLernplanByUsername(username);
+		LernplanResponse lernplan = lernplanService.getActiveLernplanByUsername(username);
 
 		if (lernplan != null) {
 			return ResponseEntity.ok(lernplan);
