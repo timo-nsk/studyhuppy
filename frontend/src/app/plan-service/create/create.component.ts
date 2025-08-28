@@ -1,6 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
 import {
+  AbstractControl,
   FormArray,
   FormBuilder,
   FormControl,
@@ -12,6 +13,10 @@ import {
 import {Session, SessionInfoDto} from '../../modul-service/session/session-domain';
 import {SessionApiService} from '../../modul-service/session/session-api.service';
 import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
+import {LernplanRequest, TagDto} from '../plan-domain';
+import {PlanApiService} from '../plan-api.service';
+import {SnackbarService} from '../../snackbar.service';
+
 
 @Component({
   selector: 'app-create',
@@ -27,6 +32,8 @@ import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
 })
 export class PlanCreateComponent implements OnInit {
   sessionApiService = inject(SessionApiService)
+  planApiService = inject(PlanApiService)
+  snackbarService = inject(SnackbarService)
   weekdays = ['Montags', 'Dienstags', 'Mittwochs', 'Donnerstags', 'Freitags', 'Samstags', 'Sonntags'];
   sessionData : SessionInfoDto[] = []
   form!: FormGroup;
@@ -87,17 +94,34 @@ export class PlanCreateComponent implements OnInit {
     if (invalid > 0) {
       return
     } else {
-      // TODO send data to backend
+      let lernplanRequest: LernplanRequest = {} as LernplanRequest;
+      lernplanRequest.lernplanTitel = this.titelForm.value.lernplanTitel!
+
+      let dayDtos : TagDto[] = []
+      for(let i = 0; i < this.days.length; i++) {
+        const currForm = this.days.at(i);
+        let dto : TagDto = this.formToDto(currForm as FormGroup);
+        dayDtos.push(dto)
+      }
+      lernplanRequest.tage = dayDtos
+
+      console.log(lernplanRequest)
+
+      this.planApiService.saveLernplan(lernplanRequest).subscribe({
+        next: (response) => {
+          this.snackbarService.openSuccess("Lernplan erfolgreich gespeichert")
+          // Optionally, reset the form or provide user feedback here
+        },
+        error: err => {
+          this.snackbarService.openError("Fehler beim Speichern des Lernplans")
+          console.log(err)
+        }
+      })
     }
-
-
-    /*
-    [
-      { weekday: 'Montag', beginn: '08:00', session: 'Montags intensiv', dauer: '99h 30min' },
-      { weekday: 'Dienstag', beginn: '', ... },
-      ...
-    ]
-    */
   }
 
+  formToDto(dayForm: FormGroup): TagDto {
+    const { weekday, beginn, session } = dayForm.value;
+    return new TagDto(weekday, beginn, session);
+  }
 }
