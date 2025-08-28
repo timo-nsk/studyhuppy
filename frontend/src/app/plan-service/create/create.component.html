@@ -1,7 +1,7 @@
-<div class="main-container bordered-r">
-  <div class="lernplan-container bordered-b">
+<div class="main-container m-accent-font">
+  <div class="lernplan-container">
     <h2>Lernplan erstellen</h2>
-    <div class="weekday-container bordered-g">
+    <div class="raw-container mt-5">
       <form class="mb-4" [formGroup]="titelForm">
         <label class="form-label">Titel</label>
         <input class="form-control" formControlName="lernplanTitel">
@@ -13,9 +13,10 @@
     </div>
     <div>
       <form [formGroup]="form" (ngSubmit)="save()">
-        <div formArrayName="days" class="weekday-container bordered-g">
-          <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i">
+        <div formArrayName="days">
+          <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i" class="weekday-container">
             <h4>{{ day.value.weekday }}</h4>
+            <hr>
 
             <table class="weekday-table">
               <tbody>
@@ -24,7 +25,7 @@
                   <label>Beginn:</label>
                 </td>
                 <td>
-                  <input type="time" formControlName="beginn" class="form-control time-picker">
+                  <input type="time" formControlName="beginn" class="form-control time-picker m-accent-font">
                   <span class="text-danger"
                         *ngIf="day.get('beginn')?.errors?.['required'] && day.get('beginn')?.touched">
                         Bitte geben Sie eine Uhrzeit an
@@ -37,7 +38,7 @@
                   <label>Session:</label>
                 </td>
                 <td>
-                  <select formControlName="session" class="form-select" (change)="updateGesamtzeit()">
+                  <select formControlName="session" class="form-select m-accent-font" (change)="updateGesamtzeit()">
                     <option selected value="none">{{day.value.weekday}} keine Session</option>
                     <option *ngFor="let sessionInfo of sessionData" [value]="sessionInfo.fachId">{{sessionInfo.name}}</option>
                   </select>
@@ -56,7 +57,7 @@
             </table>
           </div>
         </div>
-        <div class="weekday-container bordered-g">
+        <div class="weekday-container">
           <table class="weekday-table">
             <tbody>
              <tr>
@@ -66,7 +67,7 @@
             </tbody>
           </table>
         </div>
-        <div class="weekday-container bordered-g">
+        <div class="raw-container">
           <button type="submit" class="sh-btn">Speichern</button>
         </div>
       </form>

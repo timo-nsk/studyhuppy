@@ -28,7 +28,7 @@ import {SnackbarService} from '../../snackbar.service';
     FormsModule
   ],
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss', '../../general.scss', '../../button.scss']
+  styleUrls: ['./create.component.scss', '../../general.scss', '../../button.scss', '../../color.scss']
 })
 export class PlanCreateComponent implements OnInit {
   sessionApiService = inject(SessionApiService)

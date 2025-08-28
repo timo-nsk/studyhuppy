@@ -1,33 +1,29 @@
-.bordered-r {
-  border-style: solid;
-  border-color: red;
-  border-width: 3px;
-}
-
-.bordered-b {
-  border-style: solid;
-  border-color: blue;
-  border-width: 3px;
-}
-
-.bordered-g {
-  border-style: solid;
-  border-color: green;
-  border-width: 3px;
-}
-
 .lernplan-container {
   width: 700px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .weekday-container {
+  background-color: rgba(117, 161, 206, 0.15);
   min-width: 500px;
   padding: 5px;
-  margin: 5px;
+  margin: 10px;
+
+  border-style: solid;
+  border-color: rgba(16, 45, 92, 0.5);
+  border-width: 2px;
+  border-radius: 5px;
+}
+
+.raw-container {
+  min-width: 500px;
+  padding: 5px;
+  margin: 10px;
 }
 
 .weekday-table {
@@ -54,10 +50,20 @@
   width: 80px;
 }
 
+select:hover {
+  cursor: pointer;
+}
+
 p {
   margin: 0;
 }
 
 td {
-  border-width: 0;
+  background-color: rgba(117, 161, 206, 0) !important;
+  border-width: 0 !important;
+}
+
+hr {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
