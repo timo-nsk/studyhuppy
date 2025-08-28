@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HeaderService} from '../header.service';
 import {HttpClient} from '@angular/common/http';
-import {LernplanRequest} from './plan-domain';
+import {LernplanRequest, LernplanResponse} from './plan-domain';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -20,6 +20,6 @@ export class PlanApiService {
 
   getActiveLernplan() : Observable<any> {
     const header = this.headerService.createAuthHeader()
-    return this.http.get<LernplanRequest>(this.PLAN_BASE_API + '/get-active-lernplan', {headers: header})
+    return this.http.get<LernplanResponse>(this.PLAN_BASE_API + '/get-active-lernplan', {headers: header})
   }
 }
