@@ -16,6 +16,7 @@ import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
 import {LernplanRequest, TagDto} from '../plan-domain';
 import {PlanApiService} from '../plan-api.service';
 import {SnackbarService} from '../../snackbar.service';
+import {RouterLink} from '@angular/router';
 
 
 @Component({
@@ -25,7 +26,8 @@ import {SnackbarService} from '../../snackbar.service';
     ReactiveFormsModule,
     NgIf,
     TimeFormatPipe,
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss', '../../general.scss', '../../button.scss', '../../color.scss']
