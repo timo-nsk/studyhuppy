@@ -1,8 +1,19 @@
-import {FormGroup} from '@angular/forms';
+import {Block} from '../modul-service/session/session-domain';
 
 export interface LernplanRequest {
   lernplanTitel : string,
   tage : TagDto[]
+}
+
+export interface LernplanResponse {
+  lernplanTitel : string,
+  sessionList : LernplanSessionInfoDto[]
+}
+
+export interface LernplanSessionInfoDto {
+  weekday : string,
+  sessionId : string,
+  blocks : Block[]
 }
 
 export class TagDto {
