@@ -1,20 +1,24 @@
 package com.studyhub.track.application.service;
 
 import com.studyhub.track.adapter.web.controller.request.dto.LernplanResponse;
+import com.studyhub.track.adapter.web.controller.request.dto.LernplanSessionInfoDto;
 import com.studyhub.track.domain.model.lernplan.Lernplan;
-import com.studyhub.track.domain.model.lernplan.TagDto;
+import com.studyhub.track.domain.model.lernplan.Tag;
+import com.studyhub.track.domain.model.session.Session;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class LernplanService {
 
 	private final LernplanRepository lernplanRepository;
+	private final SessionRepository sessionRepository;
 
-	public LernplanService(LernplanRepository lernplanRepository) {
+	public LernplanService(LernplanRepository lernplanRepository, SessionRepository sessionRepository) {
 		this.lernplanRepository = lernplanRepository;
+		this.sessionRepository = sessionRepository;
 	}
 
 	public boolean saveLernplan(Lernplan lernplan) {
@@ -24,28 +28,33 @@ public class LernplanService {
 
 	public LernplanResponse getActiveLernplanByUsername(String username) {
 		Lernplan entityLerntag = lernplanRepository.findActiveByUsername(username);
-		if (entityLerntag == null) {
-			return null;
+
+		if (entityLerntag == null) return null;
+
+		List<LernplanSessionInfoDto> sessions = new ArrayList<>();
+		for(Tag tag : entityLerntag.getTagesListe()) {
+			UUID sessionId = tag.getSessionId();
+			Session session = sessionRepository.findSessionByFachId(sessionId);
+
+			String dayString = "";
+			switch (tag.getTag()) {
+				case MONDAY -> dayString = "Montags";
+				case TUESDAY -> dayString = "Dienstags";
+				case WEDNESDAY -> dayString = "Mittwochs";
+				case THURSDAY -> dayString = "Donnerstags";
+				case FRIDAY -> dayString = "Freitags";
+				case SATURDAY -> dayString = "Samstags";
+				case SUNDAY -> dayString = "Sonntags";
+			}
+
+			sessions.add(new LernplanSessionInfoDto(
+					dayString,
+					session.getFachId().toString(),
+					session.getBlocks()
+			));
 		}
 
-		List<TagDto> tageList = entityLerntag.getTagesListe().stream()
-				.map(e -> {
-					String weekday = "";
+		return new LernplanResponse(entityLerntag.getTitel(), sessions);
 
-					switch(e.getTag()) {
-						case MONDAY -> weekday = "Montags";
-						case TUESDAY -> weekday = "Dienstags";
-						case WEDNESDAY -> weekday = "Mittwochs";
-						case THURSDAY -> weekday = "Donnerstags";
-						case FRIDAY -> weekday = "Freitags";
-						case SATURDAY -> weekday = "Samstags";
-						case SUNDAY -> weekday = "Sonntags";
-					}
-
-					return new TagDto(weekday, e.getBeginn().toString(), e.getSessionId().toString());
-
-				}).toList();
-
-		return new LernplanResponse(entityLerntag.getTitel(), tageList);
 	}
 }
