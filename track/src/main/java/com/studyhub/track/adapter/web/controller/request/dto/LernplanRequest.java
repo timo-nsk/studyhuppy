@@ -33,7 +33,7 @@ public record LernplanRequest(
 					LocalTime beginn = LocalTime.parse(dtoObj.beginn());
 
 
-					return new Tag(tag, beginn, UUID.randomUUID());
+					return new Tag(tag, beginn, UUID.fromString(dtoObj.session()));
 				})
 				.toList();
 
