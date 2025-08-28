@@ -13,8 +13,8 @@
     </div>
     <div>
       <form [formGroup]="form" (ngSubmit)="save()">
-        <div formArrayName="days">
-          <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i" class="weekday-container bordered-g">
+        <div formArrayName="days" class="weekday-container bordered-g">
+          <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i">
             <h4>{{ day.value.weekday }}</h4>
 
             <table class="weekday-table">
@@ -37,7 +37,7 @@
                   <label>Session:</label>
                 </td>
                 <td>
-                  <select formControlName="session" class="form-select">
+                  <select formControlName="session" class="form-select" (change)="updateGesamtzeit()">
                     <option selected value="none">{{day.value.weekday}} keine Session</option>
                     <option *ngFor="let sessionInfo of sessionData" [value]="sessionInfo.fachId">{{sessionInfo.name}}</option>
                   </select>
@@ -56,7 +56,19 @@
             </table>
           </div>
         </div>
-        <button type="submit" class="sh-btn">Speichern</button>
+        <div class="weekday-container bordered-g">
+          <table class="weekday-table">
+            <tbody>
+             <tr>
+               <td>Lernzeit gesamt</td>
+               <td id="gesamtzeit-cell">{{gesamtzeit > 0 ? (gesamtzeit | timeFormat) : ''}}</td>
+             </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="weekday-container bordered-g">
+          <button type="submit" class="sh-btn">Speichern</button>
+        </div>
       </form>
     </div>
   </div>

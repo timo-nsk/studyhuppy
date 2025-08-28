@@ -40,6 +40,7 @@ export class PlanCreateComponent implements OnInit {
   titelForm = new FormGroup({
     lernplanTitel: new FormControl("", Validators.required)
   })
+  gesamtzeit : number = 0
 
   constructor(private fb: FormBuilder) {}
 
@@ -123,5 +124,21 @@ export class PlanCreateComponent implements OnInit {
   formToDto(dayForm: FormGroup): TagDto {
     const { weekday, beginn, session } = dayForm.value;
     return new TagDto(weekday, beginn, session);
+  }
+
+  updateGesamtzeit() {
+    this.gesamtzeit = 0
+    let days = this.days
+    for(let i = 0; i < days.length; i++) {
+      const currForm = days.at(i);
+      const { session } = currForm.value;
+      if (session !== 'none') {
+        let sessionInfo = this.getSessionInfo(session)
+        if (sessionInfo) {
+          this.gesamtzeit += sessionInfo.zeit
+        }
+      }
+    }
+    console.log("updated gesamtzeit")
   }
 }

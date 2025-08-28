@@ -16,9 +16,18 @@
   border-width: 3px;
 }
 
+.lernplan-container {
+  width: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .weekday-container {
-  width: 100%;
+  min-width: 500px;
   padding: 5px;
+  margin: 5px;
 }
 
 .weekday-table {
@@ -35,12 +44,14 @@
   text-align: center;
 }
 
-.time-picker {
-  width: 80px;
+#gesamtzeit-cell {
+  width: 20%;
+  align-content: center;
+  text-align: center;
 }
 
-.lernplan-container {
-  width: 700px;
+.time-picker {
+  width: 80px;
 }
 
 p {
