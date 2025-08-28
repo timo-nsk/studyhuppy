@@ -24,6 +24,9 @@ public class LernplanService {
 
 	public LernplanResponse getActiveLernplanByUsername(String username) {
 		Lernplan entityLerntag = lernplanRepository.findActiveByUsername(username);
+		if (entityLerntag == null) {
+			return null;
+		}
 
 		List<TagDto> tageList = entityLerntag.getTagesListe().stream()
 				.map(e -> {

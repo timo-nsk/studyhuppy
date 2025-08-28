@@ -1,9 +1,10 @@
 <div class="main-container bordered">
-  <div class="flex-1 flex-column m-4" *ngIf="true">
+  <div class="flex-1 flex-column m-4" *ngIf="!activePlanExists">
     <p>Sie haben bisher noch keine Lehrpläne erstellt.</p>
     <a [routerLink]="'/create-plan'">Lehrplan erstellen</a>
   </div>
-  <div *ngIf="false">
+  <div *ngIf="activePlanExists">
     <!-- TODO implement view with data-->
+    <p>plan is da</p>
   </div>
 </div>
