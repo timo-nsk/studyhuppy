@@ -4,7 +4,7 @@ html, body { height: 100%; }
 
 body {
   margin: 0;
-  font-family: "Outfit", "serif";
+  font-family: "Outfit", "sans-serif";
 }
 
 .success-snack {
@@ -25,13 +25,13 @@ body {
 }
 
 .mat-mdc-snack-bar-container.snackbar-info .mdc-snackbar__label {
-  font-family: 'Outfit', fantasy;
+  font-family: 'Outfit', sans-serif;
   font-size: 17px;
   line-height: inherit;
 }
 
 .mat-mdc-snack-bar-container.snackbar-info .mdc-snackbar__action {
-  font-family: 'Outfit', fantasy;
+  font-family: 'Outfit', sans-serif;
   font-size: 17px;
 }
 
@@ -49,13 +49,13 @@ body {
 }
 
 .mat-mdc-snack-bar-container.snackbar-error .mdc-snackbar__label {
-  font-family: 'Outfit', fantasy;
+  font-family: 'Outfit', sans-serif;
   font-size: 17px;
   line-height: inherit;
 }
 
 .mat-mdc-snack-bar-container.snackbar-error .mdc-snackbar__action {
-  font-family: 'Outfit', fantasy;
+  font-family: 'Outfit', sans-serif;
   font-size: 17px;
 }
 
@@ -73,13 +73,13 @@ body {
 }
 
 .mat-mdc-snack-bar-container.snackbar-success .mdc-snackbar__label {
-  font-family: 'Outfit', fantasy;
+  font-family: 'Outfit', sans-serif;
   font-size: 17px;
   line-height: inherit;
 }
 
 .mat-mdc-snack-bar-container.snackbar-success .mdc-snackbar__action {
-  font-family: 'Outfit', fantasy;
+  font-family: 'Outfit', sans-serif;
   font-size: 17px;
 }
 
@@ -88,6 +88,10 @@ body {
   outline: 0;
   box-shadow: 0 0 0 .15rem rgba(28, 81, 159, 0.5);
   background-color: rgba(0, 177, 255, 0.05);
+}
+
+.form-select option {
+  font-family: 'Outfit', sans-serif !important;
 }
 
 
