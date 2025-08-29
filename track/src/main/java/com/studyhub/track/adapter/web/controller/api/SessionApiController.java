@@ -36,6 +36,12 @@ public class SessionApiController {
 		}
 	}
 
+	@GetMapping("/get-session-by-id")
+	public ResponseEntity<Session> getSessionById(@RequestParam UUID sessionId) {
+		Session session = sessionService.getSessionByFachId(sessionId);
+		return ResponseEntity.ok(session);
+	}
+
 	@GetMapping("/get-lernplan-session-data")
 	public ResponseEntity<List<SessionInfoDto>> getLernplanSessionData(HttpServletRequest request) {
 		String username = jwtService.extractUsernameFromHeader(request);

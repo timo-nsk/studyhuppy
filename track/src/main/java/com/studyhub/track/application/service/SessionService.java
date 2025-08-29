@@ -39,4 +39,8 @@ public class SessionService {
 				))
 				.toList();
 	}
+
+	public Session getSessionByFachId(UUID sessionId) {
+		return sessionRepository.findSessionByFachId(sessionId);
+	}
 }

@@ -38,4 +38,14 @@ export class SessionApiService {
     const headers = this.headerService.createAuthHeader()
     return this.http.get<SessionInfoDto[]>(this.SESSION_BASE_API + '/get-lernplan-session-data', {headers})
   }
+
+  getSession(sessionId : string) : Observable<any>{
+    const headers = this.headerService.createAuthHeader()
+    return this.http.get<any>(this.SESSION_BASE_API + '/get-session-by-id', {
+      headers,
+      params: {
+        sessionId: sessionId
+      }
+    })
+  }
 }
