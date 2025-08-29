@@ -79,7 +79,7 @@ l-61 -45 -34 22 c-49 31 -172 29 -249 -4 -53 -23 -146 -81 -199 -124 -109 -90
       <p id="website-logo">Studyhuppy</p>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav flex-grow-1 justify-content-end">
-          <li>
+          <li *ngIf="loginStatusService.isLoggedIn()">
             <app-avatar></app-avatar>
           </li>
           <li>
