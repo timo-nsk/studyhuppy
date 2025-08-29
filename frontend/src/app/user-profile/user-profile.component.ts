@@ -8,7 +8,7 @@ import {SnackbarService} from '../snackbar.service';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [CommonModule, ReactiveFormsModule, NgIf, MatSnackBarModule, MatSlideToggle, NgOptimizedImage],
+  imports: [CommonModule, ReactiveFormsModule, NgIf, MatSnackBarModule, MatSlideToggle],
   templateUrl: './user-profile.component.html',
   standalone: true,
   styleUrls: ['./user-profile.component.scss', '../general.scss', '../button.scss', '../color.scss']
