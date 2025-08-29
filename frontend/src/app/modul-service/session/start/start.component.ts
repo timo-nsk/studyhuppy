@@ -2,7 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import {NgClass, NgForOf, NgIf} from '@angular/common';
 import {SessionStateManager} from '../session-state-manager.service';
 import {Session} from '../session-domain';
-import {RouterLink} from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import {SessionApiService} from '../session-api.service';
 import {TimeFormatPipe} from '../../module/time-format.pipe';
 import {ModuleApiService} from '../../module/module-api.service';
@@ -17,6 +17,7 @@ import {ModuleApiService} from '../../module/module-api.service';
 export class SessionStartComponent implements OnInit{
   sessions: any
   selectedSession!: Session | null;
+  route = inject(ActivatedRoute)
   sessionApiService = inject(SessionApiService)
   modulService = inject(ModuleApiService)
   sessionStateManager!: SessionStateManager;
@@ -25,21 +26,42 @@ export class SessionStartComponent implements OnInit{
   sessionSelectIsDisabled = false
 
   ngOnInit(): void {
-    this.sessionApiService.getSessions().subscribe({
-      next: (data) => {
-        if (!data) {
-          console.log("Keine Sessions vorhanden (204 No Content)");
-          this.sessions = null;
-          this.selectedSession = null;
-          return;
-        }
+    const sessionId = this.route.snapshot.paramMap.get('sessionId');
 
-        console.log("received sessions from backend", data);
-        this.sessions = data
-        this.selectedSession = this.sessions[0];
-        this.sessionStateManager = new SessionStateManager(this.modulService, this.selectedSession)
-      }
-    })
+    if(sessionId == null) {
+      this.sessionApiService.getSessions().subscribe({
+        next: (data) => {
+          if (!data) {
+            console.log("Keine Sessions vorhanden (204 No Content)");
+            this.sessions = null;
+            this.selectedSession = null;
+            return;
+          }
+
+          console.log("received sessions from backend", data);
+          this.sessions = data
+          this.selectedSession = this.sessions[0];
+          this.sessionStateManager = new SessionStateManager(this.modulService, this.selectedSession)
+        }
+      })
+    } else {
+      this.sessionApiService.getSession(sessionId).subscribe({
+        next: (data) => {
+          if (!data) {
+            console.log("Keine Sessions vorhanden (204 No Content)");
+            this.sessions = null;
+            this.selectedSession = null;
+            return;
+          }
+
+          console.log("received sessions from backend", data);
+          this.sessions = [data]
+          this.selectedSession = this.sessions[0];
+          this.sessionStateManager = new SessionStateManager(this.modulService, this.selectedSession)
+        }
+      })
+    }
+
   }
 
   startSession(): void {
