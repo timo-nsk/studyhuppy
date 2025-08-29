@@ -1,13 +1,14 @@
 import {Component, Input, inject} from '@angular/core';
-import { NgIf } from '@angular/common';
+import {NgIf, NgOptimizedImage} from '@angular/common';
 import {AuthApiService} from '../../auth-service/auth.service';
 import {Router, RouterLink} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import  { LoginStatusService } from '../../auth-service/login-service/login-status.service'
+import {AvatarComponent} from '../../user-profile/avatar/avatar.component';
 
 @Component({
   selector: 'app-header-main',
-  imports: [NgIf, RouterLink],
+  imports: [NgIf, RouterLink, NgOptimizedImage, AvatarComponent],
   templateUrl: './header-main.component.html',
   standalone: true,
   styleUrls: ['./header-main.component.scss', '../../general.scss', '../../color.scss', '../../links.scss', '../../button.scss']
