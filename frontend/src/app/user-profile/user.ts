@@ -4,4 +4,5 @@ export interface User {
   username : string;password : string;
   notificationSubscription : boolean;
   semester : number;
+  profilbildPath : string;
 }

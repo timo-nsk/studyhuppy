@@ -7,6 +7,7 @@ public class UserMapper {
                 user.getMail(),
                 user.getUsername(),
                 user.getNotificationSubscription(),
-                user.getSemester());
+                user.getSemester(),
+                user.getProfilbildPath());
     }
 }
