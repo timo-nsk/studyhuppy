@@ -24,7 +24,9 @@
 
           <div class="blocks-container" *ngIf="weekdayInfo.sessionId != ''">
             <div class="block-container" *ngFor="let block of weekdayInfo.blocks">
-              <span>{{block.modulName}}</span>
+              <p>
+                <span>{{block.modulName}}</span>
+              </p>
               <span class="zeitangabe">{{(block.lernzeitSeconds + block.pausezeitSeconds) | timeFormat}}</span>
             </div>
           </div>
