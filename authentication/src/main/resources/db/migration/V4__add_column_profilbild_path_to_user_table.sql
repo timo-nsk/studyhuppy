@@ -1,0 +1,2 @@
+ALTER TABLE users
+ADD COLUMN profilbild_path VARCHAR(200)
