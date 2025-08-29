@@ -1,13 +1,14 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {CommonModule, NgIf} from '@angular/common';
+import {CommonModule, NgIf, NgOptimizedImage} from '@angular/common';
 import {UserApiService} from './user.service';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
+import {SnackbarService} from '../snackbar.service';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [CommonModule, ReactiveFormsModule, NgIf, MatSnackBarModule, MatSlideToggle],
+  imports: [CommonModule, ReactiveFormsModule, NgIf, MatSnackBarModule, MatSlideToggle, NgOptimizedImage],
   templateUrl: './user-profile.component.html',
   standalone: true,
   styleUrls: ['./user-profile.component.scss', '../general.scss', '../button.scss', '../color.scss']
@@ -17,7 +18,7 @@ export class UserProfileComponent implements OnInit{
   userData : any;
 
   userService  = inject(UserApiService)
-  snackbar : MatSnackBar = inject(MatSnackBar)
+  snackbarService = inject(SnackbarService)
 
   showEmailChangeForm : boolean = false
   showPassChangeForm : boolean = false
@@ -37,6 +38,8 @@ export class UserProfileComponent implements OnInit{
   })
   newMailAlreadyExists: boolean = false
   internalServerError : boolean = false
+
+  profilbildUrl: string = 'assets/test-ava.png'; // Default-Bild
 
   ngOnInit(): void {
     this.getUserData()
@@ -77,9 +80,7 @@ export class UserProfileComponent implements OnInit{
       next: (response) => {
         this.getUserData()
         this.emailChangeForm.reset()
-        this.snackbar.open("E-Mail-Adresse erfolgreich geändert!", "close", {
-          duration: 4000
-        })
+        this.snackbarService.openSuccess("E-Mail-Adresse erfolgreich geändert!")
       },
       error: (err) => {
         if(err.status == 409) {
@@ -101,9 +102,7 @@ export class UserProfileComponent implements OnInit{
         this.changePassForm.reset()
         console.log("changed password success")
         this.changePassFail = false;
-        this.snackbar.open("Passwort erfolgreich geändert!", "close", {
-          duration: 4000
-        })
+        this.snackbarService.openSuccess("Passwort erfolgreich geändert!");
       },
       error: (err) => {
         console.log("could not change password")
@@ -124,4 +123,31 @@ export class UserProfileComponent implements OnInit{
     const data = this.userData.userId
     this.userService.deleteAccount(data)
   }
+
+  selectProfilbild(event: Event): void {
+    const input = event.target as HTMLInputElement | null;
+    if (!input?.files || input.files.length === 0) {
+      return;
+    }
+
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.profilbildUrl = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+
+    this.userService.postNewProfilbild(this.profilbildUrl).subscribe({
+      next: () => {
+        this.snackbarService.openSuccess("Profilbild erfolgreich geändert!");
+      },
+      error: (status) => {
+        if (status.value === 400) {
+          this.snackbarService.openError("Fehler beim Ändern des Profilbildes!")
+        }
+      }
+    })
+  }
+
+
 }
