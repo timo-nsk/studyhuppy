@@ -63,4 +63,9 @@ export class UserApiService {
     });
     return this.http.post<any>(this.BASE_API_URL + "/profilbild", payload, { headers });
   }
+
+  getProfilbild(userData : any): Observable<any> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.get(this.BASE_API_URL + '/profilbild/' + userData.profilbildPath, { headers, responseType: 'blob' })
+  }
 }
