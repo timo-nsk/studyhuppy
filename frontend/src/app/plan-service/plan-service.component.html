@@ -36,7 +36,7 @@
         </div>
         <div class="blocks-container">
           <div class="link-container">
-            <button class="start-session-btn" [routerLink]="'/plan-details'" *ngIf="!weekContainerDisabled[i] && weekdayInfo.sessionId != ''">
+            <button class="start-session-btn" [routerLink]="['/module/session/start', weekdayInfo.sessionId]" *ngIf="!weekContainerDisabled[i] && weekdayInfo.sessionId != ''">
               <span>Session starten</span>
             </button>
           </div>
