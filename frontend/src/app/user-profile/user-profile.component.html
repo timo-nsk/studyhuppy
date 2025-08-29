@@ -7,7 +7,7 @@
         <th class="col-wd-200 m-accent-font">Profilbild</th>
         <td class="col-wd-300 td-border-l m-accent-font">
           <div id="profilbild-container">
-            <img ngSrc="assets/test-ava.png" height="128" width="128" alt="">
+            <img [src]="profilbildUrl" height="128" width="128" alt="">
             <input
               type="file"
               #fileInput
@@ -16,7 +16,6 @@
               hidden
             />
 
-            <!-- Button, der das File-Input triggert -->
             <button id="profilbild-ändern-btn" (click)="fileInput.click()">
               ändern
             </button>

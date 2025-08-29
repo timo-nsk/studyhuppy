@@ -39,7 +39,7 @@ export class UserProfileComponent implements OnInit{
   newMailAlreadyExists: boolean = false
   internalServerError : boolean = false
 
-  profilbildUrl: string = 'assets/test-ava.png'; // Default-Bild
+  profilbildUrl : any;
 
   ngOnInit(): void {
     this.getUserData()
@@ -49,10 +49,24 @@ export class UserProfileComponent implements OnInit{
     this.userService.getUserData().subscribe({
       next: (data) => {
         this.userData = data;
-        console.log(this.userData);
+        this.getProfilbild()
       },
       error: (err) => {
         console.error('Fehler beim Laden:', err);
+      }
+    });
+  }
+
+  getProfilbild() {
+    this.userService.getProfilbild(this.userData).subscribe( {
+      next: blob => {
+        console.log(blob)
+        const reader = new FileReader();
+        reader.onload = () => this.profilbildUrl = reader.result as string;
+        reader.readAsDataURL(blob);
+      },
+      error: err => {
+        console.log(err)
       }
     });
   }
