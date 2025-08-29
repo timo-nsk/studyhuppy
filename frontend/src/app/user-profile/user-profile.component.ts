@@ -134,19 +134,19 @@ export class UserProfileComponent implements OnInit{
     const reader = new FileReader();
     reader.onload = () => {
       this.profilbildUrl = reader.result as string;
+
+      this.userService.postNewProfilbild(this.profilbildUrl).subscribe({
+        next: () => {
+          this.snackbarService.openSuccess("Profilbild erfolgreich geändert!");
+        },
+        error: (status) => {
+          if (status.value === 400) {
+            this.snackbarService.openError("Fehler beim Ändern des Profilbildes!")
+          }
+        }
+      })
     };
     reader.readAsDataURL(file);
-
-    this.userService.postNewProfilbild(this.profilbildUrl).subscribe({
-      next: () => {
-        this.snackbarService.openSuccess("Profilbild erfolgreich geändert!");
-      },
-      error: (status) => {
-        if (status.value === 400) {
-          this.snackbarService.openError("Fehler beim Ändern des Profilbildes!")
-        }
-      }
-    })
   }
 
 

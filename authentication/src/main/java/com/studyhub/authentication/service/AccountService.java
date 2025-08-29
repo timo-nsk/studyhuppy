@@ -7,6 +7,8 @@ import com.studyhub.authentication.db.AppUserRepository;
 import com.studyhub.authentication.model.AppUser;
 import com.studyhub.authentication.web.EmailChangeRequest;
 import com.studyhub.authentication.config.JWTService;
+import com.studyhub.authentication.web.controller.ProfilbildRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -101,4 +103,15 @@ public class AccountService {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
         return encoder.matches(sendPw, retrievedPw);
     }
+
+	public String findUserIdByUsername(String username) {
+		return appUserRepository.findByUsername(username).getUserId().toString();
+	}
+
+	public void saveProfilbild(ProfilbildRequest payload, HttpServletRequest request) {
+		String username = jwtService.extractUsernameFromHeader(request);
+		String userId = findUserIdByUsername(username);
+		String profilbildPath = payload.decode(userId);
+		appUserRepository.updateProfilbildPath(profilbildPath, UUID.fromString(userId));
+	}
 }

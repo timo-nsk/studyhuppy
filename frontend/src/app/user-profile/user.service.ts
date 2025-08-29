@@ -59,7 +59,7 @@ export class UserApiService {
   postNewProfilbild(profilbildUrl: string) : Observable<any> {
     const headers = this.headerService.createAuthHeader();
     const payload = JSON.stringify({
-      profilbildUrl: profilbildUrl
+      profilbildBase64: profilbildUrl
     });
     return this.http.post<any>(this.BASE_API_URL + "/profilbild", payload, { headers });
   }

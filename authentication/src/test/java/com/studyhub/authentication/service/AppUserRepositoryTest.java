@@ -31,7 +31,7 @@ public class AppUserRepositoryTest {
 	@Test
 	@DisplayName("Ein neuer User kann erfolgreich gespeichert werden")
 	void test_1() {
-		AppUser appUser = new AppUser(null, UUID.randomUUID(), "susi@gmail.com", "susi", "1234", true, true, 1);
+		AppUser appUser = new AppUser(null, UUID.randomUUID(), "susi@gmail.com", "susi", "1234", true, true, 1, null);
 
 		AppUser savedAppUser = appUserRepository.save(appUser);
 

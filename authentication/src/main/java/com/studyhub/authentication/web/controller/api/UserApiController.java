@@ -6,6 +6,7 @@ import com.studyhub.authentication.model.UserMapper;
 import com.studyhub.authentication.service.AccountService;
 import com.studyhub.authentication.web.SetNotificationSubscriptionRequest;
 import com.studyhub.authentication.config.JWTService;
+import com.studyhub.authentication.web.controller.ProfilbildRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,5 +77,12 @@ public class UserApiController {
 			}
 		}
 		return ResponseEntity.noContent().build();
+	}
+
+	@PostMapping("/profilbild")
+	public ResponseEntity<Void> setProfilBuild(@RequestBody ProfilbildRequest payload, HttpServletRequest request) {
+		accountService.saveProfilbild(payload, request);
+
+		return ResponseEntity.status(HttpStatus.ACCEPTED).build();
 	}
 }

@@ -20,4 +20,5 @@ public class AppUser  {
 	Boolean notificationSubscription;
 	Boolean acceptedAgb;
 	Integer semester;
+	String profilbildPath;
 }

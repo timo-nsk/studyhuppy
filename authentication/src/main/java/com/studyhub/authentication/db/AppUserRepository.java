@@ -54,4 +54,8 @@ public interface AppUserRepository extends CrudRepository<AppUser, Integer> {
 	AppUser findByMail(String newMail);
 
     boolean existsByUsername(String username);
+
+	@Modifying
+	@Query("update users set profilbild_path = :profilbildPath where user_id = :userId")
+	void updateProfilbildPath(String profilbildPath, UUID userId);
 }
