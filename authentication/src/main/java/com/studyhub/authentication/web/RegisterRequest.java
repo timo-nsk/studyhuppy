@@ -18,6 +18,6 @@ public record RegisterRequest(
 	public AppUser toAppUser() {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
 		String encodedPassword = encoder.encode(password);
-		return new AppUser(null, UUID.randomUUID(), mail, username, encodedPassword, notificationSubscription != null && notificationSubscription, acceptedAgb, semester, null);
+		return new AppUser(null, UUID.randomUUID(), mail, username, encodedPassword, notificationSubscription != null && notificationSubscription, acceptedAgb, semester, "none");
 	}
 }

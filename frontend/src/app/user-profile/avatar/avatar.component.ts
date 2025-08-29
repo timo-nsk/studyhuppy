@@ -1,5 +1,4 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {NgOptimizedImage} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {UserApiService} from '../user.service';
 
@@ -7,6 +6,7 @@ import {UserApiService} from '../user.service';
   selector: 'app-avatar',
   imports: [RouterLink],
   templateUrl: './avatar.component.html',
+  standalone: true,
   styleUrl: './avatar.component.scss'
 })
 export class AvatarComponent implements OnInit{
@@ -22,7 +22,13 @@ export class AvatarComponent implements OnInit{
     this.userService.getUserData().subscribe({
       next: (data) => {
         this.userData = data;
-        this.getProfilbild()
+        console.log(this.userData)
+        if(this.userData.profilbildPath != 'none') {
+          this.getProfilbild()
+        } else {
+          this.profilbildUrl = 'assets/default-avatar.png'
+        }
+
       },
       error: (err) => {
         console.error('Fehler beim Laden:', err);

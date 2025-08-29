@@ -49,7 +49,11 @@ export class UserProfileComponent implements OnInit{
     this.userService.getUserData().subscribe({
       next: (data) => {
         this.userData = data;
-        this.getProfilbild()
+        if(this.userData.profilbildPath != 'none') {
+          this.getProfilbild()
+        } else {
+          this.profilbildUrl = 'assets/default-avatar.png'
+        }
       },
       error: (err) => {
         console.error('Fehler beim Laden:', err);
