@@ -8,10 +8,16 @@ import com.studyhub.authentication.web.SetNotificationSubscriptionRequest;
 import com.studyhub.authentication.config.JWTService;
 import com.studyhub.authentication.web.controller.ProfilbildRequest;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.UUID;
 
@@ -84,5 +90,19 @@ public class UserApiController {
 		accountService.saveProfilbild(payload, request);
 
 		return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+	}
+
+	@GetMapping("/profilbild/{filename}")
+	public ResponseEntity<Resource> getProfilbild(@PathVariable String filename) throws IOException {
+		Path filePath = Paths.get("authentication/user-data/uploads").resolve(filename);
+		Resource file = new UrlResource(filePath.toUri());
+
+		if (file.exists() && file.isReadable()) {
+			return ResponseEntity.ok()
+					.contentType(MediaType.valueOf(Files.probeContentType(filePath)))
+					.body(file);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 }
