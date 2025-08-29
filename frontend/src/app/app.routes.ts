@@ -133,6 +133,10 @@ export const routes: Routes = [
               component: SessionStartComponent
             },
             {
+              path: 'session/start/:sessionId',
+              component: SessionStartComponent
+            },
+            {
               path: 'session/create',
               component: SessionCreateComponent
             },
