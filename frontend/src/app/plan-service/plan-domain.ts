@@ -5,14 +5,14 @@ export class Lernplan {
   username : string;
   titel : string;
   tagesListe : TagDto[];
-  isActive : boolean;
+  active : boolean;
 
   constructor(fachId: string, username: string, titel: string, tagesListe: TagDto[], isActive: boolean) {
     this.fachId = fachId;
     this.username = username;
     this.titel = titel;
     this.tagesListe = tagesListe;
-    this.isActive = isActive;
+    this.active = isActive;
   }
 }
 
