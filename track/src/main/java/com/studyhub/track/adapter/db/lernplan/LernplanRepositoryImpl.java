@@ -5,6 +5,7 @@ import com.studyhub.track.domain.model.lernplan.Lernplan;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.studyhub.track.adapter.db.lernplan.LernplanMapper.toDomain;
 import static com.studyhub.track.adapter.db.lernplan.LernplanMapper.toDto;
@@ -37,5 +38,10 @@ public class LernplanRepositoryImpl implements LernplanRepository {
 	public List<Lernplan> findAllByUsername(String username) {
 		List<LernplanDto> dtos = lernplanDao.findAllByUsername(username);
 		return dtos.stream().map(LernplanMapper::toDomain).toList();
+	}
+
+	@Override
+	public void deleteByFachId(UUID fachId) {
+		lernplanDao.deleteByFachId(fachId);
 	}
 }

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/plan/v1")
@@ -52,5 +53,12 @@ public class LernplanApiController {
 		} else {
 			return ResponseEntity.notFound().build();
 		}
+	}
+
+	@DeleteMapping("/delete-lernplan/{fachId}")
+	public ResponseEntity<Void> deleteLernplan(@PathVariable UUID fachId) {
+		System.out.println(fachId);
+		lernplanService.deleteLernplanByFachId(fachId);
+		return ResponseEntity.ok().build();
 	}
 }

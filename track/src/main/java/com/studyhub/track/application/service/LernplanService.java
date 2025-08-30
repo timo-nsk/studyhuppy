@@ -62,4 +62,8 @@ public class LernplanService {
 	public List<Lernplan> getAllLernplaeneByUsername(String username) {
 		return lernplanRepository.findAllByUsername(username);
 	}
+
+	public void deleteLernplanByFachId(UUID fachId) {
+		lernplanRepository.deleteByFachId(fachId);
+	}
 }

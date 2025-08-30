@@ -27,4 +27,9 @@ export class PlanApiService {
     const header = this.headerService.createAuthHeader()
     return this.http.get<LernplanResponse>(this.PLAN_BASE_API + '/get-active-lernplan', {headers: header})
   }
+
+  deleteLernplan(fachId: string) :Observable<any> {
+    const header = this.headerService.createAuthHeader()
+    return this.http.delete<any>(this.PLAN_BASE_API + `/delete-lernplan/${fachId}`, {headers: header})
+  }
 }

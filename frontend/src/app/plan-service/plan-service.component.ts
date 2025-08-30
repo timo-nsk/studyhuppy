@@ -38,7 +38,16 @@ export class PlanServiceComponent implements OnInit {
 
   deleteLernplan(fachId : string) {
     // delete lernplan by id
-    console.log("deleted")
-    this.snackbarService.openSuccess(`Lernplan "${this.titel}" gelöscht`)
+    this.planApiService.deleteLernplan(fachId).subscribe({
+      next: (response) => {
+        console.log(response)
+        this.ngOnInit()
+        this.snackbarService.openSuccess(`Lernplan "${this.titel}" gelöscht`)
+      },
+      error: (error) => {
+        console.error('Error deleting lernplan:', error);
+        this.snackbarService.openError('Fehler beim Löschen des Lernplans');
+      }
+    })
   }
 }
