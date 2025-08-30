@@ -29,6 +29,9 @@
 
 ![Statistic Screenshot](./screenshots/modul_2.png)
 
+### Lernplan Dash
+![Lernplan Screenshot](./screenshots/plan_1.png)
+
 ### Flashcard Dash
 ![Flashcard Screenshot](./screenshots/kartei_1.png)
 
