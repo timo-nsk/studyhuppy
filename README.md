@@ -7,6 +7,7 @@
 ### Implemented
 
 - Overview of study time for each university module
+- Study management of modules inside of daily sessions per week
 - Statistics and visualizations of learning time
 - Flashcard learning using spaced repetition
 - Basic creation of Mindmaps
