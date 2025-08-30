@@ -58,4 +58,8 @@ public class LernplanService {
 		return new LernplanResponse(entityLerntag.getTitel(), sessions);
 
 	}
+
+	public List<Lernplan> getAllLernplaeneByUsername(String username) {
+		return lernplanRepository.findAllByUsername(username);
+	}
 }

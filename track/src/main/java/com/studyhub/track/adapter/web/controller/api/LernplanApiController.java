@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/plan/v1")
 public class LernplanApiController {
@@ -19,6 +21,13 @@ public class LernplanApiController {
 	public LernplanApiController(LernplanService lernplanService, JWTService jwtService) {
 		this.lernplanService = lernplanService;
 		this.jwtService = jwtService;
+	}
+
+	@GetMapping("/get-all-lernplaene")
+	public ResponseEntity<List<Lernplan>> getAllLernplaene(HttpServletRequest request) {
+		String username = jwtService.extractUsernameFromHeader(request);
+		List<Lernplan> lernplaene = lernplanService.getAllLernplaeneByUsername(username);
+		return ResponseEntity.ok(lernplaene);
 	}
 
 	@PostMapping("/create")
@@ -32,6 +41,7 @@ public class LernplanApiController {
 			return ResponseEntity.internalServerError().build();
 		}
 	}
+
 	@GetMapping("/get-active-lernplan")
 	public ResponseEntity<LernplanResponse> getActiveLernplan(HttpServletRequest httpRequest) {
 		String username = jwtService.extractUsernameFromHeader(httpRequest);
