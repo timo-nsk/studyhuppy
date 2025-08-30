@@ -37,6 +37,7 @@ import {SessionCreateComponent} from './modul-service/session/create/create.comp
 import {SessionDeleteComponent} from './modul-service/session/delete/delete.component';
 import {PlanServiceComponent} from './plan-service/plan-service.component';
 import {PlanCreateComponent} from './plan-service/create/create.component';
+import {PlanWeekComponent} from './plan-service/week/week.component';
 
 export const routes: Routes = [
   {
@@ -87,8 +88,12 @@ export const routes: Routes = [
         },
         {
           path: 'meine-woche',
-          component: PlanServiceComponent,
+          component: PlanWeekComponent,
           canActivate: [authenticationGuard]
+        },
+        {
+          path: 'lernplan',
+          component: PlanServiceComponent,
         },
         {
           path: 'create-plan',
