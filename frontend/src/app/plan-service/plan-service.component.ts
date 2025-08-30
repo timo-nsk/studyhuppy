@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {NgIf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {SnackbarService} from '../snackbar.service';
 import {PlanApiService} from './plan-api.service';
@@ -10,7 +10,8 @@ import {Lernplan} from './plan-domain';
   selector: 'app-plan-service',
   imports: [
     NgIf,
-    RouterLink
+    RouterLink,
+    NgForOf
   ],
   templateUrl: './plan-service.component.html',
   standalone: true,
@@ -35,7 +36,7 @@ export class PlanServiceComponent implements OnInit {
     })
   }
 
-  deleteLernplan() {
+  deleteLernplan(fachId : string) {
     // delete lernplan by id
     console.log("deleted")
     this.snackbarService.openSuccess(`Lernplan "${this.titel}" gelöscht`)
