@@ -96,7 +96,7 @@ export const routes: Routes = [
           component: PlanServiceComponent,
         },
         {
-          path: 'create-plan',
+          path: 'lernplan/erstellen',
           component: PlanCreateComponent,
         },
         {
