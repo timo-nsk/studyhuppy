@@ -1,5 +1,21 @@
 import {Block} from '../modul-service/session/session-domain';
 
+export class Lernplan {
+  fachId : string;
+  username : string;
+  titel : string;
+  tagesListe : TagDto[];
+  isActive : boolean;
+
+  constructor(fachId: string, username: string, titel: string, tagesListe: TagDto[], isActive: boolean) {
+    this.fachId = fachId;
+    this.username = username;
+    this.titel = titel;
+    this.tagesListe = tagesListe;
+    this.isActive = isActive;
+  }
+}
+
 export interface LernplanRequest {
   lernplanTitel : string,
   tage : TagDto[]
