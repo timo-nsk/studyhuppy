@@ -47,36 +47,43 @@ export class PlanServiceComponent implements OnInit{
     let sessionList = this.activeLernplan.sessionList;
     this.weekdayInfos.push(sessionList.find(session => session.weekday === 'Montags') || {
       weekday: "Montags",
+      beginn: "",
       sessionId: "",
       blocks: []
     });
     this.weekdayInfos.push(sessionList.find(session => session.weekday === 'Dienstags') || {
       weekday: "Dienstags",
+      beginn: "",
       sessionId: "",
       blocks: []
     });
     this.weekdayInfos.push(sessionList.find(session => session.weekday === 'Mittwochs') || {
       weekday: "Mittwochs",
+      beginn: "",
       sessionId: "",
       blocks: []
     });
     this.weekdayInfos.push(sessionList.find(session => session.weekday === 'Donnerstags') || {
       weekday: "Donnerstags",
+      beginn: "",
       sessionId: "",
       blocks: []
     });
     this.weekdayInfos.push(sessionList.find(session => session.weekday === 'Freitags') || {
       weekday: "Freitags",
+      beginn: "",
       sessionId: "",
       blocks: []
     });
     this.weekdayInfos.push(sessionList.find(session => session.weekday === 'Samstags') || {
       weekday: "Samstags",
+      beginn: "",
       sessionId: "",
       blocks: []
     });
     this.weekdayInfos.push(sessionList.find(session => session.weekday === 'Sonntags') || {
       weekday: "Sonntags",
+      beginn: "",
       sessionId: "",
       blocks: []
     });
@@ -85,7 +92,15 @@ export class PlanServiceComponent implements OnInit{
   totalLearningTimePerDay(weekdayInfo: LernplanSessionInfoDto) {
     let total = 0;
     for (const block of weekdayInfo.blocks) {
-      total += block.lernzeitSeconds + block.pausezeitSeconds;
+      total += block.lernzeitSeconds;
+    }
+    return total;
+  }
+
+  totalPausenTimePerDay(weekdayInfo: LernplanSessionInfoDto) {
+    let total = 0;
+    for (const block of weekdayInfo.blocks) {
+      total += block.pausezeitSeconds;
     }
     return total;
   }

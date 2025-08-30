@@ -49,6 +49,7 @@ public class LernplanService {
 
 			sessions.add(new LernplanSessionInfoDto(
 					dayString,
+					tag.getBeginn().toString(),
 					session.getFachId().toString(),
 					session.getBlocks()
 			));

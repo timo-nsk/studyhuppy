@@ -5,6 +5,7 @@ import java.util.List;
 
 public record LernplanSessionInfoDto(
 		String weekday,
+		String beginn,
 		String sessionId,
 		List<Block> blocks
 ) {

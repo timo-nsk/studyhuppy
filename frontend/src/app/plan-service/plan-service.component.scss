@@ -126,7 +126,12 @@
 }
 
 .zeitangabe {
-  color: #4f4f4f;
+  color: #606060;
+  font-size: 13px;
+}
+
+.zeitangabe-full {
+  font-size: 15px;
 }
 
 .link-container, .total-time-container {
@@ -140,4 +145,12 @@
 
 .disabled {
   background-color: rgba(117, 161, 206, 0.25);
+}
+
+p {
+  margin: 0;
+}
+hr {
+  margin: 0 10px 10px;
+  border: 1px solid rgb(16, 45, 92);
 }

@@ -12,6 +12,7 @@ export interface LernplanResponse {
 
 export interface LernplanSessionInfoDto {
   weekday : string,
+  beginn: string,
   sessionId : string,
   blocks : Block[]
 }

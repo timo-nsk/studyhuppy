@@ -13,7 +13,10 @@
         <div class="wrapper">
           <div class="header-wrapper">
             <h4>{{weekdayInfo.weekday}}</h4>
+            <p>{{weekdayInfo.beginn}}</p>
           </div>
+
+          <hr *ngIf="weekdayInfo.sessionId != ''">
 
           <div class="free-container" *ngIf="weekdayInfo.sessionId == ''">
             <p>F</p>
@@ -27,11 +30,12 @@
               <p>
                 <span>{{block.modulName}}</span>
               </p>
-              <span class="zeitangabe">{{(block.lernzeitSeconds + block.pausezeitSeconds) | timeFormat}}</span>
+              <span class="zeitangabe">({{(block.lernzeitSeconds) | timeFormat}} / {{(block.pausezeitSeconds) | timeFormat}})</span>
             </div>
-          </div>
-          <div class="total-time-container" *ngIf="weekdayInfo.sessionId != ''">
-            <span class="zeitangabe">{{totalLearningTimePerDay(weekdayInfo) | timeFormat}}</span>
+
+            <div class="total-time-container" *ngIf="weekdayInfo.sessionId != ''">
+              <span class="zeitangabe-full m-accent-font">{{totalLearningTimePerDay(weekdayInfo) | timeFormat}} / {{totalPausenTimePerDay(weekdayInfo) | timeFormat}}</span>
+            </div>
           </div>
         </div>
         <div class="blocks-container">
