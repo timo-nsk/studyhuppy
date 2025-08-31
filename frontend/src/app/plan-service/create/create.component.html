@@ -30,7 +30,7 @@
                   <label>Beginn:</label>
                 </td>
                 <td>
-                  <input type="time" formControlName="beginn" class="form-control time-picker m-accent-font">
+                  <input type="time" formControlName="beginn" class="form-control time-picker m-accent-font" [ngClass]="{ 'disabled' : day.get('session')?.value == 'none'}">
                   <span class="text-danger"
                         *ngIf="day.get('beginn')?.errors?.['required'] && day.get('beginn')?.touched">
                         Bitte geben Sie eine Uhrzeit an

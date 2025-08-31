@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {NgForOf, NgIf} from '@angular/common';
+import {NgClass, NgForOf, NgIf} from '@angular/common';
 import {
   AbstractControl,
   FormArray,
@@ -27,7 +27,8 @@ import {RouterLink} from '@angular/router';
     NgIf,
     TimeFormatPipe,
     FormsModule,
-    RouterLink
+    RouterLink,
+    NgClass
   ],
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss', '../../general.scss', '../../button.scss', '../../color.scss']
@@ -51,6 +52,8 @@ export class PlanCreateComponent implements OnInit {
       days: this.fb.array(this.weekdays.map(day => this.createDayForm(day)))
     });
 
+    this.disableBeginnInputOnSessionNone()
+
     this.sessionApiService.getLernplanSessionData().subscribe({
       next: (data) => {
         this.sessionData = data
@@ -65,7 +68,7 @@ export class PlanCreateComponent implements OnInit {
   createDayForm(day: string): FormGroup {
     return this.fb.group({
       weekday: [day],
-      beginn: ['', Validators.required],
+      beginn: ['00:00', Validators.required],
       session: ['none', Validators.required]
     });
   }
@@ -113,7 +116,6 @@ export class PlanCreateComponent implements OnInit {
       this.planApiService.saveLernplan(lernplanRequest).subscribe({
         next: (response) => {
           this.snackbarService.openSuccess("Lernplan erfolgreich gespeichert")
-          // Optionally, reset the form or provide user feedback here
         },
         error: err => {
           this.snackbarService.openError("Fehler beim Speichern des Lernplans")
@@ -143,4 +145,23 @@ export class PlanCreateComponent implements OnInit {
     }
     console.log("updated gesamtzeit")
   }
+
+  disableBeginnInputOnSessionNone() {
+    for (let day of this.days.controls) {
+      const beginnControl = day.get('beginn');
+
+      if (day.get('session')?.value == 'none') {
+        beginnControl?.disable({ emitEvent: false });
+      }
+
+      day.get('session')?.valueChanges.subscribe(value => {
+        if (value == 'none') {
+          beginnControl?.disable({ emitEvent: false });
+        } else {
+          beginnControl?.enable({ emitEvent: false });
+        }
+      });
+    }
+  }
+
 }

@@ -47,7 +47,8 @@
 }
 
 .time-picker {
-  width: 80px;
+  width: 85px;
+  text-align: center;
 }
 
 select:hover {
@@ -66,4 +67,9 @@ td {
 hr {
   margin-top: 5px;
   margin-bottom: 5px;
+}
+
+.disabled {
+  background-color: #b6b6b6;
+  color: gray;
 }
