@@ -61,4 +61,11 @@ public class LernplanApiController {
 		lernplanService.deleteLernplanByFachId(fachId);
 		return ResponseEntity.ok().build();
 	}
+
+	@PostMapping("/set-active-lernplan/{fachId}")
+	public ResponseEntity<Void> setActiveLernplan(@PathVariable UUID fachId, HttpServletRequest httpRequest) {
+		String username = jwtService.extractUsernameFromHeader(httpRequest);
+		lernplanService.setActiveLernplan(fachId, username);
+		return ResponseEntity.ok().build();
+	}
 }

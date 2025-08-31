@@ -32,7 +32,7 @@
             </td>
             <td class="is-active-cell">
               <div class=" option-container" title="Aktivieren">
-                <input class="form-check" type="radio" [checked]="lernplan.active">
+                <input class="form-check" type="radio" [checked]="lernplan.active" (change)="setActiveLernplan(lernplan.fachId)">
               </div>
             </td>
           </tr>

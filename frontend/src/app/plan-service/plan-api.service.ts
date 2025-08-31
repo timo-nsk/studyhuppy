@@ -32,4 +32,9 @@ export class PlanApiService {
     const header = this.headerService.createAuthHeader()
     return this.http.delete<any>(this.PLAN_BASE_API + `/delete-lernplan/${fachId}`, {headers: header})
   }
+
+  setActiveLernplan(fachId: string) {
+    const header = this.headerService.createAuthHeader()
+    return this.http.post<any>(this.PLAN_BASE_API + `/set-active-lernplan/${fachId}`, null, {headers: header})
+  }
 }

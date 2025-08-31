@@ -7,7 +7,10 @@ import java.util.UUID;
 
 public interface LernplanRepository {
 	Lernplan save(Lernplan lernplan);
+	Lernplan findByFachId(UUID fachId);
 	Lernplan findActiveByUsername(String username);
 	List<Lernplan> findAllByUsername(String username);
 	void deleteByFachId(UUID fachId);
+	void setIsActiveOfLernplan(UUID fachId, boolean isActive);
+	void deactivateAllByUsername(String username);
 }

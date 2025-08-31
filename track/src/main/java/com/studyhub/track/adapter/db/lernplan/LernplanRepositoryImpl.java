@@ -26,6 +26,12 @@ public class LernplanRepositoryImpl implements LernplanRepository {
 	}
 
 	@Override
+	public Lernplan findByFachId(UUID fachId) {
+		LernplanDto dto = lernplanDao.findByFachId(fachId);
+		return toDomain(dto);
+	}
+
+	@Override
 	public Lernplan findActiveByUsername(String username) {
 		LernplanDto dto = lernplanDao.findActiveByUsername(username);
 		if (dto == null) {
@@ -44,4 +50,16 @@ public class LernplanRepositoryImpl implements LernplanRepository {
 	public void deleteByFachId(UUID fachId) {
 		lernplanDao.deleteByFachId(fachId);
 	}
+
+	@Override
+	public void setIsActiveOfLernplan(UUID fachId, boolean isActive) {
+		lernplanDao.setIsActiveOfLernplan(fachId, isActive);
+	}
+
+	@Override
+	public void deactivateAllByUsername(String username) {
+		lernplanDao.deactivateAllByUsername(username);
+	}
+
+
 }

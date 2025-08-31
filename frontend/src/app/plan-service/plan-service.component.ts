@@ -50,4 +50,19 @@ export class PlanServiceComponent implements OnInit {
       }
     })
   }
+
+  setActiveLernplan(fachId: string) {
+    this.planApiService.setActiveLernplan(fachId).subscribe({
+      next: (response) => {
+        console.log(response)
+        let activatedPlan = this.lernplaene.find(plan => plan.fachId === fachId)?.titel;
+        this.snackbarService.openSuccess(`Lernplan "${activatedPlan}" aktiviert`)
+        this.ngOnInit()
+      },
+      error: (error) => {
+        console.error('Error setting active lernplan:', error);
+        this.snackbarService.openError('Fehler beim Aktivieren des Lernplans');
+      }
+    })
+  }
 }
