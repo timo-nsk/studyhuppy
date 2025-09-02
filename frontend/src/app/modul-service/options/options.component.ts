@@ -23,7 +23,7 @@ export class OptionsComponent implements OnInit{
   modulFachId : string = ''
 
   addTimeForm = new FormGroup({
-    fachId: new FormControl("", Validators.required),
+    modulId: new FormControl("", Validators.required),
     time: new FormControl("", Validators.required)
   })
 
@@ -78,11 +78,11 @@ export class OptionsComponent implements OnInit{
     })
   }
 
-  sendAddTimeData() {
-    this.addTimeForm.patchValue({fachId: this.modulFachId})
+  postSecondsToAdd() {
+    this.addTimeForm.patchValue({modulId: this.modulFachId})
     if(this.addTimeForm.valid) {
       let data = this.addTimeForm.value
-      this.service.sendAddTimeData(data).subscribe({
+      this.service.postSecondsToAdd(data).subscribe({
         next: () => {
           this.log.debug("time data successfully sent")
           this.sb.openSuccess("Zeit erfolgreich hinzugefügt")

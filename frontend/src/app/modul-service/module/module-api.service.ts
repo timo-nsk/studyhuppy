@@ -98,10 +98,10 @@ export class ModuleApiService {
       })
   }
 
-  sendAddTimeData(data: any) : Observable<void> {
+  postSecondsToAdd(data: any) : Observable<void> {
     this.log.debug(`Try sending additional time...`)
     const headers = this.headerService.createAuthHeader()
-    return this.http.post<void>(this.MODUL_BASE_API + '/add-time', data, {headers})
+    return this.http.post<void>(this.MODUL_BASE_API + '/add-seconds', data, {headers})
   }
 
   sendKlausurDateData(data: any) : Observable<void> {

@@ -5,6 +5,7 @@ import com.studyhub.track.adapter.web.controller.api.GeneralStatisticsDto;
 import com.studyhub.track.adapter.web.controller.api.GeneralStatisticsDtoBuilder;
 import com.studyhub.track.adapter.web.controller.api.ModulSelectDto;
 import com.studyhub.track.application.JWTService;
+import com.studyhub.track.application.service.dto.ModulUpdateRequest;
 import com.studyhub.track.application.service.dto.NeuerModulterminRequest;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.Modultermin;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -49,6 +51,7 @@ public class ModulService {
 
 	public void updateSeconds(UUID fachId, int seconds) throws Exception {
 		int res = repo.updateSecondsByUuid(fachId, seconds);
+		System.out.println("res: " + res);
 		if (res == 0) throw new Exception();
 		log.info("updated modul with id:%s to seconds=%s".formatted(fachId.toString(), String.valueOf(seconds)));
 	}
@@ -237,11 +240,15 @@ public class ModulService {
 		return res;
 	}
 
-	public void addSecondsToModul(UUID uuid, int secondsToAdd) {
+	public void addSecondsToModul(UUID uuid, LocalTime time, String username) {
+		TimeConverter timeConverter = new TimeConverter();
+		int secondsToAdd = timeConverter.timeToSeconds(time.toString());
 		int oldSeconds = repo.findSecondsById(uuid);
 		oldSeconds += secondsToAdd;
 		try {
 			updateSeconds(uuid, oldSeconds);
+			ModulUpdateRequest request = new ModulUpdateRequest(uuid.toString(), 0, secondsToAdd);
+			modulEventService.saveEvent(request, username);
 		} catch(Exception e) {
 			System.out.println("Error while updating seconds");
 			System.out.println(e.getMessage());

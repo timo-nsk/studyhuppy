@@ -25,9 +25,9 @@ public class ModulEventService {
 		this.dateProvider = dateProvider;
 	}
 
-	public void saveEvent(ModulUpdateRequest request, String token) {
+	public void saveEvent(ModulUpdateRequest request, String username) {
 		if (request.secondsLearnedThisSession() < 1) return;
-		ModulGelerntEvent event = ModulGelerntEvent.initEvent(UUID.fromString(request.fachId()), request.secondsLearnedThisSession(), "timo");
+		ModulGelerntEvent event = ModulGelerntEvent.initEvent(UUID.fromString(request.fachId()), request.secondsLearnedThisSession(), username);
 		modulGelerntEvent.save(event);
 		logger.info("Saved ModulGelerntEvent: {}", event);
 	}
