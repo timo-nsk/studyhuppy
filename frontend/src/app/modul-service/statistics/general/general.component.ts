@@ -1,96 +1,40 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {StatisticApiService} from '../statistic.service';
 import {TimeFormatPipe} from '../../module/time-format.pipe';
-import {NgFor} from '@angular/common';
+import {KeyValuePipe, NgFor, NgIf} from '@angular/common';
 import {LoggingService} from '../../../logging.service';
+import {GeneralStatistics} from './general-statistics';
 
 @Component({
   selector: 'app-general',
-  imports: [TimeFormatPipe, NgFor],
+  imports: [TimeFormatPipe, NgFor, KeyValuePipe, NgIf],
   templateUrl: './general.component.html',
   standalone: true,
   styleUrl: './general.component.scss'
 })
 export class GeneralComponent implements OnInit{
   log = new LoggingService("GeneralComponent", "modul-service")
-  service = inject(StatisticApiService)
+  statisticService = inject(StatisticApiService)
 
-  totalStudyTime: number = 0;
-  totalStudyTimePerSemester: { key: number, value: number }[] = [];
-  averageStudyTimePerDay : number = 0
-  numberActiveModules: string = '';
-  numberNotActiveModules: string = '';
-  maxStudiedModul: string = '';
-  minStudiedModul: string = '';
+  generalStats : GeneralStatistics = {} as GeneralStatistics;
 
   ngOnInit(): void {
-    this.service.getTotalStudyTime().subscribe({
-      next: (data) => {
-        this.totalStudyTime = data;
-        this.log.info(`got total study time: ${data}`)
-      },
-      error: (err) => {
-        this.log.error(`error getting total study time. reason: ${err}`)
-      }
-    });
+    this.getGeneralStats()
+  }
 
-    this.service.getTotalStudyTimeperSemester().subscribe({
-      next: (data) => {
-        this.totalStudyTimePerSemester = Object.entries(data).map(([key, value]) => ({
-          key: Number(key),
-          value: value
-        }));
-        this.log.info(`got total study time per semester: ${data}`)
-      },
-      error: (err) => {
-        this.log.error(`error getting total study time per semester. reason: ${err}`)
-      }
-    });
-
-    this.service.getDurchschnittlicheLernzeitProTag().subscribe({
+  getGeneralStats() {
+    this.statisticService.getGeneralStats().subscribe({
       next: data => {
-        this.averageStudyTimePerDay = data
-        this.log.info(`got average lernzeit per day: ${data}`)
+        this.generalStats = data
+        console.log(this.generalStats)
       },
       error: err => {
-        this.log.info(`error getting average lernzeit per day. reason: ${err}`)
+        console.log("something went wrong with fecthing general statistics dto")
       }
     })
+  }
 
-    this.service.getNumberActiveModules().subscribe({
-      next: data => {
-        this.log.info(`got no. of active module: ${data}`)
-      },
-      error: err => {
-        this.log.error(`error getting no. of active module: ${err}`)
-      }
-    });
-
-    this.service.getNumberNotActiveModules().subscribe({
-      next: data => {
-        this.log.info(`got no. of not active module: ${data}`)
-      },
-      error: err => {
-        this.log.error(`error getting no. of not active module: ${err}`)
-      }
-    });
-
-    this.service.getMaxStudiedModul().subscribe({
-      next: data => {
-        this.log.info(`got max studied modul: ${data}`)
-      },
-      error: err => {
-        this.log.error(`error getting max studied modul: ${err}`)
-      }
-    });
-
-    this.service.getMinStudiedModul().subscribe({
-      next: data => {
-        this.log.info(`got min studied modul: ${data}`)
-      },
-      error: err => {
-        this.log.error(`error getting min studied modul: ${err}`)
-      }
-    });
+  isEmptyTotalStudyTimePerSemester(): boolean {
+    return Object.keys(this.generalStats.totalStudyTimePerSemester).length === 0;
   }
 }

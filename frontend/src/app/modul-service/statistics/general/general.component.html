@@ -8,7 +8,7 @@
               Zeit studiert insgesamt:
             </th>
             <td>
-              <span>{{totalStudyTime | timeFormat}}</span>
+              <span>{{generalStats.totalStudyTime | timeFormat}}</span>
             </td>
           </tr>
           <tr>
@@ -16,10 +16,18 @@
               Durchschnittliche Lernzeit am Tag:
             </th>
             <td>
-              <span>{{averageStudyTimePerDay | timeFormat}}</span>
+              <span>{{generalStats.durchschnittlicheLernzeitProTag | timeFormat}}</span>
             </td>
           </tr>
-          <tr>
+          <tr *ngIf="isEmptyTotalStudyTimePerSemester()">
+            <th>
+              Zeit studiert per Fachsemester
+            </th>
+            <td>
+              Keine Lernzeiten vorhanden
+            </td>
+          </tr>
+          <tr *ngIf="!isEmptyTotalStudyTimePerSemester()">
             <th>
               Zeit studiert per Fachsemester
             </th>
@@ -33,7 +41,7 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr *ngFor="let semester of totalStudyTimePerSemester">
+                  <tr *ngFor="let semester of generalStats.totalStudyTimePerSemester  | keyvalue">
                     <td>{{semester.key}}</td>
                     <td>{{semester.value | timeFormat }}</td>
                   </tr>
@@ -48,7 +56,7 @@
               Aktive Module:
             </th>
             <td>
-              <span>{{numberActiveModules}}</span>
+              <span>{{generalStats.numberActiveModules}}</span>
             </td>
           </tr>
 
@@ -57,7 +65,7 @@
               Inaktive Module:
             </th>
             <td>
-              <span>{{numberNotActiveModules}}</span>
+              <span>{{generalStats.numberNotActiveModules}}</span>
             </td>
           </tr>
 
@@ -66,7 +74,7 @@
               Modul am meisten studiert:
             </th>
             <td>
-              <span>{{maxStudiedModul}}</span>
+              <span>{{generalStats.maxStudiedModul}}</span>
             </td>
           </tr>
 
@@ -75,7 +83,7 @@
               Modul am wenigsten studiert:
             </th>
             <td>
-              <span>{{minStudiedModul}}</span>
+              <span>{{generalStats.minStudiedModul}}</span>
             </td>
           </tr>
         </tbody>

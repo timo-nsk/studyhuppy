@@ -4,6 +4,8 @@ import {HeaderService} from '../../header.service';
 import {Observable} from 'rxjs';
 import { environment } from '../../../environments/environment'
 import {LoggingService} from '../../logging.service';
+import {GeneralStatistics} from './general/general-statistics';
+
 
 @Injectable({
   providedIn: "root"
@@ -89,5 +91,10 @@ export class StatisticApiService {
     this.log.info("Try get chart data for last days...")
     const headers = this.headerService.createAuthHeader()
     return this.http.get<{ [date: string]: { modulName: string; secondsLearned: string }[] }>(this.BASE_API_URL + "/chart", { headers })
+  }
+
+  getGeneralStats() : Observable<GeneralStatistics>{
+    const headers = this.headerService.createAuthHeader()
+    return this.http.get<GeneralStatistics>(this.BASE_API_URL + "/get-general-statistics", { headers })
   }
 }

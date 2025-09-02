@@ -34,6 +34,14 @@ public class StatisticApiController {
 	}
 
 	@AngularApi
+	@GetMapping("/get-general-statistics")
+	public ResponseEntity<GeneralStatisticsDto> getGeneralStatistics(HttpServletRequest request) {
+		String username = jwtService.extractUsernameFromHeader(request);
+		GeneralStatisticsDto dto = modulService.getGeneralStatistics(username);
+		return ResponseEntity.ok(dto);
+	}
+
+	@AngularApi
 	@GetMapping("/get-total-study-time")
 	public ResponseEntity<Integer> getTotalStudyTime(HttpServletRequest request) {
 		String username = jwtService.extractUsernameFromHeader(request);

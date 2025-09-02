@@ -1,6 +1,8 @@
 package com.studyhub.track.application.service;
 
 
+import com.studyhub.track.adapter.web.controller.api.GeneralStatisticsDto;
+import com.studyhub.track.adapter.web.controller.api.GeneralStatisticsDtoBuilder;
 import com.studyhub.track.adapter.web.controller.api.ModulSelectDto;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.application.service.dto.NeuerModulterminRequest;
@@ -24,10 +26,12 @@ public class ModulService {
 	private final Logger log = LoggerFactory.getLogger(ModulService.class);
 	private final ModulRepository repo;
 	private final JWTService jwtService;
+	private final ModulEventService modulEventService;
 
-	public ModulService(ModulRepository modulRepository, JWTService jwtService) {
+	public ModulService(ModulRepository modulRepository, JWTService jwtService, ModulEventService modulEventService) {
 		this.repo = modulRepository;
 		this.jwtService = jwtService;
+		this.modulEventService = modulEventService;
 	}
 
 	public void saveNewModul(Modul modul) {
@@ -102,7 +106,7 @@ public class ModulService {
 		Integer totalStudyTime = repo.getTotalStudyTime(username);
 
 		if(totalStudyTime == null) {
-			return null;
+			return 0;
 		}
 		return totalStudyTime;
 	}
@@ -136,7 +140,7 @@ public class ModulService {
 		return repo.countActiveModules(username);
 	}
 
-	public Object countNotActiveModules(String username) {
+	public Integer countNotActiveModules(String username) {
 		return repo.countNotActiveModules(username);
 	}
 
@@ -242,6 +246,29 @@ public class ModulService {
 			System.out.println("Error while updating seconds");
 			System.out.println(e.getMessage());
 		}
+	}
 
+	public GeneralStatisticsDto getGeneralStatistics(String username) {
+		GeneralStatisticsDtoBuilder statBuilder = new GeneralStatisticsDtoBuilder().builder();
+
+		statBuilder.withTotalStudyTime(getTotalStudyTimeForUser(username));
+		statBuilder.withTotalStudyTimePerSemester(getTotalStudyTimePerFachSemester(username));
+		statBuilder.withDurchschnittlicheLernzeitProTag(modulEventService.computeAverageStudyTimePerDay(username));
+		statBuilder.withNumberActiveModules(countActiveModules(username));
+
+		int numberActiveModules = countActiveModules(username);
+		statBuilder.withNumberActiveModules(numberActiveModules);
+		int numberNotActiveModules = countNotActiveModules(username);
+		statBuilder.withNumberNotActiveModules(numberNotActiveModules);
+
+		if(numberActiveModules == 0 && numberNotActiveModules == 0) {
+			statBuilder.withMaxStudiedModul("Keine Module verfügbar");
+			statBuilder.withMinStudiedModul("Keine Module verfügbar");
+		} else {
+			statBuilder.withMaxStudiedModul(findModulWithMaxSeconds(username));
+			statBuilder.withMinStudiedModul(findModulWithMinSeconds(username));
+		}
+
+		return statBuilder.build();
 	}
 }
