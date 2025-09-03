@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   flex-direction: row;
-  width: 85vw;
+  width: 100%;
 }
 
 #account-table-container {
@@ -38,3 +38,83 @@ table {
   margin-top: 25px;
 }
 
+.option-btn {
+  text-align: center;
+  width: 200px;
+  height: 35px;
+  border-radius: 5px;
+}
+
+.option-btn:hover {
+  cursor: pointer;
+}
+
+#delete-module-btn {
+  background-color: #f58383;
+}
+
+#delete-module-btn:hover {
+  background-color: #f55f5f;
+}
+
+#reset-btn {
+  background-color: #c9c9c9;
+}
+
+#reset-btn:hover {
+  background-color: #a4a4a4;
+}
+
+.bordered-r {
+  border: 2px solid red;
+  padding: 2px;
+  margin: 2px;
+}
+
+.bordered-b {
+  border: 2px solid blue;
+  padding: 2px;
+  margin: 2px;
+}
+
+.bordered-g {
+  border: 2px solid green;
+  padding: 2px;
+  margin: 2px;
+}
+
+.timer-picker-inp {
+  width: 80px;
+  text-align: center;
+}
+
+#add-time-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+#add-time-btn {
+  width: 100px;
+  height: 37px;
+  border-radius: 5px;
+  background-color: rgb(16, 45, 92);
+  color: white;
+  text-align: center;
+}
+
+#add-time-btn:hover {
+  cursor: pointer;
+  background-color: rgb(70, 102, 153);
+}
+
+.btn-wrapper {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+p {
+  margin: 0;
+}
