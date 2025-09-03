@@ -3,6 +3,7 @@
   justify-content: center;
   flex-direction: row;
   width: 100%;
+  margin-bottom: 100px;
 }
 
 #account-table-container {
@@ -17,7 +18,7 @@
   width: 300px;
 }
 .td-border-l {
-  border-left: 1px solid lightgray;
+  border-left: 1px solid lightgray !important;
 }
 
 .width-n {
@@ -117,4 +118,13 @@ table {
 
 p {
   margin: 0;
+}
+
+td, th {
+  border-width: 0;
+  height: 70px;
+}
+
+td {
+  padding-left: 20px;
 }
