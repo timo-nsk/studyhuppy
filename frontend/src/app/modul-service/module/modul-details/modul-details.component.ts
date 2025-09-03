@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import {TimeFormatPipe} from '../time-format.pipe';
 import {CapitalizePipe} from '../capitalize.pipe';
 import {LoggingService} from '../../../logging.service';
@@ -11,7 +11,7 @@ import {SnackbarService} from '../../../snackbar.service';
 
 @Component({
   selector: 'app-modul-details',
-  imports: [TimeFormatPipe, CapitalizePipe, MatSlideToggle, NgIf, ReactiveFormsModule],
+  imports: [TimeFormatPipe, CapitalizePipe, MatSlideToggle, NgIf, ReactiveFormsModule, RouterLink],
   templateUrl: './modul-details.component.html',
   standalone: true,
   styleUrls: ['./modul-details.component.scss', '../../../general.scss', '../../../button.scss', '../../../color.scss']
@@ -36,12 +36,6 @@ export class ModulDetailsComponent implements  OnInit{
 
   addTimeForm = new FormGroup({
     modulId: new FormControl("", Validators.required),
-    time: new FormControl("", Validators.required)
-  })
-
-  addKlausurDate = new FormGroup({
-    fachId: new FormControl("", Validators.required),
-    date: new FormControl("", Validators.required),
     time: new FormControl("", Validators.required)
   })
 
@@ -127,27 +121,11 @@ export class ModulDetailsComponent implements  OnInit{
         next: () => {
           this.log.debug("time data successfully sent")
           this.snackbarService.openSuccess("Zeit erfolgreich hinzugefügt")
+          this.addTimeForm.patchValue({time: "--:--"})
         },
         error: (err) => {
           this.log.debug(`error sending time data. reason: ${err}`)
           this.snackbarService.openError("Zeit konnte nicht hinzugefügt werden")
-        }
-      })
-    }
-  }
-
-  sendKlausurDateData() {
-    this.addKlausurDate.patchValue({fachId: this.modulId})
-    if(this.addKlausurDate.valid) {
-      let data = this.addKlausurDate.value
-      this.service.sendKlausurDateData(data).subscribe({
-        next: () => {
-          this.log.debug("klausur date data successfully sent")
-          this.snackbarService.openSuccess("Klausurdatum-Daten erfolgreich versendet")
-        },
-        error: (err) => {
-          this.log.debug(`error sending klausur date data. reason: ${err}`)
-          this.snackbarService.openError("Klausurdatum konnte nicht eingetragen werden")
         }
       })
     }

@@ -104,12 +104,6 @@ export class ModuleApiService {
     return this.http.post<void>(this.MODUL_BASE_API + '/add-seconds', data, {headers})
   }
 
-  sendKlausurDateData(data: any) : Observable<void> {
-    this.log.debug(`Try sending klausur date...`)
-    const headers = this.headerService.createAuthHeader()
-    return this.http.post<void>(this.MODUL_BASE_API + '/add-klausur-date', data ,{headers})
-  }
-
   getModulSelectData() {
     const headers = this.headerService.createAuthHeader()
     return this.http.get<any>(this.MODUL_BASE_API + '/get-modul-select-data', {headers})
