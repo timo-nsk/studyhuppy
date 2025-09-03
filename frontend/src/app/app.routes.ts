@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import {ModuleComponent} from './modul-service/module/module.component';
 import {AddModuleComponent} from './modul-service/add-module/add-module.component';
-import {OptionsComponent} from './modul-service/options/options.component';
 import {StatisticsComponent} from './modul-service/statistics/statistics.component';
 import {ModulServiceComponent} from './modul-service/modul-service.component';
 import {LoginServiceComponent} from './auth-service/login-service/login-service.component';
@@ -148,11 +147,6 @@ export const routes: Routes = [
             {
               path: 'session/delete',
               component: SessionDeleteComponent
-            },
-            {
-              path: 'einstellungen',
-              component: OptionsComponent,
-              canActivate: [authenticationGuard]
             },
             {
               path: 'statistiken',
