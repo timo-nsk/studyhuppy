@@ -19,7 +19,6 @@ export class AddModuleComponent {
   service = inject(ModuleApiService)
   http = inject(HttpClient)
   log = new LoggingService("AddModuleComponent", "modul-service")
-  lerntageCheckbox : boolean = false
 
   newModulForm = this.initForm()
 
@@ -42,31 +41,13 @@ export class AddModuleComponent {
     }
   }
 
-  toggleLerntageCheckbox() {
-    this.lerntageCheckbox = !this.lerntageCheckbox
-    this.newModulForm.controls['mondays'].setValue(false);
-    this.newModulForm.controls['tuesdays'].setValue(false);
-    this.newModulForm.controls['wednesdays'].setValue(false);
-    this.newModulForm.controls['thursdays'].setValue(false);
-    this.newModulForm.controls['fridays'].setValue(false);
-    this.newModulForm.controls['saturdays'].setValue(false);
-    this.newModulForm.controls['sundays'].setValue(false);
-  }
-
   initForm() : FormGroup {
     return new FormGroup({
       name: new FormControl("", [Validators.required]),
       creditPoints: new FormControl("", [Validators.required, Validators.min(0)]),
       kontaktzeitStunden: new FormControl("", [Validators.required, Validators.min(1)]),
       selbststudiumStunden: new FormControl("", [Validators.required, Validators.min(1)]),
-      time: new FormControl(""),
-      mondays: new FormControl(false),
-      tuesdays: new FormControl(false),
-      wednesdays: new FormControl(false),
-      thursdays: new FormControl(false),
-      fridays: new FormControl(false),
-      saturdays: new FormControl(false),
-      sundays: new FormControl(false)
+      time: new FormControl("")
     })
   }
 }
