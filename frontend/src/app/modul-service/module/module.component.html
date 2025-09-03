@@ -22,6 +22,7 @@
                       <a class="wht-font std-link fs-20 fw-bold" [routerLink]="['/module/modul-details', m.fachId]"
                          [queryParams]="
                                    {
+                                     modulId: m.fachId,
                                      name: m.name,
                                      secondsLearned: m.secondsLearned,
                                      kreditpunkte: m.kreditpunkte.anzahlPunkte,

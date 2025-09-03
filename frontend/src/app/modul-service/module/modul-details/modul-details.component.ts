@@ -3,10 +3,15 @@ import {ActivatedRoute} from '@angular/router';
 import {TimeFormatPipe} from '../time-format.pipe';
 import {CapitalizePipe} from '../capitalize.pipe';
 import {LoggingService} from '../../../logging.service';
+import {MatSlideToggle} from "@angular/material/slide-toggle";
+import {NgIf} from "@angular/common";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ModuleApiService} from '../module-api.service';
+import {SnackbarService} from '../../../snackbar.service';
 
 @Component({
   selector: 'app-modul-details',
-  imports: [ TimeFormatPipe, CapitalizePipe ],
+  imports: [TimeFormatPipe, CapitalizePipe, MatSlideToggle, NgIf, ReactiveFormsModule],
   templateUrl: './modul-details.component.html',
   standalone: true,
   styleUrls: ['./modul-details.component.scss', '../../../general.scss', '../../../button.scss', '../../../color.scss']
@@ -14,6 +19,11 @@ import {LoggingService} from '../../../logging.service';
 export class ModulDetailsComponent implements  OnInit{
   log = new LoggingService("ModulDetailsComponent", "modul-service")
 
+  route = inject(ActivatedRoute)
+  service = inject(ModuleApiService)
+  snackbarService = inject(SnackbarService)
+
+  modulId! : string
   name!: string
   secondsLearned!: number
   kreditpunkte!: number
@@ -24,7 +34,16 @@ export class ModulDetailsComponent implements  OnInit{
   semesterJahr: string = '2000'
   lerntage!: string[]
 
-  route = inject(ActivatedRoute)
+  addTimeForm = new FormGroup({
+    modulId: new FormControl("", Validators.required),
+    time: new FormControl("", Validators.required)
+  })
+
+  addKlausurDate = new FormGroup({
+    fachId: new FormControl("", Validators.required),
+    date: new FormControl("", Validators.required),
+    time: new FormControl("", Validators.required)
+  })
 
   ngOnInit(): void {
     this.initComponentWithQueryParamData()
@@ -32,6 +51,7 @@ export class ModulDetailsComponent implements  OnInit{
 
   initComponentWithQueryParamData() {
     this.route.queryParams.subscribe(params => {
+      this.modulId = params['modulId']
       this.name = params['name']
       this.secondsLearned = params['secondsLearned']
       this.kreditpunkte = params['kreditpunkte']
@@ -67,31 +87,74 @@ export class ModulDetailsComponent implements  OnInit{
     }
   }
 
-  computeLerntageString() : string {
-    let lernTageArr  = this.lerntage
+  resetTimer() {
+    this.service.resetTimer(this.modulId).subscribe({
+      next: () => this.snackbarService.openSuccess("Timer wurde erfolgreich zurückgesetzt"),
+      error: () => this.snackbarService.openError("Timer von konnte nicht zurückgesetzt werden"),
+    })
+  }
 
-    if (!lernTageArr) return "keine Lerntage eingetragen"
-
-    const wochentage = [
-      'montags',
-      'dienstags',
-      'mittwochs',
-      'donnerstags',
-      'freitags',
-      'samstags',
-      'sonntags'
-    ];
-
-    let lerntageString = ''
-    for(let i = 0; i < lernTageArr.length; i++) {
-      if (lernTageArr[i] === "true") {
-        if (lerntageString) {
-          lerntageString += ', ';
-        }
-        lerntageString += wochentage[i];
+  deleteModul(): void {
+    this.service.deleteModul(this.modulId).subscribe({
+      next: () => {
+        this.snackbarService.openSuccess("Modul erfolgreich gelöscht")
+      },
+      error: (err) => {
+        this.snackbarService.openError(`Modul konnte nicht gelöscht werden. Grund: ${err}`)
       }
-    }
+    });
+  }
 
-    return lerntageString
+  putAktivStatus(fachId: string) {
+    this.service.putAktivStatus(fachId).subscribe(() => {
+      this.service.getAllModulesByUsername().subscribe({
+        next: (data) => {
+          // this.module = data; ????
+        },
+        error: (err) => {
+          this.snackbarService.openError("Fehler beim Laden der Daten für Methode 'putAktivStatus'")
+        }
+      });
+      this.snackbarService.openSuccess("Modulaktivität geändert")
+    })
+  }
+
+  postSecondsToAdd() {
+    this.addTimeForm.patchValue({modulId: this.modulId})
+    if(this.addTimeForm.valid) {
+      let data = this.addTimeForm.value
+      this.service.postSecondsToAdd(data).subscribe({
+        next: () => {
+          this.log.debug("time data successfully sent")
+          this.snackbarService.openSuccess("Zeit erfolgreich hinzugefügt")
+        },
+        error: (err) => {
+          this.log.debug(`error sending time data. reason: ${err}`)
+          this.snackbarService.openError("Zeit konnte nicht hinzugefügt werden")
+        }
+      })
+    }
+  }
+
+  sendKlausurDateData() {
+    this.addKlausurDate.patchValue({fachId: this.modulId})
+    if(this.addKlausurDate.valid) {
+      let data = this.addKlausurDate.value
+      this.service.sendKlausurDateData(data).subscribe({
+        next: () => {
+          this.log.debug("klausur date data successfully sent")
+          this.snackbarService.openSuccess("Klausurdatum-Daten erfolgreich versendet")
+        },
+        error: (err) => {
+          this.log.debug(`error sending klausur date data. reason: ${err}`)
+          this.snackbarService.openError("Klausurdatum konnte nicht eingetragen werden")
+        }
+      })
+    }
+  }
+
+  getActiveStatus(fachId: string) {
+    //TODO implement
+    return true
   }
 }

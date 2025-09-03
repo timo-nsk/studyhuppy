@@ -3,30 +3,84 @@
     <h2 class="m-accent-font">{{name}}</h2>
     <table class="table">
       <tbody>
-      <tr>
-        <th class="col-wd-200 m-accent-font">Zeit gelernt</th>
-        <td class="col-wd-300 td-border-l m-accent-font">{{secondsLearned | timeFormat}}</td>
-      </tr>
-      <tr>
-        <th class="col-wd-200 m-accent-font">Kreditpunkte</th>
-        <td class="col-wd-300 td-border-l m-accent-font">
-          <span>{{kreditpunkte}}</span>
-        </td>
-      </tr>
-      <tr>
-        <th class="col-wd-200 m-accent-font">Arbeitsaufwand</th>
-        <td class="col-wd-300 td-border-l m-accent-font">Kontakzteit: {{kontaktzeitStunden}}</td>
-        <td class="col-wd-300 td-border-l m-accent-font">Selbststudium: {{selbststudiumStunden}}</td>
-      </tr>
-      <tr>
-        <th class="col-wd m-accent-font">Fachsemester</th>
-        <td class="col-wd-300 td-border-l m-accent-font">{{semesterstufe}}</td>
-        <td class="col-wd-300 td-border-l m-accent-font">{{semesterTyp  | capitalize}} {{semesterJahr}}</td>
-      </tr>
-      <tr>
-        <th class="col-wd m-accent-font">Lerntage</th>
-        <td class="col-wd-300 td-border-l m-accent-font">{{computeLerntageString()}}</td>
-      </tr>
+        <tr>
+          <th class="col-wd-200 m-accent-font">Zeit gelernt</th>
+          <td class="col-wd-300 td-border-l m-accent-font">{{secondsLearned | timeFormat}}</td>
+        </tr>
+        <tr>
+          <th class="col-wd-200 m-accent-font">Kreditpunkte</th>
+          <td class="col-wd-300 td-border-l m-accent-font">
+            <span>{{kreditpunkte}}</span>
+          </td>
+        </tr>
+        <tr>
+          <th class="col-wd-200 m-accent-font">Arbeitsaufwand</th>
+          <td class="col-wd-300 td-border-l m-accent-font">Kontakzteit: {{kontaktzeitStunden}}</td>
+          <td class="col-wd-300 td-border-l m-accent-font">Selbststudium: {{selbststudiumStunden}}</td>
+        </tr>
+        <tr>
+          <th class="col-wd m-accent-font">Fachsemester</th>
+          <td class="col-wd-300 td-border-l m-accent-font">{{semesterstufe}}</td>
+          <td class="col-wd-300 td-border-l m-accent-font">{{semesterTyp  | capitalize}} {{semesterJahr}}</td>
+        </tr>
+
+        <!-- added -->
+        <tr>
+          <th class="col-wd-200 m-accent-font">
+            Timer zurücksetzen
+          </th>
+          <td class="col-wd-300 td-border-l m-accent-font">
+            <button class="btn btn-secondary" (click)="resetTimer()">reset</button>
+          </td>
+        </tr>
+        <tr>
+          <th class="col-wd-200 m-accent-font">
+            Modul löschen
+          </th>
+          <td class="col-wd-300 td-border-l m-accent-font">
+            <a (click)="deleteModul()">löschen</a>
+          </td>
+        </tr>
+        <tr>
+          <th class="col-wd-200 m-accent-font">
+            Modul aktivieren/deaktivieren
+          </th>
+          <td class="col-wd-300 td-border-l m-accent-font">
+            <div>
+              <mat-slide-toggle (change)="putAktivStatus(modulId)" [checked]="getActiveStatus(modulId)">
+                <span class="ff-outfit" *ngIf="getActiveStatus(modulId)">deaktivieren</span>
+                <span class="ff-outfit" *ngIf="!getActiveStatus(modulId)">aktivieren</span>
+              </mat-slide-toggle>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="col-wd-200 m-accent-font">
+            <label>Zeit hinzufügen (hh:mm):</label>
+          </th>
+          <td class="col-wd-300 td-border-l m-accent-font">
+            <form id="form-add-time" [formGroup]="addTimeForm">
+              <div id="option-add-time">
+                <input id="time-inp" type="time" class="inp form-control" formControlName="time">
+                <button (click)="postSecondsToAdd()" >hinzufügen</button>
+              </div>
+            </form>
+          </td>
+        </tr>
+        <tr>
+          <th class="col-wd-200 m-accent-font">
+            <label for="add-klausur">Klausurdatum hinzufügen:</label>
+          </th>
+          <td class="col-wd-300 td-border-l m-accent-font">
+            <form id="form-klausur" [formGroup]="addKlausurDate">
+              <div id="option-add-klausur-date">
+                <input id="add-klausur" class="inp form-control" type="date" formControlName="date">
+                <input type="time" class="inp form-control" formControlName="time">
+                <button (click)="sendKlausurDateData()">hinzufügen</button>
+              </div>
+            </form>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
