@@ -2,7 +2,6 @@ package com.studyhub.track.service;
 
 import com.studyhub.track.application.service.LernzeitEstimationService;
 import com.studyhub.track.domain.model.modul.Kreditpunkte;
-import com.studyhub.track.domain.model.modul.Lerntage;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.semester.Semester;
 import com.studyhub.track.domain.model.semester.SemesterPhase;
@@ -42,7 +41,6 @@ public class LernzeitEstimationServiceTest {
 		SemesterPhase phase = SemesterPhase.VORLESUNG;
 		LocalDate vorlesungBeginn = LocalDate.now();
 		Semester semester = new Semester(1, 1, SemesterTyp.WINTERSEMESTER, vorlesungBeginn, vorlesungBeginn.plusDays(60), null, null);
-		Lerntage lerntage = new Lerntage(true, true, true, true, true, false, false, phase);
 		Kreditpunkte cp = new Kreditpunkte(10, 90, selbststudiumStunden);
 		Modul m = new Modul(UUID.randomUUID(),
 				"modul",
@@ -52,10 +50,9 @@ public class LernzeitEstimationServiceTest {
 				true,
 				2,
 				semester,
-				lerntage,
 				null);
 
-		int secondsPerDay = lernzeitEstimationService.getAverageLernzeitPerLerntagForModul(m, m.getLerntage().getSemesterPhase());
+		int secondsPerDay = lernzeitEstimationService.getAverageLernzeitPerLerntagForModul(m, null);
 
 		assertThat(secondsPerDay).isEqualTo(16400);
 	}
@@ -77,7 +74,6 @@ public class LernzeitEstimationServiceTest {
 		LocalDate vorlesungEnde = vorlesungBeginn.plusDays(60);
 		LocalDateTime klausurDate = LocalDateTime.of(vorlesungEnde.plusDays(14), LocalTime.of(10, 0));
 		Semester semester = new Semester(1, 1, SemesterTyp.WINTERSEMESTER, vorlesungBeginn, vorlesungEnde, null, null);
-		Lerntage lerntage = new Lerntage(true, true, true, true, true, false, false, phase);
 		Kreditpunkte cp = new Kreditpunkte(10, 90, selbststudiumStunden);
 		Modul m = new Modul(UUID.randomUUID(),
 				"modul",
@@ -87,10 +83,9 @@ public class LernzeitEstimationServiceTest {
 				true,
 				2,
 				semester,
-				lerntage,
 				null);
 
-		int secondsPerDay = lernzeitEstimationService.getAverageLernzeitPerLerntagForModul(m, m.getLerntage().getSemesterPhase());
+		int secondsPerDay = lernzeitEstimationService.getAverageLernzeitPerLerntagForModul(m, null);
 
 		assertThat(secondsPerDay).isEqualTo(5600);
 	}
@@ -101,7 +96,6 @@ public class LernzeitEstimationServiceTest {
 		int selbststudiumStunden = 210;
 		SemesterPhase phase = SemesterPhase.VORLESUNG;
 		Semester semester = new Semester(1, 1, SemesterTyp.WINTERSEMESTER, null, null, null, null);
-		Lerntage lerntage = new Lerntage(true, true, true, true, true, false, false, phase);
 		Kreditpunkte cp = new Kreditpunkte(10, 90, selbststudiumStunden);
 		Modul m = new Modul(UUID.randomUUID(),
 				"modul",
@@ -111,10 +105,9 @@ public class LernzeitEstimationServiceTest {
 				true,
 				2,
 				semester,
-				lerntage,
 				null);
 
-		int secondsPerDay = lernzeitEstimationService.getAverageLernzeitPerLerntagForModul(m, m.getLerntage().getSemesterPhase());
+		int secondsPerDay = lernzeitEstimationService.getAverageLernzeitPerLerntagForModul(m, null);
 
 		assertThat(secondsPerDay).isEqualTo(0);
 	}
@@ -126,7 +119,6 @@ public class LernzeitEstimationServiceTest {
 		int selbststudiumStunden = 210;
 		SemesterPhase phase = SemesterPhase.KLAUSUR;
 		Semester semester = new Semester(1, 1, SemesterTyp.WINTERSEMESTER, LocalDate.now(), LocalDate.now().plusDays(60), null, null);
-		Lerntage lerntage = new Lerntage(true, true, true, true, true, false, false, phase);
 		Kreditpunkte cp = new Kreditpunkte(10, 90, selbststudiumStunden);
 		Modul m = new Modul(UUID.randomUUID(),
 				"modul",
@@ -136,10 +128,9 @@ public class LernzeitEstimationServiceTest {
 				true,
 				2,
 				semester,
-				lerntage,
 				null);
 
-		int secondsPerDay = lernzeitEstimationService.getAverageLernzeitPerLerntagForModul(m, m.getLerntage().getSemesterPhase());
+		int secondsPerDay = lernzeitEstimationService.getAverageLernzeitPerLerntagForModul(m, null);
 
 		assertThat(secondsPerDay).isEqualTo(0);
 	}

@@ -2,16 +2,12 @@ package com.studyhub.track.adapter.web;
 
 import com.studyhub.track.application.service.TimeConverter;
 import com.studyhub.track.domain.model.modul.Kreditpunkte;
-import com.studyhub.track.domain.model.modul.Lerntage;
 import com.studyhub.track.domain.model.modul.Modul;
-import com.studyhub.track.domain.model.modul.Modultermin;
 import com.studyhub.track.domain.model.semester.Semester;
-import com.studyhub.track.domain.model.semester.SemesterPhase;
 import com.studyhub.track.domain.model.semester.SemesterTyp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
 import java.util.UUID;
 
 
@@ -21,16 +17,7 @@ public record ModulForm(
 		Integer kontaktzeitStunden,
 		Integer selbststudiumStunden,
 		LocalDate klausurDatum,
-		String time,
-
-		//Für Lerntage
-		Boolean mondays,
-		Boolean tuesdays,
-		Boolean wednesdays,
-		Boolean thursdays,
-		Boolean fridays,
-		Boolean saturdays,
-		Boolean sundays)
+		String time
 
 		/** Für Stapel anlegen
 		 Boolean stapelCheckbox,
@@ -45,17 +32,17 @@ public record ModulForm(
 		 LocalDate vlBeginn,
 		 LocalDate vlEnde)
 		 **/
+)
 {
 	public Modul newModulFromFormData(ModulForm modulForm, String username, int semester) {
 		Kreditpunkte kreditpunkte = new Kreditpunkte(modulForm.creditPoints(), modulForm.kontaktzeitStunden(), modulForm.selbststudiumStunden());
-		Lerntage lerntage = new Lerntage(mondays, tuesdays, wednesdays, thursdays, fridays, saturdays, sundays, SemesterPhase.VORLESUNG);
-        TimeConverter tc = new TimeConverter();
+		TimeConverter tc = new TimeConverter();
 		LocalDateTime actualKlausurDatum = null;
 
 		if (klausurDatum != null) {
 			actualKlausurDatum = LocalDateTime.of(modulForm.klausurDatum(), tc.getLocalTimeFromString(time));
 		}
-		return new Modul(UUID.randomUUID(), name, 0, kreditpunkte, username, true, semester, new Semester(), lerntage, null);
+		return new Modul(UUID.randomUUID(), name, 0, kreditpunkte, username, true, semester, new Semester(), null);
 	}
 
 	/** OLD METHOD

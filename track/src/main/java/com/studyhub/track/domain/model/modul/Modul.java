@@ -22,7 +22,6 @@ public class Modul {
 	private boolean active;
 	private int semesterstufe;
 	private Semester semester;
-	private Lerntage lerntage;
 	private List<Modultermin> modultermine;
 
 	public String getGesamtArbeitsaufwand() {

@@ -12,11 +12,9 @@ import com.studyhub.track.adapter.web.controller.api.ModulApiController;
 import com.studyhub.track.application.service.dto.NeuerModulterminRequest;
 import com.studyhub.track.application.service.ModulEventService;
 import com.studyhub.track.application.service.ModulService;
-import com.studyhub.track.domain.model.modul.Lerntage;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.Terminart;
 import com.studyhub.track.domain.model.modul.Terminfrequenz;
-import com.studyhub.track.domain.model.semester.SemesterPhase;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -79,7 +77,7 @@ public class ModulApiControllerTest {
 	@DisplayName("Wenn ein neues Modul erstellt werden soll und der User noch welche erstellen kann, wird das Modul gespeichert")
 	void test_01() {
 		ModulForm modulForm = mock(ModulForm.class);
-		ModulForm dataForNewModul = new ModulForm("m1", 10, 90, 210, LocalDate.now(), "10:00", true, true, true, true, true, true, true);
+		ModulForm dataForNewModul = new ModulForm("m1", 10, 90, 210, LocalDate.now(), "10:00");
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		Modul m = new Modul();
 
@@ -96,7 +94,7 @@ public class ModulApiControllerTest {
 	@DisplayName("Wenn ein neues Modul erstellt werden soll und der User schon die maximale Anzahl erstellter Module erreich hat, wird das Modul nicht gespeichert")
 	void test_02() {
 		ModulForm modulForm = mock(ModulForm.class);
-		ModulForm dataForNewModul = new ModulForm("m1", 10, 90, 210, LocalDate.now(), "10:00", true, true, true, true, true, true, true);
+		ModulForm dataForNewModul = new ModulForm("m1", 10, 90, 210, LocalDate.now(), "10:00");
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		Modul m = new Modul();
 
