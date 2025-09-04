@@ -1,7 +1,6 @@
 package com.studyhub.track.application.service;
 
 import com.studyhub.track.application.JWTService;
-import com.studyhub.track.application.service.dto.ModulUpdateRequest;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.ModulGelerntEvent;
 import org.slf4j.Logger;
@@ -25,9 +24,9 @@ public class ModulEventService {
 		this.dateProvider = dateProvider;
 	}
 
-	public void saveEvent(ModulUpdateRequest request, String username) {
-		if (request.secondsLearnedThisSession() < 1) return;
-		ModulGelerntEvent event = ModulGelerntEvent.initEvent(UUID.fromString(request.fachId()), request.secondsLearnedThisSession(), username);
+	public void saveEvent(int secondsLearned, String modulId, String username) {
+		if (secondsLearned < 1) return;
+		ModulGelerntEvent event = ModulGelerntEvent.initEvent(UUID.fromString(modulId), secondsLearned, username);
 		modulGelerntEvent.save(event);
 		logger.info("Saved ModulGelerntEvent: {}", event);
 	}

@@ -51,7 +51,6 @@ public class ModulService {
 
 	public void updateSeconds(UUID fachId, int seconds) throws Exception {
 		int res = repo.updateSecondsByUuid(fachId, seconds);
-		System.out.println("res: " + res);
 		if (res == 0) throw new Exception();
 		log.info("updated modul with id:%s to seconds=%s".formatted(fachId.toString(), String.valueOf(seconds)));
 	}
@@ -247,8 +246,7 @@ public class ModulService {
 		oldSeconds += secondsToAdd;
 		try {
 			updateSeconds(uuid, oldSeconds);
-			ModulUpdateRequest request = new ModulUpdateRequest(uuid.toString(), 0, secondsToAdd);
-			modulEventService.saveEvent(request, username);
+			modulEventService.saveEvent(oldSeconds,uuid.toString(), username);
 		} catch(Exception e) {
 			System.out.println("Error while updating seconds");
 			System.out.println(e.getMessage());

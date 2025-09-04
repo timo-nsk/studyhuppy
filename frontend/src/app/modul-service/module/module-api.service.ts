@@ -5,6 +5,7 @@ import {Observable } from 'rxjs';
 import {HeaderService} from '../../header.service';
 import { environment } from '../../../environments/environment'
 import {LoggingService} from '../../logging.service';
+import {TimerRequest} from '../timer.service';
 
 @Injectable({
   providedIn: 'root'
@@ -48,24 +49,6 @@ export class ModuleApiService {
     })
   }
 
-  postNewSeconds(fachId: string, sessionSecondsLearned: number): Observable<any> {
-    const element = document.getElementById(fachId)
-    if (!element || !element.dataset['value']) return new Observable<any>()
-
-    const seconds = parseInt(element.dataset['value'], 10)
-    if (isNaN(seconds)) return new Observable<any>()
-
-    const headers = this.headerService.createAuthHeader()
-
-    const payload = {
-      fachId: fachId,
-      secondsLearned: seconds,
-      secondsLearnedThisSession: sessionSecondsLearned
-    }
-    this.log.debug(`Try posting secondsLearned=${seconds} and secondsLearnedThisSession=${sessionSecondsLearned} for modul id='${fachId}'...`)
-    return this.http.post<any>(this.MODUL_BASE_API + '/update', payload, {headers})
-  }
-
   postRawSeconds(modulId : string, secondsToAdd : number) : Observable<any> {
     const headers = this.headerService.createAuthHeader()
 
@@ -107,5 +90,10 @@ export class ModuleApiService {
   getModulSelectData() {
     const headers = this.headerService.createAuthHeader()
     return this.http.get<any>(this.MODUL_BASE_API + '/get-modul-select-data', {headers})
+  }
+
+  postTimerRequest(timerRequest: TimerRequest | undefined) : Observable<any>{
+    const headers = this.headerService.createAuthHeader()
+    return this.http.post<void>(this.MODUL_BASE_API + '/update', timerRequest, {headers})
   }
 }

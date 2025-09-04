@@ -5,8 +5,6 @@ import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,7 +31,7 @@ public interface ModulDao extends CrudRepository<ModulDto, Integer> {
 
 	@Modifying
 	@Transactional
-	@Query("update modul set seconds_learned = :seconds where fach_id = :fachId")
+	@Query("update modul set seconds_learned = seconds_learned + :seconds where fach_id = :fachId")
 	int updateSecondsByUuid(@Param("fachId") UUID fachId,
 	                         @Param("seconds") int seconds);
 
@@ -64,12 +62,4 @@ public interface ModulDao extends CrudRepository<ModulDto, Integer> {
 	List<ModulDto> findByUsername(String username);
 
 	List<ModulDto> findActiveModuleByUsername(boolean active, String username);
-
-	@Modifying
-	@Query("update modul set klausur_date = :klausurDate where fach_id = :fachId")
-	void addKlausurDate(@Param("fachId") UUID fachId,
-	                    @Param("klausurDate") LocalDateTime klausurDate);
-
-	@Query("select klausur_date from modul where fach_id = :fachId")
-	String findKlausurDateByFachId(@Param("fachId") UUID fachId);
 }

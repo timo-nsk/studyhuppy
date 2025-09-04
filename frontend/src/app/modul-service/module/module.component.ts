@@ -1,11 +1,12 @@
-import {Component, OnInit, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {Modul} from './domain';
-import { CommonModule } from '@angular/common';
-import { TimeFormatPipe } from './time-format.pipe';
+import {CommonModule} from '@angular/common';
+import {TimeFormatPipe} from './time-format.pipe';
 import {MatProgressBar} from '@angular/material/progress-bar';
 import {RouterLink} from '@angular/router';
-import { LoggingService } from '../../logging.service';
-import { ModuleApiService } from './module-api.service';
+import {LoggingService} from '../../logging.service';
+import {ModuleApiService} from './module-api.service';
+import {TimerService} from '../timer.service';
 
 @Component({
   selector: 'app-module',
@@ -20,7 +21,8 @@ export class ModuleComponent implements OnInit{
   pipe : TimeFormatPipe = new TimeFormatPipe()
   module: { [key: number]: Modul[] } = {}
 
-  sessionSecondsLearned : number = 0;
+  delta = 0 // Differenz zwischen startDate und die aktuelle Uhrzeit
+  currentModulSecondsLearned = 0
   timer: number = 0
   running: boolean = true
   disabledBtn : boolean[][] = []
@@ -34,8 +36,6 @@ export class ModuleComponent implements OnInit{
         this.isLoading = false
         this.initDisabledBtn()
         this.initOpenPanels()
-        this.log.debug("Got active module:")
-        console.log(this.module)
       },
       error: (err) => {
         this.log.error(err)
@@ -43,12 +43,92 @@ export class ModuleComponent implements OnInit{
     });
   }
 
+  updateSecondsOnModulUI(fachId: string, seconds: number): void {
+    const element = document.getElementById(fachId);
+    console.log("element before update: ", element)
+    if (element) {
+      element.innerText = this.pipe.transform(seconds)
+      element.dataset['value'] = seconds.toString();
+    }
+    console.log("element after update: ", element)
+  }
+
+  /**
+   * Startet oder beendet den Timer für das Modul, das per Button-Klick ausgewählt wurde.
+   *
+   * @param modulId - Die ID des Moduls, für das der Timer gestartet wird.
+   * @param i - Reihen-Index für die Button-Logik.
+   * @param j - Spalten-Index für die Button-Logik.
+   */
+  toggleTimer(modulId: string, i : number, j: number) : void {
+    const timerService = new TimerService(modulId)
+
+    // Wurde noch kein Button betätigt, dann kann der Modul-Timer starten,
+    // sonst wäre disabledBtn[index]=true und es kann
+    // kein weiterer Button betätigt werden
+    if(!this.disabledBtn[i][j]) {
+      if (this.running) {
+        this.service.getSeconds(modulId).subscribe({
+          next: data =>  {
+            this.currentModulSecondsLearned = data
+          }
+        })
+         // Setze den Timer im local storage
+        timerService.setLogicTimer()
+
+        // Starte den eigentlichen Timer
+        this.timer = window.setInterval(() => {
+          this.delta = timerService.computeCurrentTimerDelta() // every 1000ms -> += 1
+          this.updateSecondsOnModulUI(modulId, this.currentModulSecondsLearned + this.delta);
+        }, 1000);
+
+        this.switchButtonStyle(modulId, 0, i);
+        this.running = false;
+        this.setRunningBtn(i, j)
+      } else {
+        clearInterval(this.timer)
+        this.clearRunningBtn()
+        this.service.postTimerRequest(timerService.getTimerRequest()).subscribe()
+        this.running = true;
+        this.switchButtonStyle(modulId, 1, i);
+      }
+    }
+  }
+
+  switchButtonStyle(fachId: string, flag: 0 | 1, index : number): void {
+    const button = document.getElementById("btn-" + fachId)
+    if (!button) return;
+
+    const icon = button.querySelector<HTMLElement>(".button-icon-" + index);
+    if (!icon) return;
+
+    if (flag === 1) {
+      button.classList.remove("stop");
+      button.classList.remove("stop-button");
+      button.classList.add("play");
+      button.classList.add("play-button");
+    } else if (flag === 0) {
+      button.classList.add("stop");
+      button.classList.add("stop-button");
+      button.classList.remove("play");
+      button.classList.remove("play-button");
+    }
+  }
+
+  getModuleForSemester(semester: number): Modul[] {
+    return this.module[semester] || [];
+  }
+
+  showAccordionElement(i : number) {
+    this.openPanels[i] = !this.openPanels[i];
+  }
+
   initOpenPanels() {
     this.openPanels.push(true)
     for (let i = 1; i < Object.keys(this.module).length; i++) {
       this.openPanels.push(false)
     }
-    this.log.debug("Initialized openPanels: " + this.openPanels)
+    //this.log.debug("Initialized openPanels: " + this.openPanels)
   }
 
   initDisabledBtn() {
@@ -74,7 +154,7 @@ export class ModuleComponent implements OnInit{
         this.disabledBtn[k][l] = !(k === i && l === j);
       }
     }
-    this.log.debug(`Set disabledBtn to 'true', except at index [${i}][${j}]`)
+    //this.log.debug(`Set disabledBtn to 'true', except at index [${i}][${j}]`)
   }
 
   clearRunningBtn() {
@@ -83,86 +163,7 @@ export class ModuleComponent implements OnInit{
         this.disabledBtn[i][j] = false
       }
     }
-    this.log.debug("Cleared disabledBtn array")
-  }
-
-  updateSeconds(seconds: number): number {
-    this.sessionSecondsLearned++;
-    return ++seconds;
-  }
-
-  updateSecondsOnModulUI(fachId: string, seconds: number): void {
-    const element = document.getElementById(fachId);
-    if (element) {
-      element.innerText = this.pipe.transform(seconds)
-      element.dataset['value'] = seconds.toString();
-    }
-  }
-
-  startTimer(fachId: string, i : number, j: number) {
-    let seconds : number;
-
-    this.service.getSeconds(fachId).subscribe({ next: (data) => { seconds = data } })
-
-    // Wurde noch kein Button betätigt wurde, dann kann Timer starten, sonst wäre disabledBtn[index]=true und es kann
-    // kein weiterer Button betätigt werden
-    if(!this.disabledBtn[i][j]) {
-      if (this.running) {
-        //this.log.debug(`Start timer for modul '${this.module[i][j].name}'`)
-        this.timer = window.setInterval(() => {
-          seconds = this.updateSeconds(seconds);
-          this.updateSecondsOnModulUI(fachId, seconds)
-        }, 1000);
-        this.switchButtonStyle(fachId, 0, i);
-        this.running = false;
-        this.setRunningBtn(i, j)
-      } else {
-        clearInterval(this.timer)
-        this.clearRunningBtn()
-        this.service.postNewSeconds(fachId, this.sessionSecondsLearned).subscribe()
-        this.switchButtonStyle(fachId, 1, i);
-        this.running = true;
-        //this.log.debug(`Finished timer of modul '${this.module[i][j].name}' with sessionSecondsLearned: '${this.sessionSecondsLearned}'`)
-        this.sessionSecondsLearned = 0
-      }
-    }
-  }
-
-  switchButtonStyle(fachId: string, flag: 0 | 1, index : number): void {
-    const button = document.getElementById("btn-" + fachId)
-    if (!button) return;
-
-    const icon = button.querySelector<HTMLElement>(".button-icon-" + index);
-    if (!icon) return;
-
-    if (flag === 1) {
-      button.classList.remove("stop");
-      button.classList.remove("stop-button");
-      button.classList.add("play");
-      button.classList.add("play-button");
-    } else if (flag === 0) {
-      button.classList.add("stop");
-      button.classList.add("stop-button");
-      button.classList.remove("play");
-      button.classList.remove("play-button");
-    }
-  }
-
-  isTodayLerntag(modul : Modul) : boolean {
-    if(modul.lerntage) {
-      let lerntage : boolean[] = modul.lerntage.allLerntage;
-      let dayOfWeek = new Date().getDay().valueOf();
-      return lerntage[dayOfWeek]
-    }
-    return false
-  }
-
-  getModuleForSemester(semester: number): Modul[] {
-    return this.module[semester] || [];
-  }
-
-  showAccordionElement(i : number) {
-    this.openPanels[i] = !this.openPanels[i];
+    //this.log.debug("Cleared disabledBtn array")
   }
 
   protected readonly Object = Object;

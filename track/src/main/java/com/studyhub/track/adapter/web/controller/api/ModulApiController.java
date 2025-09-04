@@ -3,6 +3,7 @@ package com.studyhub.track.adapter.web.controller.api;
 import com.studyhub.track.adapter.authentication.AuthenticationService;
 import com.studyhub.track.adapter.metric.PrometheusMetrics;
 import com.studyhub.track.adapter.web.controller.request.dto.AddSecondsRequest;
+import com.studyhub.track.adapter.web.controller.request.dto.TimerRequest;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.adapter.db.modul.ModulDto;
 import com.studyhub.track.adapter.db.modul.ModulMapper;
@@ -51,10 +52,12 @@ public class ModulApiController {
 
 	@AngularApi
 	@PostMapping("/update")
-	public ResponseEntity<Void> updateSeconds(@RequestBody ModulUpdateRequest request) {
+	public ResponseEntity<Void> updateSeconds(@RequestBody TimerRequest timerRequest, HttpServletRequest httpServletRequest) {
 		try {
-			modulService.updateSeconds(UUID.fromString(request.fachId()), request.secondsLearned());
-			modulEventService.saveEvent(request, "");
+			String username = jwtService.extractUsernameFromHeader(httpServletRequest);
+			int seconds = timerRequest.toSeconds();
+			modulService.updateSeconds(UUID.fromString(timerRequest.modulId()), seconds);
+			modulEventService.saveEvent(seconds, timerRequest.modulId(), username);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
