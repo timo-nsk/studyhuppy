@@ -83,4 +83,16 @@ public class ModulGelerntEventRepositoryTest {
 
 		assertThat(l).hasSize(3);
 	}
+
+	@Test
+	@DisplayName("Alle Events eines Moduls werden gelöscht")
+	void test_4() {
+		UUID modulId = UUID.fromString("b3a1e8f2-7d6a-4b3e-90a8-b9e2345d6789");
+		String username = "timo123";
+
+		repository.deleteAllByModulId(modulId);
+
+		List<ModulGelerntEvent> events = repository.getAllByUsername(username);
+		assertThat(events).hasSize(0);
+	}
 }

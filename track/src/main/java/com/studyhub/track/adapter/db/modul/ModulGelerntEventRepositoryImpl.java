@@ -33,4 +33,9 @@ public class ModulGelerntEventRepositoryImpl implements ModulGelerntEventReposit
 	public List<ModulGelerntEvent> getAllByUsername(String username) {
 		return dao.findAllByUsername(username);
 	}
+
+	@Override
+	public void deleteAllByModulId(UUID modulId) {
+		dao.deleteByModulId(modulId);
+	}
 }

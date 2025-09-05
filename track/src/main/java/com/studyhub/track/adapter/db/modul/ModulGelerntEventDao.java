@@ -19,4 +19,8 @@ public interface ModulGelerntEventDao extends CrudRepository<ModulGelerntEventDt
 	                         @Param("modulId") UUID modulId);
 
 	List<ModulGelerntEvent> findAllByUsername(String username);
+
+	@Modifying
+	@Query("delete from modul_gelernt_event where modul_id = :modulId")
+	void deleteByModulId(@Param("modulId") UUID modulId);
 }

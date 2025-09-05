@@ -8,6 +8,6 @@ import java.util.UUID;
 public interface ModulGelerntEventRepository {
 	ModulGelerntEvent save(ModulGelerntEvent event);
 	int getSumSecondsLearned(LocalDate date, String username, UUID modulId);
-
 	List<ModulGelerntEvent> getAllByUsername(String username);
+	void deleteAllByModulId(UUID modulId);
 }
