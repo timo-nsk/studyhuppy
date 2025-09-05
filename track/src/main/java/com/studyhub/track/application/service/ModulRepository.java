@@ -25,11 +25,8 @@ public interface ModulRepository {
 	void deleteByUuid(UUID fachId);
 	int updateSecondsByUuid(UUID fachid, int seconds);
 	void setActive(UUID fachId, boolean active);
-	void addKlausurDate(UUID fachId, LocalDateTime klausurDate);
 	boolean addModultermin(UUID fachId, Modultermin modultermin);
 	boolean deleteModultermin(UUID fachId, Modultermin modultermin);
 
 	List<Modul> findActiveModuleByUsername(boolean active, String username);
-
-	String findKlausurDateByFachId(UUID fachId);
 }
