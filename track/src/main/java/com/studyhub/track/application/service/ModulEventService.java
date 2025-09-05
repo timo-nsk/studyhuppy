@@ -65,4 +65,8 @@ public class ModulEventService {
 		logger.info("Computed average study time per day for user '{}': {} seconds over {} days", username, sum, N);
 		return (int) Math.round((double) sum / N);
 	}
+
+	public void deleteAllModulEvents(UUID modulId) {
+		modulGelerntEvent.deleteAllByModulId(modulId);
+	}
 }
