@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: systemtests
+dummy-data:
+  registation:
+    username: 'testregistratonuser123'

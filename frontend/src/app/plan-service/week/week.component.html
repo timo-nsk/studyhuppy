@@ -32,7 +32,8 @@
               </p>
               <span class="zeitangabe">({{(block.lernzeitSeconds) | timeFormat}} / {{(block.pausezeitSeconds) | timeFormat}})</span>
             </div>
-
+          </div>
+          <div class="blocks-container">
             <div class="total-time-container" *ngIf="weekdayInfo.sessionId != ''">
               <span class="zeitangabe-full m-accent-font">{{totalLearningTimePerDay(weekdayInfo) | timeFormat}} / {{totalPausenTimePerDay(weekdayInfo) | timeFormat}}</span>
             </div>
