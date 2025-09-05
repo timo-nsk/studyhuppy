@@ -30,5 +30,21 @@ footer {
 }
 
 td, th {
-  border-width: 0 !important;
+  border-width: 0;
 }
+
+.bordered-r {
+  border: 2px solid red !important;
+  padding: 2px;
+}
+
+.bordered-b {
+  border: 2px solid blue !important;
+  padding: 2px;
+}
+
+.bordered-g {
+  border: 2px solid green !important;
+  padding: 2px;
+}
+

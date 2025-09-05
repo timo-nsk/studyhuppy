@@ -1,8 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {RouterLink, RouterOutlet} from '@angular/router';
+import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import * as jwt from 'jwt-decode';
 import { LoggingService } from '../logging.service';
+import {LoginStatusService} from '../auth-service/login-service/login-status.service';
+import {AuthApiService} from '../auth-service/auth.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-app-layout',
@@ -13,6 +16,10 @@ import { LoggingService } from '../logging.service';
 })
 export class AppLayoutComponent implements OnInit{
   log : LoggingService = new LoggingService("AppComponent", "app")
+  loginStatusService = inject(LoginStatusService)
+  authService = inject(AuthApiService)
+  router = inject(Router)
+  snackbar = inject(MatSnackBar)
 
   isAdmin : boolean = false
   isLoggedIn : boolean = false
@@ -56,5 +63,16 @@ export class AppLayoutComponent implements OnInit{
       this.log.debug("User is NOT logged in...")
       return authToken != null || authToken != ''
     }
+  }
+
+  logout() : void {
+    this.authService.logoff()
+    this.loginStatusService.logout()
+    this.router.navigateByUrl("login")
+    this.snackbar.open("Sie wurden erfolgreich abgemeldet", "dismiss", {
+      duration: 4000,
+      verticalPosition: 'bottom',
+      horizontalPosition: 'right'
+    })
   }
 }

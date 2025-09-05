@@ -1,4 +1,7 @@
 #side-navbar-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
   min-width: 150px;
   background-color: rgb(248, 249, 250);
   border-right-style: solid;
@@ -12,11 +15,36 @@
   color: rgb(16, 45, 92);
 }
 
-.navbar-link:hover {
+td {
+  text-align: center;
+  padding: 0;
+  border-width: 0 !important;
+}
+
+button {
+  width: 140px;
+  height: 40px;
+  border-style: none;
+  border-radius: 5px;
+  padding: 1px;
+}
+
+button:hover {
+  background-color: #8cc4fa;
   font-weight: bold;
   cursor: pointer;
 }
 
-td {
-  text-align: center;
+ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+table {
+  margin-top: 5px;
+}
+
+#logout-a, #help-a {
+  cursor: pointer;
 }
