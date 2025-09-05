@@ -43,8 +43,9 @@ public class ModulRepositoryImpl implements ModulRepository {
 	}
 
 	@Override
-	public void deleteByUuid(UUID fachId) {
-		modulDao.deleteByFachId(fachId);
+	public int deleteByUuid(UUID fachId) {
+
+		return modulDao.deleteByFachId(fachId);
 	}
 
 	@Override
@@ -123,11 +124,6 @@ public class ModulRepositoryImpl implements ModulRepository {
 	}
 
 	@Override
-	public void addKlausurDate(UUID fachId, LocalDateTime klausurDate) {
-		modulDao.addKlausurDate(fachId, klausurDate);
-	}
-
-	@Override
 	public boolean addModultermin(UUID fachId, Modultermin modultermin) {
 		if (modultermin == null || fachId == null) return false;
 
@@ -166,10 +162,5 @@ public class ModulRepositoryImpl implements ModulRepository {
 				.sorted(Comparator.comparing(ModulDto::secondsLearned).reversed())
 				.map(ModulMapper::toModul)
 				.toList();
-	}
-
-	@Override
-	public String findKlausurDateByFachId(UUID fachId) {
-		return modulDao.findKlausurDateByFachId(fachId);
 	}
 }

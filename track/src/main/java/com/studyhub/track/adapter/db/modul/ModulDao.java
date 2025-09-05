@@ -25,9 +25,8 @@ public interface ModulDao extends CrudRepository<ModulDto, Integer> {
 	Integer sumAllSeconds(@Param("username") String username);
 
 	@Modifying
-	@Transactional
 	@Query("delete from modul where fach_id = :fachId")
-	void deleteByFachId(@Param("fachId") UUID fachId);
+	int deleteByFachId(@Param("fachId") UUID fachId);
 
 	@Modifying
 	@Transactional
