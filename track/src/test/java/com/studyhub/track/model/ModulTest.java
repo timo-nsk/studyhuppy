@@ -71,7 +71,6 @@ public class ModulTest {
 				true,
 				2,
 				s,
-				null,
 				null);
 
 		boolean vorlesungEingetragen = m.vorlesungDatumangabenEingetragen();
@@ -90,7 +89,6 @@ public class ModulTest {
 				true,
 				2,
 				s,
-				null,
 				null);
 
 		boolean vorlesungEingetragen = m.vorlesungDatumangabenEingetragen();
@@ -109,7 +107,6 @@ public class ModulTest {
 				true,
 				2,
 				s,
-				null,
 				null);
 
 		boolean vorlesungEingetragen = m.vorlesungDatumangabenEingetragen();
@@ -128,7 +125,6 @@ public class ModulTest {
 				true,
 				2,
 				s,
-				null,
 				null);
 
 		boolean vorlesungEingetragen = m.vorlesungDatumangabenEingetragen();
@@ -146,7 +142,6 @@ public class ModulTest {
 				"peter44",
 				true,
 				2,
-				null,
 				null,
 				null);
 

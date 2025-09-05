@@ -16,7 +16,7 @@ public class ModulMapperTest {
 	@Test
 	@DisplayName("toModulDto sollte Modul zu ModulDto mappen")
 	void test_1() {
-		Modul modul = new Modul(UUID.randomUUID(), "Mathematik", 3600, ModulMother.DEFAULT_KREDITPUNKTE, "timo_neske", true, 1, ModulMother.DEFAULT_SEMESTER,  ModulMother.DEFAULT_LERNTAGE, ModulMother.DEFAULT_MODULTERMINE);
+		Modul modul = new Modul(UUID.randomUUID(), "Mathematik", 3600, ModulMother.DEFAULT_KREDITPUNKTE, "timo_neske", true, 1, ModulMother.DEFAULT_SEMESTER, ModulMother.DEFAULT_MODULTERMINE);
 
 		ModulDto dto = ModulMapper.toModulDto(modul,1);
 
@@ -32,7 +32,7 @@ public class ModulMapperTest {
 	@Test
 	@DisplayName("toModul sollte ModulDto zu Modul mappen")
 	void test_2() {
-		ModulDto dto = new ModulDto(1, UUID.randomUUID(), "Mathematik", 3600, ModulMother.DEFAULT_KREDITPUNKTE, "timo_neske", true, 1, ModulMother.DEFAULT_SEMESTER, ModulMother.DEFAULT_LERNTAGE, ModulMother.DEFAULT_MODULTERMINE);
+		ModulDto dto = new ModulDto(1, UUID.randomUUID(), "Mathematik", 3600, ModulMother.DEFAULT_KREDITPUNKTE, "timo_neske", true, 1, ModulMother.DEFAULT_SEMESTER, ModulMother.DEFAULT_MODULTERMINE);
 
 		Modul modul = ModulMapper.toModul(dto);
 
@@ -48,7 +48,7 @@ public class ModulMapperTest {
 	@Test
 	@DisplayName("toModulDtoNoId sollte Modul zu ModulDto ohne ID mappen")
 	void test_3() {
-		Modul modul = new Modul(UUID.randomUUID(), "Mathematik", 3600, ModulMother.DEFAULT_KREDITPUNKTE, "timo_neske", true, 1, ModulMother.DEFAULT_SEMESTER,  ModulMother.DEFAULT_LERNTAGE, ModulMother.DEFAULT_MODULTERMINE);
+		Modul modul = new Modul(UUID.randomUUID(), "Mathematik", 3600, ModulMother.DEFAULT_KREDITPUNKTE, "timo_neske", true, 1, ModulMother.DEFAULT_SEMESTER, ModulMother.DEFAULT_MODULTERMINE);
 
 		ModulDto dto = ModulMapper.toModulDtoNoId(modul);
 
