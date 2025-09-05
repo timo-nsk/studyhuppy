@@ -3,12 +3,12 @@ package com.studyhub.track.adapter.db.session;
 import com.studyhub.track.domain.model.session.Session;
 
 public class SessionMapper {
-	public static SessionDto toDto(Session session) {
+	public static SessionDto toDto(Session session, Long existingDbKey) {
 		if (session == null) {
 			return null;
 		}
 		return new SessionDto(
-				null,
+				existingDbKey,
 				session.getFachId(),
 				session.getUsername(),
 				session.getTitel(),

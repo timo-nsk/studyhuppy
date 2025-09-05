@@ -1,6 +1,7 @@
 package com.studyhub.track.application.service;
 
 import com.studyhub.track.adapter.web.controller.request.dto.SessionInfoDto;
+import com.studyhub.track.domain.model.session.Block;
 import com.studyhub.track.domain.model.session.Session;
 import org.springframework.stereotype.Service;
 
@@ -42,5 +43,16 @@ public class SessionService {
 
 	public Session getSessionByFachId(UUID sessionId) {
 		return sessionRepository.findSessionByFachId(sessionId);
+	}
+
+	public void deleteModuleFromBlocks(UUID modulId, String username) {
+		List<Session> userSessions = sessionRepository.findAllByUsername(username);
+		for(Session session : userSessions) {
+			List<Block> filteredBlocks = session.getBlocks()
+					.stream().filter(e -> !e.getModulId().equals(modulId))
+					.toList();
+			session.setBlocks(filteredBlocks);
+			sessionRepository.save(session);
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package com.studyhub.track.adapter.db.session;
 
+import com.studyhub.track.adapter.db.modul.ModulDto;
 import com.studyhub.track.application.service.SessionRepository;
 import com.studyhub.track.domain.model.session.Session;
 import org.springframework.stereotype.Repository;
@@ -19,7 +20,9 @@ public class SessionRepositoryImpl implements SessionRepository {
 
 	@Override
 	public Session save(Session session) {
-		SessionDto sessionDto = toDto(session);
+		Long existingDbKey =
+				sessionDao.findByFachId(session.getFachId()).map(SessionDto::id).orElse(null);
+		SessionDto sessionDto = toDto(session, existingDbKey);
 		SessionDto saved = sessionDao.save(sessionDto);
 		return toEntity(saved);
 	}
@@ -37,7 +40,7 @@ public class SessionRepositoryImpl implements SessionRepository {
 
 	@Override
 	public Session findSessionByFachId(UUID fachId) {
-		SessionDto dto = sessionDao.findByFachId(fachId);
+		SessionDto dto = sessionDao.findByFachId(fachId).get();
 		return toEntity(dto);
 	}
 }

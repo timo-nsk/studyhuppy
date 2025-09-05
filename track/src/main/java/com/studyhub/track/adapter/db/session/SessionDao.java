@@ -5,11 +5,12 @@ import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface SessionDao extends CrudRepository<SessionDto, Long> {
 	List<SessionDto> findAllByUsername(String username);
-	SessionDto findByFachId(UUID fachId);
+	Optional<SessionDto> findByFachId(UUID fachId);
 
     @Modifying
     @Query("delete from session where fach_id = :fachId")
