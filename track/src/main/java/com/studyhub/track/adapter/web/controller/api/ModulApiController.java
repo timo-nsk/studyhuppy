@@ -111,9 +111,15 @@ public class ModulApiController {
 
 	@AngularApi
 	@DeleteMapping("/delete")
-	public ResponseEntity<Void> deleteModul(@RequestParam String fachId) {
-		modulService.deleteModul(UUID.fromString(fachId));
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	public ResponseEntity<Void> deleteModul(@RequestParam UUID fachId, HttpServletRequest httpServletRequest) {
+		String username = jwtService.extractUsernameFromHeader(httpServletRequest);
+		boolean success = modulService.deleteModul(fachId, username);
+
+		if(success) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
 	}
 
 	@AngularApi

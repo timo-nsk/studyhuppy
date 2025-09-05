@@ -1,16 +1,12 @@
 package com.studyhub.track.service;
 
-import com.studyhub.track.application.JWTService;
-import com.studyhub.track.application.service.ModulRepository;
-import com.studyhub.track.application.service.ModulService;
-import com.studyhub.track.application.service.TimeConverter;
+import com.studyhub.track.application.service.*;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.util.ModulMother;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static com.studyhub.track.util.ModulMother.*;
@@ -21,52 +17,55 @@ import static org.mockito.Mockito.*;
 
 public class ModulServiceTest {
 
-	static ModulRepository repo;
+	static ModulRepository modulRepository;
+	static SessionService sessionService;
+	static ModulEventService modulEventService;
 	static ModulService modulService;
-	static JWTService jwtService;
+
 
 	@BeforeAll
 	static void init() {
-		repo = mock(ModulRepository.class);
-		jwtService = mock(JWTService.class);
-		modulService = new ModulService(repo, jwtService);
+		modulRepository = mock(ModulRepository.class);
+		sessionService = mock(SessionService.class);
+		modulEventService = mock(ModulEventService.class);
+		modulService = new ModulService(modulRepository, sessionService, modulEventService);
 	}
 
 	@Test
 	@DisplayName("repo.save() wird korrekt aufgerufen")
 	void test_01() {
 		modulService.saveNewModul(initModul());
-		verify(repo).save(any(Modul.class));
+		verify(modulRepository).save(any(Modul.class));
 	}
 
 	@Test
 	@DisplayName("repo.findAll() wird korrekt aufgerufen")
 	void test_02() {
 		modulService.findAll();
-		verify(repo).findAll();
+		verify(modulRepository).findAll();
 	}
 
 	@Test
 	@DisplayName("repo.updateSecondsByUuid() wird aufgerufen und Metode aktualisiert erfolgreich")
 	void test_03() throws Exception {
 		UUID uuid = UUID.randomUUID();
-		when(repo.updateSecondsByUuid(uuid, 10)).thenReturn(1);
+		when(modulRepository.updateSecondsByUuid(uuid, 10)).thenReturn(1);
 		modulService.updateSeconds(uuid, 10);
-		verify(repo).updateSecondsByUuid(any(UUID.class), anyInt());
+		verify(modulRepository).updateSecondsByUuid(any(UUID.class), anyInt());
 	}
 
 	@Test
 	@DisplayName("repo.deleteByUuid() wird korrekt aufgerufen")
 	void test_04() {
-		modulService.deleteModul(UUID.randomUUID());
-		verify(repo).deleteByUuid(any(UUID.class));
+		modulService.deleteModul(UUID.randomUUID(), "peter77");
+		verify(modulRepository).deleteByUuid(any(UUID.class));
 	}
 
 	@Test
 	@DisplayName("repo.findActiveModuleByUsername() wird korrekt aufgerufen")
 	void test_05() {
 		modulService.findActiveModuleByUsername(true, "user123");
-		verify(repo).findActiveModuleByUsername(true, "user123");
+		verify(modulRepository).findActiveModuleByUsername(true, "user123");
 	}
 
 	@Test
@@ -76,12 +75,12 @@ public class ModulServiceTest {
 		String time = "00:01";
 		TimeConverter tc = mock(TimeConverter.class);
 		when(tc.timeToSeconds(time)).thenReturn(60);
-		when(repo.findSecondsById(any())).thenReturn(60);
-		when(repo.updateSecondsByUuid(modulId, 120)).thenReturn(1);
+		when(modulRepository.findSecondsById(any())).thenReturn(60);
+		when(modulRepository.updateSecondsByUuid(modulId, 120)).thenReturn(1);
 
 		modulService.addTime(modulId, time);
 
-		verify(repo).updateSecondsByUuid(modulId, 120);
+		verify(modulRepository).updateSecondsByUuid(modulId, 120);
 	}
 
 	@Test
@@ -93,7 +92,7 @@ public class ModulServiceTest {
 		Map<UUID, String> desiredMap = new HashMap<>();
 		desiredMap.put(modulList.get(0).getFachId(), modulList.get(0).getName());
 		desiredMap.put(modulList.get(1).getFachId(), modulList.get(1).getName());
-		when(repo.findAll()).thenReturn(modulList);
+		when(modulRepository.findAll()).thenReturn(modulList);
 
 		//TODO: fix
 		//Map<UUID, String> returnedMap = modulService.getModuleMap();
@@ -119,7 +118,7 @@ public class ModulServiceTest {
 		expectedMap.put(3, 3000);
 		expectedMap.put(4, 1000);
 		expectedMap.put(5, 5000);
-		when(repo.findByUsername("peter")).thenReturn(modulList);
+		when(modulRepository.findByUsername("peter")).thenReturn(modulList);
 
 		Map<Integer, Integer> actual = modulService.getTotalStudyTimePerFachSemester("peter");
 
@@ -130,7 +129,7 @@ public class ModulServiceTest {
 	@DisplayName("Wenn ein User nur 10 Module erstellen darf und aktuelle 9 erstellt hat, kann er ein weiteres Modul erstellen")
 	void test_15() {
 		List<Modul> modulList = ModulMother.initListWithNEmptyModule(9);
-		when(repo.findByUsername("peter")).thenReturn(modulList);
+		when(modulRepository.findByUsername("peter")).thenReturn(modulList);
 
 		boolean allowed = modulService.modulCanBeCreated("peter", 10);
 
@@ -141,7 +140,7 @@ public class ModulServiceTest {
 	@DisplayName("Wenn ein User nur 10 Module erstellen darf und aktuelle 10 erstellt hat, kann er kein weiteres Modul erstellen")
 	void test_16() {
 		List<Modul> modulList = ModulMother.initListWithNEmptyModule(10);
-		when(repo.findByUsername("peter")).thenReturn(modulList);
+		when(modulRepository.findByUsername("peter")).thenReturn(modulList);
 
 		boolean allowed = modulService.modulCanBeCreated("peter", 10);
 
@@ -152,18 +151,18 @@ public class ModulServiceTest {
 	@DisplayName("getFachsemesterModuleMap baut die Datenstruktur Map<Integer, List<Modul>> korrekt zusammen")
 	void test_17() {
 		List<Modul> modulList = ModulMother.modulListWithSemester();
-		when(repo.findActiveModuleByUsername(true, "peter")).thenReturn(modulList);
+		when(modulRepository.findActiveModuleByUsername(true, "peter")).thenReturn(modulList);
 		Map<Integer, List<Modul>> expectedMap = new TreeMap<>();
 		List<Modul> l1 = List.of(
-				new Modul(UUID.randomUUID(), "m1", 1000, DEFAULT_KREDITPUNKTE, "peter", true, 3, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE) ,
-				new Modul(UUID.randomUUID(), "m2", 2000, DEFAULT_KREDITPUNKTE, "peter", true, 3, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE));
+				new Modul(UUID.randomUUID(), "m1", 1000, DEFAULT_KREDITPUNKTE, "peter", true, 3, DEFAULT_SEMESTER, DEFAULT_MODULTERMINE) ,
+				new Modul(UUID.randomUUID(), "m2", 2000, DEFAULT_KREDITPUNKTE, "peter", true, 3, DEFAULT_SEMESTER, DEFAULT_MODULTERMINE));
 		expectedMap.put(3, l1);
-		List<Modul> l2 = List.of(new Modul(UUID.randomUUID(), "m3", 1000, DEFAULT_KREDITPUNKTE, "peter", true, 4, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE));
+		List<Modul> l2 = List.of(new Modul(UUID.randomUUID(), "m3", 1000, DEFAULT_KREDITPUNKTE, "peter", true, 4, DEFAULT_SEMESTER, DEFAULT_MODULTERMINE));
 		expectedMap.put(4, l2);
 		List<Modul> l3 = List.of(
-				new Modul(UUID.randomUUID(), "m4", 500, DEFAULT_KREDITPUNKTE, "peter", true, 5, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE),
-				new Modul(UUID.randomUUID(), "m5", 500, DEFAULT_KREDITPUNKTE, "peter", true, 5, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE),
-				new Modul(UUID.randomUUID(), "m6", 4000, DEFAULT_KREDITPUNKTE, "peter", true, 5, DEFAULT_SEMESTER,  DEFAULT_LERNTAGE, DEFAULT_MODULTERMINE));
+				new Modul(UUID.randomUUID(), "m4", 500, DEFAULT_KREDITPUNKTE, "peter", true, 5, DEFAULT_SEMESTER, DEFAULT_MODULTERMINE),
+				new Modul(UUID.randomUUID(), "m5", 500, DEFAULT_KREDITPUNKTE, "peter", true, 5, DEFAULT_SEMESTER, DEFAULT_MODULTERMINE),
+				new Modul(UUID.randomUUID(), "m6", 4000, DEFAULT_KREDITPUNKTE, "peter", true, 5, DEFAULT_SEMESTER, DEFAULT_MODULTERMINE));
 		expectedMap.put(5, l3);
 
 		Map<Integer, List<Modul>> actualMap = modulService.getFachsemesterModuleMap("peter");
@@ -177,5 +176,22 @@ public class ModulServiceTest {
 		assertThat(actualMap.get(5).get(0).getName()).isEqualTo("m4");
 		assertThat(actualMap.get(5).get(1).getName()).isEqualTo("m5");
 		assertThat(actualMap.get(5).get(2).getName()).isEqualTo("m6");
+	}
+
+	@Test
+	@DisplayName("deleteModul(...) gibt Löschanweisung korrekt an alle betroffenen Microservices weiter")
+	void test_18() {
+		UUID modulid = UUID.randomUUID();
+		String username = "peter77";
+		doNothing().when(modulRepository).deleteByUuid(modulid);
+		doNothing().when(sessionService).deleteModuleFromBlocks(modulid, username);
+		doNothing().when(modulEventService).deleteAllModulEvents(modulid);
+
+		modulService.deleteModul(modulid, username);
+
+		verify(modulRepository, times(1)).deleteByUuid(modulid);
+		verify(sessionService, times(1)).deleteModuleFromBlocks(modulid, username);
+		verify(modulEventService, times(1)).deleteAllModulEvents(modulid);
+
 	}
 }
