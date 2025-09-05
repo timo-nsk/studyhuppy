@@ -1,6 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {NgIf} from '@angular/common';
 import {RouterLink} from '@angular/router';
+import  { LoginStatusService } from '../../auth-service/login-service/login-status.service'
 import {AvatarComponent} from '../../user-profile/avatar/avatar.component';
 
 @Component({
@@ -11,6 +12,5 @@ import {AvatarComponent} from '../../user-profile/avatar/avatar.component';
   styleUrls: ['./header-main.component.scss', '../../general.scss', '../../color.scss', '../../links.scss', '../../button.scss']
 })
 export class HeaderMainComponent {
-
-
+  loginStatusService = inject(LoginStatusService)
 }
