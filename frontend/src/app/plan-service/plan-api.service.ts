@@ -37,4 +37,9 @@ export class PlanApiService {
     const header = this.headerService.createAuthHeader()
     return this.http.post<any>(this.PLAN_BASE_API + `/set-active-lernplan/${fachId}`, null, {headers: header})
   }
+
+  hasLernplan(): Observable<any> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.get<any>(this.PLAN_BASE_API + '/has-lernplan', {headers})
+  }
 }

@@ -2,7 +2,9 @@ package com.studyhub.kartei.adapter.web.controller.api;
 
 import com.studyhub.kartei.adapter.web.controller.request.dto.*;
 import com.studyhub.kartei.domain.model.Karteikarte;
+import com.studyhub.kartei.domain.model.Stapel;
 import com.studyhub.kartei.service.application.*;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 import java.util.regex.PatternSyntaxException;
 
@@ -20,12 +23,14 @@ public class KarteikarteApiController {
 	private final StapelService stapelService;
 	private final KarteikarteService karteikarteService;
 	private final KarteikarteImportService karteikarteImportService;
+	private final JWTService jwtService;
 
-	public KarteikarteApiController(StapelService stapelService, KarteikarteService karteikarteService, KarteikarteImportService karteikarteImportService) {
+	public KarteikarteApiController(StapelService stapelService, KarteikarteService karteikarteService, KarteikarteImportService karteikarteImportService, JWTService jwtService) {
 		this.stapelService = stapelService;
         this.karteikarteService = karteikarteService;
         this.karteikarteImportService = karteikarteImportService;
-    }
+		this.jwtService = jwtService;
+	}
 
 	@PostMapping("/add-neue-karte-normal")
 	public ResponseEntity<Void> addNewKarteikarteNormal(@RequestBody NewNormalKarteikarteRequest nKRequest) {
@@ -102,5 +107,12 @@ public class KarteikarteApiController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Es entstand ein Fehler auf dem Server, versuchen Sie es erneut");
 		}
         return ResponseEntity.ok("Karteikarten erfolgreich importiert");
+	}
+
+	@GetMapping("/has-karteikartenstapel")
+	public ResponseEntity<Boolean> hasLernSessions(HttpServletRequest request) {
+		String username = jwtService.extractUsernameFromHeader(request);
+		List<Stapel> data = stapelService.findByUsername(username);
+		return ResponseEntity.ok(!data.isEmpty());
 	}
 }

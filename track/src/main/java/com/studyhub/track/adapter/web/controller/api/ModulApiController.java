@@ -208,4 +208,12 @@ public class ModulApiController {
 		List<ModulSelectDto> data = modulService.getModulSelectData(username);
 		return ResponseEntity.ok(data);
 	}
+
+	@AngularApi
+	@GetMapping("/has-module")
+	public ResponseEntity<Boolean> hasModule(HttpServletRequest request) {
+		String username = jwtService.extractUsernameFromHeader(request);
+		List<Modul> data = modulService.findAllByUsername(username);
+		return ResponseEntity.ok(!data.isEmpty());
+	}
 }

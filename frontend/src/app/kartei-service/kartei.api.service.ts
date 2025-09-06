@@ -104,4 +104,9 @@ export class KarteiApiService {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.post<string>(this.BASE_API_URL + '/import-karten', formData, { headers })
   }
+
+  hasKarteikartenStapel() {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.get<any>(this.BASE_API_URL + '/has-karteikartenstapel', {headers})
+  }
 }

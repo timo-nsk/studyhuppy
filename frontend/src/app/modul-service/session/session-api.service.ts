@@ -48,4 +48,9 @@ export class SessionApiService {
       }
     })
   }
+
+  hasLernSessions(): Observable<any> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.get<any>(this.SESSION_BASE_API + '/has-lernsessions', {headers})
+  }
 }

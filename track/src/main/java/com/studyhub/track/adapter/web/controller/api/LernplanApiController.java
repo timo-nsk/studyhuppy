@@ -1,10 +1,12 @@
 package com.studyhub.track.adapter.web.controller.api;
 
+import com.studyhub.track.adapter.web.AngularApi;
 import com.studyhub.track.adapter.web.controller.request.dto.LernplanRequest;
 import com.studyhub.track.adapter.web.controller.request.dto.LernplanResponse;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.application.service.LernplanService;
 import com.studyhub.track.domain.model.lernplan.Lernplan;
+import com.studyhub.track.domain.model.session.Session;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -67,5 +69,13 @@ public class LernplanApiController {
 		String username = jwtService.extractUsernameFromHeader(httpRequest);
 		lernplanService.setActiveLernplan(fachId, username);
 		return ResponseEntity.ok().build();
+	}
+
+	@AngularApi
+	@GetMapping("/has-lernplan")
+	public ResponseEntity<Boolean> hasLernplan(HttpServletRequest request) {
+		String username = jwtService.extractUsernameFromHeader(request);
+		List<Lernplan> data = lernplanService.getAllLernplaeneByUsername(username);
+		return ResponseEntity.ok(!data.isEmpty());
 	}
 }

@@ -1,10 +1,12 @@
 package com.studyhub.track.adapter.web.controller.api;
 
+import com.studyhub.track.adapter.web.AngularApi;
 import com.studyhub.track.adapter.web.controller.request.dto.SessionDeleteRequest;
 import com.studyhub.track.adapter.web.controller.request.dto.SessionInfoDto;
 import com.studyhub.track.adapter.web.controller.request.dto.SessionRequest;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.application.service.SessionService;
+import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.session.Session;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
@@ -72,5 +74,13 @@ public class SessionApiController {
 		System.out.println(deleteRequest);
 		sessionService.deleteSession(deleteRequest.fachId());
 		return ResponseEntity.ok().build();
+	}
+
+	@AngularApi
+	@GetMapping("/has-lernsessions")
+	public ResponseEntity<Boolean> hasLernSessions(HttpServletRequest request) {
+		String username = jwtService.extractUsernameFromHeader(request);
+		List<Session> data = sessionService.getSessionsByUsername(username);
+		return ResponseEntity.ok(!data.isEmpty());
 	}
 }

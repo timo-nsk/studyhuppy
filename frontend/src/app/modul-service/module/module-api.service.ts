@@ -96,4 +96,9 @@ export class ModuleApiService {
     const headers = this.headerService.createAuthHeader()
     return this.http.post<void>(this.MODUL_BASE_API + '/update', timerRequest, {headers})
   }
+
+  hasModule(): Observable<any> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.get<any>(this.MODUL_BASE_API + '/has-module', {headers})
+  }
 }
