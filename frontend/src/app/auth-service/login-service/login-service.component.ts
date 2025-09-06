@@ -42,7 +42,7 @@ export class LoginServiceComponent {
         next: (token: string) => {
           localStorage.setItem("auth_token", token);
           this.loginStatusService.login()
-          this.router.navigateByUrl("module");
+          this.router.navigateByUrl("home");
           this.log.debug(`user authentication SUCCESS. created auth_token: ${token} and saved in localStorage`)
           let decode = jwtDecode(token)
           let username = decode.sub
