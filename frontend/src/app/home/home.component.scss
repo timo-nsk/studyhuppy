@@ -1,0 +1,52 @@
+.border-r {
+  border: 1px solid red;
+  padding: 2px;
+  margin: 2px;
+}
+
+.border-g {
+  border: 1px solid green;
+  padding: 2px;margin: 2px;
+}
+
+.border-b {
+  border: 1px solid blue;
+  padding: 2px;margin: 2px;
+}
+
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 90vw;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 70%;
+}
+
+.content-container {
+  width: 100%;
+}
+
+.alert-container {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.info-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+p {
+  margin: 0;
+}
+
+
