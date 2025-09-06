@@ -24,7 +24,6 @@ export class RegisterServiceComponent {
   router = inject(Router)
   userAlreadyExists = false
 
-  //TODO: add validation, need to check if username is available in backend
   registerForm : FormGroup = new FormGroup({
     mail: new FormControl("", [Validators.required, Validators.email]),
     username: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
