@@ -37,6 +37,7 @@ import {SessionDeleteComponent} from './modul-service/session/delete/delete.comp
 import {PlanServiceComponent} from './plan-service/plan-service.component';
 import {PlanCreateComponent} from './plan-service/create/create.component';
 import {PlanWeekComponent} from './plan-service/week/week.component';
+import {HomeComponent} from './home/home.component';
 
 export const routes: Routes = [
   {
@@ -80,6 +81,11 @@ export const routes: Routes = [
     component: AppLayoutComponent,
     children:
       [
+        {
+          path: 'home',
+          component: HomeComponent,
+          canActivate: [authenticationGuard]
+        },
         {
           path: 'profil',
           component: UserProfileComponent,
