@@ -1,8 +1,7 @@
 import {Component, inject, Input, OnInit} from '@angular/core';
-import {ModuleApiService} from '../../module/module-api.service';
-import {Modul} from '../../module/domain';
 import {NgForOf} from '@angular/common';
 import {Block} from '../session-domain';
+import {Modul} from '../../modul-service/module/domain';
 
 @Component({
   selector: 'Lernblock',

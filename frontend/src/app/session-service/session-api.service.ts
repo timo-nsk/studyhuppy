@@ -1,10 +1,10 @@
-import {environment} from '../../../environments/environment';
 import {inject, Injectable} from '@angular/core';
-import {HeaderService} from '../../header.service';
 import {HttpClient} from '@angular/common/http';
-import {LoggingService} from '../../logging.service';
 import {Session, SessionInfoDto} from './session-domain';
 import {Observable} from 'rxjs';
+import {environment} from '../../environments/environment';
+import {HeaderService} from '../header.service';
+import {LoggingService} from '../logging.service';
 
 @Injectable({
   providedIn: 'root'

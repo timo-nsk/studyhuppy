@@ -30,14 +30,14 @@ import {MindmapServiceComponent} from './mindmap-service/mindmap-service.compone
 import {MindmapDetailsComponent} from './mindmap-service/mindmap-details/mindmap-details.component';
 import {HelpComponent} from './app-layout/header/help/help.component';
 import {KontaktComponent} from './app-layout/footer/kontakt/kontakt.component';
-import {SessionComponent} from './modul-service/session/session.component';
-import {SessionStartComponent} from './modul-service/session/start/start.component';
-import {SessionCreateComponent} from './modul-service/session/create/create.component';
-import {SessionDeleteComponent} from './modul-service/session/delete/delete.component';
 import {PlanServiceComponent} from './plan-service/plan-service.component';
 import {PlanCreateComponent} from './plan-service/create/create.component';
 import {PlanWeekComponent} from './plan-service/week/week.component';
 import {HomeComponent} from './home/home.component';
+import {SessionComponent} from './session-service/session.component';
+import {SessionStartComponent} from './session-service/start/start.component';
+import {SessionCreateComponent} from './session-service/create/create.component';
+import {SessionDeleteComponent} from './session-service/delete/delete.component';
 
 export const routes: Routes = [
   {
@@ -115,6 +115,26 @@ export const routes: Routes = [
           canActivate: [authenticationGuard, authorityGuard]
         },
         {
+          path: 'session',
+          component: SessionComponent
+        },
+        {
+          path: 'session/start',
+          component: SessionStartComponent
+        },
+        {
+          path: 'session/start/:sessionId',
+          component: SessionStartComponent
+        },
+        {
+          path: 'session/create',
+          component: SessionCreateComponent
+        },
+        {
+          path: 'session/delete',
+          component: SessionDeleteComponent
+        },
+        {
         path: 'module',
         component: ModulServiceComponent,
         canActivate: [authenticationGuard],
@@ -133,26 +153,6 @@ export const routes: Routes = [
             },
             { path: 'add-modul',
               component: AddModuleComponent,
-            },
-            {
-              path: 'session',
-              component: SessionComponent,
-            },
-            {
-              path: 'session/start',
-              component: SessionStartComponent
-            },
-            {
-              path: 'session/start/:sessionId',
-              component: SessionStartComponent
-            },
-            {
-              path: 'session/create',
-              component: SessionCreateComponent
-            },
-            {
-              path: 'session/delete',
-              component: SessionDeleteComponent
             },
             {
               path: 'statistiken',

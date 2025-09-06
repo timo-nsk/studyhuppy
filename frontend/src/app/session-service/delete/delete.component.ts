@@ -2,8 +2,8 @@ import {Component, inject, OnInit} from '@angular/core';
 import {Session} from '../session-domain';
 import {SessionApiService} from '../session-api.service';
 import {NgForOf, NgIf} from '@angular/common';
-import {SnackbarService} from '../../../snackbar.service';
 import {RouterLink} from '@angular/router';
+import {SnackbarService} from '../../snackbar.service';
 
 @Component({
   selector: 'app-delete',
@@ -14,7 +14,7 @@ import {RouterLink} from '@angular/router';
   ],
   templateUrl: './delete.component.html',
   standalone: true,
-  styleUrls: ['./delete.component.scss', '../../../general.scss']
+  styleUrls: ['./delete.component.scss', '../../general.scss']
 })
 export class SessionDeleteComponent implements OnInit{
   sessionApiService = inject(SessionApiService)

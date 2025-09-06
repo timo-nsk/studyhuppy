@@ -1,7 +1,6 @@
 import {Session} from './session-domain';
 import {AudioService} from './audio.service';
-import {ModuleApiService} from '../module/module-api.service';
-import {inject} from '@angular/core';
+import {ModuleApiService} from '../modul-service/module/module-api.service';
 
 export class SessionStateManager {
   audioService = new AudioService()

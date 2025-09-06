@@ -1,9 +1,9 @@
 import {inject, Injectable} from '@angular/core';
 import {ModuleApiService} from '../modul-service/module/module-api.service';
 import {KarteiApiService} from '../kartei-service/kartei.api.service';
-import {SessionApiService} from '../modul-service/session/session-api.service';
 import {PlanApiService} from '../plan-service/plan-api.service';
 import {forkJoin, Observable} from 'rxjs';
+import {SessionApiService} from '../session-service/session-api.service';
 
 export interface UserServiceInformation {
   hasModule : boolean;

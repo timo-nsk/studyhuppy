@@ -4,15 +4,15 @@ import {SessionStateManager} from '../session-state-manager.service';
 import {Session} from '../session-domain';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {SessionApiService} from '../session-api.service';
-import {TimeFormatPipe} from '../../module/time-format.pipe';
-import {ModuleApiService} from '../../module/module-api.service';
+import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
+import {ModuleApiService} from '../../modul-service/module/module-api.service';
 
 @Component({
   selector: 'app-session-start',
   imports: [NgIf, RouterLink, NgForOf, TimeFormatPipe, NgClass],
   templateUrl: './start.component.html',
   standalone: true,
-  styleUrls: ['./start.component.scss', '../../../general.scss', '../../../button.scss']
+  styleUrls: ['./start.component.scss', '../../general.scss', '../../button.scss']
 })
 export class SessionStartComponent implements OnInit{
   sessions: any

@@ -7,6 +7,6 @@ import {RouterLink} from '@angular/router';
   imports: [FormsModule, ReactiveFormsModule, RouterLink],
   templateUrl: './session.component.html',
   standalone: true,
-  styleUrls: ['./session.component.scss', '../../general.scss', '../../button.scss']
+  styleUrls: ['./session.component.scss', '../general.scss', '../button.scss']
 })
 export class SessionComponent{ }

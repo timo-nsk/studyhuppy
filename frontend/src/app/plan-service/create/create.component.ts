@@ -10,13 +10,13 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import {Session, SessionInfoDto} from '../../modul-service/session/session-domain';
-import {SessionApiService} from '../../modul-service/session/session-api.service';
 import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
 import {LernplanRequest, TagDto} from '../plan-domain';
 import {PlanApiService} from '../plan-api.service';
 import {SnackbarService} from '../../snackbar.service';
 import {RouterLink} from '@angular/router';
+import {SessionApiService} from '../../session-service/session-api.service';
+import {SessionInfoDto} from '../../session-service/session-domain';
 
 
 @Component({
@@ -31,6 +31,7 @@ import {RouterLink} from '@angular/router';
     NgClass
   ],
   templateUrl: './create.component.html',
+  standalone: true,
   styleUrls: ['./create.component.scss', '../../general.scss', '../../button.scss', '../../color.scss']
 })
 export class PlanCreateComponent implements OnInit {

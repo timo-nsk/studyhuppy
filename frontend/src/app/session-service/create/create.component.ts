@@ -3,17 +3,17 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgForOf} from '@angular/common';
 import {BlockComponent} from '../block/block.component';
 import {SessionApiService} from '../session-api.service';
-import {Modul} from '../../module/domain';
-import {ModuleApiService} from '../../module/module-api.service';
 import {Block, Session} from '../session-domain';
-import {SnackbarService} from '../../../snackbar.service';
+import {SnackbarService} from '../../snackbar.service';
+import {Modul} from '../../modul-service/module/domain';
+import {ModuleApiService} from '../../modul-service/module/module-api.service';
 
 @Component({
   selector: 'app-session-create',
   imports: [BlockComponent, FormsModule, NgForOf, ReactiveFormsModule],
   templateUrl: './create.component.html',
   standalone: true,
-  styleUrls: ['./create.component.scss', '../../../general.scss', '../../../button.scss', '../../../forms.scss', '../../../color.scss']
+  styleUrls: ['./create.component.scss', '../../general.scss', '../../button.scss', '../../forms.scss', '../../color.scss']
 })
 export class SessionCreateComponent implements OnInit{
   snackbarService = inject(SnackbarService)

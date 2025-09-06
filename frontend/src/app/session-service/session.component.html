@@ -1,0 +1,19 @@
+<div class="main-container">
+  <div class="session-container">
+    <p id="intro-p">Hier können Sie Lernsessions erstellen und starten, die aus Zeitblöcken Ihrer Module bestehen. Die Lernzeiten werden zu ihren erstellten Modulen hinzugefügt.</p>
+    <div class="d-flex flex-row align-items-center">
+      <div class="card b" [routerLink]="'/session/start'">
+        <p>Lernsession</p>
+        <p>starten</p>
+      </div>
+      <div class="card g" [routerLink]="'/session/create'">
+        <p>Lernsession</p>
+        <p>erstellen</p>
+      </div>
+      <div class="card r" [routerLink]="'/session/delete'">
+        <p>Lernsession</p>
+        <p>löschen</p>
+      </div>
+    </div>
+  </div>
+</div>

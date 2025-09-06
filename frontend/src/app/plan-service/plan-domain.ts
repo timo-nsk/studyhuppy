@@ -1,4 +1,4 @@
-import {Block} from '../modul-service/session/session-domain';
+import {Block} from '../session-service/session-domain';
 
 export class Lernplan {
   fachId : string;
