@@ -3,6 +3,10 @@
     <div class="content-container">
       <h2>Willkommen {{username}}!</h2>
     </div>
+    <div id="loading-container" *ngIf="isLoading">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Lade Daten...</p>
+    </div>
     <div class="content-container" *ngIf="!isLoading">
       <div *ngIf="!hasModule()" class="alert alert-warning alert-container">
         <div>

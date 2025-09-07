@@ -4,11 +4,13 @@ import {HomeService, UserServiceInformation} from './home.service';
 import {NgIf} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {PlanApiService} from '../plan-service/plan-api.service';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-home',
-  imports: [NgIf, RouterLink],
+  imports: [NgIf, RouterLink, MatProgressSpinner],
   templateUrl: './home.component.html',
+  standalone: true,
   styleUrls: ['./home.component.scss', '../general.scss']
 })
 export class HomeComponent implements OnInit{
