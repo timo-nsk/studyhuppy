@@ -12,6 +12,7 @@ import {RouterLink} from '@angular/router';
 })
 export class HomeComponent implements OnInit{
   homeService = inject(HomeService)
+  isLoading = true;
 
   username: string = "default";
   userServiceInformation : UserServiceInformation = {} as UserServiceInformation
@@ -20,6 +21,7 @@ export class HomeComponent implements OnInit{
     this.getUsername()
     this.homeService.gatherUserServiceInformation().subscribe(usi => {
       this.userServiceInformation = usi;
+      this.isLoading = false
     });
   }
 
