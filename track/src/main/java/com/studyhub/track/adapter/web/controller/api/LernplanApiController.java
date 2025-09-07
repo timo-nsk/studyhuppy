@@ -78,4 +78,18 @@ public class LernplanApiController {
 		List<Lernplan> data = lernplanService.getAllLernplaeneByUsername(username);
 		return ResponseEntity.ok(!data.isEmpty());
 	}
+
+	@AngularApi
+	@GetMapping("/is-today-planned")
+	public ResponseEntity<Boolean> isTodayPlanned(HttpServletRequest request) {
+		String username = jwtService.extractUsernameFromHeader(request);
+		LernplanResponse res = lernplanService.getActiveLernplanByUsername(username);
+
+		if (res == null) {
+			return ResponseEntity.ok(false);
+		}  else {
+			boolean isTodayPlanned = res.isTodayPlanned();
+			return ResponseEntity.ok(isTodayPlanned);
+		}
+	}
 }

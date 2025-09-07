@@ -3,6 +3,7 @@ import {jwtDecode} from 'jwt-decode';
 import {HomeService, UserServiceInformation} from './home.service';
 import {NgIf} from '@angular/common';
 import {RouterLink} from '@angular/router';
+import {PlanApiService} from '../plan-service/plan-api.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,9 @@ import {RouterLink} from '@angular/router';
 })
 export class HomeComponent implements OnInit{
   homeService = inject(HomeService)
+  planApiService = inject(PlanApiService)
   isLoading = true;
+  todayPlanned = false
 
   username: string = "default";
   userServiceInformation : UserServiceInformation = {} as UserServiceInformation
@@ -21,6 +24,7 @@ export class HomeComponent implements OnInit{
     this.getUsername()
     this.homeService.gatherUserServiceInformation().subscribe(usi => {
       this.userServiceInformation = usi;
+      this.isTodayPlanned()
       this.isLoading = false
     });
   }
@@ -48,5 +52,13 @@ export class HomeComponent implements OnInit{
 
   hasKarteikartenstapel() {
     return this.userServiceInformation.hasKarteikartenStapel
+  }
+
+  isTodayPlanned() {
+    this.planApiService.isTodayPlanned().subscribe({
+      next: data => {
+        this.todayPlanned = data
+      }
+    })
   }
 }

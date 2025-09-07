@@ -34,7 +34,12 @@
             </div>
           </div>
           <div *ngIf="hasLernplan()" class="info-wrapper alert alert-primary">
-            <p>Viel Spaß beim Lernen und bleib am Ball!</p>
+            <div *ngIf="todayPlanned">
+              <p>Vergess heute nicht zu lernen!</p>
+            </div>
+            <div *ngIf="!todayPlanned">
+              <p>Heute steht nichts an.</p>
+            </div>
           </div>
         </div>
       </div>
