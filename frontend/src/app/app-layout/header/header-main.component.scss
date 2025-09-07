@@ -1,12 +1,40 @@
-.nav-svg {
-  fill: grey;
+header, nav {
+  height: 150px;
 }
 
-.nav-svg:hover {
-  fill: rgb(29, 76, 151);
+#header-container {
+  height: 125px;
 }
 
-.border-r {
-  border: 1px solid red;
+header {
+  height: 100%;
+  border-bottom-style: solid;
+  border-bottom-color: rgb(16, 45, 92);
+  border-bottom-width: 3px;
+}
+
+#header-navigation {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+}
+
+#logo-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 20px;
+}
+
+#avatar-container {
+  display: flex;
+  align-items: center;
+  padding-right: 50px;
+}
+
+p {
+  margin: 0;
 }
 
