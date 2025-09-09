@@ -1,93 +1,89 @@
-<div id="super-container">
-  <div id="chart-container">
-    <div class="chart">
-      <table class="table">
-        <tbody>
-          <tr>
-            <th>
-              Zeit studiert insgesamt:
-            </th>
-            <td>
-              <span>{{generalStats.totalStudyTime | timeFormat}}</span>
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Durchschnittliche Lernzeit am Tag:
-            </th>
-            <td>
-              <span>{{generalStats.durchschnittlicheLernzeitProTag | timeFormat}}</span>
-            </td>
-          </tr>
-          <tr *ngIf="isEmptyTotalStudyTimePerSemester()">
-            <th>
-              Zeit studiert per Fachsemester
-            </th>
-            <td>
-              Keine Lernzeiten vorhanden
-            </td>
-          </tr>
-          <tr *ngIf="!isEmptyTotalStudyTimePerSemester()">
-            <th>
-              Zeit studiert per Fachsemester
-            </th>
-            <td>
-              <div>
-                <table class="table">
-                  <thead>
-                  <tr>
-                    <th>FS</th>
-                    <th>Zeit</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr *ngFor="let semester of generalStats.totalStudyTimePerSemester  | keyvalue">
-                    <td>{{semester.key}}</td>
-                    <td>{{semester.value | timeFormat }}</td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
-            </td>
-          </tr>
+<div id="chart-container">
+  <table class="table bordered-r">
+    <tbody>
+      <tr>
+        <th>
+          Zeit studiert insgesamt:
+        </th>
+        <td>
+          <span>{{generalStats.totalStudyTime | timeFormat}}</span>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Durchschnittliche Lernzeit am Tag:
+        </th>
+        <td>
+          <span>{{generalStats.durchschnittlicheLernzeitProTag | timeFormat}}</span>
+        </td>
+      </tr>
+      <tr *ngIf="isEmptyTotalStudyTimePerSemester()">
+        <th>
+          Zeit studiert per Fachsemester
+        </th>
+        <td>
+          Keine Lernzeiten vorhanden
+        </td>
+      </tr>
+      <tr *ngIf="!isEmptyTotalStudyTimePerSemester()">
+        <th>
+          Zeit studiert per Fachsemester
+        </th>
+        <td>
+          <div>
+            <table class="table">
+              <thead>
+              <tr>
+                <th>FS</th>
+                <th>Zeit</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let semester of generalStats.totalStudyTimePerSemester  | keyvalue">
+                <td>{{semester.key}}</td>
+                <td>{{semester.value | timeFormat }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </td>
+      </tr>
 
-          <tr>
-            <th>
-              Aktive Module:
-            </th>
-            <td>
-              <span>{{generalStats.numberActiveModules}}</span>
-            </td>
-          </tr>
+      <tr>
+        <th>
+          Aktive Module:
+        </th>
+        <td>
+          <span>{{generalStats.numberActiveModules}}</span>
+        </td>
+      </tr>
 
-          <tr>
-            <th>
-              Inaktive Module:
-            </th>
-            <td>
-              <span>{{generalStats.numberNotActiveModules}}</span>
-            </td>
-          </tr>
+      <tr>
+        <th>
+          Inaktive Module:
+        </th>
+        <td>
+          <span>{{generalStats.numberNotActiveModules}}</span>
+        </td>
+      </tr>
 
-          <tr>
-            <th>
-              Modul am meisten studiert:
-            </th>
-            <td>
-              <span>{{generalStats.maxStudiedModul}}</span>
-            </td>
-          </tr>
+      <tr>
+        <th>
+          Modul am meisten studiert:
+        </th>
+        <td>
+          <span>{{generalStats.maxStudiedModul}}</span>
+        </td>
+      </tr>
 
-          <tr>
-            <th>
-              Modul am wenigsten studiert:
-            </th>
-            <td>
-              <span>{{generalStats.minStudiedModul}}</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+      <tr>
+        <th>
+          Modul am wenigsten studiert:
+        </th>
+        <td>
+          <span>{{generalStats.minStudiedModul}}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
