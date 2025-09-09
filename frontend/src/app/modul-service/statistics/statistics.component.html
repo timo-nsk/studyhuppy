@@ -1,24 +1,4 @@
-<!--
-<div id="chart-ansicht-container">
-  <div id="chart-ansicht-box">
-    <div id="pagination-container">
-      <div id="modul-pagination">
-        <div class="pagination-item left-page-item">
-          <a class="std-link m-accent-font" [routerLink]="'general'">Allgemein</a>
-        </div>
-        <div class="pagination-item right-page-item">
-          <a class="std-link m-accent-font" [routerLink]="'charts'">Charts</a>
-        </div>
-        <div></div>
-        <div></div>
-      </div>
-    </div>
-    <router-outlet></router-outlet>
-  </div>
-</div>
--->
-
-<div id="statistic-container" class="bordered-r">
+<div id="statistic-container">
   <div id="statistic-wrapper">
     <div id="pagination">
         <div class="pagination-item" (click)="activatePaginationitem(0)" [ngClass]="{'activated': isActive[0]}">
