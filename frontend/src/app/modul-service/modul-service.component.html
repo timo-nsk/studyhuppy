@@ -1,16 +1,18 @@
 <div>
-  <div id="pagination-container">
-    <div id="modul-pagination">
-      <div class="pagination-item left-page-item">
-        <a class="std-link m-accent-font" [routerLink]="['meine-module']">Meine Module</a>
-      </div>
-      <div class="pagination-item">
-        <a class="std-link m-accent-font" [routerLink]="['add-modul']">Modul hinzufügen</a>
-      </div>
-      <div class="pagination-item right-page-item">
-        <a class="std-link m-accent-font" [routerLink]="['statistiken']">Statistiken</a>
-      </div>
-    </div>
+  <div id="pagination-table" class="bordered-b">
+    <table>
+      <tr>
+        <th>
+          <a class="m-accent-font" [routerLink]="['meine-module']">Meine Module</a>
+        </th>
+        <th>
+          <a class="m-accent-font" [routerLink]="['add-modul']">Modul hinzufügen</a>
+        </th>
+        <th>
+          <a class="m-accent-font" [routerLink]="['statistiken/general']">Statistiken</a>
+        </th>
+      </tr>
+    </table>
   </div>
   <div>
     <router-outlet></router-outlet>

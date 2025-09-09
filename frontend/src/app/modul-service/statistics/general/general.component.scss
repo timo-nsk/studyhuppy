@@ -1,17 +1,5 @@
-#super-container{
-  display: flex;
-  justify-content: center;
-  width: 85vw;
-}
-
 #chart-container {
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 50px;
-  padding: 50px 50px 50px 50px;
-
+  width: 600px;
 }
 
 .chart {
@@ -23,4 +11,9 @@
   border-color: lightgray;
   border-width: 1px;
 
+}
+
+table {
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
