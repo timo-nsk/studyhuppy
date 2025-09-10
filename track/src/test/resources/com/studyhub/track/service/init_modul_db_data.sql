@@ -19,13 +19,6 @@ INSERT INTO kreditpunkte (modul, anzahl_punkte, kontaktzeit_stunden, selbststudi
     (3846846, 5, 60, 90),
     (4846846, 5, 60, 90);
 
-INSERT INTO lerntage (modul, mondays, tuesdays, wednesdays, thursdays, fridays, saturdays, sundays, semester_phase) VALUES
-    (1654654, true, false, true, false, true, false, false, 'VORLESUNG'),
-    (2546546, true, false, true, false, true, false, false, 'VORLESUNG'),
-    (3846846, true, false, true, false, true, false, false, 'VORLESUNG'),
-    (4846846, true, false, true, false, true, false, false, 'VORLESUNG'),
-    (5846846, true, false, true, false, true, false, false, 'VORLESUNG');
-
 INSERT INTO modultermin (modul, termin_name, start_date, ende_date, notiz, terminart, terminfrequenz) VALUES
     (1654654, 'T1', '2025-03-23 14:30:00', '2025-04-23 14:30:00', null, null, 'EINMALIG'),
     (2546546, 'T2', '2025-03-24 14:30:00', null, null, null, 'TÄGLICH'),
