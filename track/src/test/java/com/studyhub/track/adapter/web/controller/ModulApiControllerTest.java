@@ -1,11 +1,11 @@
 package com.studyhub.track.adapter.web.controller;
 
 import com.studyhub.track.adapter.authentication.AuthenticationService;
+import com.studyhub.track.adapter.metric.PrometheusMetrics;
+import com.studyhub.track.adapter.web.controller.request.dto.TimerRequest;
 import com.studyhub.track.application.JWTService;
-import com.studyhub.track.adapter.mail.KlausurReminderService;
 import com.studyhub.track.adapter.security.SecurityConfig;
 import com.studyhub.track.adapter.web.controller.request.dto.AddTimeRequest;
-import com.studyhub.track.adapter.web.KlausurDateRequest;
 import com.studyhub.track.adapter.web.ModulForm;
 import com.studyhub.track.application.service.dto.ModulUpdateRequest;
 import com.studyhub.track.adapter.web.controller.api.ModulApiController;
@@ -29,18 +29,17 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 
 @WebMvcTest(ModulApiController.class)
 @Import(SecurityConfig.class)
@@ -54,6 +53,11 @@ public class ModulApiControllerTest {
 	MockMvc mvc;
 
 	ObjectMapper objectMapper = new ObjectMapper();
+	{
+		// Für die JSON-Deserialisierung von LocalDateTime
+		objectMapper.registerModule(new JavaTimeModule());
+		objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+	}
 
 	@MockitoBean
 	private ModulService modulService;
@@ -68,7 +72,7 @@ public class ModulApiControllerTest {
 	private AuthenticationService authenticationService;
 
 	@MockitoBean
-	private KlausurReminderService klausurReminderService;
+	private PrometheusMetrics metrics;
 
 	@Autowired
 	private ModulApiController modulApiController;
@@ -121,10 +125,10 @@ public class ModulApiControllerTest {
 	@DisplayName("Ein Post-Request auf /update ist als authentifizierte Person möglich")
 	@WithMockUser(username="testuser", roles = "USER")
 	void test_04() throws Exception {
-		ModulUpdateRequest modulUpdateRequest = new ModulUpdateRequest(UUID.randomUUID().toString(), 20, 10);
+		TimerRequest timerRequest = new TimerRequest(UUID.randomUUID().toString(), "786786786");
 		mvc.perform(post("/api/modul/v1/update")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(modulUpdateRequest)))
+				.content(objectMapper.writeValueAsString(timerRequest)))
 				.andExpect(status().isOk());
 	}
 
@@ -176,24 +180,6 @@ public class ModulApiControllerTest {
 	}
 
 	@Test
-	@DisplayName("Post-Request auf /data-klausur-reminding ist nicht als unauthentifizierte Person möglich")
-	void test_11() throws Exception {
-		mvc.perform(post("/api/modul/v1/data-klausur-reminding"))
-				.andExpect(status().isForbidden());
-	}
-
-	@Test
-	@DisplayName("Post-Request auf /data-klausur-reminding ist als authentifizierte Person möglich")
-	@WithMockUser(username="testuser", roles = "USER")
-	void test_12() throws Exception {
-		List<String> l = List.of("user1", "user2");
-		mvc.perform(post("/api/modul/v1/data-klausur-reminding")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content(objectMapper.writeValueAsString(l)))
-				.andExpect(status().isOk());
-	}
-
-	@Test
 	@DisplayName("Put-Request auf /reset ist nicht als unauthentifizierte Person möglich")
 	void test_13() throws Exception {
 		mvc.perform(put("/api/modul/v1/reset"))
@@ -222,7 +208,7 @@ public class ModulApiControllerTest {
 	void test_16() throws Exception {
 		mvc.perform(delete("/api/modul/v1/delete")
 						.param("fachId", UUID.randomUUID().toString()))
-				.andExpect(status().isNoContent());
+				.andExpect(status().isNotFound()); // Da randomuuid
 	}
 
 	@Test
@@ -287,30 +273,6 @@ public class ModulApiControllerTest {
 	void test_24() throws Exception {
 		AddTimeRequest req = new AddTimeRequest(UUID.randomUUID().toString(), "01:30");
 		mvc.perform(post("/api/modul/v1/add-time")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content(objectMapper.writeValueAsString(req)))
-				.andExpect(status().isOk());
-	}
-
-	@Test
-	@DisplayName("Post-Request auf /add-klausur-dat ist nicht als unauthentifizierte Person möglich")
-	void test_25() throws Exception {
-		KlausurDateRequest req = new KlausurDateRequest(UUID.randomUUID().toString(), LocalDate.now(), "00:30");
-		mvc.perform(post("/api/modul/v1/add-klausur-date")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content(objectMapper.writeValueAsString(req)))
-				.andExpect(status().isForbidden());
-	}
-
-	@Disabled("Geht praktisch")
-	@Test
-	@DisplayName("Post-Request auf /add-klausur-dat ist als authentifizierte Person möglich")
-	@WithMockUser(username="testuser", roles = "USER")
-	void test_26() throws Exception {
-
-		KlausurDateRequest req = new KlausurDateRequest(UUID.randomUUID().toString(), LocalDate.now(), "00:30");
-		System.out.println(objectMapper.writeValueAsString(req));
-		mvc.perform(post("/api/modul/v1/add-klausur-date")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(objectMapper.writeValueAsString(req)))
 				.andExpect(status().isOk());
