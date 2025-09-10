@@ -7,13 +7,10 @@ import com.studyhub.track.adapter.web.controller.request.dto.TimerRequest;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.adapter.db.modul.ModulDto;
 import com.studyhub.track.adapter.db.modul.ModulMapper;
-import com.studyhub.track.adapter.mail.KlausurReminderDto;
-import com.studyhub.track.adapter.mail.KlausurReminderService;
 import com.studyhub.track.adapter.web.*;
 import com.studyhub.track.adapter.web.controller.request.dto.AddTimeRequest;
 import com.studyhub.track.application.service.ModulEventService;
 import com.studyhub.track.application.service.ModulService;
-import com.studyhub.track.application.service.dto.ModulUpdateRequest;
 import com.studyhub.track.application.service.dto.NeuerModulterminRequest;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.Modultermin;
@@ -37,16 +34,14 @@ public class ModulApiController {
 	private final ModulService modulService;
 	private final ModulEventService modulEventService;
 	private final AuthenticationService authenticationService;
-	private final KlausurReminderService klausurReminderService;
 	private final JWTService jwtService;
 	private final PrometheusMetrics metrics;
 
-	public ModulApiController(ModulService service, ModulEventService modulEventService, AuthenticationService authenticationService, KlausurReminderService klausurReminderService, JWTService jwtService, PrometheusMetrics metrics) {
+	public ModulApiController(ModulService service, ModulEventService modulEventService, AuthenticationService authenticationService , JWTService jwtService, PrometheusMetrics metrics) {
 		this.modulService = service;
 		this.modulEventService = modulEventService;
         this.authenticationService = authenticationService;
-        this.klausurReminderService = klausurReminderService;
-		this.jwtService = jwtService;
+        this.jwtService = jwtService;
         this.metrics = metrics;
     }
 
@@ -90,12 +85,6 @@ public class ModulApiController {
 	@GetMapping("/module-name")
 	public String getModulName(String modulFachId) {
 		return modulService.findModulNameByFachid(UUID.fromString(modulFachId));
-	}
-
-	@Api
-	@PostMapping("/data-klausur-reminding")
-	public ResponseEntity<List<KlausurReminderDto>> findModuleWithoutKlausurDate(@RequestBody List<String> users) {
-		return ResponseEntity.ok(klausurReminderService.findModuleWithoutKlausurDate(users));
 	}
 
 	@AngularApi
