@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Testcontainers
 @DataJdbcTest
 @Rollback(false)
-@Sql(scripts = "drop_session_table.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "drop_session_table.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @Sql(scripts = "init_session_db_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @TestPropertySource(properties = {
 		"spring.datasource.url=jdbc:postgresql://localhost:${container.port}/sessiontest",
