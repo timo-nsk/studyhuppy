@@ -110,10 +110,10 @@ public class ModulRepositoryTest {
 	void test_04() {
 		UUID fachId = UUID.fromString("f47ac10b-58cc-4372-a567-0e12b2c3d479");
 
-		repository.updateSecondsByUuid(fachId, 0);
+		repository.updateSecondsByUuid(fachId, 10);
 		Modul foundModul = repository.findByUuid(fachId);
 
-		assertThat(foundModul.getSecondsLearned()).isEqualTo(0);
+		assertThat(foundModul.getSecondsLearned()).isEqualTo(20);
 	}
 
 	@Test
