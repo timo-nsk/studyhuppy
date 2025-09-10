@@ -1,25 +1,22 @@
-<div id="super-container">
-  <div id="chart-container">
-    <!-- TODO FIX: die chart daten sind nciht ganz richtig, wie die zsammengerechnet werden für die Tage -->
-    <div class="chart">
-      <ng-container *ngIf="isLoading">
-        <div class="spinner-container">
-          <mat-spinner class="spinner" [diameter]="50"></mat-spinner>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="!isLoading">
-        <canvas id="chart-total"></canvas>
-      </ng-container>
-    </div>
-    <div class="chart">
-      <ng-container *ngIf="isLoading">
-        <div class="spinner-container">
-          <mat-spinner class="spinner" [diameter]="50"></mat-spinner>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="!isLoading">
-        <canvas id="chart-each"></canvas>
-      </ng-container>
-    </div>
+<div id="chart-container">
+  <div class="chart">
+    <ng-container *ngIf="isLoading">
+      <div class="spinner-container">
+        <mat-spinner class="spinner" [diameter]="50"></mat-spinner>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!isLoading">
+      <canvas id="chart-total"></canvas>
+    </ng-container>
+  </div>
+  <div class="chart">
+    <ng-container *ngIf="isLoading">
+      <div class="spinner-container">
+        <mat-spinner class="spinner" [diameter]="50"></mat-spinner>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!isLoading">
+      <canvas id="chart-each"></canvas>
+    </ng-container>
   </div>
 </div>

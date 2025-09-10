@@ -34,6 +34,19 @@
   width: 100%;
 }
 
+#loading-container {
+  color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 80px;
+}
+
+.custom-spinner circle {
+  stroke: #4caf50 !important;
+}
+
 .alert-container {
   display: flex;
   flex-direction: row;

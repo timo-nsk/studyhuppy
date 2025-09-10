@@ -1,31 +1,26 @@
-.btnnn {
-  background-color: red !important;
-}
-
-#super-container{
-  display: flex;
-  justify-content: center;
-  width: 85vw;
-}
-
-#statistic-wrapper {
-
+#chart-container{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 50px;
-  padding: 50px 50px 50px 50px;
-
+  align-items: center;
+  width: 100%;
 }
 
 .chart {
-  width: 60vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: white;
-  padding: 50px 50px 50px 50px;
-  border-radius: 10px;
-  border-style: solid;
-  border-color: lightgray;
-  border-width: 1px;
+  width: 90%;
+  min-width: 40%;
+  padding: 20px;
+}
+
+.chart canvas {
+  width: 90% !important;
+  min-width: 40%;
+  height: auto !important;
 }
 
 .spinner-container {
