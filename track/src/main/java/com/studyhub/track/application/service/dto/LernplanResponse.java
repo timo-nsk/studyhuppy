@@ -1,6 +1,4 @@
-package com.studyhub.track.adapter.web.controller.request.dto;
-
-import com.studyhub.track.domain.model.session.Session;
+package com.studyhub.track.application.service.dto;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

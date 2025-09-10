@@ -1,10 +1,9 @@
 package com.studyhub.track.application.service;
 
 
-import com.studyhub.track.adapter.web.controller.api.GeneralStatisticsDto;
-import com.studyhub.track.adapter.web.controller.api.GeneralStatisticsDtoBuilder;
-import com.studyhub.track.adapter.web.controller.api.ModulSelectDto;
-import com.studyhub.track.application.JWTService;
+import com.studyhub.track.application.service.dto.GeneralStatisticsDto;
+import com.studyhub.track.application.service.dto.GeneralStatisticsDtoBuilder;
+import com.studyhub.track.application.service.dto.ModulSelectDto;
 import com.studyhub.track.application.service.dto.NeuerModulterminRequest;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.Modultermin;
@@ -258,8 +257,7 @@ public class ModulService {
 			updateSeconds(uuid, oldSeconds);
 			modulEventService.saveEvent(oldSeconds,uuid.toString(), username);
 		} catch(Exception e) {
-			System.out.println("Error while updating seconds");
-			System.out.println(e.getMessage());
+			log.error("Error saving event", e);
 		}
 	}
 

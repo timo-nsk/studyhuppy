@@ -1,7 +1,7 @@
 package com.studyhub.track.application.service;
 
-import com.studyhub.track.adapter.web.controller.request.dto.LernplanResponse;
-import com.studyhub.track.adapter.web.controller.request.dto.LernplanSessionInfoDto;
+import com.studyhub.track.application.service.dto.LernplanResponse;
+import com.studyhub.track.application.service.dto.LernplanSessionInfoDto;
 import com.studyhub.track.domain.model.lernplan.Lernplan;
 import com.studyhub.track.domain.model.lernplan.Tag;
 import com.studyhub.track.domain.model.session.Session;

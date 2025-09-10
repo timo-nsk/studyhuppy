@@ -1,4 +1,4 @@
-package com.studyhub.track.adapter.web.controller.request.dto;
+package com.studyhub.track.application.service.dto;
 
 import com.studyhub.track.domain.model.session.Block;
 import java.util.List;

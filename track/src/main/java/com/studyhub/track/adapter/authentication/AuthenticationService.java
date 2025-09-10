@@ -18,7 +18,6 @@ public class AuthenticationService {
 
 	public Integer getSemesterOfUser(String username, String token) {
 		log.info("Try get fachsemester of user '%s' from authentication service.", username);
-		System.out.println(token);
 		return WebClient.builder()
 				.baseUrl(authAiUrl)
 				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE)

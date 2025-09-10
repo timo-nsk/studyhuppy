@@ -1,7 +1,5 @@
-package com.studyhub.track.adapter.web.controller.api;
+package com.studyhub.track.application.service.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

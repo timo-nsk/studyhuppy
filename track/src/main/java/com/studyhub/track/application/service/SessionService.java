@@ -1,6 +1,6 @@
 package com.studyhub.track.application.service;
 
-import com.studyhub.track.adapter.web.controller.request.dto.SessionInfoDto;
+import com.studyhub.track.application.service.dto.SessionInfoDto;
 import com.studyhub.track.domain.model.session.Block;
 import com.studyhub.track.domain.model.session.Session;
 import org.springframework.stereotype.Service;

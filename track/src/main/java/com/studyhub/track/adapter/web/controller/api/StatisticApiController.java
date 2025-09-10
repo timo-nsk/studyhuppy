@@ -5,6 +5,7 @@ import com.studyhub.track.adapter.web.AngularApi;
 import com.studyhub.track.application.service.ModulEventService;
 import com.studyhub.track.application.service.ModulService;
 import com.studyhub.track.application.service.ModulStat;
+import com.studyhub.track.application.service.dto.GeneralStatisticsDto;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

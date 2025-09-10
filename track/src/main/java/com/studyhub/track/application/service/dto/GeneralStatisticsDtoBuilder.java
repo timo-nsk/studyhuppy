@@ -1,4 +1,4 @@
-package com.studyhub.track.adapter.web.controller.api;
+package com.studyhub.track.application.service.dto;
 
 import java.util.Map;
 

@@ -2,11 +2,10 @@ package com.studyhub.track.adapter.web.controller.api;
 
 import com.studyhub.track.adapter.web.AngularApi;
 import com.studyhub.track.adapter.web.controller.request.dto.SessionDeleteRequest;
-import com.studyhub.track.adapter.web.controller.request.dto.SessionInfoDto;
+import com.studyhub.track.application.service.dto.SessionInfoDto;
 import com.studyhub.track.adapter.web.controller.request.dto.SessionRequest;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.application.service.SessionService;
-import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.session.Session;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +57,6 @@ public class SessionApiController {
 
 	@PostMapping("/create")
 	public ResponseEntity<Void> createSession(@RequestBody SessionRequest sessionRequest, HttpServletRequest request) {
-		System.out.println(sessionRequest);
 		String username = jwtService.extractUsernameFromHeader(request);
 		boolean success = sessionService.save(sessionRequest.toEntity(username));
 
@@ -71,7 +69,6 @@ public class SessionApiController {
 
 	@DeleteMapping("/delete-session")
 	public ResponseEntity<Void> deleteSession(@RequestBody SessionDeleteRequest deleteRequest) {
-		System.out.println(deleteRequest);
 		sessionService.deleteSession(deleteRequest.fachId());
 		return ResponseEntity.ok().build();
 	}

@@ -11,6 +11,7 @@ import com.studyhub.track.adapter.web.*;
 import com.studyhub.track.adapter.web.controller.request.dto.AddTimeRequest;
 import com.studyhub.track.application.service.ModulEventService;
 import com.studyhub.track.application.service.ModulService;
+import com.studyhub.track.application.service.dto.ModulSelectDto;
 import com.studyhub.track.application.service.dto.NeuerModulterminRequest;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.Modultermin;
@@ -83,8 +84,9 @@ public class ModulApiController {
 
 	@AngularApi
 	@GetMapping("/module-name")
-	public String getModulName(String modulFachId) {
-		return modulService.findModulNameByFachid(UUID.fromString(modulFachId));
+	public ResponseEntity<String> getModulName(String modulFachId) {
+		String modulName = modulService.findModulNameByFachid(UUID.fromString(modulFachId));
+		return ResponseEntity.ok(modulName);
 	}
 
 	@AngularApi
