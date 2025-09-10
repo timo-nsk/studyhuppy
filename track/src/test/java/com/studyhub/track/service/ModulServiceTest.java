@@ -179,16 +179,17 @@ public class ModulServiceTest {
 	}
 
 	@Test
-	@DisplayName("deleteModul(...) gibt Löschanweisung korrekt an alle betroffenen Microservices weiter")
+	@DisplayName("deleteModul(...) gibt Löschanweisung korrekt an alle betroffenen Microservices weiter und alle Daten zum Modul werden gelöscht")
 	void test_18() {
 		UUID modulid = UUID.randomUUID();
 		String username = "peter77";
-		doNothing().when(modulRepository).deleteByUuid(modulid);
+		when(modulRepository.deleteByUuid(modulid)).thenReturn(1);
 		doNothing().when(sessionService).deleteModuleFromBlocks(modulid, username);
 		doNothing().when(modulEventService).deleteAllModulEvents(modulid);
 
-		modulService.deleteModul(modulid, username);
+		boolean success = modulService.deleteModul(modulid, username);
 
+		assertThat(success).isTrue();
 		verify(modulRepository, times(1)).deleteByUuid(modulid);
 		verify(sessionService, times(1)).deleteModuleFromBlocks(modulid, username);
 		verify(modulEventService, times(1)).deleteAllModulEvents(modulid);
