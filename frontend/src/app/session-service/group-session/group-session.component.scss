@@ -24,7 +24,32 @@
 }
 
 .wrapper {
-  width: 50%;
+  width: 40%;
+}
+
+#user-selection-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.user-container {
+  width: 80px;
+  height: 80px;
+
+  margin: 5px;
+
+  border: 2px solid gray;
+  border-radius: 40px;
+}
+
+#add-user-btn {
+  margin: 5px;
+  width: 80px;
+  height: 80px;
+  border: 2px solid gray;
+  border-radius: 40px;
 }
 
 
