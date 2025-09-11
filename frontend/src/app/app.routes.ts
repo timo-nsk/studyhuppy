@@ -38,6 +38,7 @@ import {SessionComponent} from './session-service/session.component';
 import {SessionStartComponent} from './session-service/start/start.component';
 import {SessionCreateComponent} from './session-service/create/create.component';
 import {SessionDeleteComponent} from './session-service/delete/delete.component';
+import {GroupSessionComponent} from './session-service/group-session/group-session.component';
 
 export const routes: Routes = [
   {
@@ -121,6 +122,10 @@ export const routes: Routes = [
         {
           path: 'session/start',
           component: SessionStartComponent
+        },
+        {
+          path: 'session/group/setup',
+          component: GroupSessionComponent
         },
         {
           path: 'session/start/:sessionId',
