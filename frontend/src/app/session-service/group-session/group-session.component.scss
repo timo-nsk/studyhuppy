@@ -1,0 +1,30 @@
+.border-r {
+  border: 1px solid red;
+  padding: 2px;
+  margin: 2px;
+}
+
+.border-g {
+  border: 1px solid green;
+  padding: 2px;
+  margin: 2px;
+}
+
+.border-o {
+  border: 1px solid orange;
+  padding: 2px;
+  margin: 2px;
+}
+
+.group-container {
+  width: 90vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  width: 50%;
+}
+
+
