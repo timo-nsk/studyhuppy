@@ -4,9 +4,27 @@
   width: 90vw;
 }
 
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 250px 250px;
+  gap: 10px;
+}
+
+.grid-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .session-container {
-  width: 40%;
+  width: 45%;
   margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .btn-group-container {
@@ -28,15 +46,23 @@
 }
 
 .card {
-  width: 200px;
-  height: 200px;
+  width: 210px;
+  height: 210px;
   font-size: 25px;
   padding: 10px;
   margin: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card:hover {
   cursor: pointer;
+}
+
+p {
+  margin: 0;
 }
 
 .b {
@@ -49,4 +75,8 @@
 
 .r {
   background-color: #f85d5d;
+}
+
+.o {
+  background-color: #ffa500;
 }
