@@ -6,3 +6,8 @@ export interface User {
   semester : number;
   profilbildPath : string;
 }
+
+export interface UserGroupSessionDto {
+  userId: string;
+  username: string;
+}
