@@ -6,7 +6,7 @@
     </div>
 
     <div *ngIf="sessions != null">
-      <div class="pre-session-container" *ngIf="sessions.length > 1">
+      <div class="pre-session-container" *ngIf="sessions.length > 0">
         <p>Session-Konfiguration auswählen</p>
         <select class="form-select" [disabled]="sessionSelectIsDisabled">
           <option *ngFor="let session of sessions"
