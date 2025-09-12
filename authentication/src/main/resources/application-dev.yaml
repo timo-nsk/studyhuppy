@@ -5,6 +5,16 @@ spring:
     url: jdbc:postgresql://localhost:6436/${AUTH_DB}
     username: ${AUTH_DB_USER}
     password: ${AUTH_DB_PASS}
+  kafka:
+    bootstrap-servers: localhost:10000
+    consumer:
+      group-id: studyhuppy
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 management:
   endpoints:
     web:
