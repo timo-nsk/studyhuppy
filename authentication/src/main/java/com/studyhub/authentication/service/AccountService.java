@@ -36,17 +36,9 @@ public class AccountService {
 		this.jwtService = jwtService;
 	}
 
-	//NOTE: was passiert, wenn in nur einem system ein erfolg ist und wieder getried wird?
-	//TODO: die Requests an die Systeme implementieren
-	public boolean deleteAccount(UUID userId, int tries) {
-		boolean trackRequestSuccess = true; //trackRequestService.sendDeleteAllRequest(username);
-		boolean karteiRequestSuccess = true; //karteiRequestService.sendDeleteAllRequest(username);
+	public void deleteAccount(UUID userId) {
 		appUserRepository.deleteByUserId(userId);
-
-		boolean success = trackRequestSuccess && karteiRequestSuccess;
-
-        log.info("User '%s' deleted from system (tries: %d)".formatted(userId, tries));
-        return success;
+        log.info("User '%s' deleted from authentication service".formatted(userId));
 	}
 
 	public void editNotificationSubscription(Boolean activate, String username) {

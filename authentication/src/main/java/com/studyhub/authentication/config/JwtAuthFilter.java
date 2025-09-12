@@ -39,12 +39,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 	                                FilterChain filterChain) throws ServletException, IOException {
 		log.info("Try JwtAuthFilter ...");
 		String path = request.getRequestURI();
-		if (path.equals("/api/auth/v1/login") || path.equals("/api/auth/v1/register") || path.equals("/agb") || path.equals("/api/auth/v1/password-reset")
-				|| path.equals("/api/v1/get-db-health") || path.equals("/actuator/health") || path.equals("/api/auth/v1/kontakt-message")) {
+		if (path.startsWith("/api/auth/v1/login") ||
+				path.startsWith("/api/auth/v1/register") ||
+				path.startsWith("/agb") ||
+				path.startsWith("/api/auth/v1/password-reset") ||
+				path.startsWith("/api/v1/get-db-health") ||
+				path.startsWith("/actuator/health") ||
+				path.startsWith("/api/auth/v1/kontakt-message")) {
 			log.info("No need to filter request to path: " + path);
 			filterChain.doFilter(request, response);
 			return;
 		}
+
 
 		log.info("Check Header...");
 

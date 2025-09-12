@@ -1,5 +1,6 @@
 package com.studyhub.authentication.web.controller.api;
 
+import com.studyhub.authentication.adapter.kafka.UserDeletionProducer;
 import com.studyhub.authentication.model.AppUser;
 import com.studyhub.authentication.model.UserDto;
 import com.studyhub.authentication.model.UserMapper;
@@ -26,10 +27,12 @@ import java.util.UUID;
 public class UserApiController {
 	private final AccountService accountService;
 	private final JWTService jwtService;
+	private final UserDeletionProducer userDeletionProducer;
 
-	public UserApiController(AccountService accountService, JWTService jwtService) {
+	public UserApiController(AccountService accountService, JWTService jwtService, UserDeletionProducer userDeletionProducer) {
 		this.accountService = accountService;
 		this.jwtService = jwtService;
+		this.userDeletionProducer = userDeletionProducer;
 	}
 
 
@@ -70,19 +73,10 @@ public class UserApiController {
 	}
 
 	@DeleteMapping("/delete-account")
-	public ResponseEntity<Void> deleteAccount(@RequestBody String userId) {
-
-		int maxTries = 3;
-
-		for (int i = 1; i <= maxTries; i++) {
-			boolean success = accountService.deleteAccount(UUID.fromString(userId), i);
-			if(success) {
-				return ResponseEntity.noContent().build();
-			} else if(i == maxTries) {
-				return ResponseEntity.internalServerError().build();
-			}
-		}
-		return ResponseEntity.noContent().build();
+	public ResponseEntity<Void> deleteAccount(@RequestParam("userId") String userId) {
+		accountService.deleteAccount(UUID.fromString(userId));
+		userDeletionProducer.sendMessage(userId);
+		return ResponseEntity.ok().build();
 	}
 
 	@PostMapping("/profilbild")
