@@ -31,3 +31,6 @@ actuator/actuator-test.sh
 actuator/run-tests-actuator.bat
 actuator/target
 
+# Ist nur für Windows relevant
+start-kafka.bat
+
