@@ -52,4 +52,27 @@
   border-radius: 40px;
 }
 
+#add-user-btn {
+  display: block;
+  appearance: none;      /* entfernt Standard-Dropdown-Pfeil in modernen Browsern */
+  -webkit-appearance: none; /* Safari/Chrome */
+  -moz-appearance: none; /* Firefox */
+
+  margin: 5px;
+  width: 80px;
+  height: 80px;
+  border: 2px solid gray;
+  border-radius: 40px;
+  cursor: pointer;
+  font-size: 24px; /* Icon vergrößern */
+}
+
+/* Optional: Pfeil selbst erstellen (falls du einen custom Pfeil willst) */
+#add-user-btn::after {
+  content: '▼'; /* oder ein Icon */
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
+}
+
 
