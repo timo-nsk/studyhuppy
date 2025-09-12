@@ -137,6 +137,7 @@ export class UserProfileComponent implements OnInit{
     this.showAssertDeletionBox = true;
   }
 
+  //todo FIX: IST: nach löschung bleibt user auf seite. SOLL: nach löschung weiterleitung auf startseite
   deleteAccount() {
     const data = this.userData.userId
     this.userService.deleteAccount(data)
