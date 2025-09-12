@@ -73,9 +73,9 @@ public class UserApiController {
 	}
 
 	@DeleteMapping("/delete-account")
-	public ResponseEntity<Void> deleteAccount(@RequestParam("userId") String userId) {
-		accountService.deleteAccount(UUID.fromString(userId));
-		userDeletionProducer.sendMessage(userId);
+	public ResponseEntity<Void> deleteAccount(@RequestBody String userId) {
+		String username = accountService.deleteAccount(UUID.fromString(userId));
+		userDeletionProducer.sendMessage(username, userId);
 		return ResponseEntity.ok().build();
 	}
 

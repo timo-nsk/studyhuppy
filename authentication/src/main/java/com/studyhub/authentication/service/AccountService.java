@@ -36,9 +36,11 @@ public class AccountService {
 		this.jwtService = jwtService;
 	}
 
-	public void deleteAccount(UUID userId) {
+	public String deleteAccount(UUID userId) {
+		String username = appUserRepository.findByUserId(userId).getUsername();
 		appUserRepository.deleteByUserId(userId);
         log.info("User '%s' deleted from authentication service".formatted(userId));
+		return username;
 	}
 
 	public void editNotificationSubscription(Boolean activate, String username) {
