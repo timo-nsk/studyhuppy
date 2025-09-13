@@ -96,6 +96,7 @@ public class MindmapApiController {
 	public ResponseEntity<Void> createMindmap(@RequestBody NewMindmapRequest req, HttpServletRequest httpServletRequest) {
 		try {
 			mindmapService.createNewMindmap(req, httpServletRequest);
+			System.out.println("hurensohn");
 			return ResponseEntity.ok().build();
 		} catch(NodeSaveException e) {
 			log.error("Could not save node of role ROOT:", e);

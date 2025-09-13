@@ -13,4 +13,6 @@ public interface MindmapNodeRepository extends Neo4jRepository<MindmapNode, UUID
     Optional<MindmapNode> findByModulId(UUID modulId);
 
 	Optional<Set<MindmapNode>> findAllByUsername(String username);
+
+	void deleteAllByUsername(String username);
 }

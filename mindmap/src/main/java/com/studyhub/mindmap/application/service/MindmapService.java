@@ -119,4 +119,8 @@ public class MindmapService {
 		}
 		return res;
 	}
+
+	public void deleteAllMindmapsByUsername(String username) {
+		mindmapNodeRepository.deleteAllByUsername(username);
+	}
 }
