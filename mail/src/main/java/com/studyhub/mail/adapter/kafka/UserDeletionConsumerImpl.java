@@ -27,7 +27,7 @@ public class UserDeletionConsumerImpl implements IUserDeletionConsumer {
 	@Override
 	@KafkaListener(
 			topics="user-deletion",
-			groupId ="studyhuppy-modul"
+			groupId ="studyhuppy-mail"
 	)
 	public void consumeUserDeletion(UserDto userDto) {
 		deleteAllUserData(userDto);
@@ -37,6 +37,6 @@ public class UserDeletionConsumerImpl implements IUserDeletionConsumer {
 	public void deleteAllUserData(UserDto userDto) {
 		mailService.deleteAllByUsername(userDto.userId());
 
-		LOGGER.info("Deleted all associated user data from service 'modul'");
+		LOGGER.info("Deleted all associated user data from service 'mail'");
 	}
 }
