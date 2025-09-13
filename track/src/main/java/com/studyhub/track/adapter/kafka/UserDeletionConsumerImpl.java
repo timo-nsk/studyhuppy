@@ -1,6 +1,8 @@
-package com.studyhub.track.application.service;
+package com.studyhub.track.adapter.kafka;
 
 import com.studyhub.kafka.dto.UserDto;
+import com.studyhub.track.application.service.IUserDeletionConsumer;
+import com.studyhub.track.application.service.ModulService;
 import com.studyhub.track.domain.model.modul.Modul;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,16 +16,17 @@ import java.util.List;
  * topic: 'user-deletion'
  */
 @Service
-public class UserDeletionConsumer {
+public class UserDeletionConsumerImpl implements IUserDeletionConsumer {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserDeletionConsumer.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserDeletionConsumerImpl.class);
 
 	private final ModulService modulService;
 
-	public UserDeletionConsumer(ModulService modulService) {
+	public UserDeletionConsumerImpl(ModulService modulService) {
 		this.modulService = modulService;
 	}
 
+	@Override
 	@KafkaListener(
 			topics="user-deletion",
 			groupId ="studyhuppy"
@@ -32,7 +35,8 @@ public class UserDeletionConsumer {
 		deleteAllUserData(userDto);
 	}
 
-	private void deleteAllUserData(UserDto userDto) {
+	@Override
+	public void deleteAllUserData(UserDto userDto) {
 		List<Modul> allModules = modulService.findAllByUsername(userDto.username());
 
 		for (Modul modul : allModules) {
