@@ -21,16 +21,16 @@ create table karteikarte(
     frage_typ varchar(20),
     antwortzeit_sekunden int,
     lernstufen varchar(200),
-    stapel int references stapel(id),
+    stapel int references stapel(id) on delete cascade,
     stapel_key int
 );
 
 create table antwort(
     antwort text,
     wahrheit boolean,
-    karteikarte int references karteikarte(id),
+    karteikarte int references karteikarte(id) on delete cascade,
     karteikarte_key int,
-    stapel int references stapel(id),
+    stapel int references stapel(id) on delete cascade,
     stapel_key int
 );
 
