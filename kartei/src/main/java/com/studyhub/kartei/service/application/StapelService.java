@@ -1,6 +1,7 @@
 package com.studyhub.kartei.service.application;
 
 import com.studyhub.kartei.domain.model.Karteikarte;
+import com.studyhub.kartei.domain.model.KarteikarteGelerntEvent;
 import com.studyhub.kartei.domain.model.Stapel;
 import com.studyhub.kartei.service.application.lernzeit.KarteikarteGelerntEventRepository;
 import com.studyhub.kartei.service.application.lernzeit.LernzeitService;
@@ -162,5 +163,13 @@ public class StapelService {
 		s.removeAntwortFromKarte(UUID.fromString(req.karteId()), req.antwortIndex());
 		repo.save(s);
 		return true;
+	}
+
+	public void deleteStapelByFachId(UUID fachId) {
+		repo.deleteStapelByFachId(fachId);
+	}
+
+	public void deleteEventsByStapelId(UUID stapelId) {
+		gelerntEventRepository.deleteAllByStapelId(stapelId);
 	}
 }

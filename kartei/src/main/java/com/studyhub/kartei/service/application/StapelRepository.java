@@ -28,4 +28,6 @@ public interface StapelRepository {
 	List<Stapel> findByUsername(String username);
 
 	boolean isStapelDbHealthy();
+
+	void deleteStapelByFachId(UUID fachId);
 }

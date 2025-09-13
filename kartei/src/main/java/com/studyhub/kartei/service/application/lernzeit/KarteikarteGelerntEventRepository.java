@@ -18,4 +18,6 @@ public interface KarteikarteGelerntEventRepository {
 	List<KarteikarteGelerntEvent> findByStapelId(UUID stapelId);
 
 	void deleteAllByKarteiFachId(UUID karteiFachId);
+
+	void deleteAllByStapelId(UUID stapelId);
 }

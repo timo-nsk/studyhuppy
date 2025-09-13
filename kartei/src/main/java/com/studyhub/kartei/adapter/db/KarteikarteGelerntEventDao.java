@@ -23,4 +23,8 @@ public interface KarteikarteGelerntEventDao extends CrudRepository<KarteikarteGe
 	@Modifying
 	@Query("delete from karteikarte_gelernt_event where karteikarte_id = :karteiFachId")
 	void deleteAllByKarteiFachId(@Param("karteiFachId") UUID karteiFachId);
+
+	@Modifying
+	@Query("delete from karteikarte_gelernt_event where stapel_id = :stapelId")
+	void deleteAllByStapelId(@Param("stapelId") UUID stapelId);
 }

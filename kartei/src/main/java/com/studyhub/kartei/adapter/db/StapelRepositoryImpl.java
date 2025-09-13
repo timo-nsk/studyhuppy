@@ -97,4 +97,9 @@ public class StapelRepositoryImpl implements StapelRepository {
 		Integer result = dao.isStapelDbHealthy();
 		return result != null;
 	}
+
+	@Override
+	public void deleteStapelByFachId(UUID fachId) {
+		dao.deleteByFachId(fachId);
+	}
 }
