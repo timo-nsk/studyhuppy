@@ -2,8 +2,12 @@ package com.studyhub.track.adapter.kafka;
 
 import com.studyhub.kafka.dto.UserDto;
 import com.studyhub.track.application.service.IUserDeletionConsumer;
+import com.studyhub.track.application.service.LernplanService;
 import com.studyhub.track.application.service.ModulService;
+import com.studyhub.track.application.service.SessionService;
+import com.studyhub.track.domain.model.lernplan.Lernplan;
 import com.studyhub.track.domain.model.modul.Modul;
+import com.studyhub.track.domain.model.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -21,9 +25,16 @@ public class UserDeletionConsumerImpl implements IUserDeletionConsumer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserDeletionConsumerImpl.class);
 
 	private final ModulService modulService;
+	private final LernplanService lernplanService;
+	private final SessionService sessionService;
 
-	public UserDeletionConsumerImpl(ModulService modulService) {
+	public UserDeletionConsumerImpl(
+			ModulService modulService,
+			LernplanService lernplanService,
+			SessionService sessionService) {
 		this.modulService = modulService;
+		this.lernplanService = lernplanService;
+		this.sessionService = sessionService;
 	}
 
 	@Override
@@ -37,11 +48,14 @@ public class UserDeletionConsumerImpl implements IUserDeletionConsumer {
 
 	@Override
 	public void deleteAllUserData(UserDto userDto) {
-		List<Modul> allModules = modulService.findAllByUsername(userDto.username());
+		String username = userDto.username();
+		List<Modul> allModules = modulService.findAllByUsername(username);
+		List<Lernplan> allLernplaene = lernplanService.getAllLernplaeneByUsername(username);
+		List<Session> allSession = sessionService.getSessionsByUsername(username);
 
-		for (Modul modul : allModules) {
-			modulService.deleteModul(modul.getFachId(), userDto.username());
-		}
+		for (Modul modul : allModules) modulService.deleteModul(modul.getFachId(), userDto.username());
+		for(Lernplan lernplan : allLernplaene) lernplanService.deleteLernplanByFachId(lernplan.getFachId());
+		for (Session session : allSession) sessionService.deleteSession(session.getFachId());
 
 		LOGGER.info("Deleted all associated user data from service 'modul'");
 	}
