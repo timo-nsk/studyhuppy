@@ -3,7 +3,6 @@ package com.studyhub.kartei.adapter.kafka;
 import com.studyhub.kafka.dto.UserDto;
 import com.studyhub.kartei.domain.model.Stapel;
 import com.studyhub.kartei.service.application.IUserDeletionConsumer;
-import com.studyhub.kartei.service.application.KarteikarteService;
 import com.studyhub.kartei.service.application.StapelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +10,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 public class UserDeletionConsumerImpl implements IUserDeletionConsumer {
 
-	private StapelService stapelService;
+	private final StapelService stapelService;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserDeletionConsumerImpl.class);
 
@@ -32,7 +32,7 @@ public class UserDeletionConsumerImpl implements IUserDeletionConsumer {
 	@Override
 	@KafkaListener(
 			topics="user-deletion",
-			groupId ="studyhuppy"
+			groupId ="studyhuppy-kartei"
 	)
 	public void consumeUserDeletion(UserDto userDto) {
 		deleteAllUserData(userDto);
@@ -44,10 +44,11 @@ public class UserDeletionConsumerImpl implements IUserDeletionConsumer {
 		List<Stapel> allStapel = stapelService.findByUsername(username);
 
 		for (Stapel stapel : allStapel) {
-			stapelService.deleteStapelByFachId(stapel.getFachId());
+			UUID stapelId = stapel.getFachId();
+			stapelService.deleteStapelByFachId(stapelId);
+			stapelService.deleteEventsByStapelId(stapelId);
 		}
 
-
-		LOGGER.info("Deleted all associated user data from service 'modul'");
+		LOGGER.info("Deleted all associated user data from service 'kartei'");
 	}
 }

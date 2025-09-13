@@ -40,7 +40,7 @@ public class UserDeletionConsumerImpl implements IUserDeletionConsumer {
 	@Override
 	@KafkaListener(
 			topics="user-deletion",
-			groupId ="studyhuppy"
+			groupId ="studyhuppy-modul"
 	)
 	public void consumeUserDeletion(UserDto userDto) {
 		deleteAllUserData(userDto);
