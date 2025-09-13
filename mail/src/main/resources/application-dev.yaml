@@ -10,6 +10,18 @@ spring:
     password: ${MAIL_DB_PASS}
     username: ${MAIL_DB_USER}
     url: jdbc:postgresql://localhost:6435/${MAIL_DB}
+  kafka:
+    bootstrap-servers: localhost:10000
+    consumer:
+      group-id: studyhuppy-modul
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 management:
   endpoints:
     web:

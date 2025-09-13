@@ -5,6 +5,8 @@ import com.studyhub.mail.adapter.db.MailGesendetEventRepository;
 import com.studyhub.mail.domain.model.MailGesendetEvent;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class MailGesendetEventService {
 
@@ -22,5 +24,9 @@ public class MailGesendetEventService {
 	public boolean isMailDbHealthy() {
 		Integer result = repo.isMailDbHealthy();
 		return result != null;
+	}
+
+	public void deleteAllByUsername(UUID userId) {
+		repo.deleteAllByUserId(userId);
 	}
 }
