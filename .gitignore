@@ -26,6 +26,7 @@ mail/target
 
 mindmap/mindmap-data
 mindmap/.env
+mindmap/target
 
 actuator/actuator-test.sh
 actuator/run-tests-actuator.bat
