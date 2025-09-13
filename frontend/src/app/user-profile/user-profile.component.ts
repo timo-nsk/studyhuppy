@@ -5,6 +5,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
 import {SnackbarService} from '../snackbar.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -19,6 +20,7 @@ export class UserProfileComponent implements OnInit{
 
   userService  = inject(UserApiService)
   snackbarService = inject(SnackbarService)
+  router = inject(Router)
 
   showEmailChangeForm : boolean = false
   showPassChangeForm : boolean = false
@@ -140,7 +142,17 @@ export class UserProfileComponent implements OnInit{
   //todo FIX: IST: nach löschung bleibt user auf seite. SOLL: nach löschung weiterleitung auf startseite
   deleteAccount() {
     const data = this.userData.userId
-    this.userService.deleteAccount(data)
+    this.userService.deleteAccount(data).subscribe({
+      next: (response) => {
+        console.log('Account deleted successfully', response);
+        this.router.navigate(['/login'])
+        this.snackbarService.openSuccess("Ihr Account wurde gelöscht.")
+      },
+      error: (err) => {
+        console.error('Error deleting account', err);
+        this.snackbarService.openError("Ihr Account konnte nicht gelöscht werden. Wenden Sie sich an den Support.")
+      }
+    });
   }
 
   selectProfilbild(event: Event): void {

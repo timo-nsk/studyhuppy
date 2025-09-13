@@ -40,20 +40,13 @@ export class UserApiService {
     return this.http.put<any>(this.BASE_API_URL + "/change-password", data, { headers, observe : 'response'});
   }
 
-  deleteAccount(data: any) {
+  deleteAccount(data: any) : Observable<any>{
     const headers = this.headerService.createAuthHeader()
 
-    this.http.request('DELETE', this.BASE_API_URL + '/delete-account', {
+    return this.http.request<any>('DELETE', this.BASE_API_URL + '/delete-account', {
       headers,
       body: data
-    }).subscribe({
-      next: (response) => {
-        console.log('Account deleted successfully', response);
-      },
-      error: (err) => {
-        console.error('Error deleting account', err);
-      }
-    });
+    })
   }
 
   postNewProfilbild(profilbildUrl: string) : Observable<any> {
