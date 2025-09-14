@@ -29,6 +29,7 @@ export class AddModuleComponent {
       this.service.postFormData(form).subscribe({
         next: () => {
           this.sb.openInfo("Modul erfolgreich erstellt")
+          this.newModulForm.reset()
         },
         error: (err) => {
           console.log(err)
