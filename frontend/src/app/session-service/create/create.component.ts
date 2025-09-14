@@ -18,7 +18,7 @@ import {ModuleApiService} from '../../modul-service/module/module-api.service';
 export class SessionCreateComponent implements OnInit{
   snackbarService = inject(SnackbarService)
   sessionApiService = inject(SessionApiService)
-  anzahlBloecke : number = 2;
+  anzahlBloecke : number = 1;
   session: any
   module : Modul[] = []
   modulService = inject(ModuleApiService)
