@@ -1,25 +1,21 @@
-import {Component, inject, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {NgForOf} from '@angular/common';
 import {Block} from '../session-domain';
 import {Modul} from '../../modul-service/module/domain';
+import {BlockManager} from './block-manager.service';
 
 @Component({
   selector: 'Lernblock',
-  imports: [
-    NgForOf
-  ],
+  imports: [NgForOf],
   templateUrl: './block.component.html',
   standalone: true,
   styleUrl: './block.component.scss'
 })
-export class BlockComponent implements OnInit{
+export class BlockComponent{
   @Input() index!: number;
   @Input() block!: Block;
   @Input() module : Modul[] = []
-
-  ngOnInit(): void {
-
-  }
+  @Input() blockManager : BlockManager | undefined;
 
   setModulOfBlock(event : Event): void {
     const select = event.target as HTMLSelectElement;
@@ -36,22 +32,21 @@ export class BlockComponent implements OnInit{
     }
 
     this.block.setModulName(modulName)
-
-    console.log(`[Block ${this.index}] ModulId gesetzt: ${this.block.modulId}`);
-    console.log(`[Block ${this.index}] ModulName gesetzt: ${this.block.modulName}`);
   }
 
   setLernzeitOfBlock(event : Event): void {
     const select = event.target as HTMLSelectElement;
     const minutes = Number(select.value);
     this.block.setLernzeitSeconds(minutes * 60);
-    console.log(`[Block ${this.index}] Lernzeit gesetzt: ${this.block.lernzeitSeconds}`);
   }
 
   setPauseOfBlock(event : Event): void {
     const select = event.target as HTMLSelectElement;
     const minutes = Number(select.value);
     this.block.setPausezeitSeconds(minutes * 60)
-    console.log(`[Block ${this.index}] Pause gesetzt: ${this.block.pausezeitSeconds}`);
+  }
+
+  removeBlock(index : number) {
+    this.blockManager?.removeBlock(index)
   }
 }

@@ -7,6 +7,7 @@ import {Block, Session} from '../session-domain';
 import {SnackbarService} from '../../snackbar.service';
 import {Modul} from '../../modul-service/module/domain';
 import {ModuleApiService} from '../../modul-service/module/module-api.service';
+import {BlockManager} from '../block/block-manager.service';
 
 @Component({
   selector: 'app-session-create',
@@ -22,35 +23,29 @@ export class SessionCreateComponent implements OnInit{
   session: any
   module : Modul[] = []
   modulService = inject(ModuleApiService)
+  blockManager = inject(BlockManager)
+  currentBlockList : Block[] = []
 
   ngOnInit(): void {
     this.modulService.getAllModulesByUsername().subscribe(
       {
-        next: data => {
-          this.module = data
-          // console.log(this.module)
-        }
+        next: data => { this.module = data }
       }
     )
     this.setSessionConfigData()
   }
 
-  getBlocks(): number[] {
-    return Array.from({ length: this.anzahlBloecke }, (_, i) => i);
-  }
-
   setSessionConfigData() : void {
-    let blocks = []
-
     for(let i = 0; i < this.anzahlBloecke; i++) {
-      const block = new Block("", 10, 10, this.module?.[0]?.fachId);
-      blocks.push(block)
+      const block = this.blockManager.initDefaultBlock()
+      this.blockManager.appendBlock(block)
     }
-    this.session = new Session("", "", blocks);
+    this.session = new Session("", "", this.blockManager.blocks);
+    this.currentBlockList = this.blockManager.blocks
   }
 
   getBlock(index : number) : Block {
-    return this.session.blocks[index];
+    return this.blockManager.getBlock(index)
   }
 
   saveSession(): void {
@@ -68,5 +63,13 @@ export class SessionCreateComponent implements OnInit{
     } else {
       console.error("Session ist ungültig. Bitte überprüfen Sie die Eingaben.");
     }
+  }
+
+  appendBlock() {
+    const block = this.blockManager.initDefaultBlock()
+    this.blockManager.appendBlock(block)
+    // currentBlockList wird genutzt, damit die View aktualisiert wird
+    this.currentBlockList = this.blockManager.blocks
+    this.blockManager.printBlocks()
   }
 }
