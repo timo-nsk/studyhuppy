@@ -29,6 +29,10 @@ export class Block {
   setPausezeitSeconds(seconds: number): void {
     this.pausezeitSeconds = seconds;
   }
+
+  printBlock() : void {
+    console.log(`- Block - ModulId: ${this.modulId}, Lernzeit: ${this.lernzeitSeconds}, Pausezeit: ${this.pausezeitSeconds}`);
+  }
 }
 
 export class Session {
