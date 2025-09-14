@@ -172,4 +172,11 @@ public class StapelService {
 	public void deleteEventsByStapelId(UUID stapelId) {
 		gelerntEventRepository.deleteAllByStapelId(stapelId);
 	}
+
+	public List<String> getFaelligeStapelNamenByUsername(String username) {
+		return repo.findByUsername(username).stream()
+				.filter(s -> s.anzahlFälligeKarteikarten(LocalDateTime.now()) > 0)
+				.map(Stapel::getName)
+				.toList();
+	}
 }

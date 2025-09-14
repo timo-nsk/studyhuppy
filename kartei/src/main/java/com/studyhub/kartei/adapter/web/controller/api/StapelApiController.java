@@ -66,4 +66,11 @@ public class StapelApiController {
 	public ResponseEntity<Stapel> getStapelWithAllKarteikartenByFachid(@RequestBody String fachId) {
 		return ResponseEntity.ok(stapelService.findByFachId(fachId));
 	}
+
+	@GetMapping("/check-faellige-stapel")
+	public ResponseEntity<List<String>> checkFaelligeStapel(HttpServletRequest request) {
+		String username = jwtService.extractUsernameFromHeader(request);
+		List<String> faelligeStapel = stapelService.getFaelligeStapelNamenByUsername(username);
+		return ResponseEntity.ok(faelligeStapel);
+	}
 }

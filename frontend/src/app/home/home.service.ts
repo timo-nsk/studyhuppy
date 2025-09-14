@@ -5,11 +5,15 @@ import {PlanApiService} from '../plan-service/plan-api.service';
 import {forkJoin, Observable} from 'rxjs';
 import {SessionApiService} from '../session-service/session-api.service';
 
-export interface UserServiceInformation {
+export interface UserModulServiceInformation {
   hasModule : boolean;
   hasLernSessions : boolean;
   hasLernplan : boolean;
+}
+
+export interface UserKarteiServiceInformation {
   hasKarteikartenStapel : boolean;
+  faelligeStapel : string[];
 }
 
 @Injectable({
@@ -19,14 +23,21 @@ export class HomeService {
   modulApiService = inject(ModuleApiService)
   sessionApiService = inject(SessionApiService)
   lerplanApiService = inject(PlanApiService)
+
   karteiApiService = inject(KarteiApiService)
 
-  gatherUserServiceInformation(): Observable<UserServiceInformation> {
+  gatherUserServiceInformation(): Observable<UserModulServiceInformation> {
     return forkJoin({
       hasModule: this.modulApiService.hasModule(),
       hasLernSessions: this.sessionApiService.hasLernSessions(),
       hasLernplan: this.lerplanApiService.hasLernplan(),
-      hasKarteikartenStapel: this.karteiApiService.hasKarteikartenStapel()
+    });
+  }
+
+  gatherUserKarteiServiceInformation(): Observable<UserKarteiServiceInformation> {
+    return forkJoin({
+      hasKarteikartenStapel: this.karteiApiService.hasKarteikartenStapel(),
+      faelligeStapel: this.karteiApiService.getFaelligeStapelInfo()
     });
   }
 }

@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {jwtDecode} from 'jwt-decode';
-import {HomeService, UserServiceInformation} from './home.service';
+import {HomeService, UserModulServiceInformation, UserKarteiServiceInformation} from './home.service';
 import {NgIf} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {PlanApiService} from '../plan-service/plan-api.service';
@@ -16,18 +16,24 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
 export class HomeComponent implements OnInit{
   homeService = inject(HomeService)
   planApiService = inject(PlanApiService)
-  isLoading = true;
+  isModulDataLoading = true;
+  isKarteiDataLoading = true;
   todayPlanned = false
 
   username: string = "default";
-  userServiceInformation : UserServiceInformation = {} as UserServiceInformation
+  userServiceInformation : UserModulServiceInformation = {} as UserModulServiceInformation
+  userKarteiServiceInfo : UserKarteiServiceInformation = {} as UserKarteiServiceInformation
 
   ngOnInit(): void {
     this.getUsername()
     this.homeService.gatherUserServiceInformation().subscribe(usi => {
       this.userServiceInformation = usi;
       this.isTodayPlanned()
-      this.isLoading = false
+      this.isModulDataLoading = false
+    });
+    this.homeService.gatherUserKarteiServiceInformation().subscribe(usi => {
+      this.userKarteiServiceInfo = usi;
+      this.isKarteiDataLoading = false
     });
   }
 
@@ -53,8 +59,21 @@ export class HomeComponent implements OnInit{
   }
 
   hasKarteikartenstapel() {
-    return this.userServiceInformation.hasKarteikartenStapel
+    return this.userKarteiServiceInfo.hasKarteikartenStapel
   }
+
+  hasFaelligeStapel() {
+    return this.userKarteiServiceInfo.faelligeStapel.length > 0
+  }
+
+  getFaelligeStapel() {
+    if (this.hasFaelligeStapel()) {
+      return this.userKarteiServiceInfo.faelligeStapel.join(", ")
+    } else {
+      return "Keine fälligen Stapel."
+    }
+  }
+
 
   isTodayPlanned() {
     this.planApiService.isTodayPlanned().subscribe({

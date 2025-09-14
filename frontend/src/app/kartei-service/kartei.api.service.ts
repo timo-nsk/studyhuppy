@@ -109,4 +109,9 @@ export class KarteiApiService {
     const headers = this.headerService.createAuthHeader()
     return this.http.get<any>(this.BASE_API_URL + '/has-karteikartenstapel', {headers})
   }
+
+  getFaelligeStapelInfo() : Observable<string[]> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.get<string[]>(this.BASE_API_URL + '/check-faellige-stapel', {headers})
+  }
 }
