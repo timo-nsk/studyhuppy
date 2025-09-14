@@ -4,14 +4,14 @@
       <div>
         <h3>Meine Lernpläne</h3>
       </div>
-      <div>
+      <div *ngIf="hasModule">
         <button class="sh-btn" [routerLink]="'/lernplan/erstellen'">erstellen</button>
       </div>
     </div>
-    <div id="no-lernplan-container" class="" *ngIf="false">
+    <div id="no-lernplan-container" class="" *ngIf="!hasLernplan()">
       <p>Keine Lernpläne verfügbar</p>
     </div>
-    <div id="lernplan-container" class="" *ngIf="true">
+    <div id="lernplan-container" class="" *ngIf="hasLernplan()">
       <table class="table table-sm">
         <tbody>
           <tr *ngFor="let lernplan of lernplaene">

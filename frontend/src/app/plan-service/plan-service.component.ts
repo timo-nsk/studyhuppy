@@ -4,6 +4,7 @@ import {RouterLink} from '@angular/router';
 import {SnackbarService} from '../snackbar.service';
 import {PlanApiService} from './plan-api.service';
 import {Lernplan} from './plan-domain';
+import {ModuleApiService} from '../modul-service/module/module-api.service';
 
 
 @Component({
@@ -20,8 +21,10 @@ import {Lernplan} from './plan-domain';
 export class PlanServiceComponent implements OnInit {
   snackbarService = inject(SnackbarService)
   planApiService = inject(PlanApiService)
+  modulService = inject(ModuleApiService)
   titel = "blub"
   lernplaene : Lernplan[] = [];
+  hasModule = false
 
   ngOnInit(): void {
     this.planApiService.getAllLernplaene().subscribe({
@@ -34,6 +37,7 @@ export class PlanServiceComponent implements OnInit {
         this.snackbarService.openError('Fehler beim Laden der Lernpläne');
       }
     })
+    this.checkHasModule()
   }
 
   deleteLernplan(fachId : string) {
@@ -64,5 +68,17 @@ export class PlanServiceComponent implements OnInit {
         this.snackbarService.openError('Fehler beim Aktivieren des Lernplans');
       }
     })
+  }
+
+  checkHasModule() {
+    this.modulService.hasModule().subscribe({
+      next: res => {
+        this.hasModule = res
+      }
+    })
+  }
+
+  hasLernplan() {
+    return this.lernplaene.length > 0
   }
 }
