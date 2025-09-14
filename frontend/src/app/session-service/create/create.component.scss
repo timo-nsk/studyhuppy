@@ -8,3 +8,29 @@
   align-items: center;
   flex-direction: column;
 }
+
+#lernblock-container {
+  background-color: #e7f4ff;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+#btn-container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+#add-block-btn {
+  width: 130px;
+  height: 30px;
+  background-color: gray;
+  text-align: center;
+
+  border: 2px solid black;
+  border-radius: 3px;
+}
+
+#add-block-btn:hover {
+  cursor: pointer;
+}

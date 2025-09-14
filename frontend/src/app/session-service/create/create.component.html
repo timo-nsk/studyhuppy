@@ -1,5 +1,5 @@
 <div class="main-container">
-  <div class="form-container flex-column">
+  <div class="form-container flex-column border-r">
     <form class="sh-form m-accent-font">
       <div class="mb-4">
         <label >Session-Titel</label>
@@ -9,29 +9,27 @@
         <label class="form-label">Beschreibung</label>
         <textarea class="form-control" [(ngModel)]="session.beschreibung" name="session-beschreibung"></textarea>
       </div>
-      <div class="mb-4">
-        <label>Anzahl Blöcke:</label>
-        <select class="form-select" [(ngModel)]="anzahlBloecke" name="blocke-select" (change)="setSessionConfigData()">
-          <option [value]="1" selected>1</option>
-          <option [value]="2">2</option>
-          <option [value]="3">3</option>
-          <option [value]="4">4</option>
-          <option [value]="5">5</option>
-          <option [value]="6">6</option>
-          <option [value]="7">7</option>
-          <option [value]="8">8</option>
-          <option [value]="9">9</option>
-          <option [value]="10">10</option>
-        </select>
+      <div id="lernblock-container" class="mb-4">
+        <div>
+          <h3>Lernblöcke</h3>
+        </div>
+        <div>
+          <Lernblock *ngFor="let block of currentBlockList; let i = index"
+                     [index]="i" [block]="getBlock(i)"
+                     [module] = "module"
+                     [blockManager]="blockManager">
+          </Lernblock>
+        </div>
+        <div id="btn-container">
+          <button id="add-block-btn" (click)="appendBlock()">
+            Block hinzufügen
+          </button>
+        </div>
       </div>
       <div class="mb-4">
-        <Lernblock *ngFor="let block of getBlocks(); let i = index"
-                   [index]="i" [block]="getBlock(i)"
-                   [module] = "module">
-        </Lernblock>
-      </div>
-      <div class="mb-4">
-        <button id="session-save-btn" class="sh-btn" (click)="saveSession()">Session speichern</button>
+        <button id="session-save-btn" class="sh-btn" (click)="saveSession()">
+          Session speichern
+        </button>
       </div>
     </form>
   </div>
