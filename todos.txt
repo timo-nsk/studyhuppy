@@ -1,0 +1,10 @@
+- lernpläne müssen komplett frei bearbeitbar sein, nach erstellung
+- sessions müssen komplett frei bearbeitbar sein, nach erstellung
+- die blöcke, die bei sessions erstellt werden, sollen per drag und drop arrangeable sein, also man soll die reihenflge ändern könne (glaube das ist relativ komplex)
+- man soll sessions, die man abgeschlossen hat, bewerten können hinsichtlich der subjektiven "lernleistung", also im sinne von "wie gut konntest du dich konzentrieren etc"
+- user soll quick sessions erstellen können, also: modul auswählen, zeit auswählen, pause auswählen und ein repeat-anzahl. Nichts muss persistent gespeichert werden
+
+
+DONE
+- beim erstellen von sessions soll lieber so ein +-button anstatt dieses select mit den x blöcken dannkommen. Weil es bisher so ist, das wenn man zb 5 blöcke eingestellt
+  und sich zb umentscheidet währen ddem erstellöungsprozess, alle blöcke dann resetet werden vond en daten. das ist super nervig.
