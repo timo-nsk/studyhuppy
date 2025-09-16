@@ -14,12 +14,17 @@
         <textarea class="form-control" formControlName="sessionBeschreibung" name="session-beschreibung"></textarea>
       </div>
       <div id="lernblock-container" class="mb-4">
-        <div>
-          <h3>Lernblöcke</h3>
+        <div id="lernblock-container-head" class="border">
+          <div class="border">
+            <h3>Lernblöcke</h3>
+          </div>
+          <div class="border">
+            <button id="pomodoro-btn" type="button" (click)="setPomodoroTimes()">pomo</button>
+          </div>
         </div>
         <div>
           <Lernblock *ngFor="let block of currentBlockList; let i = index"
-                     [index]="i" [block]="getBlock(i)"
+                     [index]="i" [block]="block"
                      [module] = "module"
                      [blockManager]="blockManager">
           </Lernblock>
@@ -30,7 +35,7 @@
           </div>
         </div>
         <div id="btn-container">
-          <button id="add-block-btn" (click)="appendBlock()">
+          <button id="add-block-btn" type="button" (click)="appendBlock()">
             <svg width="164" height="65" viewBox="0 0 164 65" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="3" y="3" width="158" height="38" rx="9" fill="#F5F5F5" stroke="#383838" stroke-width="2"/>
               <circle cx="82.5" cy="42.5" r="19.5" fill="#F5F5F5" stroke="#383838" stroke-width="2"/>
@@ -44,7 +49,7 @@
         </div>
       </div>
       <div class="mb-4">
-        <button id="session-save-btn" class="sh-btn">
+        <button id="session-save-btn" class="sh-btn" type="submit">
           Session speichern
         </button>
       </div>

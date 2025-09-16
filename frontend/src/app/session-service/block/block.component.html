@@ -8,7 +8,7 @@
         <tr>
           <td class="td-label">Modul:</td>
           <td>
-            <select class="form-select" (change)="setModulOfBlock($event)">
+            <select class="form-select modul-select" (change)="setModulOfBlock($event)">
               <option disabled selected value="">---</option>
               <option *ngFor="let modul of module" [value]="modul.fachId">{{modul.name}}</option>
             </select>
@@ -17,8 +17,8 @@
         <tr>
           <td class="td-label">Lernzeit:</td>
           <td>
-            <select class="form-select" (change)="setLernzeitOfBlock($event)">
-              <option [value]="5" selected>5min</option>
+            <select class="form-select lernzeit-select" (change)="setLernzeitOfBlock($event)">
+              <option [value]="5">5min</option>
               <option [value]="10">10min</option>
               <option [value]="15">15min</option>
               <option [value]="20">20min</option>
@@ -36,8 +36,8 @@
         <tr>
           <td class="td-label">Pause:</td>
           <td>
-            <select class="form-select" (change)="setPauseOfBlock($event)">
-              <option [value]="5" selected>5min</option>
+            <select class="form-select pausen-select" (change)="setPauseOfBlock($event)">
+              <option [value]="5">5min</option>
               <option [value]="10">10min</option>
               <option [value]="15">15min</option>
               <option [value]="20">20min</option>
