@@ -15,6 +15,30 @@
   padding: 15px;
 }
 
+.border {
+  border: 2px solid #a1d1ff;
+  padding: 2px;
+  margin: 2px;
+}
+
+#lernblock-container-head {
+  display: flex;
+  justify-content: space-between;
+}
+
+#pomodoro-btn {
+  background-color: #f55f5f;
+  width: 80px;
+  height: 40px;
+  text-align: center;
+  border: 2px none black;
+  border-radius: 4px;
+}
+
+#pomodoro-btn:hover {
+  cursor: pointer;
+}
+
 #invalid-block-container {
   height: 40px;
   display: flex;
