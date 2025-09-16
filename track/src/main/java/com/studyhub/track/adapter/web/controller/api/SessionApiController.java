@@ -1,7 +1,9 @@
 package com.studyhub.track.adapter.web.controller.api;
 
 import com.studyhub.track.adapter.web.AngularApi;
+import com.studyhub.track.adapter.web.controller.request.dto.SessionBeendetEventRequest;
 import com.studyhub.track.adapter.web.controller.request.dto.SessionDeleteRequest;
+import com.studyhub.track.application.service.SessionEventsService;
 import com.studyhub.track.application.service.dto.SessionInfoDto;
 import com.studyhub.track.adapter.web.controller.request.dto.SessionRequest;
 import com.studyhub.track.application.JWTService;
@@ -18,10 +20,12 @@ import java.util.UUID;
 public class SessionApiController {
 
 	private final SessionService sessionService;
+	SessionEventsService sessionEventsService;
 	private final JWTService jwtService;
 
-	public SessionApiController(SessionService sessionService, JWTService jwtService) {
+	public SessionApiController(SessionService sessionService, SessionEventsService sessionEventsService, JWTService jwtService) {
 		this.sessionService = sessionService;
+		this.sessionEventsService = sessionEventsService;
 		this.jwtService = jwtService;
 	}
 
@@ -79,5 +83,17 @@ public class SessionApiController {
 		String username = jwtService.extractUsernameFromHeader(request);
 		List<Session> data = sessionService.getSessionsByUsername(username);
 		return ResponseEntity.ok(!data.isEmpty());
+	}
+
+	@AngularApi
+	@PostMapping("/save-session-beendet-event" )
+	public ResponseEntity<Void> saveSessionBeendetEvent(@RequestBody SessionBeendetEventRequest eventRequest) {
+		System.out.println("sent sesison event: " + eventRequest);
+		boolean success = sessionEventsService.save(eventRequest.toEntity());
+		if (success) {
+			return ResponseEntity.ok().build();
+		} else {
+			return ResponseEntity.internalServerError().build();
+		}
 	}
 }
