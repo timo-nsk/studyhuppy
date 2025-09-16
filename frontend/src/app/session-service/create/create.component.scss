@@ -15,15 +15,24 @@
   padding: 15px;
 }
 
+#invalid-block-container {
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffafaf;
+  border: 2px solid #ff8e8e;
+  border-radius: 5px;
+  color: black;
+  margin-bottom: 20px;
+}
+
 #btn-container {
   display: flex;
   justify-content: center;
   align-content: center;
 }
 
-#add-block-btn {
-
-}
 
 #add-block-btn:hover {
   cursor: pointer;

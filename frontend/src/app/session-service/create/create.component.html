@@ -1,13 +1,17 @@
 <div class="main-container">
   <div class="form-container flex-column border-r">
-    <form class="sh-form m-accent-font">
+    <form class="sh-form m-accent-font" [formGroup]="sessionForm" (ngSubmit)="saveSession()">
       <div class="mb-4">
         <label >Session-Titel</label>
-        <input class="form-control" [(ngModel)]="session.titel" name="session-titel">
+        <input class="form-control" formControlName="sessionTitel" name="session-titel">
+        <span class="text-danger"
+              *ngIf="sessionForm.controls['sessionTitel'].errors?.['required'] && sessionForm.controls['sessionTitel'].touched">
+              Bitte geben Sie einen Sessiontitel ein
+        </span>
       </div>
       <div class="mb-4">
         <label class="form-label">Beschreibung</label>
-        <textarea class="form-control" [(ngModel)]="session.beschreibung" name="session-beschreibung"></textarea>
+        <textarea class="form-control" formControlName="sessionBeschreibung" name="session-beschreibung"></textarea>
       </div>
       <div id="lernblock-container" class="mb-4">
         <div>
@@ -19,6 +23,11 @@
                      [module] = "module"
                      [blockManager]="blockManager">
           </Lernblock>
+        </div>
+        <div id="invalid-block-container" *ngIf="invalidBlocks.length > 0">
+          <div *ngFor="let status of invalidBlocks">
+            <span *ngIf="!status">In einem Block fehlt die Modulangabe</span>
+          </div>
         </div>
         <div id="btn-container">
           <button id="add-block-btn" (click)="appendBlock()">
@@ -35,7 +44,7 @@
         </div>
       </div>
       <div class="mb-4">
-        <button id="session-save-btn" class="sh-btn" (click)="saveSession()">
+        <button id="session-save-btn" class="sh-btn">
           Session speichern
         </button>
       </div>

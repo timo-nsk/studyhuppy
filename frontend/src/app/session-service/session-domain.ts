@@ -47,18 +47,6 @@ export class Session {
     this.beschreibung = beschreibung;
     this.blocks = blocks;
   }
-
-  validSession(): boolean {
-    if(this.titel == "" || this.titel == null) return false
-
-    for (const block of this.blocks) {
-      if (!block.modulId || block.lernzeitSeconds <= 0 || block.pausezeitSeconds < 0) {
-        return false
-      }
-    }
-
-    return true
-  }
 }
 
 export interface SessionInfoDto {

@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Block} from '../session-domain';
+import {validate} from 'uuid';
 
 @Injectable({
   providedIn: "root"
@@ -13,7 +14,7 @@ export class BlockManager {
   }
 
   initDefaultBlock() : Block {
-    return new Block("", 300, 300, "uuid-placeholder");
+    return new Block("", 300, 300, "");
   }
 
   get blocks(): Block[] {
@@ -49,4 +50,33 @@ export class BlockManager {
   hasAtLeastOneBlock(): boolean {
     return this.blockList.length == 1;
   }
+
+  validateBlocks() : boolean[] {
+    let validateStatus = []
+    for (let block of this.blockList) {
+      let modulid = block.modulId;
+
+      if(!validate(modulid)) {
+        validateStatus.push(false)
+      } else {
+        validateStatus.push(true)
+      }
+    }
+
+    return validateStatus
+  }
+
+  isValidBlockList() {
+    let validateStatus = this.validateBlocks()
+
+    for (let status of validateStatus) {
+      if(!status) return false
+    }
+    return true
+  }
+
+  clearList() {
+    this.blockList = []
+  }
+
 }

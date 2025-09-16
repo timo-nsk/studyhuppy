@@ -5,7 +5,6 @@
       <div class="mb-4">
         <label for="modul-name" class="form-label m-accent-font sh-form-lbl">Modulname<span class="hint-star">*</span></label>
         <input id="modul-name" class="form-control" type="text" formControlName="name">
-
         <span class="text-danger"
               *ngIf="newModulForm.controls['name'].errors?.['required'] && newModulForm.controls['name'].touched">
               Bitte geben Sie einen Modulnamen ein

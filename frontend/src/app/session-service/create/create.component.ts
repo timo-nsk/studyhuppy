@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NgForOf} from '@angular/common';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {NgForOf, NgIf} from '@angular/common';
 import {BlockComponent} from '../block/block.component';
 import {SessionApiService} from '../session-api.service';
 import {Block, Session} from '../session-domain';
@@ -11,7 +11,7 @@ import {BlockManager} from '../block/block-manager.service';
 
 @Component({
   selector: 'app-session-create',
-  imports: [BlockComponent, FormsModule, NgForOf, ReactiveFormsModule],
+  imports: [BlockComponent, FormsModule, NgForOf, ReactiveFormsModule, NgIf],
   templateUrl: './create.component.html',
   standalone: true,
   styleUrls: ['./create.component.scss', '../../general.scss', '../../button.scss', '../../forms.scss', '../../color.scss']
@@ -19,12 +19,16 @@ import {BlockManager} from '../block/block-manager.service';
 export class SessionCreateComponent implements OnInit{
   snackbarService = inject(SnackbarService)
   sessionApiService = inject(SessionApiService)
-  anzahlBloecke : number = 1;
-  session: any
+  session: Session = {} as Session
   module : Modul[] = []
   modulService = inject(ModuleApiService)
   blockManager = inject(BlockManager)
   currentBlockList : Block[] = []
+  invalidBlocks : boolean[] = []
+  sessionForm : FormGroup = new FormGroup({
+    sessionTitel: new FormControl("", Validators.required),
+    sessionBeschreibung: new FormControl("")
+  })
 
   ngOnInit(): void {
     this.modulService.getAllModulesByUsername().subscribe(
@@ -36,10 +40,9 @@ export class SessionCreateComponent implements OnInit{
   }
 
   setSessionConfigData() : void {
-    for(let i = 0; i < this.anzahlBloecke; i++) {
-      const block = this.blockManager.initDefaultBlock()
-      this.blockManager.appendBlock(block)
-    }
+    const block = this.blockManager.initDefaultBlock()
+    this.blockManager.appendBlock(block)
+
     this.session = new Session("", "", this.blockManager.blocks);
     this.currentBlockList = this.blockManager.blocks
   }
@@ -49,10 +52,19 @@ export class SessionCreateComponent implements OnInit{
   }
 
   saveSession(): void {
-    if(this.session.validSession()) {
+    this.blockManager.printBlocks()
+    if(this.blockManager.isValidBlockList() && this.sessionForm.valid) {
+
+      this.session.titel = this.sessionForm.get('sessionTitel')?.value;
+      this.session.beschreibung = this.sessionForm.get('sessionBeschreibung')?.value;
+      this.session.blocks = this.blockManager.blocks
+
+      console.log(this.session)
+
       this.sessionApiService.saveSession(this.session).subscribe({
         next: (response) => {
           this.snackbarService.openSuccess("Session erfolgreich gespeichert.");
+          this.clearComponent()
           this.setSessionConfigData();
         },
         error: (error) => {
@@ -61,6 +73,8 @@ export class SessionCreateComponent implements OnInit{
         }
       })
     } else {
+      this.sessionForm.markAllAsTouched()
+      this.invalidBlocks = this.blockManager.validateBlocks()
       console.error("Session ist ungültig. Bitte überprüfen Sie die Eingaben.");
     }
   }
@@ -70,6 +84,12 @@ export class SessionCreateComponent implements OnInit{
     this.blockManager.appendBlock(block)
     // currentBlockList wird genutzt, damit die View aktualisiert wird
     this.currentBlockList = this.blockManager.blocks
-    this.blockManager.printBlocks()
+  }
+
+  clearComponent() {
+    this.blockManager.clearList()
+    this.currentBlockList = []
+    this.invalidBlocks = []
+    this.sessionForm.reset()
   }
 }
