@@ -248,9 +248,8 @@ public class ModulService {
 		return res;
 	}
 
-	public void addSecondsToModul(UUID uuid, LocalTime time, String username) {
+	public void addSecondsToModul(UUID uuid, int secondsToAdd, String username) {
 		TimeConverter timeConverter = new TimeConverter();
-		int secondsToAdd = timeConverter.timeToSeconds(time.toString());
 		int oldSeconds = modulRepository.findSecondsById(uuid);
 		oldSeconds += secondsToAdd;
 		try {
