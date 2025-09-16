@@ -5,6 +5,6 @@ import java.util.UUID;
 
 public record AddSecondsRequest(
         UUID modulId,
-        LocalTime time
+        Integer secondsToAdd
 ) {
 }
