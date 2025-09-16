@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, effect, inject, OnInit} from '@angular/core';
 import {NgClass, NgForOf, NgIf} from '@angular/common';
 import {SessionStateManager} from '../session-state-manager.service';
 import {Session} from '../session-domain';
@@ -6,6 +6,7 @@ import {ActivatedRoute, RouterLink} from '@angular/router';
 import {SessionApiService} from '../session-api.service';
 import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
 import {ModuleApiService} from '../../modul-service/module/module-api.service';
+import {SessionSignalService} from './session-signal.service';
 
 @Component({
   selector: 'app-session-start',
@@ -25,6 +26,15 @@ export class SessionStartComponent implements OnInit{
   sessionPaused = false;
   sessionSelectIsDisabled = false
 
+  constructor(private sessionSignalService: SessionSignalService) {
+    effect(() => {
+      if (this.sessionSignalService.sessionFinished() === -1) {
+        this.resetButtons()
+      }
+    });
+  }
+
+
   ngOnInit(): void {
     const sessionId = this.route.snapshot.paramMap.get('sessionId');
 
@@ -41,7 +51,7 @@ export class SessionStartComponent implements OnInit{
           console.log("received sessions from backend", data);
           this.sessions = data
           this.selectedSession = this.sessions[0];
-          this.sessionStateManager = new SessionStateManager(this.modulService, this.selectedSession)
+          this.sessionStateManager = new SessionStateManager(this.modulService, this.selectedSession, this.sessionSignalService)
         }
       })
     } else {
@@ -57,7 +67,7 @@ export class SessionStartComponent implements OnInit{
           console.log("received sessions from backend", data);
           this.sessions = [data]
           this.selectedSession = this.sessions[0];
-          this.sessionStateManager = new SessionStateManager(this.modulService, this.selectedSession)
+          this.sessionStateManager = new SessionStateManager(this.modulService, this.selectedSession, this.sessionSignalService)
         }
       })
     }
@@ -115,7 +125,7 @@ export class SessionStartComponent implements OnInit{
     // Setze für den UI-State die aktuelle Fach-Id des Blocks neu
     this.sessionStateManager.setCurrentBlockId(this.selectedSession.blocks[0].fachId)
     // Der State-Manager wird mit deer global gesetzen Session neu instanziiert
-    this.sessionStateManager = new SessionStateManager(this.modulService, this.selectedSession)
+    this.sessionStateManager = new SessionStateManager(this.modulService, this.selectedSession, this.sessionSignalService)
   }
 
   getComputedSessionZeit(session : Session) : number {
@@ -124,5 +134,15 @@ export class SessionStartComponent implements OnInit{
       totalSessionZeit += (session?.blocks?.[i]?.lernzeitSeconds ?? 0) + (session?.blocks?.[i]?.pausezeitSeconds ?? 0)
     }
     return totalSessionZeit
+  }
+
+  isLastBlockOfSession() {
+    return this.sessionStateManager.isLastBlockOfSession()
+  }
+
+  resetButtons() {
+    this.sessionStarted = true
+    this.sessionPaused = false
+    this.sessionSelectIsDisabled = false
   }
 }

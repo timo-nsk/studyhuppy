@@ -1,6 +1,7 @@
 import {Session} from './session-domain';
 import {AudioService} from './audio.service';
 import {ModuleApiService} from '../modul-service/module/module-api.service';
+import {SessionSignalService} from './start/session-signal.service';
 
 export class SessionStateManager {
   audioService = new AudioService()
@@ -17,7 +18,7 @@ export class SessionStateManager {
   currentBlockId : string
 
 
-  constructor(modulService: ModuleApiService, session : Session | null) {
+  constructor(modulService: ModuleApiService, session : Session | null, private sessionSignalService : SessionSignalService) {
     this.modulService = modulService
     this.lernzeiten = session!.blocks.map(block => block.lernzeitSeconds);
     this.pausen = session!.blocks.map(block => block.pausezeitSeconds);
@@ -38,6 +39,7 @@ export class SessionStateManager {
   startBlock(i: number) {
     if (i >= this.lernzeiten.length) {
       console.log("Alle Blöcke abgeschlossen!");
+      this.sessionSignalService.finishThisSession()
       this.audioService.playAudio("session-finish.mp3")
       return;
     }
@@ -61,10 +63,10 @@ export class SessionStateManager {
 
           if (this.pausen[i] <= 0) {
             clearInterval(this.currentPauseTimer);
-            this.currentPauseIndex++;
             console.log(`Block ${i} abgeschlossen.`);
             this.startBlock(i + 1);
             this.handleAudioSounds(i);
+            this.currentPauseIndex++;
           }
         }, 1000);
       }
@@ -101,6 +103,10 @@ export class SessionStateManager {
 
   getCurrentBlockModulId() {
     return this.session!.blocks[this.currentLernzeitIndex].modulId
+  }
+
+  isLastBlockOfSession() {
+    return this.currentLernzeitIndex == this.lernzeiten.length - 2
   }
 
   setCurrentBlockId(fachId : string | undefined) {
