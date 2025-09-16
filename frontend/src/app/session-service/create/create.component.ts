@@ -47,10 +47,6 @@ export class SessionCreateComponent implements OnInit{
     this.currentBlockList = this.blockManager.blocks
   }
 
-  getBlock(index : number) : Block {
-    return this.blockManager.getBlock(index)
-  }
-
   saveSession(): void {
     this.blockManager.printBlocks()
     if(this.blockManager.isValidBlockList() && this.sessionForm.valid) {
