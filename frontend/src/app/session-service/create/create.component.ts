@@ -8,6 +8,7 @@ import {SnackbarService} from '../../snackbar.service';
 import {Modul} from '../../modul-service/module/domain';
 import {ModuleApiService} from '../../modul-service/module/module-api.service';
 import {BlockManager} from '../block/block-manager.service';
+import {PomodoroSignalService} from './pomodoro-signal.service';
 
 @Component({
   selector: 'app-session-create',
@@ -19,6 +20,7 @@ import {BlockManager} from '../block/block-manager.service';
 export class SessionCreateComponent implements OnInit{
   snackbarService = inject(SnackbarService)
   sessionApiService = inject(SessionApiService)
+  pomodoroSignalService = inject(PomodoroSignalService)
   session: Session = {} as Session
   module : Modul[] = []
   modulService = inject(ModuleApiService)
@@ -32,9 +34,7 @@ export class SessionCreateComponent implements OnInit{
 
   ngOnInit(): void {
     this.modulService.getAllModulesByUsername().subscribe(
-      {
-        next: data => { this.module = data }
-      }
+      { next: data => { this.module = data } }
     )
     this.setSessionConfigData()
   }
@@ -75,7 +75,7 @@ export class SessionCreateComponent implements OnInit{
     } else {
       this.sessionForm.markAllAsTouched()
       this.invalidBlocks = this.blockManager.validateBlocks()
-      console.error("Session ist ungültig. Bitte überprüfen Sie die Eingaben.");
+      console.log("invalid blockList:, ", this.currentBlockList)
     }
   }
 
@@ -91,5 +91,21 @@ export class SessionCreateComponent implements OnInit{
     this.currentBlockList = []
     this.invalidBlocks = []
     this.sessionForm.reset()
+  }
+
+  /**
+   * Setzt alle Blöcke auf lernzeitSeconds=1500 und pausezeitSeconds=500.
+   * und signalisiert die Änderung im PomodoroSignalService
+   */
+  setPomodoroTimes() {
+    console.log("before", JSON.parse(JSON.stringify(this.currentBlockList)));
+
+    this.currentBlockList = this.currentBlockList.map(b =>
+      new Block("", 25 * 60, 5 * 60, b.fachId, "")
+    );
+
+    this.pomodoroSignalService.changeSignal()
+
+    console.log("after", JSON.parse(JSON.stringify(this.currentBlockList)));
   }
 }
