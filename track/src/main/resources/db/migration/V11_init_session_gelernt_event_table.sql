@@ -1,4 +1,5 @@
 create table session_beendet_event(
+    id serial primary key,
     event_id uuid,
     username varchar(200),
     beendet_datum timestamp,
@@ -6,7 +7,7 @@ create table session_beendet_event(
 );
 
 create table session_bewertung(
-    session_beendet_event int references session_beendet_event(event_id),
+    session_beendet_event int references session_beendet_event(id),
     konzentration_bewertung decimal,
     produktivitaet_bewertung decimal,
     schwierigkeit_bewertung decimal
