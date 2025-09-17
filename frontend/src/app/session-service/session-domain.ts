@@ -54,3 +54,9 @@ export interface SessionInfoDto {
   name : string,
   zeit : number
 }
+
+export interface SessionBewertung {
+  konzentrationBewertung : number;
+  produktivitaetBewertung : number;
+  schwierigkeitBewertung : number;
+}
