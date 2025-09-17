@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Session, SessionInfoDto} from './session-domain';
+import {Session, SessionBewertung, SessionInfoDto} from './session-domain';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
 import {HeaderService} from '../header.service';
@@ -52,5 +52,18 @@ export class SessionApiService {
   hasLernSessions(): Observable<any> {
     const headers = this.headerService.createAuthHeader()
     return this.http.get<any>(this.SESSION_BASE_API + '/has-lernsessions', {headers})
+  }
+
+  sendSessionBewertung(sessionBewertung: SessionBewertung, abgebrochen : boolean) {
+    const headers = this.headerService.createAuthHeader()
+    const payload = {
+      bewertung: sessionBewertung,
+      abgebrochen: abgebrochen
+    }
+    return this.http.post<any>(
+      this.SESSION_BASE_API + '/save-session-beendet-event',
+      payload,
+      { headers }
+    );
   }
 }
