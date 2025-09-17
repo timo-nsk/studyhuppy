@@ -87,9 +87,9 @@ public class SessionApiController {
 
 	@AngularApi
 	@PostMapping("/save-session-beendet-event" )
-	public ResponseEntity<Void> saveSessionBeendetEvent(@RequestBody SessionBeendetEventRequest eventRequest) {
-		System.out.println("sent sesison event: " + eventRequest);
-		boolean success = sessionEventsService.save(eventRequest.toEntity());
+	public ResponseEntity<Void> saveSessionBeendetEvent(@RequestBody SessionBeendetEventRequest eventRequest, HttpServletRequest request) {
+		String username = jwtService.extractUsernameFromHeader(request);
+		boolean success = sessionEventsService.save(eventRequest.toEntity(username));
 		if (success) {
 			return ResponseEntity.ok().build();
 		} else {
