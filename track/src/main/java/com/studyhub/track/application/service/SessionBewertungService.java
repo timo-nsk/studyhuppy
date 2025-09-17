@@ -3,8 +3,9 @@ package com.studyhub.track.application.service;
 import com.studyhub.track.domain.model.session.SessionBeendetEvent;
 import com.studyhub.track.domain.model.session.SessionBewertung;
 import org.springframework.stereotype.Service;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 @Service
@@ -26,6 +27,18 @@ public class SessionBewertungService {
 
 	public Double getAverageSchwierigkeitBewertungByUsername(String username) {
 		return getAverageByUsername(username, SessionBewertung::getSchwierigkeitBewertung);
+	}
+
+	public Map<Integer, Integer> getKonzentrationHisto(String username) {
+		return getHistogramByUsername(username, SessionBewertung::getKonzentrationBewertung);
+	}
+
+	public Map<Integer, Integer> getProduktivitaetHist(String username) {
+		return getHistogramByUsername(username, SessionBewertung::getProduktivitaetBewertung);
+	}
+
+	public Map<Integer, Integer> getSchwierigkeitHisto(String username) {
+		return getHistogramByUsername(username, SessionBewertung::getSchwierigkeitBewertung);
 	}
 
 	public SessionBewertungStatistikDto getSessionBewertungStatistikByUsername(String username) {
@@ -50,5 +63,24 @@ public class SessionBewertungService {
 				.reduce(0, Integer::sum);
 
 		return sum / (double) events.size();
+	}
+
+	private Map<Integer, Integer> getHistogramByUsername(String username,
+	                                                     Function<SessionBewertung, Integer> mapper) {
+		List<SessionBeendetEvent> events = sessionBeendetEventRepository.findAllByUsername(username);
+		Map<Integer, Integer> histogram = new HashMap<>();
+
+		for (int i = 0; i <= 10; i++) histogram.put(i, 0);
+
+		for (int i = 0; i <= 10; i++) {
+			int j = i;
+			events.stream()
+					.map(SessionBeendetEvent::getBewertung)
+					.map(mapper)
+					.filter(bewertung -> bewertung == j)
+					.forEach(bewertung -> histogram.put(j, histogram.get(j) + 1));
+		}
+
+		return histogram;
 	}
 }

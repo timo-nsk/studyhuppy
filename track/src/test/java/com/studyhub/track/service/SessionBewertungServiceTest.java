@@ -11,7 +11,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
+import java.util.Map;
 import static com.studyhub.track.util.SessionBeendetEventMother.initEventsOfUser;
+import static com.studyhub.track.util.SessionBeendetEventMother.initEventsOfUserHisto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -74,5 +76,67 @@ public class SessionBewertungServiceTest {
 		assertThat(statistikDto.konzentrationBewertung()).isEqualTo(5.0);
 		assertThat(statistikDto.produktivitaetBewertung()).isEqualTo(6.0);
 		assertThat(statistikDto.schwierigkeitBewertung()).isEqualTo(7.0);
+	}
+
+	@Test
+	@DisplayName("Für einen User 'peter93' wird ein Histogram der Konzentrationsbewertung korrekt berechnet")
+	void test_05() {
+		List<SessionBeendetEvent> events = initEventsOfUserHisto(USER);
+		when(sessionBeendetEventRepository.findAllByUsername(USER)).thenReturn(events);
+
+		Map<Integer, Integer> actual = sessionBewertungService.getKonzentrationHisto(USER);
+
+		assertThat(actual.get(0)).isEqualTo(0);
+		assertThat(actual.get(1)).isEqualTo(0);
+		assertThat(actual.get(2)).isEqualTo(2);
+		assertThat(actual.get(3)).isEqualTo(0);
+		assertThat(actual.get(4)).isEqualTo(0);
+		assertThat(actual.get(5)).isEqualTo(2);
+		assertThat(actual.get(6)).isEqualTo(2);
+		assertThat(actual.get(7)).isEqualTo(1);
+		assertThat(actual.get(8)).isEqualTo(0);
+		assertThat(actual.get(9)).isEqualTo(1);
+		assertThat(actual.get(10)).isEqualTo(0);
+	}
+
+	@Test
+	@DisplayName("Für einen User 'peter93' wird ein Histogram der Produktivitätsbewertung korrekt berechnet")
+	void test_06() {
+		List<SessionBeendetEvent> events = initEventsOfUserHisto(USER);
+		when(sessionBeendetEventRepository.findAllByUsername(USER)).thenReturn(events);
+
+		Map<Integer, Integer> actual = sessionBewertungService.getProduktivitaetHist(USER);
+		assertThat(actual.get(0)).isEqualTo(1);
+		assertThat(actual.get(1)).isEqualTo(3);
+		assertThat(actual.get(2)).isEqualTo(0);
+		assertThat(actual.get(3)).isEqualTo(3);
+		assertThat(actual.get(4)).isEqualTo(0);
+		assertThat(actual.get(5)).isEqualTo(0);
+		assertThat(actual.get(6)).isEqualTo(0);
+		assertThat(actual.get(7)).isEqualTo(0);
+		assertThat(actual.get(8)).isEqualTo(0);
+		assertThat(actual.get(9)).isEqualTo(0);
+		assertThat(actual.get(10)).isEqualTo(1);
+	}
+
+	@Test
+	@DisplayName("Für einen User 'peter93' wird ein Histogram der Schwierigkeitsbewertung korrekt berechnet")
+	void test_07() {
+		List<SessionBeendetEvent> events = initEventsOfUserHisto(USER);
+		when(sessionBeendetEventRepository.findAllByUsername(USER)).thenReturn(events);
+
+		Map<Integer, Integer> actual = sessionBewertungService.getSchwierigkeitHisto(USER);
+
+		assertThat(actual.get(0)).isEqualTo(0);
+		assertThat(actual.get(1)).isEqualTo(0);
+		assertThat(actual.get(2)).isEqualTo(0);
+		assertThat(actual.get(3)).isEqualTo(0);
+		assertThat(actual.get(4)).isEqualTo(0);
+		assertThat(actual.get(5)).isEqualTo(0);
+		assertThat(actual.get(6)).isEqualTo(0);
+		assertThat(actual.get(7)).isEqualTo(6);
+		assertThat(actual.get(8)).isEqualTo(2);
+		assertThat(actual.get(9)).isEqualTo(0);
+		assertThat(actual.get(10)).isEqualTo(0);
 	}
 }
