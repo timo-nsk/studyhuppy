@@ -7,6 +7,7 @@ import {SessionApiService} from '../session-api.service';
 import {TimeFormatPipe} from '../../modul-service/module/time-format.pipe';
 import {ModuleApiService} from '../../modul-service/module/module-api.service';
 import {SessionSignalService} from './session-signal.service';
+import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-session-start',
@@ -30,6 +31,7 @@ export class SessionStartComponent implements OnInit{
     effect(() => {
       if (this.sessionSignalService.sessionFinished() === -1) {
         this.resetButtons()
+        this.openRatingModal()
       }
     });
   }
@@ -105,6 +107,7 @@ export class SessionStartComponent implements OnInit{
     // Nach einem Abbruch der Session können wieder andere Konfigurationen gewählt werden
     this.sessionSelectIsDisabled = false;
     this.ngOnInit()
+    this.openRatingModal()
   }
 
   getCurrentLernzeit(): number {
@@ -144,5 +147,13 @@ export class SessionStartComponent implements OnInit{
     this.sessionStarted = true
     this.sessionPaused = false
     this.sessionSelectIsDisabled = false
+  }
+
+  openRatingModal() {
+    const modalEl = document.getElementById('myModal');
+    if (modalEl) {
+      const modal = new Modal(modalEl);
+      modal.show();
+    }
   }
 }

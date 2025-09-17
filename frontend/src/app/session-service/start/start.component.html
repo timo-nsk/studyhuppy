@@ -63,6 +63,27 @@
           <button id="session-resume-btn" class="sh-btn" *ngIf="!sessionStarted && sessionPaused" (click)="resumeSession()">Session fortsetzen</button>
           <button id="session-abort-btn" class="sh-btn" *ngIf="!sessionStarted" (click)="abortThisSession()">Session abbrechen</button>
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Lernsession beendet 🎉</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+              </div>
+              <div class="modal-body">
+                Bewerte diese Lernsession
+              </div>
+              <div>
+                Konzentration
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
