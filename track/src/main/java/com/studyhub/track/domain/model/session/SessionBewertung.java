@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class SessionBewertung {
-	Double konzentrationBewertung;
-	Double produktivitaetBewertung;
-	Double schwierigkeitBewertung;
+	Integer konzentrationBewertung;
+	Integer produktivitaetBewertung;
+	Integer schwierigkeitBewertung;
 }
