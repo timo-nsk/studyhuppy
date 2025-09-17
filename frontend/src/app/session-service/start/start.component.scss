@@ -61,10 +61,6 @@ td {
   border-width: 0 !important;
 }
 
-.bordered {
-  border: 2px solid black;
-}
-
 .sh-btn {
   width: 150px !important;
   margin: 2px;
@@ -95,4 +91,54 @@ td {
 
 p {
   margin: 5px;
+}
+
+.rating-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.rating-container {
+  width: 80%;
+}
+
+.table {
+  width: 100% !important;
+}
+
+.td-label {
+  width: 200px !important;
+}
+
+.td-rating {
+  width: 100% !important;
+}
+
+.bordered {
+  border: 2px solid red;
+  padding: 2px;
+  margin: 2px;
+}
+
+.rate-btn {
+  width: 95px;
+  height: 35px;
+  margin: 4px;
+  text-align: center;
+}
+
+#send-rate-btn {
+  background-color: #acf0ff;
+  border: 0 none;
+  border-radius: 10px;
+}
+
+#send-rate-btn:hover {
+  background-color: #7ed2f1;
+}
+
+#skip-rate-btn:hover {
+  text-decoration: underline;
 }

@@ -65,21 +65,47 @@
         </div>
 
         <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="rating-modal" tabindex="-1" aria-labelledby="rating-modal-label" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Lernsession beendet 🎉</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                <h5 class="modal-title" id="rating-modal-label">Lernsession beendet 🎉</h5>
               </div>
               <div class="modal-body">
-                Bewerte diese Lernsession
+                <div>
+                  <p>Wie ist die Lernsession gelaufen?</p>
+                </div>
+                <section class="rating-section bordered">
+                  <div class="rating-container bordered">
+                    <table class="bordered">
+                      <tbody>
+                      <tr>
+                        <td class="td-label">Konzentration</td>
+                        <td class="td-rating">
+                          <rating [(ngModel)]="sessionBewertung.konzentrationBewertung" [max]="10"></rating>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="td-label">Produktivität</td>
+                        <td class="td-rating">
+                          <rating [(ngModel)]="sessionBewertung.produktivitaetBewertung" [max]="10"></rating>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="td-label">Schwierigkeit</td>
+                        <td class="td-rating">
+                          <rating [(ngModel)]="sessionBewertung.schwierigkeitBewertung" [max]="10"></rating>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
               </div>
-              <div>
-                Konzentration
-              </div>
+
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+                <button id="skip-rate-btn" type="button" class="rate-btn" data-bs-dismiss="modal">skip</button>
+                <button id="send-rate-btn" type="button" class="rate-btn" data-bs-dismiss="modal" (click)="sendBewertung()">bewerten</button>
               </div>
             </div>
           </div>
