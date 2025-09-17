@@ -7,9 +7,9 @@ INSERT INTO session_beendet_event(id, event_id, username, beendet_datum, abgebro
     (10006, '11111111-1111-1111-1111-111111111116', 'john_doe', '2023-10-06 12:50:00', true);
 
 INSERT INTO session_bewertung(session_beendet_event, konzentration_bewertung, produktivitaet_bewertung, schwierigkeit_bewertung) VALUES
-    (10000, 5.5, 6.0, 3.5),
-    (10001, 7.0, 6.5, 4.0),
-    (10003, 6.5, 5.5, 2.5),
-    (10004, 7.0, 4.5, 3.0),
-    (10005, 9.0, 8.0, 3.0),
-    (10006, 8.0, 5.5, 3.0);
+    (10000, 5, 6, 3),
+    (10001, 7, 6, 4),
+    (10003, 6, 5, 2),
+    (10004, 7, 4, 3),
+    (10005, 9, 8, 3),
+    (10006, 8, 5, 3);

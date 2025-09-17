@@ -63,7 +63,7 @@ public class SessionBeendetEventRepositoryTest {
 	@Test
 	@DisplayName("Ein neues SessionBeendetEvent eines Users wird erfolgreich gespeichert")
 	public void test_01() {
-		SessionBewertung newBewertung = new SessionBewertung(5.0, 6.0, 5.0);
+		SessionBewertung newBewertung = new SessionBewertung(5, 6, 5);
 		SessionBeendetEvent newEvent = new SessionBeendetEvent(UUID.randomUUID(), "florentiiina", LocalDateTime.now(), newBewertung, false);
 
 		SessionBeendetEvent savedEvent = repository.save(newEvent);
