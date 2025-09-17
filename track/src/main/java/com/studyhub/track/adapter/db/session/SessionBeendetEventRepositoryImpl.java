@@ -33,6 +33,10 @@ public class SessionBeendetEventRepositoryImpl implements SessionBeendetEventRep
 
 	@Override
 	public SessionBeendetEvent findByEventId(UUID eventId) {
+		SessionBeendetEventDto dto = eventDao.findByEventId(eventId);
+		if (dto == null) {
+			return null;
+		}
 		return toDomain(eventDao.findByEventId(eventId));
 	}
 
