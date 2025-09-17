@@ -1,10 +1,10 @@
 - Lernpläne müssen nach der Erstellung komplett frei bearbeitbar sein.
 - Sessions müssen nach der Erstellung komplett frei bearbeitbar sein.
 - Die Blöcke, die bei Sessions erstellt werden, sollen per Drag & Drop anordenbar sein, also man soll die Reihenfolge ändern können (ich glaube, das ist relativ komplex).
-- Man soll Sessions, die man abgeschlossen hat, hinsichtlich der subjektiven „Lernleistung“ bewerten können, also im Sinne von „wie gut konntest du dich konzentrieren etc.“
 - Der User soll Quick-Sessions erstellen können, also: Modul auswählen, Zeit auswählen, Pause auswählen und eine Wiederholungsanzahl festlegen. Nichts muss persistent gespeichert werden.
 - Wenn man eine Lernsession startet, soll auch die Gesamtzeit heruntergezählt und angezeigt werden.
 
 DONE
+- Man soll Sessions, die man abgeschlossen hat, hinsichtlich der subjektiven „Lernleistung“ bewerten können, also im Sinne von „wie gut konntest du dich konzentrieren etc.“
 - Beim Erstellen von Sessions soll lieber ein +-Button anstatt dieses Select-Menüs mit den x Blöcken erscheinen. Denn bisher ist es so, dass wenn man z. B. 5 Blöcke eingestellt hat und sich während des Erstellungsprozesses umentscheidet, alle Blöcke samt Daten zurückgesetzt werden. Das ist super nervig.
 - Wenn man Sessions erstellt, soll es einen Pomodoro-Auto-Fill geben, der überall für die Blöcke 25 min / 5 min setzt.
