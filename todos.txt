@@ -3,6 +3,7 @@
 - Die Blöcke, die bei Sessions erstellt werden, sollen per Drag & Drop anordenbar sein, also man soll die Reihenfolge ändern können (ich glaube, das ist relativ komplex).
 - Der User soll Quick-Sessions erstellen können, also: Modul auswählen, Zeit auswählen, Pause auswählen und eine Wiederholungsanzahl festlegen. Nichts muss persistent gespeichert werden.
 - Wenn man eine Lernsession startet, soll auch die Gesamtzeit heruntergezählt und angezeigt werden.
+- Für die Sessionbewertungen sollen Statistiken für die UI entwickelt werden, alles im Backend ist fertig
 
 DONE
 - Man soll Sessions, die man abgeschlossen hat, hinsichtlich der subjektiven „Lernleistung“ bewerten können, also im Sinne von „wie gut konntest du dich konzentrieren etc.“
