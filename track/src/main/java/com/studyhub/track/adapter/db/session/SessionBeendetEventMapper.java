@@ -3,6 +3,11 @@ package com.studyhub.track.adapter.db.session;
 import com.studyhub.track.domain.model.session.SessionBeendetEvent;
 
 public class SessionBeendetEventMapper {
+
+	private SessionBeendetEventMapper() {
+		// Utility class
+	}
+
 	public static SessionBeendetEvent toDomain(SessionBeendetEventDto dto) {
 		return new SessionBeendetEvent(
 				dto.eventId(),
