@@ -77,6 +77,6 @@ public class Modul {
 			}
 			return l.toArray(new Modultermin[0]);
 		}
-		return null;
+		return new Modultermin[0];
 	}
 }
