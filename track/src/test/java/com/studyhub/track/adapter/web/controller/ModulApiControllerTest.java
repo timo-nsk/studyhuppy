@@ -7,7 +7,6 @@ import com.studyhub.track.application.JWTService;
 import com.studyhub.track.adapter.security.SecurityConfig;
 import com.studyhub.track.adapter.web.controller.request.dto.AddTimeRequest;
 import com.studyhub.track.adapter.web.ModulForm;
-import com.studyhub.track.application.service.dto.ModulUpdateRequest;
 import com.studyhub.track.adapter.web.controller.api.ModulApiController;
 import com.studyhub.track.application.service.dto.NeuerModulterminRequest;
 import com.studyhub.track.application.service.ModulEventService;
@@ -29,7 +28,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -114,10 +112,10 @@ public class ModulApiControllerTest {
 	@Test
 	@DisplayName("Ein Post-Request auf /update ist nicht als unauthentifizierte Person möglich")
 	void test_03() throws Exception {
-		ModulUpdateRequest modulUpdateRequest = new ModulUpdateRequest(UUID.randomUUID().toString(), 20, 10);
+		TimerRequest timerRequest = new TimerRequest(UUID.randomUUID().toString(), "786786786");
 		mvc.perform(post("/api/update")
 						.contentType(MediaType.APPLICATION_JSON)
-						.content(objectMapper.writeValueAsString(modulUpdateRequest)))
+						.content(objectMapper.writeValueAsString(timerRequest)))
 				.andExpect(status().isForbidden());
 	}
 
