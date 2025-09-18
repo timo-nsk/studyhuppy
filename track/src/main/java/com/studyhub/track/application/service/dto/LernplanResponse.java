@@ -15,11 +15,9 @@ public record LernplanResponse(
 
 		for(LernplanSessionInfoDto session : sessionList) {
 			DayOfWeek plannedDayOfWeek = mapToEnum(session.weekday());
-			if(currentDayOfWeek == plannedDayOfWeek) {
-				if(!session.blocks().isEmpty()) {
-					todayPlanned = true;
-					break;
-				}
+			if (currentDayOfWeek == plannedDayOfWeek && !session.blocks().isEmpty()) {
+				todayPlanned = true;
+				break;
 			}
 		}
 		return todayPlanned;
