@@ -85,19 +85,19 @@ public class ModulServiceTest {
 
 	@Test
 	@DisplayName("Finde alle Module und transformiere die Liste in eine Map<Fach-Id, Modulname>")
-	void tst_09() {
+	void test_09() {
+		String username = "user123";
 		List<Modul> modulList = new ArrayList<>();
 		modulList.add(ModulMother.initModulWithName("Data Science"));
 		modulList.add(ModulMother.initModulWithName("Aldat"));
 		Map<UUID, String> desiredMap = new HashMap<>();
 		desiredMap.put(modulList.get(0).getFachId(), modulList.get(0).getName());
 		desiredMap.put(modulList.get(1).getFachId(), modulList.get(1).getName());
-		when(modulRepository.findAll()).thenReturn(modulList);
+		when(modulRepository.findByUsername(username)).thenReturn(modulList);
 
-		//TODO: fix
-		//Map<UUID, String> returnedMap = modulService.getModuleMap();
+		Map<UUID, String> returnedMap = modulService.getModuleMap(username);
 
-		//assertThat(returnedMap).isEqualTo(desiredMap);
+		assertThat(returnedMap).isEqualTo(desiredMap);
 	}
 
 	@Test
