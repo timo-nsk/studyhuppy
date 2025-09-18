@@ -33,7 +33,7 @@ public class CreateNewStapelRequest{
 	}
 
 	public boolean invalidLernstufen() {
-		String regex = "^(?:(?:[1-9][0-9]*m|[1-9][0-9]*h|[1-9][0-9]*d)(?:,(?:[1-9][0-9]*m|[1-9][0-9]*h|[1-9][0-9]*d))*)$";
+		String regex = "^(?:[1-9][0-9]*m|[1-9][0-9]*h|[1-9][0-9]*d)(?:,(?:[1-9][0-9]*m|[1-9][0-9]*h|[1-9][0-9]*d))*$";
 		return Pattern.compile(regex).matcher(lernIntervalle).matches();
 	}
 
