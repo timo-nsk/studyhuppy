@@ -193,17 +193,17 @@ public class ModulRepositoryTest {
 		assertThat(repository.isModulDbHealthy()).isTrue();
 	}
 
-	@Disabled("muss nur gefixed werden")
 	@Test
 	@DisplayName("Eine Liste von neuen Modulen wird erfolgreich abgespeichert")
 	void test_14() {
+		int resultShouldHaveNine = 9;
 		List<Modul> module = List.of(ModulMother.initModulWithName("modul1"),
 				ModulMother.initModulWithName("modul2"));
 
-		List<Modul> saved = repository.saveAll(module);
+		repository.saveAll(module);
 
-		assertThat(saved.size()).isEqualTo(module.size());
-		assertThat(saved.get(1).getName()).isEqualTo("modul2");
+		assertThat(repository.findAll()).hasSize(resultShouldHaveNine);
+
 	}
 
 	@Test
