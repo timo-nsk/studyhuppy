@@ -71,7 +71,7 @@ public class ModulService {
 
 	public void resetModulTime(UUID fachId) throws Exception {
 		int res = modulRepository.updateSecondsByUuid(fachId, 0);
-		if (res == 0) throw new Exception();
+		if (res == 0) throw new ModulSecondsUpdateException("could not update seconds when resetting modul with id: %s".formatted(fachId.toString()));
 		log.info("reseted modul time to 0 with id:%s".formatted(fachId.toString()));
 	}
 
@@ -249,7 +249,6 @@ public class ModulService {
 	}
 
 	public void addSecondsToModul(UUID uuid, int secondsToAdd, String username) {
-		TimeConverter timeConverter = new TimeConverter();
 		int oldSeconds = modulRepository.findSecondsById(uuid);
 		oldSeconds += secondsToAdd;
 		try {
