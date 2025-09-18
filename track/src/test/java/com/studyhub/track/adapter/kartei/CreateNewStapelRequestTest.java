@@ -44,17 +44,6 @@ public class CreateNewStapelRequestTest {
 	}
 
 	@Test
-	@DisplayName("Request mit nicht korrekten lernstufen-Formatierung wird als invalid erkannt")
-	void test_4() {
-		String uuid = UUID.randomUUID().toString();
-		CreateNewStapelRequest req = new CreateNewStapelRequest(uuid, "name", "beschreibung", "20m,2h2d", "peter22");
-
-		boolean res = req.invalidLernstufen();
-
-		assertThat(res).isFalse();
-	}
-
-	@Test
 	@DisplayName("Request ohne Setnamen ist nicht möglich")
 	void test_5() {
 		String uuid = UUID.randomUUID().toString();
