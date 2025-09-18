@@ -13,9 +13,11 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StapelRequestServiceTest {
-	//TODO: FIXME - aktuell fehlschlagend, da die Funktion rausgenommen wurde und vor der Token-VErifizierung implementiert wurde.
-	// Deswegen der 403 - Fehler. Die sendCreateNewStapelRequest muss den Header mit dem Token bekommen und weiter schicken
-	@Disabled
+	@Disabled(
+			"""
+				TODO: FIXME - aktuell fehlschlagend, da die Funktion rausgenommen wurde und vor der Token-VErifizierung implementiert wurde.
+				Deswegen der 403 - Fehler. Die sendCreateNewStapelRequest muss den Header mit dem Token bekommen und weiter schicken
+			""")
 	@Test
 	@DisplayName("Ein valider RequestBody wird an das Kartei-System per POST-Request geschickt")
 	void testSendCreateNewStapelRequest() throws IOException, InterruptedException {
