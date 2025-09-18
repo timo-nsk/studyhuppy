@@ -11,6 +11,7 @@ import com.studyhub.track.domain.model.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.List;
  * Alle Daten des Benutzers werden gelöscht.
  * topic: 'user-deletion'
  */
-@Service
+@Component
 public class UserDeletionConsumerImpl implements IUserDeletionConsumer {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserDeletionConsumerImpl.class);
