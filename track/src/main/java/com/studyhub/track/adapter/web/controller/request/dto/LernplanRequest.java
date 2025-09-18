@@ -18,7 +18,7 @@ public record LernplanRequest(
 				.filter(e -> !e.session().equals("none"))
 				.map(dtoObj -> {
 
-					DayOfWeek tag = null;
+					DayOfWeek tag;
 
 					switch(dtoObj.weekday()) {
 						case "Montags" -> tag = DayOfWeek.MONDAY;
@@ -28,6 +28,7 @@ public record LernplanRequest(
 						case "Freitags" -> tag = DayOfWeek.FRIDAY;
 						case "Samstags" -> tag = DayOfWeek.SATURDAY;
 						case "Sonntags" -> tag = DayOfWeek.SUNDAY;
+						default -> tag = null;
 					}
 
 					LocalTime beginn = LocalTime.parse(dtoObj.beginn());
