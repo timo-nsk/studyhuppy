@@ -169,14 +169,14 @@ public class ModulTest {
 	@DisplayName("Wenn ein Modul ein Modultermin der Art KLAUSUR hat, wird true returned")
 	void test_14() {
 		Modul m = ModulMother.initModulWithKlausurtermin();
-		assertTrue(m.hasKlausurdate());
+		assertTrue(m.hasKlausurtermin());
 	}
 
 	@Test
 	@DisplayName("Wenn ein Modul kein Modultermin der Art KLAUSUR hat, wird false returned")
 	void test_15() {
 		Modul m = ModulMother.initModul();
-		assertFalse(m.hasKlausurdate());
+		assertFalse(m.hasKlausurtermin());
 	}
 
 	@Test
@@ -184,7 +184,7 @@ public class ModulTest {
 	void test_16() {
 		Modul m = ModulMother.initModulWithKlausurtermin();
 
-		Modultermin[] klausurTermine = m.getKlauurtermine();
+		Modultermin[] klausurTermine = m.getKlausurtermine();
 
 		assertThat(klausurTermine).hasSize(1);
 		assertThat(klausurTermine[0].getTerminart()).isEqualTo(Terminart.KLAUSUR);
@@ -195,7 +195,7 @@ public class ModulTest {
 	void test_17() {
 		Modul m = ModulMother.initModul();
 
-		Modultermin[] klausurTermine = m.getKlauurtermine();
+		Modultermin[] klausurTermine = m.getKlausurtermine();
 
 		assertThat(klausurTermine).isNull();
 	}

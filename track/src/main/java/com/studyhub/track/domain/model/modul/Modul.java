@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 @AllArgsConstructor
@@ -59,7 +58,7 @@ public class Modul {
 		return false;
 	}
 
-	public boolean hasKlausurdate() {
+	public boolean hasKlausurtermin() {
 		int c = 0;
 		for (Modultermin modultermin : modultermine) {
 			if(modultermin.getTerminart() == Terminart.KLAUSUR)  c++;
@@ -68,8 +67,8 @@ public class Modul {
 		return c > 0;
 	}
 
-	public Modultermin[] getKlauurtermine() {
-		if (hasKlausurdate()) {
+	public Modultermin[] getKlausurtermine() {
+		if (hasKlausurtermin()) {
 			List<Modultermin> l = new ArrayList<>();
 			for (Modultermin modultermin : modultermine) {
 				if (modultermin.getTerminart() == Terminart.KLAUSUR) {
