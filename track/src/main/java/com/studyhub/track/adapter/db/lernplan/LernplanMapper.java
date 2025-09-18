@@ -4,6 +4,10 @@ import com.studyhub.track.domain.model.lernplan.Lernplan;
 
 public class LernplanMapper {
 
+	private LernplanMapper() {
+		// Utility class
+	}
+
 	public static Lernplan toDomain(LernplanDto dto) {
 		return new Lernplan(
 				dto.fachId(),

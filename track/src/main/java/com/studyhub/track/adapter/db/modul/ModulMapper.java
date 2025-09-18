@@ -4,6 +4,11 @@ import com.studyhub.track.domain.model.modul.Modul;
 import org.springframework.data.relational.core.sql.In;
 
 public class ModulMapper {
+
+	private ModulMapper() {
+		// Utility class
+	}
+
 	public static ModulDto toModulDto(Modul modul, Integer existingDbKey) {
 		return new ModulDto(existingDbKey,
 				modul.getFachId(),
