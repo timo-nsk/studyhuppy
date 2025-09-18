@@ -1,5 +1,6 @@
 package com.studyhub.track.adapter.kartei;
 
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +12,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Service
 public class StapelRequestService {
 
+	@Setter
 	@Value("${kartei.api_url}")
 	private String karteiApiUrl;
 
@@ -29,9 +31,5 @@ public class StapelRequestService {
 					.block();
 
 		log.info("CreateNewStapelRequest sent to: %s ".formatted(uri));
-	}
-
-	public void setKarteiApiUrl(String url) {
-		this.karteiApiUrl = url;
 	}
 }
