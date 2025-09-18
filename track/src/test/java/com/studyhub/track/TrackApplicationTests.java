@@ -10,5 +10,6 @@ class TrackApplicationTests {
 
 	@Test
 	void contextLoads() {
+		// Tested, ob der Spring Application Context erfolgreich geladen wird
 	}
 }
