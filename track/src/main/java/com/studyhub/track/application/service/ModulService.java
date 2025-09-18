@@ -46,7 +46,7 @@ public class ModulService {
 
 	public void updateSeconds(UUID fachId, int seconds) throws Exception {
 		int res = modulRepository.updateSecondsByUuid(fachId, seconds);
-		if (res == 0) throw new Exception();
+		if (res == 0) throw new ModulSecondsUpdateException("could not update seconds for modul with id: %s".formatted(fachId.toString()));
 		log.info("updated modul with id:%s to seconds=%s".formatted(fachId.toString(), String.valueOf(seconds)));
 	}
 
