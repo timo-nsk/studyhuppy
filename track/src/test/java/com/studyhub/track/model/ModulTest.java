@@ -191,12 +191,12 @@ public class ModulTest {
 	}
 
 	@Test
-	@DisplayName("Wenn ein Modul keine Klausurtermine enthält, wird null zurückgegeben")
+	@DisplayName("Wenn ein Modul keine Klausurtermine enthält, wird ein leeres Array mit length=0 zurückgegeben")
 	void test_17() {
 		Modul m = ModulMother.initModul();
 
 		Modultermin[] klausurTermine = m.getKlausurtermine();
 
-		assertThat(klausurTermine).isNull();
+		assertThat(klausurTermine).hasSize(0);
 	}
 }
