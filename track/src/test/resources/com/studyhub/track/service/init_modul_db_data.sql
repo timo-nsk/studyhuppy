@@ -21,9 +21,9 @@ INSERT INTO kreditpunkte (modul, anzahl_punkte, kontaktzeit_stunden, selbststudi
 
 INSERT INTO modultermin (modul, termin_name, start_date, ende_date, notiz, terminart, terminfrequenz) VALUES
     (1654654, 'T1', '2025-03-23 14:30:00', '2025-04-23 14:30:00', null, null, 'EINMALIG'),
-    (2546546, 'T2', '2025-03-24 14:30:00', null, null, null, 'TÄGLICH'),
-    (3846846, 'T3', '2025-03-25 14:30:00', null, null, null, 'WÖCHENTLICH'),
+    (2546546, 'T2', '2025-03-24 14:30:00', null, null, null, 'TAEGLICH'),
+    (3846846, 'T3', '2025-03-25 14:30:00', null, null, null, 'WOECHENTLICH'),
     (4846846, 'T4', '2025-03-26 14:30:00', null, null, null, 'MONATLICH'),
-    (5846846, 'T5', '2025-03-27 14:30:00', null, 'N1', null, 'JÄHRLICH'),
+    (5846846, 'T5', '2025-03-27 14:30:00', null, 'N1', null, 'JAEHRLICH'),
     (7846846, 'T6', '2024-03-30 14:30:00', '2024-04-30 14:30:00', null, null, 'EINMALIG');
 
