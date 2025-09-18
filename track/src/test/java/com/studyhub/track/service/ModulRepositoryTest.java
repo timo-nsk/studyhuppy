@@ -266,8 +266,8 @@ public class ModulRepositoryTest {
 
 		assertThat(success).isTrue();
 
-		//Modul foundModul = repository.findByUuid(fachId); angeblich werden 2 gefunden ???
-		//assertThat(foundModul.getModultermine()).hasSize(0);
+		Modul foundModul = repository.findByUuid(fachId);
+		assertThat(foundModul.getModultermine()).hasSize(0);
 	}
 
 	@Test
