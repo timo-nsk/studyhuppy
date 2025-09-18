@@ -17,7 +17,7 @@ public class AuthenticationService {
 	private Logger log = LoggerFactory.getLogger(AuthenticationService.class);
 
 	public Integer getSemesterOfUser(String username, String token) {
-		log.info("Try get fachsemester of user '%s' from authentication service.", username);
+		log.info("Try get fachsemester of user '{}' from authentication service.", username);
 		return WebClient.builder()
 				.baseUrl(authAiUrl)
 				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE)
