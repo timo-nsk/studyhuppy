@@ -14,7 +14,7 @@ public interface ModulRepository {
 	List<Modul> findByActiveIsTrue();
 	List<Modul> findByActiveIsFalse();
 	List<Modul> findByUsername(String username);
-	List<Modul> saveAll(List<Modul> modulList);
+	void saveAll(List<Modul> modulList);
 	Integer getTotalStudyTime(String username);
 	Integer countActiveModules(String username);
 	Integer findSecondsById(UUID fachId);

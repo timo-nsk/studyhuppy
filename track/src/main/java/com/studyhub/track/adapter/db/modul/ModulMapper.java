@@ -22,6 +22,19 @@ public class ModulMapper {
 				modul.getModultermine());
 	}
 
+	public static ModulDto toModulDto(Modul modul) {
+		return new ModulDto(null,
+				modul.getFachId(),
+				modul.getName(),
+				modul.getSecondsLearned(),
+				modul.getKreditpunkte(),
+				modul.getUsername(),
+				modul.isActive(),
+				modul.getSemesterstufe(),
+				modul.getSemester(),
+				modul.getModultermine());
+	}
+
 	public static Modul toModul(ModulDto dto) {
 		return new Modul(
 				dto.fachId(),

@@ -74,12 +74,9 @@ public class ModulRepositoryImpl implements ModulRepository {
 	}
 
 	@Override
-	public List<Modul> saveAll(List<Modul> modulList) {
-		//TODO refactor
-		//List<ModulDto> saved = (List<ModulDto>) modulDao.saveAll(modulList.stream().map(ModulMapper::toModulDto).toList());
-
-		//return saved.stream().map(ModulMapper::toModul).toList();
-		return null;
+	public void saveAll(List<Modul> modulList) {
+		List<ModulDto> mapped = modulList.stream().map(ModulMapper::toModulDto).toList();
+		modulDao.saveAll(mapped);
 	}
 
 	@Override
