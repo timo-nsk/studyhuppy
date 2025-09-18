@@ -1,19 +1,17 @@
 package com.studyhub.track.adapter.metric;
 
-
 import io.prometheus.client.Summary;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
-
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 @Component
 public class RequestMetricFilter implements Filter {
 
-    private Summary summary = Summary.build()
+    private static final Summary summary = Summary.build()
             .name("http_request_duration_in_seconds")
             .help("The time it took to process the request in seconds")
             .labelNames("method", "uri", "status")
