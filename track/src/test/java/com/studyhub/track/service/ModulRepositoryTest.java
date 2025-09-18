@@ -175,15 +175,9 @@ public class ModulRepositoryTest {
 	@DisplayName("Wenn mehrere Module mit der gleichen Zeit am wenigsten gelernt wurden, wird lexikographisch das erste Modul gefunden.")
 	void test_11() {
 		String modulMinSeconds = repository.findByMinSeconds("peter4");
-
-		assertThat(modulMinSeconds).isEqualTo("mod6");
-	}
-
-	@Test
-	@DisplayName("Wenn mehrere Module mit der gleichen Zeit am häufigsten gelernt wurden, wird lexikographisch das erste Modul gefunden.")
-	void test_12() {
 		String modulMaxSeconds = repository.findByMaxSeconds("peter4");
 
+		assertThat(modulMinSeconds).isEqualTo("mod6");
 		assertThat(modulMaxSeconds).isEqualTo("mod4");
 	}
 
