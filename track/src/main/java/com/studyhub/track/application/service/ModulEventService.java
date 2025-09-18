@@ -1,6 +1,5 @@
 package com.studyhub.track.application.service;
 
-import com.studyhub.track.application.JWTService;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.ModulGelerntEvent;
 import org.slf4j.Logger;
@@ -13,14 +12,12 @@ import java.util.*;
 public class ModulEventService {
 	private final ModulGelerntEventRepository modulGelerntEvent;
 	private final ModulRepository modulRepository;
-	private final JWTService jwtService;
 	private final DateProvider dateProvider;
 	private final Logger logger = LoggerFactory.getLogger(ModulEventService.class);
 
-	public ModulEventService(ModulGelerntEventRepository modulGelerntEvent, ModulRepository modulRepository, JWTService jwtService, DateProvider dateProvider) {
+	public ModulEventService(ModulGelerntEventRepository modulGelerntEvent, ModulRepository modulRepository, DateProvider dateProvider) {
 		this.modulGelerntEvent = modulGelerntEvent;
 		this.modulRepository = modulRepository;
-		this.jwtService = jwtService;
 		this.dateProvider = dateProvider;
 	}
 

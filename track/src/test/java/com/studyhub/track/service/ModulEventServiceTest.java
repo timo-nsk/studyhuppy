@@ -1,6 +1,5 @@
 package com.studyhub.track.service;
 
-import com.studyhub.track.application.JWTService;
 import com.studyhub.track.application.service.*;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.ModulGelerntEvent;
@@ -12,7 +11,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -21,7 +19,6 @@ import static org.mockito.Mockito.when;
 public class ModulEventServiceTest {
 	static ModulRepository modulRepo;
 	static ModulGelerntEventRepository eventRepo;
-	static JWTService jwtService;
 	static ModulEventService service;
 	static DateProvider dateProvider;
 
@@ -29,9 +26,8 @@ public class ModulEventServiceTest {
 	static void init() {
 		modulRepo = mock(ModulRepository.class);
 		eventRepo = mock(ModulGelerntEventRepository.class);
-		jwtService = mock(JWTService.class);
 		dateProvider = mock(DateProvider.class);
-		service = new ModulEventService(eventRepo, modulRepo, jwtService, dateProvider);
+		service = new ModulEventService(eventRepo, modulRepo, dateProvider);
 	}
 
 	@Test
@@ -41,7 +37,6 @@ public class ModulEventServiceTest {
 				ModulMother.initModulWithNameAndUsername("Mathe", "timo123"),
 				ModulMother.initModulWithNameAndUsername("AlDat", "timo123"));
 
-		when(jwtService.extractUsername("token")).thenReturn("timo123");
 		when(modulRepo.findByUsername("timo123")).thenReturn(modules);
 		when(dateProvider.getTodayDate()).thenReturn(LocalDate.of(2025, 1, 10));
 		when(eventRepo.getSumSecondsLearned(any(), any(), any())).thenReturn(20);
@@ -63,7 +58,6 @@ public class ModulEventServiceTest {
 				ModulMother.initModulWithNameAndUsername("Mathe", "timo123"),
 				ModulMother.initModulWithNameAndUsername("AlDat", "timo123"));
 
-		when(jwtService.extractUsername("token")).thenReturn("timo123");
 		when(modulRepo.findByUsername("timo123")).thenReturn(modules);
 		when(dateProvider.getTodayDate()).thenReturn(LocalDate.of(2025, 1, 10));
 		when(eventRepo.getSumSecondsLearned(any(), any(), any())).thenReturn(0);
