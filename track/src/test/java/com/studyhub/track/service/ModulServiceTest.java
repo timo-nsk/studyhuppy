@@ -193,6 +193,20 @@ class ModulServiceTest {
 		verify(modulRepository, times(1)).deleteByUuid(modulid);
 		verify(sessionService, times(1)).deleteModuleFromBlocks(modulid, username);
 		verify(modulEventService, times(1)).deleteAllModulEvents(modulid);
+	}
 
+	@Test
+	@DisplayName("changeActivity() ändert den Aktivitätsstatus eines Moduls und speichert es im Repository")
+	void test_19() {
+		UUID modulid = UUID.randomUUID();
+		Modul modul = initNotActiveModul();
+		when(modulRepository.findByUuid(modulid)).thenReturn(modul);
+		when(modulRepository.save(any(Modul.class))).thenReturn(modul);
+
+		modulService.changeActivity(modulid);
+
+		assertThat(modul.isActive()).isTrue();
+		verify(modulRepository, times(1)).findByUuid(modulid);
+		verify(modulRepository, times(1)).save(modul);
 	}
 }

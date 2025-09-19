@@ -81,15 +81,8 @@ public class ModulService {
 
 	public void changeActivity(UUID fachId) {
 		Modul m = modulRepository.findByUuid(fachId);
-		boolean isActive = m.isActive();
-
-		if (isActive) {
-			modulRepository.setActive(fachId, false);
-			log.info("deactivated modul id:%s".formatted(fachId.toString()));
-		} else {
-			modulRepository.setActive(fachId, true);
-			log.info("activated modul id:%s".formatted(fachId.toString()));
-		}
+		m.changeActivity();
+		modulRepository.save(m);
 	}
 
 	public void deactivateModul(UUID fachId) {
