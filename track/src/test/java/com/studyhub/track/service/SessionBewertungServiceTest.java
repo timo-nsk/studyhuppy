@@ -88,15 +88,16 @@ public class SessionBewertungServiceTest {
 
 		assertThat(actual.get(0)).isZero();
 		assertThat(actual.get(1)).isZero();
-		assertThat(actual).containsEntry(2,2);
 		assertThat(actual.get(3)).isZero();
 		assertThat(actual.get(4)).isZero();
-		assertThat(actual).containsEntry(5,2);
-		assertThat(actual).containsEntry(6,2);
-		assertThat(actual).containsEntry(7,1);
 		assertThat(actual.get(8)).isZero();
-		assertThat(actual).containsEntry(9,1);
 		assertThat(actual.get(10)).isZero();
+		assertThat(actual)
+				.containsEntry(2,2)
+				.containsEntry(5,2)
+				.containsEntry(6,2)
+				.containsEntry(7,1)
+				.containsEntry(9,1);
 	}
 
 	@Test
@@ -106,17 +107,18 @@ public class SessionBewertungServiceTest {
 		when(sessionBeendetEventRepository.findAllByUsername(USER)).thenReturn(events);
 
 		Map<Integer, Integer> actual = sessionBewertungService.getProduktivitaetHist(USER);
-		assertThat(actual).containsEntry(0,1);
-		assertThat(actual).containsEntry(1,3);
 		assertThat(actual.get(2)).isZero();
-		assertThat(actual).containsEntry(3,3);
 		assertThat(actual.get(4)).isZero();
 		assertThat(actual.get(5)).isZero();
 		assertThat(actual.get(6)).isZero();
 		assertThat(actual.get(7)).isZero();
 		assertThat(actual.get(8)).isZero();
 		assertThat(actual.get(9)).isZero();
-		assertThat(actual).containsEntry(10,1);
+		assertThat(actual)
+				.containsEntry(0,1)
+				.containsEntry(1,3)
+				.containsEntry(3,3)
+				.containsEntry(10,1);
 	}
 
 	@Test
@@ -134,9 +136,10 @@ public class SessionBewertungServiceTest {
 		assertThat(actual.get(4)).isZero();
 		assertThat(actual.get(5)).isZero();
 		assertThat(actual.get(6)).isZero();
-		assertThat(actual).containsEntry(7,6);
-		assertThat(actual).containsEntry(8,2);
 		assertThat(actual.get(9)).isZero();
 		assertThat(actual.get(10)).isZero();
+		assertThat(actual)
+				.containsEntry(7,6)
+				.containsEntry(8,2);
 	}
 }

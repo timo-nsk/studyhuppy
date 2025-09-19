@@ -64,7 +64,7 @@ public class ModulEventServiceTest {
 
 		Map<LocalDate, List<ModulStat>> res = service.getStatisticsForRecentDays(7, "token");
 
-		assertThat(res).hasSize(0);
+		assertThat(res).isEmpty();
 	}
 
 	@Test
