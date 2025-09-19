@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
@@ -51,7 +51,7 @@ public class UserDeletionConsumerImpl implements IUserDeletionConsumer {
 	public void deleteAllUserData(UserDto userDto) {
 		String username = userDto.username();
 		List<Modul> allModules = modulService.findAllByUsername(username);
-		List<Lernplan> allLernplaene = lernplanService.getAllLernplaeneByUsername(username);
+		List<Lernplan> allLernplaene = lernplanService.findAllLernplaeneByUsername(username);
 		List<Session> allSession = sessionService.getSessionsByUsername(username);
 
 		for (Modul modul : allModules) modulService.deleteModul(modul.getFachId(), userDto.username());
