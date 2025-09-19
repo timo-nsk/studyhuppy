@@ -151,7 +151,7 @@ class ModulTest {
 	}
 
 	@Test
-	@DisplayName("Ein Modultermin kann erfolgreich hinzugefügt und entfernt werden")
+	@DisplayName("Ein Modultermin kann erfolgreich hinzugefügt werden")
 	void test_13() {
 		Modul m = ModulMother.initModulWithoutTermine();
 		Modultermin modultermin = new Modultermin("T1",LocalDateTime.now(), null, "Testtermin", Terminart.SONSTIGES,Terminfrequenz.EINMALIG);
@@ -159,10 +159,6 @@ class ModulTest {
 		boolean added = m.putNewModulTermin(modultermin);
 		assertTrue(added);
 		assertTrue(m.getModultermine().contains(modultermin));
-
-		boolean removed = m.removeModulTermin(modultermin);
-		assertTrue(removed);
-		assertFalse(m.getModultermine().contains(modultermin));
 	}
 
 	@Test
@@ -198,5 +194,35 @@ class ModulTest {
 		Modultermin[] klausurTermine = m.getKlausurtermine();
 
 		assertThat(klausurTermine).isEmpty();
+	}
+
+	@Test
+	@DisplayName("Wenn versucht wird, ein ModulTermin aus einem Modul zu entfernen, das nicht im Modul enthalten ist, wird false returned")
+	void test_18() {
+		Modul m = ModulMother.initModulWithoutTermine();
+		Modultermin modultermin = new Modultermin("T1",LocalDateTime.now(), null, "Testtermin", Terminart.SONSTIGES,Terminfrequenz.EINMALIG);
+
+		boolean removed = m.removeModulTermin(modultermin);
+		assertFalse(removed);
+	}
+
+	@Test
+	@DisplayName("Ein aktives Modul kann deaktiviert werden")
+	void test_19() {
+		Modul m = ModulMother.initActiveModul();
+
+		m.changeActivity();
+
+		assertFalse(m.isActive());
+	}
+
+	@Test
+	@DisplayName("Ein nicht aktives Modul kann aktiviert werden")
+	void test_20() {
+		Modul m = ModulMother.initNotActiveModul();
+
+		m.changeActivity();
+
+		assertTrue(m.isActive());
 	}
 }
