@@ -79,4 +79,8 @@ public class Modul {
 		}
 		return new Modultermin[0];
 	}
+
+	public void changeActivity() {
+		this.active = !this.active;
+	}
 }
