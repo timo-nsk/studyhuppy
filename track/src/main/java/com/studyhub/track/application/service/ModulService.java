@@ -44,7 +44,7 @@ public class ModulService {
 		return modulRepository.findAll();
 	}
 
-	public void updateSeconds(UUID fachId, int seconds) throws Exception {
+	public void updateSeconds(UUID fachId, int seconds) throws ModulSecondsUpdateException {
 		int res = modulRepository.updateSecondsByUuid(fachId, seconds);
 		if (res == 0) throw new ModulSecondsUpdateException("could not update seconds for modul with id: %s".formatted(fachId.toString()));
 		log.info("updated modul with id:%s to seconds=%s".formatted(fachId.toString(), String.valueOf(seconds)));
@@ -69,7 +69,7 @@ public class ModulService {
 		return true;
 	}
 
-	public void resetModulTime(UUID fachId) throws Exception {
+	public void resetModulTime(UUID fachId) throws ModulSecondsUpdateException {
 		int res = modulRepository.updateSecondsByUuid(fachId, 0);
 		if (res == 0) throw new ModulSecondsUpdateException("could not update seconds when resetting modul with id: %s".formatted(fachId.toString()));
 		log.info("reseted modul time to 0 with id:%s".formatted(fachId.toString()));
@@ -97,7 +97,7 @@ public class ModulService {
 		log.info("deactivated modul id:%s".formatted(fachId.toString()));
 	}
 
-	public void addTime(UUID fachId, String time) throws Exception {
+	public void addTime(UUID fachId, String time) throws ModulSecondsUpdateException {
 		TimeConverter tc = new TimeConverter();
 		int addSeconds = tc.timeToSeconds(time);
 		int alreadyLearned = modulRepository.findSecondsById(fachId);
