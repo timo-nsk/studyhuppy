@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class SessionBewertungServiceTest {
 
-	private static String USER = "peter93";
+	private static final String USER = "peter93";
 
 	@Mock
 	private SessionBeendetEventRepository sessionBeendetEventRepository;
