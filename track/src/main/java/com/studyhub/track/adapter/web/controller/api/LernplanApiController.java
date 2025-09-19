@@ -6,7 +6,7 @@ import com.studyhub.track.application.service.dto.LernplanWochenuebersicht;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.application.service.LernplanService;
 import com.studyhub.track.domain.model.lernplan.Lernplan;
-import com.studyhub.track.domain.service.LernplanAktivierungsService;
+import com.studyhub.track.application.service.LernplanAktivierungsService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
