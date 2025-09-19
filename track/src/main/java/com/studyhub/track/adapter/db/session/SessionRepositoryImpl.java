@@ -5,6 +5,7 @@ import com.studyhub.track.application.service.SessionRepository;
 import com.studyhub.track.domain.model.session.Session;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import static com.studyhub.track.adapter.db.session.SessionMapper.toDto;
 import static com.studyhub.track.adapter.db.session.SessionMapper.toEntity;
@@ -40,7 +41,7 @@ public class SessionRepositoryImpl implements SessionRepository {
 
 	@Override
 	public Session findSessionByFachId(UUID fachId) {
-		SessionDto dto = sessionDao.findByFachId(fachId).get();
-		return toEntity(dto);
+		Optional<SessionDto> dto = sessionDao.findByFachId(fachId);
+		return dto.map(SessionMapper::toEntity).orElse(null);
 	}
 }
