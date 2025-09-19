@@ -27,7 +27,7 @@ public class RequestMetricFilter implements Filter {
         String uri = request.getRequestURI();
         String status = String.valueOf(response.getStatus());
         long endTime = System.nanoTime();
-        double diff = ((double) endTime - startTime) / (double) TimeUnit.SECONDS.toNanos(1L);
+        double diff = ((double) endTime - startTime) / TimeUnit.SECONDS.toNanos(1L);
         summary.labels(method, uri, status).observe(diff);
     }
 }
