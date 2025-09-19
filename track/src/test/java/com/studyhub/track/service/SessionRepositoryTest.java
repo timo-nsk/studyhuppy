@@ -76,8 +76,7 @@ public class SessionRepositoryTest {
 
 		var sessions = repository.findAllByUsername(username);
 
-		assertThat(sessions).isNotNull();
-		assertThat(sessions).hasSize(2);
+		assertThat(sessions).isNotNull().hasSize(2);
 		assertThat(sessions.get(0).getUsername()).isEqualTo(username);
 		assertThat(sessions.get(1).getUsername()).isEqualTo(username);
 	}
