@@ -15,7 +15,7 @@ public interface ModulRepository {
 	void saveAll(List<Modul> modulList);
 	Integer getTotalStudyTime(String username);
 	Integer countActiveModules(String username);
-	Integer findSecondsById(UUID fachId);
+	int findSecondsById(UUID fachId);
 	Integer countNotActiveModules(String username);
 	String findByMinSeconds(String username);
 	String findByMaxSeconds(String username);

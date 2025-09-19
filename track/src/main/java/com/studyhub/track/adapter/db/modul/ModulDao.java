@@ -41,7 +41,7 @@ public interface ModulDao extends CrudRepository<ModulDto, Integer> {
 	               @Param("active") boolean active);
 
 	@Query("select seconds_learned from modul where fach_id = :fachId")
-	Integer findSecondsById(UUID fachId);
+	Optional<Integer> findSecondsById(UUID fachId);
 
 	@Query("SELECT m.name FROM Modul m WHERE m.username = :username AND m.seconds_learned = (" +
 			"SELECT MAX(m2.seconds_learned) FROM Modul m2 WHERE m2.username = :username" +

@@ -231,4 +231,26 @@ class ModulServiceTest {
 		verify(mock, times(0)).resetSecondsLearned();
 		verify(modulRepository, times(0)).save(any(Modul.class));
 	}
+
+	@Test
+	@DisplayName("Für ein Modul mit secondsLearned = 2000 wird dieser Wert über den Service korrekt zurückgegeben")
+	void test_22() {
+		UUID desiredSecondsOfModul = UUID.randomUUID();
+		when(modulRepository.findSecondsById(desiredSecondsOfModul)).thenReturn(2000);
+
+		int actualSeconds = modulService.getSecondsForId(desiredSecondsOfModul);
+
+		assertThat(actualSeconds).isEqualTo(2000);
+	}
+
+	@Test
+	@DisplayName("Wenn ein Modul, dass nicht existiert die secondsLearned abfragt werden, wird 0 zurückgegeben")
+	void test_23() {
+		UUID notExistingModulId = UUID.randomUUID();
+		when(modulRepository.findSecondsById(notExistingModulId)).thenReturn(0);
+
+		int actualSeconds = modulService.getSecondsForId(notExistingModulId);
+
+		assertThat(actualSeconds).isEqualTo(0);
+	}
 }

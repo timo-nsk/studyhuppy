@@ -25,9 +25,9 @@ public class ModulRepositoryImpl implements ModulRepository {
 	}
 
 	@Override
-	public Integer findSecondsById(UUID fachId) {
-		Integer oldSeconds = modulDao.findSecondsById(fachId);
-		return oldSeconds != null ? oldSeconds : 0;
+	public int findSecondsById(UUID fachId) {
+		Optional<Integer> oldSeconds = modulDao.findSecondsById(fachId);
+		return oldSeconds.orElse(0);
 	}
 
 	@Override
