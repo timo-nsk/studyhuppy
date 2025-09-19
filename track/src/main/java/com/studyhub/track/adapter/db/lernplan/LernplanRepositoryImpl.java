@@ -47,8 +47,8 @@ public class LernplanRepositoryImpl implements LernplanRepository {
 	}
 
 	@Override
-	public void deleteByFachId(UUID fachId) {
-		lernplanDao.deleteByFachId(fachId);
+	public int deleteByFachId(UUID fachId) {
+		return lernplanDao.deleteByFachId(fachId);
 	}
 
 	@Override
