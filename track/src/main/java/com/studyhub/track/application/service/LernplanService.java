@@ -1,7 +1,7 @@
 package com.studyhub.track.application.service;
 
-import com.studyhub.track.application.service.dto.LernplanResponse;
-import com.studyhub.track.application.service.dto.LernplanSessionInfoDto;
+import com.studyhub.track.application.service.dto.LernplanWochenuebersicht;
+import com.studyhub.track.application.service.dto.LernplanTagesuebersicht;
 import com.studyhub.track.domain.model.lernplan.Lernplan;
 import com.studyhub.track.domain.model.lernplan.Tag;
 import com.studyhub.track.domain.model.session.Session;
@@ -28,16 +28,15 @@ public class LernplanService {
 		return saved != null;
 	}
 
-	public LernplanResponse getActiveLernplanByUsername(String username) {
+	public LernplanWochenuebersicht collectLernplanWochenuebersicht(String username) {
 		Lernplan entityLerntag = lernplanRepository.findActiveByUsername(username);
 
 		if (entityLerntag == null) return null;
 
-		List<LernplanSessionInfoDto> sessions = new ArrayList<>();
+		List<LernplanTagesuebersicht> sessions = new ArrayList<>();
 		for(Tag tag : entityLerntag.getTagesListe()) {
 			UUID sessionId = tag.getSessionId();
 			Session session = sessionRepository.findSessionByFachId(sessionId);
-
 			String dayString = "";
 			switch (tag.getTag()) {
 				case MONDAY -> dayString = "Montags";
@@ -49,7 +48,7 @@ public class LernplanService {
 				case SUNDAY -> dayString = "Sonntags";
 			}
 
-			sessions.add(new LernplanSessionInfoDto(
+			sessions.add(new LernplanTagesuebersicht(
 					dayString,
 					tag.getBeginn().toString(),
 					session.getFachId().toString(),
@@ -57,7 +56,7 @@ public class LernplanService {
 			));
 		}
 
-		return new LernplanResponse(entityLerntag.getTitel(), sessions);
+		return new LernplanWochenuebersicht(entityLerntag.getTitel(), sessions);
 
 	}
 

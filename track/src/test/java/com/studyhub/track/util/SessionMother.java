@@ -40,4 +40,19 @@ public class SessionMother {
 				blocks
 		);
 	}
+
+	public static Session createSessionWithTwoBlocks(UUID sessionId) {
+		List<Block> blocks = new ArrayList<>();
+
+		blocks.add(new Block(UUID.fromString("11111111-1111-1111-1111-111111111111"), UUID.fromString("11111111-1111-1111-1111-111111111112"), "Modul A", 2000, 2000));
+		blocks.add(new Block(UUID.fromString("21111111-1111-1111-1111-111111111111"), UUID.fromString("11111111-1111-1111-1111-111111111112"), "Modul B", 2000, 2000));
+
+		return new Session(
+				sessionId,
+				"Test Session",
+				"Test Description",
+				"Test Location",
+				blocks
+		);
+	}
 }

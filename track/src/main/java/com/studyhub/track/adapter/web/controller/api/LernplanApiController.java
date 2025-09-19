@@ -2,7 +2,7 @@ package com.studyhub.track.adapter.web.controller.api;
 
 import com.studyhub.track.adapter.web.AngularApi;
 import com.studyhub.track.adapter.web.controller.request.dto.LernplanRequest;
-import com.studyhub.track.application.service.dto.LernplanResponse;
+import com.studyhub.track.application.service.dto.LernplanWochenuebersicht;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.application.service.LernplanService;
 import com.studyhub.track.domain.model.lernplan.Lernplan;
@@ -45,9 +45,9 @@ public class LernplanApiController {
 	}
 
 	@GetMapping("/get-active-lernplan")
-	public ResponseEntity<LernplanResponse> getActiveLernplan(HttpServletRequest httpRequest) {
+	public ResponseEntity<LernplanWochenuebersicht> getActiveLernplan(HttpServletRequest httpRequest) {
 		String username = jwtService.extractUsernameFromHeader(httpRequest);
-		LernplanResponse lernplan = lernplanService.getActiveLernplanByUsername(username);
+		LernplanWochenuebersicht lernplan = lernplanService.collectLernplanWochenuebersicht(username);
 
 		if (lernplan != null) {
 			return ResponseEntity.ok(lernplan);
@@ -81,7 +81,7 @@ public class LernplanApiController {
 	@GetMapping("/is-today-planned")
 	public ResponseEntity<Boolean> isTodayPlanned(HttpServletRequest request) {
 		String username = jwtService.extractUsernameFromHeader(request);
-		LernplanResponse res = lernplanService.getActiveLernplanByUsername(username);
+		LernplanWochenuebersicht res = lernplanService.collectLernplanWochenuebersicht(username);
 
 		if (res == null) {
 			return ResponseEntity.ok(false);
