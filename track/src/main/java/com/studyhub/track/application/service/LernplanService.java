@@ -6,7 +6,6 @@ import com.studyhub.track.domain.model.lernplan.Lernplan;
 import com.studyhub.track.domain.model.lernplan.Tag;
 import com.studyhub.track.domain.model.session.Session;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,17 +59,11 @@ public class LernplanService {
 
 	}
 
-	public List<Lernplan> getAllLernplaeneByUsername(String username) {
+	public List<Lernplan> findAllLernplaeneByUsername(String username) {
 		return lernplanRepository.findAllByUsername(username);
 	}
 
-	public void deleteLernplanByFachId(UUID fachId) {
-		lernplanRepository.deleteByFachId(fachId);
-	}
-
-	@Transactional
-	public void setActiveLernplan(UUID fachId, String username) {
-		lernplanRepository.deactivateAllByUsername(username);
-		lernplanRepository.setIsActiveOfLernplan(fachId, true);
+	public int deleteLernplanByFachId(UUID fachId) {
+		return lernplanRepository.deleteByFachId(fachId);
 	}
 }
