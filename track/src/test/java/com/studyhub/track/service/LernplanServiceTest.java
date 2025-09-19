@@ -12,9 +12,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
+import java.util.List;
 import java.util.UUID;
-
 import static com.studyhub.track.util.LernplanMother.*;
 import static com.studyhub.track.util.SessionMother.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -72,5 +71,43 @@ public class LernplanServiceTest {
 		assertThat(actual).isEqualTo(expected);
 	}
 
+	@Test
+	@DisplayName("Alle erstellten Lernpläne für einen User 'testuser' werden zurückgegeben.")
+	void test_4() {
+		String username = "testuser";
+		Lernplan l1 = initFullLernplan();
+		Lernplan l2 = initFullLernplan();
+		when(lernplanRepository.findAllByUsername(username)).thenReturn(List.of(l1, l2));
 
+		java.util.List<Lernplan> allLernplaene = lernplanService.findAllLernplaeneByUsername(username);
+
+		assertThat(allLernplaene)
+				.hasSize(2)
+				.containsExactlyInAnyOrder(l1, l2);
+		verify(lernplanRepository, times(1)).findAllByUsername(username);
+	}
+
+	@Test
+	@DisplayName("Wenn ein Lernplan anhand der FachId gelöscht wird, dann soll 1 zurückgegeben werden, was eine erfolgreiche Löschung signalisiert.")
+	void test_5() {
+		UUID fachId = UUID.randomUUID();
+		when(lernplanRepository.deleteByFachId(fachId)).thenReturn(1);
+
+		int result = lernplanService.deleteLernplanByFachId(fachId);
+
+		assertThat(result).isEqualTo(1);
+		verify(lernplanRepository, times(1)).deleteByFachId(fachId);
+	}
+
+	@Test
+	@DisplayName("Wenn ein Lernplan anhand der FachId gelöscht werden soll, die nicht in der Datenbank existiert, soll 0 zurückgegeben werden, was eine erfolglose Löschung signalisiert.")
+	void test_6() {
+		UUID fachId = UUID.randomUUID();
+		when(lernplanRepository.deleteByFachId(fachId)).thenReturn(0);
+
+		int result = lernplanService.deleteLernplanByFachId(fachId);
+
+		assertThat(result).isEqualTo(0);
+		verify(lernplanRepository, times(1)).deleteByFachId(fachId);
+	}
 }
