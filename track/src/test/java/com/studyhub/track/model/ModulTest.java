@@ -197,6 +197,6 @@ public class ModulTest {
 
 		Modultermin[] klausurTermine = m.getKlausurtermine();
 
-		assertThat(klausurTermine).hasSize(0);
+		assertThat(klausurTermine).isEmpty();
 	}
 }

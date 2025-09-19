@@ -74,7 +74,7 @@ public class ModulRepositoryTest {
 	void test_02() {
 		List<Modul> l = repository.findAll();
 
-		assertThat(l.size()).isEqualTo(7);
+		assertThat(l).hasSize(7);
 	}
 
 
@@ -85,7 +85,7 @@ public class ModulRepositoryTest {
 
 		repository.deleteByUuid(fachId);
 
-		assertThat(repository.findAll().size()).isEqualTo(6);
+		assertThat(repository.findAll()).hasSize(6);
 	}
 
 
@@ -106,8 +106,8 @@ public class ModulRepositoryTest {
 		List<Modul> activeModule = repository.findActiveModuleByUsername(true, "user123");
 		List<Modul> notActiveModule = repository.findActiveModuleByUsername(false, "user123");
 
-		assertThat(activeModule.size()).isEqualTo(1);
-		assertThat(notActiveModule.size()).isEqualTo(1);
+		assertThat(activeModule).hasSize(1);
+		assertThat(notActiveModule).hasSize(1);
 	}
 
 	@Test
@@ -251,7 +251,7 @@ public class ModulRepositoryTest {
 		assertThat(success).isTrue();
 
 		Modul foundModul = repository.findByUuid(fachId);
-		assertThat(foundModul.getModultermine()).hasSize(0);
+		assertThat(foundModul.getModultermine()).isEmpty();
 	}
 
 	@Test

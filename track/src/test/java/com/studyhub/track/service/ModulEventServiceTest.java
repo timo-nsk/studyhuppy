@@ -43,9 +43,9 @@ public class ModulEventServiceTest {
 
 		Map<LocalDate, List<ModulStat>> res = service.getStatisticsForRecentDays(7, "timo123");
 
-		assertThat(res.size()).isEqualTo(7);
+		assertThat(res).hasSize(7);
 		List<ModulStat> stats = res.get(LocalDate.of(2025, 1, 4));
-		assertThat(stats.size()).isEqualTo(2);
+		assertThat(stats).hasSize(2);
 		assertThat(stats.get(0).secondsLearned()).isEqualTo("20");
 		assertThat(stats.get(1).secondsLearned()).isEqualTo("20");
 		assertThat(stats.get(1).modulName()).isEqualTo("AlDat");
@@ -64,7 +64,7 @@ public class ModulEventServiceTest {
 
 		Map<LocalDate, List<ModulStat>> res = service.getStatisticsForRecentDays(7, "token");
 
-		assertThat(res.size()).isEqualTo(0);
+		assertThat(res).hasSize(0);
 	}
 
 	@Test
@@ -100,6 +100,6 @@ public class ModulEventServiceTest {
 
 		int res = service.computeAverageStudyTimePerDay(username);
 
-		assertThat(res).isEqualTo(0);
+		assertThat(res).isZero();
 	}
 }

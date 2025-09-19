@@ -88,6 +88,6 @@ public class ModulGelerntEventRepositoryTest {
 		repository.deleteAllByModulId(modulId);
 
 		List<ModulGelerntEvent> events = repository.getAllByUsername(username);
-		assertThat(events).hasSize(0);
+		assertThat(events).isEmpty();
 	}
 }

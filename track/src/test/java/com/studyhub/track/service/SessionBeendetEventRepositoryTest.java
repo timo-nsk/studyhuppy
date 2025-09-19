@@ -98,6 +98,6 @@ public class SessionBeendetEventRepositoryTest {
 
 		List<SessionBeendetEvent> allEvents = repository.findAllByUsername("peter66");
 
-		assertThat(allEvents).hasSize(0);
+		assertThat(allEvents).isEmpty();
 	}
 }
