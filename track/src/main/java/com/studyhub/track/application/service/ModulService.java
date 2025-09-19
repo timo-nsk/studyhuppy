@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.IntStream;
@@ -69,10 +68,14 @@ public class ModulService {
 		return true;
 	}
 
-	public void resetModulTime(UUID fachId) throws ModulSecondsUpdateException {
-		int res = modulRepository.updateSecondsByUuid(fachId, 0);
-		if (res == 0) throw new ModulSecondsUpdateException("could not update seconds when resetting modul with id: %s".formatted(fachId.toString()));
-		log.info("reseted modul time to 0 with id:%s".formatted(fachId.toString()));
+	public void resetSecondsLearnedOfModul(UUID modulId) {
+		Modul m = modulRepository.findByUuid(modulId);
+
+		if(m == null) return;
+
+		m.resetSecondsLearned();
+		modulRepository.save(m);
+		log.info("resetted secondsLearned to 0 of modul with id: '%s'".formatted(modulId.toString()));
 	}
 
 	public List<Modul> findActiveModuleByUsername(boolean active, String username) {

@@ -209,4 +209,29 @@ class ModulServiceTest {
 		verify(modulRepository, times(1)).findByUuid(modulid);
 		verify(modulRepository, times(1)).save(modul);
 	}
+
+	@Test
+	@DisplayName("Die secondsLearned eines Moduls werden auf 0 zurückgesetzt.")
+	void test_20() {
+		Modul modulToReset = initModul();
+		when(modulRepository.findByUuid(modulToReset.getFachId())).thenReturn(modulToReset);
+
+		modulService.resetSecondsLearnedOfModul(modulToReset.getFachId());
+
+		assertThat(modulToReset.getSecondsLearned()).isZero();
+		verify(modulRepository, times(1)).save(modulToReset);
+	}
+
+	@Test
+	@DisplayName("Wenn beim Zurücksetzen der Lernzeit das Modul nicht gefunden wird, passiert nichts.")
+	void test_21() {
+		Modul mock = mock(Modul.class);
+		UUID nonExistingModulId = UUID.randomUUID();
+		when(modulRepository.findByUuid(nonExistingModulId)).thenReturn(null);
+
+		modulService.resetSecondsLearnedOfModul(nonExistingModulId);
+
+		verify(mock, times(0)).resetSecondsLearned();
+		verify(modulRepository, times(0)).save(any(Modul.class));
+	}
 }

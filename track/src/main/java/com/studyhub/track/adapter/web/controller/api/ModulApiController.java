@@ -93,7 +93,7 @@ public class ModulApiController {
 	@PutMapping("/reset")
 	public ResponseEntity<Void> reset(@RequestParam("fachId") String fachId) {
 		try {
-			modulService.resetModulTime(UUID.fromString(fachId));
+			modulService.resetSecondsLearnedOfModul(UUID.fromString(fachId));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
