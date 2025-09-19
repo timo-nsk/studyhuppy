@@ -15,7 +15,7 @@ public interface LernplanDao extends CrudRepository<LernplanDto, Long> {
 
 	@Modifying
 	@Query("delete from lernplan where fach_id = :fachId")
-	void deleteByFachId(UUID fachId);
+	int deleteByFachId(UUID fachId);
 
 	@Lock(LockMode.PESSIMISTIC_WRITE)
 	@Query("select * from lernplan where username = :username and is_active = true")
