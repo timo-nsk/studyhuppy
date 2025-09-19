@@ -2,8 +2,6 @@ package com.studyhub.track.application.service;
 
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.Modultermin;
-
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 

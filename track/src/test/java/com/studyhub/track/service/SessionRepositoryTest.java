@@ -1,10 +1,7 @@
 package com.studyhub.track.service;
 
-import com.studyhub.track.adapter.db.modul.ModulDao;
-import com.studyhub.track.adapter.db.modul.ModulRepositoryImpl;
 import com.studyhub.track.adapter.db.session.SessionDao;
 import com.studyhub.track.adapter.db.session.SessionRepositoryImpl;
-import com.studyhub.track.application.service.ModulRepository;
 import com.studyhub.track.application.service.SessionRepository;
 import com.studyhub.track.domain.model.session.Session;
 import com.studyhub.track.util.SessionMother;

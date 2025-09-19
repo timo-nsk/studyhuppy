@@ -6,9 +6,7 @@ import org.springframework.data.relational.core.sql.LockMode;
 import org.springframework.data.relational.repository.Lock;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface LernplanDao extends CrudRepository<LernplanDto, Long> {

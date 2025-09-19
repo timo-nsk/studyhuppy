@@ -1,10 +1,7 @@
 package com.studyhub.track.service;
 
-import com.studyhub.track.adapter.db.modul.ModulGelerntEventDao;
-import com.studyhub.track.adapter.db.modul.ModulGelerntEventRepositoryImpl;
 import com.studyhub.track.adapter.db.session.SessionBeendetEventDao;
 import com.studyhub.track.adapter.db.session.SessionBeendetEventRepositoryImpl;
-import com.studyhub.track.application.service.ModulGelerntEventRepository;
 import com.studyhub.track.application.service.SessionBeendetEventRepository;
 import com.studyhub.track.domain.model.session.SessionBeendetEvent;
 import com.studyhub.track.domain.model.session.SessionBewertung;
@@ -20,7 +17,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;

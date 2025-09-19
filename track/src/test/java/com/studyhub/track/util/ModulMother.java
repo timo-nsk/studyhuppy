@@ -2,9 +2,7 @@ package com.studyhub.track.util;
 
 import com.studyhub.track.domain.model.modul.*;
 import com.studyhub.track.domain.model.semester.Semester;
-import com.studyhub.track.domain.model.semester.SemesterPhase;
 import com.studyhub.track.domain.model.semester.SemesterTyp;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
