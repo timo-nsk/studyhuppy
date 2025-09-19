@@ -6,6 +6,7 @@ import com.studyhub.track.application.service.dto.LernplanWochenuebersicht;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.application.service.LernplanService;
 import com.studyhub.track.domain.model.lernplan.Lernplan;
+import com.studyhub.track.domain.service.LernplanAktivierungsService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,17 +19,19 @@ import java.util.UUID;
 public class LernplanApiController {
 
 	private LernplanService lernplanService;
+	private LernplanAktivierungsService lernplanAktivierungsService;
 	private JWTService jwtService;
 
-	public LernplanApiController(LernplanService lernplanService, JWTService jwtService) {
+	public LernplanApiController(LernplanService lernplanService, LernplanAktivierungsService lernplanAktivierungsService, JWTService jwtService) {
 		this.lernplanService = lernplanService;
+		this.lernplanAktivierungsService = lernplanAktivierungsService;
 		this.jwtService = jwtService;
 	}
 
 	@GetMapping("/get-all-lernplaene")
 	public ResponseEntity<List<Lernplan>> getAllLernplaene(HttpServletRequest request) {
 		String username = jwtService.extractUsernameFromHeader(request);
-		List<Lernplan> lernplaene = lernplanService.getAllLernplaeneByUsername(username);
+		List<Lernplan> lernplaene = lernplanService.findAllLernplaeneByUsername(username);
 		return ResponseEntity.ok(lernplaene);
 	}
 
@@ -65,7 +68,7 @@ public class LernplanApiController {
 	@PostMapping("/set-active-lernplan/{fachId}")
 	public ResponseEntity<Void> setActiveLernplan(@PathVariable UUID fachId, HttpServletRequest httpRequest) {
 		String username = jwtService.extractUsernameFromHeader(httpRequest);
-		lernplanService.setActiveLernplan(fachId, username);
+		lernplanAktivierungsService.setActiveLernplan(fachId, username);
 		return ResponseEntity.ok().build();
 	}
 
@@ -73,7 +76,7 @@ public class LernplanApiController {
 	@GetMapping("/has-lernplan")
 	public ResponseEntity<Boolean> hasLernplan(HttpServletRequest request) {
 		String username = jwtService.extractUsernameFromHeader(request);
-		List<Lernplan> data = lernplanService.getAllLernplaeneByUsername(username);
+		List<Lernplan> data = lernplanService.findAllLernplaeneByUsername(username);
 		return ResponseEntity.ok(!data.isEmpty());
 	}
 
