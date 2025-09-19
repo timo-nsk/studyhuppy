@@ -83,4 +83,8 @@ public class Modul {
 	public void changeActivity() {
 		this.active = !this.active;
 	}
+
+	public void resetSecondsLearned() {
+		this.secondsLearned = 0;
+	}
 }

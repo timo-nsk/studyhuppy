@@ -225,4 +225,14 @@ class ModulTest {
 
 		assertTrue(m.isActive());
 	}
+
+	@Test
+	@DisplayName("Die gelernten Sekunden eines Moduls können auf 0 zurückgesetzt werden")
+	void test_21() {
+		Modul m = ModulMother.initModul();
+
+		m.resetSecondsLearned();
+
+		assertThat(m.getSecondsLearned()).isZero();
+	}
 }
