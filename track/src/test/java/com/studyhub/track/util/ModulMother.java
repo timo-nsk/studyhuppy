@@ -17,6 +17,14 @@ public class ModulMother {
 		return new Modul(UUID.randomUUID(), "Modul", 1000, DEFAULT_KREDITPUNKTE, "user123",true,1, DEFAULT_SEMESTER, DEFAULT_MODULTERMINE);
 	}
 
+	public static Modul initActiveModul() {
+		return new Modul(UUID.randomUUID(), "Modul", 1000, DEFAULT_KREDITPUNKTE, "user123",true,1, DEFAULT_SEMESTER, DEFAULT_MODULTERMINE);
+	}
+
+	public static Modul initNotActiveModul() {
+		return new Modul(UUID.randomUUID(), "Modul", 1000, DEFAULT_KREDITPUNKTE, "user123",false,1, DEFAULT_SEMESTER, DEFAULT_MODULTERMINE);
+	}
+
 	public static Modul initModulWithName(String name) {
 		return new Modul(UUID.randomUUID(), name, 1000, DEFAULT_KREDITPUNKTE,  "user123",true,1, DEFAULT_SEMESTER, DEFAULT_MODULTERMINE);
 	}
