@@ -22,7 +22,7 @@ public class JWTService {
 	public String generateToken(String username, List<String> authorities) {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("authorities", authorities);
-		long expirationTime = 7 * 24 * 60 * 60 * 1000;
+		long expirationTime = (long) 7 * 24 * 60 * 60 * 1000;
 		return Jwts.builder()
 				.claims()
 				.add(claims)
