@@ -33,13 +33,11 @@ public class CreateNewStapelRequest{
 	}
 
 	public boolean invalidLernstufen() {
-		String regex = "^(?:[1-9][0-9]*m|[1-9][0-9]*h|[1-9][0-9]*d)(?:,(?:[1-9][0-9]*m|[1-9][0-9]*h|[1-9][0-9]*d))*$";
+		String regex = "^(?:[1-9]\\d*m|[1-9]\\d*h|[1-9]\\d*d)(?:,(?:[1-9]\\d*m|[1-9]\\d*h|[1-9]\\d*d))*$";
 		return Pattern.compile(regex).matcher(lernIntervalle).matches();
 	}
 
 	public boolean invalidSetname() {
-		if (setName == null) return true;
-		if (setName.equals("")) return true;
-		return false;
+		return setName == null || setName.isEmpty();
 	}
 }
