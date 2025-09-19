@@ -30,7 +30,7 @@ public class ModulTest {
 		Kreditpunkte kreditpunkte = new Kreditpunkte(10, 90, 210);
 		Modul m = ModulMother.initModulWithCpAndSecondsLearned(kreditpunkte, 1083600);
 
-		assertTrue(m.überschreitetGesamtarbeitsaufwand());
+		assertTrue(m.ueberschreitetGesamtarbeitsaufwand());
 	}
 
 	@Test
@@ -39,7 +39,7 @@ public class ModulTest {
 		Kreditpunkte kreditpunkte = new Kreditpunkte(10, 90, 210);
 		Modul m = ModulMother.initModulWithCpAndSecondsLearned(kreditpunkte,  1076400);
 
-		assertFalse(m.überschreitetGesamtarbeitsaufwand());
+		assertFalse(m.ueberschreitetGesamtarbeitsaufwand());
 	}
 
 	@Test
@@ -48,7 +48,7 @@ public class ModulTest {
 		Kreditpunkte kreditpunkte = new Kreditpunkte(10, 90, 210);
 		Modul m = ModulMother.initModulWithCpAndSecondsLearned(kreditpunkte,  757000);
 
-		assertTrue(m.überschreitetSelbststudiumaufwand());
+		assertTrue(m.ueberschreitetSelbststudiumaufwand());
 	}
 
 	@Test
@@ -57,7 +57,7 @@ public class ModulTest {
 		Kreditpunkte kreditpunkte = new Kreditpunkte(10, 90, 210);
 		Modul m = ModulMother.initModulWithCpAndSecondsLearned(kreditpunkte,  755000);
 
-		assertFalse(m.überschreitetSelbststudiumaufwand());
+		assertFalse(m.ueberschreitetSelbststudiumaufwand());
 	}
 
 	@Test

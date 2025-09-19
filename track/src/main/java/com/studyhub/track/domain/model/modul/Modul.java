@@ -27,11 +27,11 @@ public class Modul {
 		return String.valueOf(kreditpunkte.getSelbststudiumStunden() + kreditpunkte.getKontaktzeitStunden());
 	}
 
-	public boolean überschreitetGesamtarbeitsaufwand() {
+	public boolean ueberschreitetGesamtarbeitsaufwand() {
 		return secondsLearned >= Integer.parseInt(getGesamtArbeitsaufwand())*60*60;
 	}
 
-	public boolean überschreitetSelbststudiumaufwand() {
+	public boolean ueberschreitetSelbststudiumaufwand() {
 		return secondsLearned >= kreditpunkte.getSelbststudiumStunden()*60*60;
 	}
 
