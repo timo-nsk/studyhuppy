@@ -10,7 +10,7 @@ public interface LernplanRepository {
 	Lernplan findByFachId(UUID fachId);
 	Lernplan findActiveByUsername(String username);
 	List<Lernplan> findAllByUsername(String username);
-	void deleteByFachId(UUID fachId);
+	int deleteByFachId(UUID fachId);
 	void setIsActiveOfLernplan(UUID fachId, boolean isActive);
 	void deactivateAllByUsername(String username);
 }
