@@ -3,12 +3,10 @@ package com.studyhub.track.service;
 import com.studyhub.track.application.service.*;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.util.ModulMother;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import java.util.*;
-
 import static com.studyhub.track.util.ModulMother.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -17,14 +15,13 @@ import static org.mockito.Mockito.*;
 
 class ModulServiceTest {
 
-	static ModulRepository modulRepository;
-	static SessionService sessionService;
-	static ModulEventService modulEventService;
-	static ModulService modulService;
+	ModulRepository modulRepository;
+	SessionService sessionService;
+	ModulEventService modulEventService;
+	ModulService modulService;
 
-
-	@BeforeAll
-	static void init() {
+	@BeforeEach
+	void init() {
 		modulRepository = mock(ModulRepository.class);
 		sessionService = mock(SessionService.class);
 		modulEventService = mock(ModulEventService.class);
