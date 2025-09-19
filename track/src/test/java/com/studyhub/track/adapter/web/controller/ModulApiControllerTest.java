@@ -45,7 +45,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("application-dev.yaml")
 public class ModulApiControllerTest {
 	@Value("${maxModule}")
-	private int MAX_MODULE;
+	private int maxModule;
 
 	@Autowired
 	MockMvc mvc;
@@ -84,7 +84,7 @@ public class ModulApiControllerTest {
 		Modul m = new Modul();
 
 		when(jwtService.extractUsernameFromHeader(request)).thenReturn("peter");
-		when(modulService.modulCanBeCreated("peter", MAX_MODULE)).thenReturn(true);
+		when(modulService.modulCanBeCreated("peter", maxModule)).thenReturn(true);
 		when(modulForm.newModulFromFormData(dataForNewModul, "peter", 2)).thenReturn(m);
 
 		modulApiController.newModule(dataForNewModul, request);
@@ -101,7 +101,7 @@ public class ModulApiControllerTest {
 		Modul m = new Modul();
 
 		when(jwtService.extractUsernameFromHeader(request)).thenReturn("peter");
-		when(modulService.modulCanBeCreated("peter", MAX_MODULE)).thenReturn(false);
+		when(modulService.modulCanBeCreated("peter", maxModule)).thenReturn(false);
 		when(modulForm.newModulFromFormData(dataForNewModul, "peter", 2)).thenReturn(m);
 
 		modulApiController.newModule(dataForNewModul, request);
