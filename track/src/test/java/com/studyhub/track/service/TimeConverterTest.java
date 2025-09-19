@@ -16,7 +16,7 @@ class TimeConverterTest {
 	private static TimeConverter tc;
 
 	@BeforeAll
-	public static void init() {
+	static void init() {
 		tc = new TimeConverter();
 	}
 
