@@ -58,7 +58,7 @@ class SessionBeendetEventRepositoryTest {
 
 	@Test
 	@DisplayName("Ein neues SessionBeendetEvent eines Users wird erfolgreich gespeichert")
-	public void test_01() {
+	void test_01() {
 		SessionBewertung newBewertung = new SessionBewertung(5, 6, 5);
 		SessionBeendetEvent newEvent = new SessionBeendetEvent(UUID.randomUUID(), "florentiiina", LocalDateTime.now(), newBewertung, false);
 
@@ -69,7 +69,7 @@ class SessionBeendetEventRepositoryTest {
 
 	@Test
 	@DisplayName("Alle SessionBeendetEvents eines Users werden erfolgreich geladen")
-	public void test_02() {
+	void test_02() {
 		List<SessionBeendetEvent> allEvents = repository.findAllByUsername("john_doe");
 
 		assertThat(allEvents).hasSize(3);
@@ -77,7 +77,7 @@ class SessionBeendetEventRepositoryTest {
 
 	@Test
 	@DisplayName("Ein SessionBeendetEvent wird anhand seiner Event-Id erfolgreich geladen")
-	public void test_03() {
+	void test_03() {
 		SessionBeendetEvent loadedEvent = repository.findByEventId(UUID.fromString("11111111-1111-1111-1111-111111111112"));
 
 		assertThat(loadedEvent.getUsername()).isEqualTo("maria88");
@@ -85,7 +85,7 @@ class SessionBeendetEventRepositoryTest {
 
 	@Test
 	@DisplayName("Wenn in der Datenbank nach einer Event-Id gesucht wird, die nicht existiert, wird ein null-Wert zurückgegeben")
-	public void test_04() {
+	void test_04() {
 		SessionBeendetEvent loadedEvent = repository.findByEventId(UUID.fromString("11111111-1111-1111-1111-911111111112"));
 
 		assertThat(loadedEvent).isNull();
@@ -93,7 +93,7 @@ class SessionBeendetEventRepositoryTest {
 
 	@Test
 	@DisplayName("Alle SessionBeendetEvents eines Users werden gelöscht")
-	public void test_05() {
+	void test_05() {
 		repository.deleteAllByUsername("peter66");
 
 		List<SessionBeendetEvent> allEvents = repository.findAllByUsername("peter66");
