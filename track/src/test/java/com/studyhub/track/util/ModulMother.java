@@ -45,10 +45,10 @@ public class ModulMother {
 		return List.of(m1, m2, m3, m4, m5, m6);
 	}
 
-	public static List<Modul> initListWithNEmptyModule(int N) {
+	public static List<Modul> initListWithNEmptyModule(int n) {
 		List<Modul> modulList = new ArrayList<>();
 
-		for (int i = 0; i < N; i++) {
+		for (int i = 0; i < n; i++) {
 			modulList.add(new Modul());
 		}
 
