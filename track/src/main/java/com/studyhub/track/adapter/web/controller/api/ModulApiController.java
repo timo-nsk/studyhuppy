@@ -30,7 +30,7 @@ import java.util.UUID;
 public class ModulApiController {
 
 	@Value("${maxModule}")
-	private int MAX_MODULE;
+	private int maxModule;
 
 	private final ModulService modulService;
 	private final ModulEventService modulEventService;
@@ -137,7 +137,7 @@ public class ModulApiController {
 		 }
 		 **/
 
-		if (modulService.modulCanBeCreated(username, MAX_MODULE)) {
+		if (modulService.modulCanBeCreated(username, maxModule)) {
 			modulService.saveNewModul(modul);
 			return ResponseEntity.status(HttpStatus.CREATED).build();
 		} else {
