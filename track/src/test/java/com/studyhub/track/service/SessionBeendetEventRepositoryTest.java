@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 		"spring.datasource.username=timo",
 		"spring.datasource.password=1234"
 })
-public class SessionBeendetEventRepositoryTest {
+class SessionBeendetEventRepositoryTest {
 
 	@Container
 	static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15.2")

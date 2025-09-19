@@ -18,7 +18,7 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.*;
 import static com.tngtech.archunit.library.Architectures.onionArchitecture;
 
 @AnalyzeClasses(packagesOf = TrackApplication.class)
-public class ArchitectureTest {
+class ArchitectureTest {
 
 	JavaClasses classesImport = new ClassFileImporter()
 			.withImportOption(ImportOption.Predefined.DO_NOT_INCLUDE_TESTS)
@@ -26,7 +26,7 @@ public class ArchitectureTest {
 
 	@DisplayName("Die Onion-Architektur wird nicht verletzt.")
 	@Test
-	public void testOnionArchitecture() {
+	void testOnionArchitecture() {
 		ArchRule rule = onionArchitecture()
 				.domainModels("..domain.model..")
 				.domainServices("..domain.model..")
@@ -37,35 +37,35 @@ public class ArchitectureTest {
 
 	@DisplayName("Keine Klasse benutzt Field-injection.")
 	@Test
-	public void noFieldInjection() {
+	void noFieldInjection() {
 		ArchRule rule = noFields().should().beAnnotatedWith(Autowired.class);
 		rule.check(classesImport);
 	}
 
 	@DisplayName("Service-Klassen haben den Postfix Service")
 	@Test
-	public void checkServicePostfix() {
+	void checkServicePostfix() {
 		ArchRule rule = classes().that().areAnnotatedWith(Service.class).should().haveSimpleNameEndingWith("Service");
 		rule.check(classesImport);
 	}
 
 	@DisplayName("Controller-Klassen haben den Postfix Controller")
 	@Test
-	public void checkControllerPostfix() {
+	void checkControllerPostfix() {
 		ArchRule rule = classes().that().areAnnotatedWith(Controller.class).should().haveSimpleNameEndingWith("Controller");
 		rule.check(classesImport);
 	}
 
 	@DisplayName("Handler-Methoden in Rest-Controller geben eine Response-Entity zurück")
 	@Test
-	public void apiMethodsReturnResponseEntities() {
+	void apiMethodsReturnResponseEntities() {
 		ArchRule rule = methods().that().areDeclaredInClassesThat().areAnnotatedWith(RestController.class).should().haveRawReturnType(ResponseEntity.class);
 		rule.check(classesImport);
 	}
 
 	@DisplayName("Controller-Klassen benutzen nur Klassen, die mit @Service annotiert sind")
 	@Test
-	public void controllerOnlyAccessServices() {
+	void controllerOnlyAccessServices() {
 		ArchRule rule = classes().that().areAnnotatedWith(Controller.class).should().dependOnClassesThat().areAnnotatedWith(Service.class);
 		rule.check(classesImport);
 	}

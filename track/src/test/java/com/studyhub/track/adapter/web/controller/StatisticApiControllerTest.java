@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(StatisticApiController.class)
 @Import(SecurityConfig.class)
 @ActiveProfiles("application-dev.yaml")
-public class StatisticApiControllerTest {
+class StatisticApiControllerTest {
 
 	@Autowired
 	MockMvc mvc;

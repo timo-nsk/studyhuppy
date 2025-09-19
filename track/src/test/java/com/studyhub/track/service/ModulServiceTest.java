@@ -15,7 +15,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
-public class ModulServiceTest {
+class ModulServiceTest {
 
 	static ModulRepository modulRepository;
 	static SessionService sessionService;

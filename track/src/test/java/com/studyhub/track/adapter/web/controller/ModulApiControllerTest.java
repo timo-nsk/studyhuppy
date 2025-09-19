@@ -43,7 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(SecurityConfig.class)
 @TestPropertySource(properties = "maxModule=30")
 @ActiveProfiles("application-dev.yaml")
-public class ModulApiControllerTest {
+class ModulApiControllerTest {
 	@Value("${maxModule}")
 	private int maxModule;
 

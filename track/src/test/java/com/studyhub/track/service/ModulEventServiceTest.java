@@ -16,7 +16,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ModulEventServiceTest {
+class ModulEventServiceTest {
 	static ModulRepository modulRepo;
 	static ModulGelerntEventRepository eventRepo;
 	static ModulEventService service;

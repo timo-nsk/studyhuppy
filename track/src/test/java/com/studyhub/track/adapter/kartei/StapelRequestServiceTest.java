@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StapelRequestServiceTest {
+class StapelRequestServiceTest {
 	@Disabled(
 			"""
 				TODO: FIXME - aktuell fehlschlagend, da die Funktion rausgenommen wurde und vor der Token-VErifizierung implementiert wurde.

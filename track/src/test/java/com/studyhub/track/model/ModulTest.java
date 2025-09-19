@@ -13,7 +13,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ModulTest {
+class ModulTest {
 
 	@Test
 	@DisplayName("Modul mit 10CP , 90 Kontaktzeitstunden und 210 Selbststudiumstunden hat einen Arbeitsauffwand von 300")

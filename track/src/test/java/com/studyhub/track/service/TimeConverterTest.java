@@ -11,7 +11,7 @@ import java.time.LocalTime;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TimeConverterTest {
+class TimeConverterTest {
 
 	private static TimeConverter tc;
 
