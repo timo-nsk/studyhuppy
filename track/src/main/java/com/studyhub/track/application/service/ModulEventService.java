@@ -54,13 +54,13 @@ public class ModulEventService {
 
 	public Integer computeAverageStudyTimePerDay(String username) {
 		List<ModulGelerntEvent> allEvents = modulGelerntEvent.getAllByUsername(username);
-		int N = (int) allEvents.stream().map(ModulGelerntEvent::dateGelernt).distinct().count();
+		int anzahlEvents = (int) allEvents.stream().map(ModulGelerntEvent::dateGelernt).distinct().count();
 		int sum = allEvents.stream().mapToInt(ModulGelerntEvent::secondsLearned).sum();
 
-		if(N == 0) return 0;
+		if(anzahlEvents == 0) return 0;
 
-		logger.info("Computed average study time per day for user '{}': {} seconds over {} days", username, sum, N);
-		return (int) Math.round((double) sum / N);
+		logger.info("Computed average study time per day for user '{}': {} seconds over {} days", username, sum, anzahlEvents);
+		return (int) Math.round((double) sum / anzahlEvents);
 	}
 
 	public void deleteAllModulEvents(UUID modulId) {
