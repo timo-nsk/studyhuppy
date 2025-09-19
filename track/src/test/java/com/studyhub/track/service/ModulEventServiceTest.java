@@ -7,14 +7,17 @@ import com.studyhub.track.util.ModulMother;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class ModulEventServiceTest {
 	static ModulRepository modulRepo;
@@ -101,5 +104,24 @@ class ModulEventServiceTest {
 		int res = service.computeAverageStudyTimePerDay(username);
 
 		assertThat(res).isZero();
+	}
+
+	@DisplayName("Ein ModulEvent mit {4, 0, -1000} Sekunden wird nicht gespeichert.")
+	@ParameterizedTest
+	@ValueSource(ints = {4, 0, -1000})
+	void test_05(int secondsLearned) {
+		assertThrows(IllegalStateException.class, () -> {
+			service.saveEvent(secondsLearned, UUID.randomUUID().toString(), "timo123");
+		});
+	}
+
+	@Test
+	@DisplayName("Ein ModulEvent mit 5 Sekunden wird gespeichert.")
+	void test_06() {
+		int secondsLearned = 5;
+
+		service.saveEvent(secondsLearned, UUID.randomUUID().toString(), "timo123");
+
+		verify(eventRepo, times(1)).save(any(ModulGelerntEvent.class));
 	}
 }

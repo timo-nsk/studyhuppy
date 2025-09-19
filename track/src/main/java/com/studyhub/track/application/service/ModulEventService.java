@@ -22,10 +22,13 @@ public class ModulEventService {
 	}
 
 	public void saveEvent(int secondsLearned, String modulId, String username) {
-		if (secondsLearned < 1) return;
 		ModulGelerntEvent event = ModulGelerntEvent.initEvent(UUID.fromString(modulId), secondsLearned, username);
-		modulGelerntEvent.save(event);
-		logger.info("Saved ModulGelerntEvent: {}", event);
+		if (event.enoughSecondsLearned()) {
+			modulGelerntEvent.save(event);
+			logger.info("Saved ModulGelerntEvent: {}", event);
+		} else {
+			throw new IllegalStateException("modul was not saved, because not enough seconds learned");
+		}
 	}
 
 	public Map<LocalDate, List<ModulStat>> getStatisticsForRecentDays(int days, String username) {
