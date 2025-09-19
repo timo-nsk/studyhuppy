@@ -39,7 +39,7 @@ public class SecurityConfig {
 		requestHandler.setCsrfRequestAttributeName(null);
 
 		http
-				// TODO: muss aus sein, weil sonst die keine POST requests als 403. fixen
+				// TODO: muss für Development disabled sein
 				.csrf().disable()
 				.cors(Customizer.withDefaults())
 				//.requiresChannel().anyRequest().requiresSecure().and()
@@ -66,13 +66,9 @@ public class SecurityConfig {
 				"http://localhost:4200",
 				"http://127.0.0.1:4200",
 				"http://127.0.0.1:8080",
-				"http://49.12.242.124:8080",
-				"http://49.12.242.124:4200",
-				"https://49.12.242.124",
-				"https://49.12.242.124:8443",
-				"https://49.12.242.124:9084",
 				"https://studyhuppy.de",
 				"https://www.studyhuppy.de"
+				// hier muss bei Bedarf auch die URI vom Cloud-Server rein
 		));
 
 		config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
