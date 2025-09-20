@@ -34,12 +34,12 @@ export interface LernplanSessionInfoDto {
 }
 
 export class TagDto {
-  weekday : string;
+  tag : string;
   beginn : string;
   session : string;
 
   constructor(weekday: string, beginn: string, session: string) {
-    this.weekday = weekday;
+    this.tag = weekday;
     this.beginn = beginn;
     this.session = session;
   }
