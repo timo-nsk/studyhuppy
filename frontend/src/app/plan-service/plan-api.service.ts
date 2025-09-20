@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HeaderService} from '../header.service';
 import {HttpClient} from '@angular/common/http';
-import {Lernplan, LernplanRequest, LernplanResponse} from './plan-domain';
+import {Lernplan, LernplanBearbeitetRequest, LernplanRequest, LernplanResponse} from './plan-domain';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -51,5 +51,10 @@ export class PlanApiService {
   getLernplanById(lernplanId: string) : Observable<Lernplan> {
     const headers = this.headerService.createAuthHeader()
     return this.http.get<Lernplan>(this.PLAN_BASE_API + `/get-lernplan-by-id/${lernplanId}`, {headers})
+  }
+
+  sendLernplanBearbeitetRequest(lernplanBearbeitetRequest: LernplanBearbeitetRequest) {
+    const header = this.headerService.createAuthHeader()
+    return this.http.post<any>(this.PLAN_BASE_API + '/bearbeite-lernplan', lernplanBearbeitetRequest, {headers: header})
   }
 }
