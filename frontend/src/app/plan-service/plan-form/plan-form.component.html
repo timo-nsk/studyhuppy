@@ -1,74 +1,71 @@
-<div class="lernplan-container" *ngIf="sessionData.length > 0">
-  <h2>Lernplan erstellen</h2>
-  <div class="raw-container mt-5">
-    <form class="mb-4" [formGroup]="titelForm">
-      <label class="form-label">Titel</label>
-      <input class="form-control" formControlName="lernplanTitel">
-      <span class="text-danger"
-            *ngIf="titelForm.controls['lernplanTitel'].errors?.['required'] && titelForm.controls['lernplanTitel'].touched">
-              Bitte geben Sie einen Lernplantitel ein
-        </span>
-    </form>
-  </div>
-  <div>
-    <form [formGroup]="form" (ngSubmit)="save()">
-      <div formArrayName="days">
-        <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i" class="weekday-container">
-          <h4>{{ day.value.weekday }}</h4>
-          <hr>
+<div class="raw-container mt-5">
+  <form class="mb-4" [formGroup]="titelForm">
+    <label class="form-label">Titel</label>
+    <input class="form-control" formControlName="lernplanTitel">
+    <span class="text-danger"
+          *ngIf="titelForm.controls['lernplanTitel'].errors?.['required'] && titelForm.controls['lernplanTitel'].touched">
+            Bitte geben Sie einen Lernplantitel ein
+      </span>
+  </form>
+</div>
+<div>
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <div formArrayName="days">
+      <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i" class="weekday-container">
+        <h4>{{ day.value.weekday }}</h4>
+        <hr>
 
-          <table class="weekday-table">
-            <tbody>
-            <tr>
-              <td class="label-cell">
-                <label>Beginn:</label>
-              </td>
-              <td>
-                <input type="time" formControlName="beginn" class="form-control time-picker m-accent-font" [ngClass]="{ 'disabled' : day.get('session')?.value == 'none'}">
-                <span class="text-danger"
-                      *ngIf="day.get('beginn')?.errors?.['required'] && day.get('beginn')?.touched">
-                        Bitte geben Sie eine Uhrzeit an
-                  </span>
-              </td>
-              <td></td>
-            </tr>
-            <tr>
-              <td class="label-cell">
-                <label>Session:</label>
-              </td>
-              <td>
-                <select formControlName="session" class="form-select m-accent-font" (change)="updateGesamtzeit()">
-                  <option selected value="none">{{day.value.weekday}} keine Session</option>
-                  <option *ngFor="let sessionInfo of sessionData" [value]="sessionInfo.fachId">{{sessionInfo.name}}</option>
-                </select>
-                <span class="text-danger"
-                      *ngIf="day.get('session')?.errors?.['required'] && day.get('session')?.touched">
-                        Bitte geben Sie eine Lernkonfiguration aus
-                  </span>
-              </td>
-              <td class="zeit-cell">
-                <p *ngIf="getSessionInfo(day.get('session')?.value) as info">
-                  {{info.zeit | timeFormat}}
-                </p>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="weekday-container">
         <table class="weekday-table">
           <tbody>
           <tr>
-            <td>Lernzeit gesamt</td>
-            <td id="gesamtzeit-cell">{{gesamtzeit > 0 ? (gesamtzeit | timeFormat) : ''}}</td>
+            <td class="label-cell">
+              <label>Beginn:</label>
+            </td>
+            <td>
+              <input type="time" formControlName="beginn" class="form-control time-picker m-accent-font" [ngClass]="{ 'disabled' : day.get('session')?.value == 'none'}">
+              <span class="text-danger"
+                    *ngIf="day.get('beginn')?.errors?.['required'] && day.get('beginn')?.touched">
+                      Bitte geben Sie eine Uhrzeit an
+                </span>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="label-cell">
+              <label>Session:</label>
+            </td>
+            <td>
+              <select formControlName="session" class="form-select m-accent-font" (change)="updateGesamtzeit()">
+                <option selected value="none">{{day.value.weekday}} keine Session</option>
+                <option *ngFor="let sessionInfo of sessionData" [value]="sessionInfo.fachId">{{sessionInfo.name}}</option>
+              </select>
+              <span class="text-danger"
+                    *ngIf="day.get('session')?.errors?.['required'] && day.get('session')?.touched">
+                      Bitte geben Sie eine Lernkonfiguration aus
+                </span>
+            </td>
+            <td class="zeit-cell">
+              <p *ngIf="getSessionInfo(day.get('session')?.value) as info">
+                {{info.zeit | timeFormat}}
+              </p>
+            </td>
           </tr>
           </tbody>
         </table>
       </div>
-      <div class="raw-container">
-        <button type="submit" class="sh-btn">Speichern</button>
-      </div>
-    </form>
-  </div>
+    </div>
+    <div class="weekday-container">
+      <table class="weekday-table">
+        <tbody>
+        <tr>
+          <td>Lernzeit gesamt</td>
+          <td id="gesamtzeit-cell">{{gesamtzeit > 0 ? (gesamtzeit | timeFormat) : ''}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="raw-container">
+      <button type="submit" class="sh-btn">Speichern</button>
+    </div>
+  </form>
 </div>
