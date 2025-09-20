@@ -1,0 +1,75 @@
+.lernplan-container {
+  width: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.weekday-container {
+  background-color: rgba(117, 161, 206, 0.15);
+  min-width: 500px;
+  padding: 5px;
+  margin: 10px;
+
+  border-style: solid;
+  border-color: rgba(16, 45, 92, 0.5);
+  border-width: 2px;
+  border-radius: 5px;
+}
+
+.raw-container {
+  min-width: 500px;
+  padding: 5px;
+  margin: 10px;
+}
+
+.weekday-table {
+  width: 100%;
+}
+
+.label-cell {
+  width: 15%;
+}
+
+.zeit-cell {
+  width: 15%;
+  align-content: center;
+  text-align: center;
+}
+
+#gesamtzeit-cell {
+  width: 20%;
+  align-content: center;
+  text-align: center;
+}
+
+.time-picker {
+  width: 85px;
+  text-align: center;
+}
+
+select:hover {
+  cursor: pointer;
+}
+
+p {
+  margin: 0;
+}
+
+td {
+  background-color: rgba(117, 161, 206, 0) !important;
+  border-width: 0 !important;
+}
+
+hr {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.disabled {
+  background-color: #b6b6b6;
+  color: gray;
+}
