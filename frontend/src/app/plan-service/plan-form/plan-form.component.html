@@ -9,7 +9,7 @@
   </form>
 </div>
 <div>
-  <form [formGroup]="form" (ngSubmit)="save()">
+  <form [formGroup]="form" (ngSubmit)="sendLernplanData()">
     <div formArrayName="days">
       <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i" class="weekday-container">
         <h4>{{ day.value.weekday }}</h4>
@@ -65,7 +65,8 @@
       </table>
     </div>
     <div class="raw-container">
-      <button type="submit" class="sh-btn">Speichern</button>
+      <button *ngIf="!hasLernplanToEdit()" type="submit" class="sh-btn">Lernplan erstellen</button>
+      <button *ngIf="hasLernplanToEdit()" type="submit" class="sh-btn">Änderungen speichern</button>
     </div>
   </form>
 </div>
