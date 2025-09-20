@@ -18,4 +18,8 @@ public class PrometheusMetrics {
     public void incrementTotalRequests() {
         totalRequests.increment();
     }
+
+    public double getTotalRequestsCount() {
+        return totalRequests.count();
+    }
 }
