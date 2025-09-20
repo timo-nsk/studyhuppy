@@ -18,4 +18,8 @@ public class Lernplan {
 	private String titel;
 	private List<Tag> tagesListe;
 	private boolean isActive;
+
+	public void aktualisiereTagesliste(List<Tag> neueTagesListe) {
+		this.tagesListe = neueTagesListe;
+	}
 }
