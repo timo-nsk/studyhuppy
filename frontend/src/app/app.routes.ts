@@ -40,6 +40,7 @@ import {SessionCreateComponent} from './session-service/create/create.component'
 import {SessionDeleteComponent} from './session-service/delete/delete.component';
 import {GroupSessionComponent} from './session-service/group-session/group-session.component';
 import {PlanEditComponent} from './plan-service/edit/edit.component';
+import {LernplanResolver} from './plan-service/edit/lernplan.resolver';
 
 export const routes: Routes = [
   {
@@ -109,6 +110,7 @@ export const routes: Routes = [
         {
           path: 'lernplan/bearbeiten/:lernplanId',
           component: PlanEditComponent,
+          resolve: { lernplanToEdit: LernplanResolver }
         },
         {
           path: 'admin',

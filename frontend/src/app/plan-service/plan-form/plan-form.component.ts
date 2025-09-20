@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, Input, OnInit} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -14,7 +14,7 @@ import {SessionApiService} from '../../session-service/session-api.service';
 import {PlanApiService} from '../plan-api.service';
 import {SnackbarService} from '../../snackbar.service';
 import {SessionInfoDto} from '../../session-service/session-domain';
-import {LernplanRequest, TagDto} from '../plan-domain';
+import {Lernplan, LernplanRequest, TagDto} from '../plan-domain';
 
 @Component({
   selector: 'app-plan-form',
@@ -43,6 +43,8 @@ export class PlanFormComponent implements OnInit{
   })
   gesamtzeit : number = 0
 
+  @Input() lernplanToEdit! : Lernplan
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
@@ -55,12 +57,13 @@ export class PlanFormComponent implements OnInit{
     this.sessionApiService.getLernplanSessionData().subscribe({
       next: (data) => {
         this.sessionData = data
-        console.log(this.sessionData)
+        console.log("Plan-Form lernplanToEdit: ", this.lernplanToEdit)
       },
       error: (err) => {
         console.error('Error fetching session data:', err);
       }
     })
+
   }
 
   createDayForm(day: string): FormGroup {
