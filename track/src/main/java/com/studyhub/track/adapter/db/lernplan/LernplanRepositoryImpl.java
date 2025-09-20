@@ -3,8 +3,8 @@ package com.studyhub.track.adapter.db.lernplan;
 import com.studyhub.track.application.service.LernplanRepository;
 import com.studyhub.track.domain.model.lernplan.Lernplan;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static com.studyhub.track.adapter.db.lernplan.LernplanMapper.toDomain;
@@ -21,14 +21,15 @@ public class LernplanRepositoryImpl implements LernplanRepository {
 
 	@Override
 	public Lernplan save(Lernplan lernplan) {
-		LernplanDto dto = toDto(lernplan);
+		Long existringId = lernplanDao.findByFachId(lernplan.getFachId()).map(LernplanDto::id).orElse(null);
+		LernplanDto dto = toDto(lernplan, existringId);
 		return  toDomain(lernplanDao.save(dto));
 	}
 
 	@Override
 	public Lernplan findByFachId(UUID fachId) {
-		LernplanDto dto = lernplanDao.findByFachId(fachId);
-		return toDomain(dto);
+		Optional<LernplanDto> dto = lernplanDao.findByFachId(fachId);
+		return dto.map(LernplanMapper::toDomain).orElse(null);
 	}
 
 	@Override
