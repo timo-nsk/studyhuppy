@@ -6,6 +6,7 @@ import com.studyhub.kartei.service.application.IUserDeletionConsumer;
 import com.studyhub.kartei.service.application.StapelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.util.UUID;
  * Alle Daten des Benutzers werden gelöscht.
  * topic: 'user-deletion'
  */
+@Profile("dev-kafka")
 @Service
 public class UserDeletionConsumerImpl implements IUserDeletionConsumer {
 
