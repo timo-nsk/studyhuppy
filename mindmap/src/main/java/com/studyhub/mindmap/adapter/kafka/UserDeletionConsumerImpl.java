@@ -5,6 +5,7 @@ import com.studyhub.mindmap.application.service.IUserDeletionConsumer;
 import com.studyhub.mindmap.application.service.MindmapService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  * Alle Daten des Benutzers werden gelöscht.
  * topic: 'user-deletion'
  */
+@Profile("dev-kafka")
 @Service
 public class UserDeletionConsumerImpl implements IUserDeletionConsumer {
 
