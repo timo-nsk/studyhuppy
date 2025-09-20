@@ -70,4 +70,12 @@ public class LernplanService {
 	public Lernplan findByFachId(UUID lernplanId) {
 		return lernplanRepository.findByFachId(lernplanId);
 	}
+
+	public boolean saveBearbeitetenLernplan(Lernplan bearbeiteterPlan) {
+		UUID lernplanId = bearbeiteterPlan.getFachId();
+		Lernplan alterPlan = lernplanRepository.findByFachId(lernplanId);
+		alterPlan.aktualisiereTagesliste(bearbeiteterPlan.getTagesListe());
+		Lernplan saved = lernplanRepository.save(alterPlan);
+		return saved != null;
+	}
 }
