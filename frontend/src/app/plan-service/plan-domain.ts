@@ -21,6 +21,11 @@ export interface LernplanRequest {
   tage : TagDto[]
 }
 
+export interface LernplanBearbeitetRequest {
+  lernplanId : string,
+  tage : TagDto[]
+}
+
 export interface LernplanResponse {
   lernplanTitel : string,
   sessionList : LernplanSessionInfoDto[]
