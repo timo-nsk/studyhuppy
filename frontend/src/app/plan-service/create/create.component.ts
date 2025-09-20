@@ -25,11 +25,13 @@ import {PlanFormComponent} from '../plan-form/plan-form.component';
 export class PlanCreateComponent implements OnInit {
   sessionApiService = inject(SessionApiService)
   sessionData : SessionInfoDto[] = []
+  loadingData = true
 
   ngOnInit(): void {
     this.sessionApiService.getLernplanSessionData().subscribe({
       next: (data) => {
         this.sessionData = data
+        this.loadingData = false
       },
       error: (err) => {
         console.error('Error fetching session data:', err);
