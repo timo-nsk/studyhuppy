@@ -1,11 +1,12 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {PlanFormComponent} from '../plan-form/plan-form.component';
 
 @Component({
   selector: 'app-edit',
-  imports: [],
+  imports: [PlanFormComponent],
   templateUrl: './edit.component.html',
-  styleUrl: './edit.component.scss'
+  styleUrls: ['./edit.component.scss', '../../general.scss', '../../button.scss', '../../color.scss']
 })
 export class PlanEditComponent implements OnInit{
   route = inject(ActivatedRoute);
