@@ -15,12 +15,12 @@ public record LernplanRequest(
 ) {
 	public Lernplan toEntity(String username) {
 		List<Tag> tagesListe = tage.stream()
-				.filter(e -> !e.session().equals("none"))
+				.filter(e -> !e.sessionId().equals("none"))
 				.map(dtoObj -> {
 
 					DayOfWeek tag;
 
-					switch(dtoObj.weekday()) {
+					switch(dtoObj.tag()) {
 						case "Montags" -> tag = DayOfWeek.MONDAY;
 						case "Dienstags" -> tag = DayOfWeek.TUESDAY;
 						case "Mittwochs" -> tag = DayOfWeek.WEDNESDAY;
@@ -34,7 +34,7 @@ public record LernplanRequest(
 					LocalTime beginn = LocalTime.parse(dtoObj.beginn());
 
 
-					return new Tag(tag, beginn, UUID.fromString(dtoObj.session()));
+					return new Tag(tag, beginn, UUID.fromString(dtoObj.sessionId()));
 				})
 				.toList();
 
