@@ -36,11 +36,11 @@ export interface LernplanSessionInfoDto {
 export class TagDto {
   tag : string;
   beginn : string;
-  session : string;
+  sessionId : string;
 
   constructor(weekday: string, beginn: string, session: string) {
     this.tag = weekday;
     this.beginn = beginn;
-    this.session = session;
+    this.sessionId = session;
   }
 }
