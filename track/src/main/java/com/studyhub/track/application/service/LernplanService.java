@@ -66,4 +66,8 @@ public class LernplanService {
 	public int deleteLernplanByFachId(UUID fachId) {
 		return lernplanRepository.deleteByFachId(fachId);
 	}
+
+	public Lernplan findByFachId(UUID lernplanId) {
+		return lernplanRepository.findByFachId(lernplanId);
+	}
 }

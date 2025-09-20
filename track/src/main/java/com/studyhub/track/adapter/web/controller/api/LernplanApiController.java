@@ -28,6 +28,16 @@ public class LernplanApiController {
 		this.jwtService = jwtService;
 	}
 
+	@GetMapping("/get-lernplan-by-id/{lernplanId}")
+	public ResponseEntity<Lernplan> getLernplanById(@PathVariable UUID lernplanId) {
+		Lernplan lernplan = lernplanService.findByFachId(lernplanId);
+		if (lernplan != null) {
+			return ResponseEntity.ok(lernplan);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
 	@GetMapping("/get-all-lernplaene")
 	public ResponseEntity<List<Lernplan>> getAllLernplaene(HttpServletRequest request) {
 		String username = jwtService.extractUsernameFromHeader(request);

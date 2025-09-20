@@ -47,4 +47,9 @@ export class PlanApiService {
     const headers = this.headerService.createAuthHeader()
     return this.http.get<any>(this.PLAN_BASE_API + '/is-today-planned', {headers})
   }
+
+  getLernplanById(lernplanId: string) : Observable<Lernplan> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.get<Lernplan>(this.PLAN_BASE_API + `/get-lernplan-by-id/${lernplanId}`, {headers})
+  }
 }
