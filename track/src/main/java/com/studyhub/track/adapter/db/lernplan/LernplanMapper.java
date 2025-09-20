@@ -18,9 +18,9 @@ public class LernplanMapper {
 		);
 	}
 
-	public static LernplanDto toDto(Lernplan l) {
+	public static LernplanDto toDto(Lernplan l, Long existingId) {
 		return new LernplanDto(
-				null,
+				existingId,
 				l.getFachId(),
 				l.getUsername(),
 				l.getTitel(),
