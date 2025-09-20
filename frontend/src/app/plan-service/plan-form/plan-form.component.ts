@@ -1,5 +1,6 @@
 import {Component, inject, Input, OnInit} from '@angular/core';
 import {
+  AbstractControl,
   FormArray,
   FormBuilder,
   FormControl,
@@ -34,6 +35,7 @@ export class PlanFormComponent implements OnInit{
   planApiService = inject(PlanApiService)
   snackbarService = inject(SnackbarService)
   weekdays = ['Montags', 'Dienstags', 'Mittwochs', 'Donnerstags', 'Freitags', 'Samstags', 'Sonntags'];
+  weekdaysEnum = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
   sessionData : SessionInfoDto[] = []
 
   form!: FormGroup;
@@ -57,7 +59,12 @@ export class PlanFormComponent implements OnInit{
     this.sessionApiService.getLernplanSessionData().subscribe({
       next: (data) => {
         this.sessionData = data
-        console.log("Plan-Form lernplanToEdit: ", this.lernplanToEdit)
+        //console.log("Plan-Form lernplanToEdit: ", this.lernplanToEdit)
+
+        if(this.hasLernplanToEdit()) {
+          this.fillFormForEdit()
+        }
+
       },
       error: (err) => {
         console.error('Error fetching session data:', err);
@@ -163,5 +170,28 @@ export class PlanFormComponent implements OnInit{
         }
       });
     }
+  }
+
+  /**
+   * Befüllt das Form-Objekt mit den Daten aus dem lernplanToEdit-Objekt
+   */
+  fillFormForEdit() {
+    this.titelForm.patchValue({lernplanTitel: this.lernplanToEdit.titel})
+
+    this.days.controls.forEach((formGroup: AbstractControl, index: number) => {
+      const currentDay = this.weekdaysEnum[index]
+      const tagDto = this.lernplanToEdit.tagesListe.find(tagDto => tagDto.tag === currentDay);
+
+      if(tagDto) {
+        const dayGroup = formGroup as FormGroup;
+
+        dayGroup.patchValue({beginn: tagDto.beginn})
+        dayGroup.patchValue({session: tagDto.sessionId})
+      }
+    });
+  }
+
+  hasLernplanToEdit() : boolean {
+    return this.lernplanToEdit != null && this.lernplanToEdit != undefined
   }
 }
