@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: mindmap-service
+  neo4j:
+    uri: bolt://localhost:7687
+    authentication:
+      username: ${MINDMAP_USER}
+      password: ${MINDMAP_PASS}
+  kafka:
+    bootstrap-servers: localhost:10000
+    consumer:
+      group-id: studyhuppy-mail
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+management:
+  endpoints:
+    web:
+      base-path: /api/mindmap/v1/actuator
+server:
+  port: ${SERVER_PORT}
+jwt:
+  secret: ${JWT_SECRET}
+adapter:
+  uri:
+    modul: http://localhost:9080/api/modul/v1
