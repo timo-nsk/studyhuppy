@@ -1,8 +1,12 @@
 <div class="main-container m-accent-font">
-  <div class="lernplan-container" *ngIf="sessionData.length == 0">
-    <p>Sie haben noch keine Lern-Konfigurationen erstellt.</p>
-    <p>Um einen Lernplan erstellen zu können, benötigen Sie mindestens eine <a [routerLink]="'/session/create'">Lernkonfiguration</a>.</p>
+  <div *ngIf="!loadingData">
+    <div class="lernplan-container" *ngIf="sessionData.length == 0">
+      <p>Sie haben noch keine Lern-Konfigurationen erstellt.</p>
+      <p>Um einen Lernplan erstellen zu können, benötigen Sie mindestens eine <a [routerLink]="'/session/create'">Lernkonfiguration</a>.</p>
+    </div>
+    <div class="lernplan-container" *ngIf="sessionData.length > 0">
+      <h2>Lernplan erstellen</h2>
+      <app-plan-form></app-plan-form>
+    </div>
   </div>
-
-  <app-plan-form></app-plan-form>
 </div>
