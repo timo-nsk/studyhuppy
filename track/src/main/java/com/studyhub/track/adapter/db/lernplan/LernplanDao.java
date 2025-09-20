@@ -7,11 +7,12 @@ import org.springframework.data.relational.repository.Lock;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface LernplanDao extends CrudRepository<LernplanDto, Long> {
 	List<LernplanDto> findAllByUsername(String username);
-	LernplanDto findByFachId(UUID fachId);
+	Optional<LernplanDto> findByFachId(UUID fachId);
 
 	@Modifying
 	@Query("delete from lernplan where fach_id = :fachId")
