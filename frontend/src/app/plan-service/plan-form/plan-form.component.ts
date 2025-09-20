@@ -15,7 +15,7 @@ import {SessionApiService} from '../../session-service/session-api.service';
 import {PlanApiService} from '../plan-api.service';
 import {SnackbarService} from '../../snackbar.service';
 import {SessionInfoDto} from '../../session-service/session-domain';
-import {Lernplan, LernplanRequest, TagDto} from '../plan-domain';
+import {Lernplan, LernplanBearbeitetRequest, LernplanRequest, TagDto} from '../plan-domain';
 
 @Component({
   selector: 'app-plan-form',
@@ -89,47 +89,18 @@ export class PlanFormComponent implements OnInit{
     return this.sessionData.find(s => s.fachId === fachId);
   }
 
-  save() {
-    let invalid = 0
+  sendLernplanData() {
+    let valid = this.validateFormData()
 
-    if (this.titelForm.invalid) {
-      this.titelForm.markAllAsTouched()
-      invalid++
-    }
-
-    for(let i = 0; i < this.days.length; i++) {
-      const currForm = this.days.at(i);
-      if(currForm.invalid) {
-        currForm.markAllAsTouched()
-        invalid++
-      }
-    }
-
-    if (invalid > 0) {
+    if (!valid) {
       return
     } else {
-      let lernplanRequest: LernplanRequest = {} as LernplanRequest;
-      lernplanRequest.lernplanTitel = this.titelForm.value.lernplanTitel!
 
-      let dayDtos : TagDto[] = []
-      for(let i = 0; i < this.days.length; i++) {
-        const currForm = this.days.at(i);
-        let dto : TagDto = this.formToDto(currForm as FormGroup);
-        dayDtos.push(dto)
+      if(this.isErstellung()) {
+        this.erstelleLernplan()
+      } else if(this.isBearbeitung()) {
+        this.bearbeiteLernplan()
       }
-      lernplanRequest.tage = dayDtos
-
-      console.log(lernplanRequest)
-
-      this.planApiService.saveLernplan(lernplanRequest).subscribe({
-        next: (response) => {
-          this.snackbarService.openSuccess("Lernplan erfolgreich gespeichert")
-        },
-        error: err => {
-          this.snackbarService.openError("Fehler beim Speichern des Lernplans")
-          console.log(err)
-        }
-      })
     }
   }
 
@@ -193,5 +164,81 @@ export class PlanFormComponent implements OnInit{
 
   hasLernplanToEdit() : boolean {
     return this.lernplanToEdit != null && this.lernplanToEdit != undefined
+  }
+
+  isErstellung() : boolean {
+    return !this.hasLernplanToEdit()
+  }
+
+  isBearbeitung() : boolean {
+    return this.hasLernplanToEdit()
+  }
+
+  validateFormData(): boolean {
+    let invalid = 0
+
+    if (this.titelForm.invalid) {
+      this.titelForm.markAllAsTouched()
+      invalid++
+    }
+
+    for(let i = 0; i < this.days.length; i++) {
+      const currForm = this.days.at(i);
+      if(currForm.invalid) {
+        currForm.markAllAsTouched()
+        invalid++
+      }
+    }
+
+    return invalid === 0
+  }
+
+  private erstelleLernplan() {
+    let lernplanRequest: LernplanRequest = {} as LernplanRequest;
+    lernplanRequest.lernplanTitel = this.titelForm.value.lernplanTitel!
+
+    let dayDtos : TagDto[] = []
+    for(let i = 0; i < this.days.length; i++) {
+      const currForm = this.days.at(i);
+      let dto : TagDto = this.formToDto(currForm as FormGroup);
+      dayDtos.push(dto)
+    }
+    lernplanRequest.tage = dayDtos
+
+    console.log(lernplanRequest)
+
+    this.planApiService.saveLernplan(lernplanRequest).subscribe({
+      next: (response) => {
+        this.snackbarService.openSuccess("Lernplan erfolgreich gespeichert")
+      },
+      error: err => {
+        this.snackbarService.openError("Fehler beim Speichern des Lernplans")
+        console.log(err)
+      }
+    })
+  }
+
+  private bearbeiteLernplan() {
+    let lernplanBearbeitetRequest: LernplanBearbeitetRequest = {} as LernplanBearbeitetRequest;
+    lernplanBearbeitetRequest.lernplanId = this.lernplanToEdit.fachId
+
+    let dayDtos : TagDto[] = []
+    for(let i = 0; i < this.days.length; i++) {
+      const currForm = this.days.at(i);
+      let dto : TagDto = this.formToDto(currForm as FormGroup);
+      dayDtos.push(dto)
+    }
+    lernplanBearbeitetRequest.tage = dayDtos
+
+
+    this.planApiService.sendLernplanBearbeitetRequest(lernplanBearbeitetRequest).subscribe({
+      next: (response) => {
+        this.snackbarService.openSuccess("Lernplan erfolgreich gespeichert")
+      },
+      error: err => {
+        this.snackbarService.openError("Fehler beim Speichern des Lernplans")
+        console.log(err)
+      }
+    })
   }
 }
