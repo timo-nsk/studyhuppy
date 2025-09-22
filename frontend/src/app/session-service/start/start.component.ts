@@ -84,18 +84,20 @@ export class SessionStartComponent implements OnInit{
     this.sessionStarted = false;
     // Wenn eine Lern-Session gestartet wurde, darf nicht währenddessen die Session-Konfiguration gewechselt werden!
     this.sessionSelectIsDisabled = true;
+    this.sessionStateManager.printThisSessionData()
   }
 
   pauseSession(): void {
     this.sessionStateManager.pause()
     this.sessionPaused = true;
-    this.sessionStateManager.printTotaleLernzeit()
+    this.sessionStateManager.printThisSessionData()
   }
 
   resumeSession(): void {
     this.startSession()
     this.sessionPaused = false;
     this.sessionStateManager.printTotaleLernzeit()
+    this.sessionStateManager.printThisSessionData()
   }
 
   abortThisSession() : void {
