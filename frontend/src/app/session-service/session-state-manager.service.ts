@@ -6,6 +6,7 @@ import {SessionSignalService} from './start/session-signal.service';
 export class SessionStateManager {
   audioService = new AudioService()
   modulService : ModuleApiService;
+
   currentTotal : number = 0
   lernzeiten : number[] = []
   pausen : number[] = []
@@ -85,6 +86,7 @@ export class SessionStateManager {
     this.currentLernzeitTimer = 0;
     this.currentPauseTimer = 0;
   }
+
   getCurrentLernzeit() : number {
     return this.lernzeiten[this.currentLernzeitIndex];
   }
@@ -115,6 +117,13 @@ export class SessionStateManager {
 
   printTotaleLernzeit() {
     console.log(`Totale Lernzeit bisher: ${this.currentTotal}`)
+  }
+
+  printThisSessionData() {
+    console.log("### CURRENT SESSION STATE ###")
+    console.log("lernzeiten array: ", this.lernzeiten)
+    console.log("pausen array: ", this.pausen)
+    console.log(`currentTotal: ${this.currentTotal}`)
   }
 
   handleAudioSounds(i : number) {
