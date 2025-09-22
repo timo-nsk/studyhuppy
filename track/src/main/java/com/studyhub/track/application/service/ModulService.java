@@ -245,11 +245,9 @@ public class ModulService {
 	}
 
 	public void addSecondsToModul(UUID uuid, int secondsToAdd, String username) {
-		int oldSeconds = modulRepository.findSecondsById(uuid);
-		oldSeconds += secondsToAdd;
 		try {
-			updateSeconds(uuid, oldSeconds);
-			modulEventService.saveEvent(oldSeconds,uuid.toString(), username);
+			updateSeconds(uuid, secondsToAdd);
+			modulEventService.saveEvent(secondsToAdd, uuid.toString(), username);
 		} catch(Exception e) {
 			log.error("Error saving event", e);
 		}

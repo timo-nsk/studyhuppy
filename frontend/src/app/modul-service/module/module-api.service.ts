@@ -52,6 +52,8 @@ export class ModuleApiService {
   postRawSeconds(modulId : string, secondsToAdd : number) : Observable<any> {
     const headers = this.headerService.createAuthHeader()
 
+    console.log("DEBUG: seconds to add: " + secondsToAdd)
+
     const payload = {
       modulId: modulId,
       secondsToAdd: secondsToAdd,

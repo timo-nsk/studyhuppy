@@ -51,9 +51,9 @@ public class ModulApiController {
 	public ResponseEntity<Void> updateSeconds(@RequestBody TimerRequest timerRequest, HttpServletRequest httpServletRequest) {
 		try {
 			String username = jwtService.extractUsernameFromHeader(httpServletRequest);
-			int seconds = timerRequest.toSeconds();
-			modulService.updateSeconds(UUID.fromString(timerRequest.modulId()), seconds);
-			modulEventService.saveEvent(seconds, timerRequest.modulId(), username);
+			//modulService.updateSeconds(UUID.fromString(timerRequest.modulId()), seconds);
+			//modulEventService.saveEvent(seconds, timerRequest.modulId(), username);
+			modulService.addSecondsToModul(UUID.fromString(timerRequest.modulId()), timerRequest.toSeconds(), username);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
