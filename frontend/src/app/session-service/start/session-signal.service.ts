@@ -13,4 +13,8 @@ export class SessionSignalService {
     this.sessionFinished.set(this.sessionFinished() * -1)
   }
 
+  resetThisSession() {
+    this.sessionFinished.set(1)
+  }
+
 }

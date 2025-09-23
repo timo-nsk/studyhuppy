@@ -36,6 +36,7 @@ export class SessionStartComponent implements OnInit{
       if (this.sessionSignalService.sessionFinished() === -1) {
         this.resetButtons()
         this.openRatingModal()
+        this.sessionSignalService.resetThisSession()
       }
     });
   }
@@ -84,56 +85,51 @@ export class SessionStartComponent implements OnInit{
     this.sessionStarted = false;
     // Wenn eine Lern-Session gestartet wurde, darf nicht währenddessen die Session-Konfiguration gewechselt werden!
     this.sessionSelectIsDisabled = true;
-    this.sessionStateManager.printThisSessionData()
   }
 
   pauseSession(): void {
     this.sessionStateManager.pause()
     this.sessionPaused = true;
-    this.sessionStateManager.printThisSessionData()
   }
 
   resumeSession(): void {
-    this.startSession()
+    this.sessionStateManager.fortsetzen()
     this.sessionPaused = false;
-    this.sessionStateManager.printTotaleLernzeit()
-    this.sessionStateManager.printThisSessionData()
   }
 
   abortThisSession() : void {
     this.sessionAbgebrochen = true
 
     // Die Session wird abgebrochen, aber die bisher gelernte Zeit wird dem Modul gutgeschrieben
-    const modulId = this.sessionStateManager.getCurrentBlockModulId()
-    const secondsLearned = this.sessionStateManager.getCurrentTotal()
-    this.modulService.postRawSeconds(modulId, secondsLearned).subscribe()
+    const modulId = this.sessionStateManager.aktuelleBlockModulId
+    const secondsLearned = this.sessionStateManager.gesamtGelernteSekunden
+    this.modulService.postRawSeconds(modulId!, secondsLearned).subscribe()
 
-    this.sessionStateManager.pause()
+    this.sessionStateManager.beenden();
+    this.sessionSignalService.resetThisSession()
     this.sessionStarted = true;
-    //this.sessionStateManager.clearState();
     // Nach einem Abbruch der Session können wieder andere Konfigurationen gewählt werden
     this.sessionSelectIsDisabled = false;
     this.ngOnInit()
-    this.openRatingModal()
   }
 
   getCurrentLernzeit(): number {
-    return this.sessionStateManager.getCurrentLernzeit()
+    return this.sessionStateManager.aktuelleLernzeit
   }
 
   getCurrentPause(): number {
-    return this.sessionStateManager.getCurrentPause()
+    return this.sessionStateManager.aktuellePausenzeit
   }
 
   getCurrentBlockId(): string {
-    return this.sessionStateManager.getCurrentBlockId()
+    return this.sessionStateManager.aktuelleBlockId
   }
 
   selectSession(selectedSession : Session) {
     // Setze die ausgewählte Session als globale ausgewählte Session
     this.selectedSession = selectedSession
     // Setze für den UI-State die aktuelle Fach-Id des Blocks neu
-    this.sessionStateManager.setCurrentBlockId(this.selectedSession.blocks[0].fachId)
+    this.sessionStateManager.aktuelleBlockId = this.selectedSession.blocks[0].fachId
     // Der State-Manager wird mit deer global gesetzen Session neu instanziiert
     this.sessionStateManager = new SessionStateManager(this.modulService, this.selectedSession, this.sessionSignalService)
   }
@@ -144,10 +140,6 @@ export class SessionStartComponent implements OnInit{
       totalSessionZeit += (session?.blocks?.[i]?.lernzeitSeconds ?? 0) + (session?.blocks?.[i]?.pausezeitSeconds ?? 0)
     }
     return totalSessionZeit
-  }
-
-  isLastBlockOfSession() {
-    return this.sessionStateManager.isLastBlockOfSession()
   }
 
   resetButtons() {

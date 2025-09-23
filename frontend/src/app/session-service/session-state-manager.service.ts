@@ -1,138 +1,166 @@
 import {Session} from './session-domain';
-import {AudioService} from './audio.service';
 import {ModuleApiService} from '../modul-service/module/module-api.service';
 import {SessionSignalService} from './start/session-signal.service';
+import {LernzeitenState, PausenzeitenState, ZeitTyp} from './start/timer-state';
 
 export class SessionStateManager {
-  audioService = new AudioService()
   modulService : ModuleApiService;
+  lernzeitenState : LernzeitenState = {} as LernzeitenState;
+  pausenzeitenState : PausenzeitenState = {} as PausenzeitenState;
+  session : Session | null
 
-  currentTotal : number = 0
-  lernzeiten : number[] = []
-  pausen : number[] = []
-  session : any
-
-  currentLernzeitTimer : any = 0
-  currentPauseTimer : any = 0
-  currentLernzeitIndex : number = 0
-  currentPauseIndex : number = 0
   currentBlockId : string
-
+  currentBlockIndex : number = 0;
+  gesamtGelernteSekunden : number = 0;
+  nBlocks = 0;
 
   constructor(modulService: ModuleApiService, session : Session | null, private sessionSignalService : SessionSignalService) {
     this.modulService = modulService
-    this.lernzeiten = session!.blocks.map(block => block.lernzeitSeconds);
-    this.pausen = session!.blocks.map(block => block.pausezeitSeconds);
-    this.currentBlockId = session!.blocks[0].fachId || "";
-    this.session = session
+    this.lernzeitenState = new LernzeitenState(session!.blocks.map(block => block.lernzeitSeconds), this.currentBlockIndex, ZeitTyp.LERNEN);
+    this.pausenzeitenState = new PausenzeitenState(session!.blocks.map(block => block.pausezeitSeconds), this.currentBlockIndex, ZeitTyp.PAUSE);
+
+    if(this.validZeiten()) {
+      this.nBlocks = this.lernzeitenState.arrayLaenge
+      this.currentBlockId = session!.blocks[0].fachId || "";
+      this.session = session
+    } else {
+      throw new Error("Die Anzahl der Lernzeiten stimmt nicht mit der Anzahl der Pausenzeiten überein.")
+    }
   }
 
-  start(): void {
-    this.startBlock(this.currentLernzeitIndex);
+  /**
+   * Initialisiert die Lernzeiten- und Pausenzeiten-State-Objekte neu mit dem aktuell logischen Block-Index.
+   */
+  initialisiereTimerStates() : void {
+    this.lernzeitenState = new LernzeitenState(this.session!.blocks.map(block => block.lernzeitSeconds), this.currentBlockIndex, ZeitTyp.LERNEN);
+    this.pausenzeitenState = new PausenzeitenState(this.session!.blocks.map(block => block.pausezeitSeconds), this.currentBlockIndex, ZeitTyp.PAUSE);
   }
 
-  pause() : void {
-    console.log("pausing timers")
-    clearInterval(this.currentLernzeitTimer)
-    clearInterval(this.currentPauseTimer)
-  }
+  /**
+   * Leitet den Beginn der Session ein, wenn der User auf den Button "Session starten" den start-component klickt.
+   */
+  async start() {
+    this.lernzeitenState.printState()
 
-  startBlock(i: number) {
-    if (i >= this.lernzeiten.length) {
-      console.log("Alle Blöcke abgeschlossen!");
-      this.sessionSignalService.finishThisSession()
-      this.audioService.playAudio("session-finish.mp3")
-      return;
+    //Solange noch nicht alle Blöcke abgeschlossen wurden
+    while(this.sessionNichtAbgeschlossen()) {
+      // 1. Wenn der Lernzeit-Timer für den aktuellen Block noch nicht beendet wurde, starte ihn
+      if(this.lernzeitenState.istNochNichtGestartet) {
+        this.lernzeitenState.starteTimer()
+      }
+
+      // 2. Wenn der Lernzeit-Timer für den aktuellen Block beendet wurde, starte den Pausen-Timer
+      if(this.lernzeitenState.istBeendet) {
+
+        // 3. Wenn der Pausen-Timer für den aktuellen Block noch nicht gestartet wurde, starte ihn
+        if (this.pausenzeitenState.istNochNichtGestartet) this.pausenzeitenState.starteTimer()
+
+        // 4. Wenn der Pausen-Timer für den aktuellen Block beendet wurde, verarbeite den nächsten Block
+        if (this.pausenzeitenState.istBeendet) {
+          this.processNextBlock()
+          this.initialisiereTimerStates()
+        }
+      } else {
+        this.gesamtGelernteSekunden++
+      }
+      //console.log("gesamte gelernte sekunde: ", this.gesamtGelernteSekunden)
+      await this.sleep();
     }
 
-    this.currentLernzeitTimer = setInterval(() => {
-      this.currentTotal += 1;
-      this.lernzeiten[i]--;
-
-      console.log(`Block ${i} Lernzeit: ${this.lernzeiten[i]}`);
-
-      if (this.lernzeiten[i] <= 0) {
-        // Die Lernzeit des Blocks ist vorbei und wird dem Modul gutgeschrieben
-        this.modulService.postRawSeconds(this.session!.blocks[i].modulId, this.currentTotal).subscribe()
-        this.handleAudioSounds(i)
-
-        clearInterval(this.currentLernzeitTimer);
-        this.currentLernzeitIndex++;
-        this.currentPauseTimer = setInterval(() => {
-          this.pausen[i]--;
-          console.log(`Block ${i} Pause: ${this.pausen[i]}`);
-
-          if (this.pausen[i] <= 0) {
-            clearInterval(this.currentPauseTimer);
-            console.log(`Block ${i} abgeschlossen.`);
-            this.startBlock(i + 1);
-            this.handleAudioSounds(i);
-            this.currentPauseIndex++;
-          }
-        }, 1000);
-      }
-    }, 1000);
-
-    this.currentTotal = 0
-    this.currentBlockId = this.session!.blocks[this.currentLernzeitIndex].fachId || "";
+    // Session ist logisch abgeschlossen und der Service bekommt das Signal,
+    // dass die Session beendet ist, um die UI updaten zu können
+    this.sessionSignalService.finishThisSession()
   }
 
-  clearState() : void {
-    this.currentTotal = 0;
-    this.lernzeiten = [];
-    this.pausen = [];
-    clearInterval(this.currentLernzeitTimer);
-    clearInterval(this.currentPauseTimer);
-    this.currentLernzeitTimer = 0;
-    this.currentPauseTimer = 0;
+  /**
+   * Pausiert den aktuell logischen laufenden Timer, anhand des Blockzustand.
+   * Ein logischer Timer ist der aktuelle Timer, dessen Status "Laufend" ist.
+   */
+  pause() : void {
+    if(this.lernzeitenState.istLaufend) {
+     this.lernzeitenState.pausiereTimer()
+    } else if (this.pausenzeitenState.istLaufend) {
+      this.pausenzeitenState.pausiereTimer()
+    }
   }
 
-  getCurrentLernzeit() : number {
-    return this.lernzeiten[this.currentLernzeitIndex];
+  /**
+   * Prüft, welcher Timer pausiert ist und setzt diesen fort. Es kann logisch nur ein Timer pausiert sein.
+   */
+  fortsetzen() : void {
+    if(this.lernzeitenState.istPausiert) {
+      this.lernzeitenState.starteTimer()
+    } else if (this.pausenzeitenState.istPausiert) {
+      this.pausenzeitenState.starteTimer()
+    }
   }
 
-  getCurrentPause() : number {
-    return this.pausen[this.currentPauseIndex];
+  /**
+   * Prüft, ob ein Timer läuft oder pausiert ist und beendet diesen. Es ist logisch nur ein Timer laufend/pausiert.
+   */
+  beenden() : void {
+    this.lernzeitenState.beendeTimer()
+    this.pausenzeitenState.beendeTimer()
+    this.forciereSessionEnde()
   }
 
-  getCurrentBlockId() : string {
+  /**
+   * Gibt zurück, ob die Anzahl der Lernzeiten mit der Anzahl der Pausenzeiten übereinstimmt.
+   */
+  validZeiten() : boolean {
+    return this.lernzeitenState.arrayLaenge === this.pausenzeitenState.arrayLaenge;
+  }
+
+  /**
+   * Setzt den nächsten logischen Block der Session, wenn noch nicht der letzte Block erreicht wurde.
+   */
+  processNextBlock() : void {
+    if(this.currentBlockIndex + 1 < this.nBlocks) {
+      this.currentBlockIndex++;
+      this.currentBlockId = this.session!.blocks[this.currentBlockIndex].fachId || "";
+    }
+  }
+
+  /**
+   * Gibt zurück, ob die Session noch nicht abgeschlossen ist.
+   * Eine Session ist abgeschlossen, wenn der letzte Eintrag des zeitenSekunden == 0 für den jeweiligen TimerState gilt.
+   */
+  sessionNichtAbgeschlossen() : boolean {
+    const lernzeitenAbgeschlossen = this.lernzeitenState.letzteZeitAbgelaufen
+    const pausenzeitenAbgeschlossen = this.pausenzeitenState.letzteZeitAbgelaufen
+    return !(lernzeitenAbgeschlossen && pausenzeitenAbgeschlossen)
+  }
+
+  /**
+   * Forciert das Session-Ende, indem die letzten Einträge der zeitenSekunden-Arrays auf 0 gesetzt werden.
+   */
+  forciereSessionEnde() : void {
+    const n = this.lernzeitenState.arrayLaenge
+    this.lernzeitenState.zeitenSekunden[n-1] = 0
+    this.pausenzeitenState.zeitenSekunden[n-1] = 0
+  }
+
+  get aktuelleLernzeit() : number {
+    return this.lernzeitenState.zeitAktuell
+  }
+
+  get aktuellePausenzeit() : number {
+    return this.pausenzeitenState.zeitAktuell
+  }
+
+  get aktuelleBlockId() : string {
     return this.currentBlockId;
   }
 
-  getCurrentTotal() {
-    return this.currentTotal
+  get aktuelleBlockModulId() {
+    return this.session!.blocks[this.currentBlockIndex].modulId
   }
 
-  getCurrentBlockModulId() {
-    return this.session!.blocks[this.currentLernzeitIndex].modulId
-  }
-
-  isLastBlockOfSession() {
-    return this.currentLernzeitIndex == this.lernzeiten.length - 2
-  }
-
-  setCurrentBlockId(fachId : string | undefined) {
+  set aktuelleBlockId(fachId : string | undefined) {
     this.currentBlockId = fachId ?? ""
   }
 
-  printTotaleLernzeit() {
-    console.log(`Totale Lernzeit bisher: ${this.currentTotal}`)
-  }
-
-  printThisSessionData() {
-    console.log("### CURRENT SESSION STATE ###")
-    console.log("lernzeiten array: ", this.lernzeiten)
-    console.log("pausen array: ", this.pausen)
-    console.log(`currentTotal: ${this.currentTotal}`)
-  }
-
-  handleAudioSounds(i : number) {
-    //Lernzeit des letzten Block läuft aus
-    if (i == this.lernzeiten.length-1) {
-      this.audioService.playAudio("session-finish.mp3")
-    } else {
-      // Lernzeit eines Zwischenblock läuft aus
-      this.audioService.playAudio("block-clear-1.mp3");
-    }
+  private sleep() {
+    return new Promise(resolve => setTimeout(resolve, 1000));
   }
 }

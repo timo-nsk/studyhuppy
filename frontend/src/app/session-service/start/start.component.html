@@ -29,7 +29,7 @@
                 <td class="td-label">Lernzeit:</td>
                 <td>{{getCurrentLernzeit() | timeFormat}}</td>
               </tr>
-              <tr *ngIf="getCurrentPause() > 0">
+              <tr>
                 <td class="td-label">Pause:</td>
                 <td>{{getCurrentPause() | timeFormat}}</td>
               </tr>
