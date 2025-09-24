@@ -1,0 +1,102 @@
+.border-r {
+  border: 2px solid red;
+  padding: 2px;
+  margin: 2px;
+}
+
+.border-b {
+  border: 2px solid blue;
+  padding: 2px;
+  margin: 2px;
+}
+
+.border-g {
+  border: 2px solid green;
+  padding: 2px;
+  margin: 2px;
+}
+
+#session-overview {
+  width: 650px;
+  margin-top: 5%;
+}
+
+#session-overview-header-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#erstellen-btn {
+  width: 100px;
+  height: 30px;
+  background-color: #3f7dff;
+  color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  text-align: center;
+}
+
+#erstellen-btn:hover {
+  background-color: #2168fd;
+  cursor: pointer;
+}
+
+#no-lernsessions-container {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 40px;
+  text-align: center;
+  vertical-align: center;
+  font-size: 12px;
+  color: gray;
+}
+
+#lernsessions-container {
+  margin-top: 20px;
+}
+
+.table {
+  border-radius: 5px;
+  margin: 0;
+}
+
+.delete-cell, .edit-cell, .is-active-cell {
+  width: 8%;
+}
+
+.is-active-cell {
+
+}
+
+.title-cell {
+  vertical-align: middle;
+  padding-left: 10px;
+}
+
+.edit-icon:hover {
+  cursor: pointer;
+  fill: #0b41f3;
+}
+
+.delete-icon:hover {
+  cursor: pointer;
+  fill: red;
+}
+
+.option-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+}
+
+.sh-btn {
+  height: 30px !important;
+}
+
+p, h3 {
+  margin: 0;
+}
