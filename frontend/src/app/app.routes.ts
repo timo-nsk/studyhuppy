@@ -41,6 +41,7 @@ import {SessionDeleteComponent} from './session-service/delete/delete.component'
 import {GroupSessionComponent} from './session-service/group-session/group-session.component';
 import {PlanEditComponent} from './plan-service/edit/edit.component';
 import {LernplanResolver} from './plan-service/edit/lernplan.resolver';
+import {SessionOverviewComponent} from './session-service/overview/overview.component';
 
 export const routes: Routes = [
   {
@@ -125,6 +126,10 @@ export const routes: Routes = [
         {
           path: 'session',
           component: SessionComponent
+        },
+        {
+          path: 'session/overview',
+          component: SessionOverviewComponent
         },
         {
           path: 'session/start',
