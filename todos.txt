@@ -3,6 +3,14 @@
 - Der User soll Quick-Sessions erstellen können, also: Modul auswählen, Zeit auswählen, Pause auswählen und eine Wiederholungsanzahl festlegen. Nichts muss persistent gespeichert werden.
 - Wenn man eine Lernsession startet, soll auch die Gesamtzeit heruntergezählt und angezeigt werden.
 - Für die Sessionbewertungen sollen Statistiken für die UI entwickelt werden, alles im Backend ist fertig
+- Die Charts für die Lernstatistiken sollen nur dann angezeigt werden, wenn es zu visualisierende Daten gibt. Sonst ein String "Keine Statistiken verfügbar"
+- Unter Meine Module muss die Info "Keine eingetragenen Module vorhanden." zentriert werden.
+- Es gibt noch kein einheitliches Look-and-Feel zwischen den verschiedenen Services.
+  - Zum Beispiel ist der Margin-Abstand vom Main-Content mal geringer/höher als bei anderen Services.
+  - Es sollten Buttons, die dieselbe Funktion haben, auch gleich aussehen (z. B. Edit-Buttons). -> neues Design überlegen und zentralisieren
+  - Auch haben manche Texte andere Schriftgrößen -> einheitliche Schriftgrößen schaffen
+- HTML-Seiten könnten semantischer mit <section> gestaltet werden.
+
 
 DONE
 - Man soll Sessions, die man abgeschlossen hat, hinsichtlich der subjektiven „Lernleistung“ bewerten können, also im Sinne von „wie gut konntest du dich konzentrieren etc.“
