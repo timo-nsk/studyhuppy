@@ -1,5 +1,4 @@
 @echo off
-
 setlocal enabledelayedexpansion
 
 for /f "tokens=1-3 delims=:.," %%a in ("%time%") do (
@@ -8,29 +7,17 @@ for /f "tokens=1-3 delims=:.," %%a in ("%time%") do (
     set "ss=%%c"
 )
 
-echo [%date% !hh!:!mm!:!ss!] Starte Studyhub-Services...
-echo [%date% !hh!:!mm!:!ss!] Starte Mail-Service...
-docker compose --env-file mail/.env -f mail/docker-compose.yaml up -d --build
-echo [%date% !hh!:!mm!:!ss!] Mail-Service gestartet.
+set STACK_NAME=studyhuppy
 
-echo [%date% !hh!:!mm!:!ss!] Starte Kartei-Service...
-docker compose --env-file kartei/.env -f kartei/docker-compose.yaml up -d --build
-echo [%date% !hh!:!mm!:!ss!] Kartei-Service gestartet.
+echo [%date% !hh!:!mm!:!ss!] Starte alle Studyhuppy-Services unter Stack "%STACK_NAME%"...
 
-echo [%date% !hh!:!mm!:!ss!] Starte Track-Service...
-docker compose --env-file track/.env -f track/docker-compose.yaml up -d --build
-echo [%date% !hh!:!mm!:!ss!] Track-Service gestartet.
+docker compose -p %STACK_NAME% ^
+  --env-file mail/.env -f mail/docker-compose.yaml ^
+  --env-file kartei/.env -f kartei/docker-compose.yaml ^
+  --env-file track/.env -f track/docker-compose.yaml ^
+  --env-file mindmap/.env -f mindmap/docker-compose.yaml ^
+  --env-file authentication/.env -f authentication/docker-compose.yaml ^
+  --env-file actuator/.env -f actuator/docker-compose.yaml ^
+  up -d --build
 
-echo [%date% !hh!:!mm!:!ss!] Starte Mindmap-Service...
-docker compose --env-file mindmap/.env -f mindmap/docker-compose.yaml up -d --build
-echo [%date% !hh!:!mm!:!ss!] Mindmap-Service gestartet.
-
-echo [%date% !hh!:!mm!:!ss!] Starte Authentication-Service...
-docker compose --env-file authentication/.env -f authentication/docker-compose.yaml up -d --build
-echo [%date% !hh!:!mm!:!ss!] Authentication-Service gestartet.
-
-echo [%date% !hh!:!mm!:!ss!] Starte Actuator-Service...
-docker compose --env-file actuator/.env -f actuator/docker-compose.yaml up -d --build
-echo [%date% !hh!:!mm!:!ss!] Actuator-Service gestartet.
-
-echo [%date% !hh!:!mm!:!ss!] Alle Studyhub-Services sind gestartet.
+echo [%date% !hh!:!mm!:!ss!] Alle Studyhuppy-Services unter Stack "%STACK_NAME%" gestartet.
