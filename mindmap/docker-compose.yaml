@@ -1,7 +1,8 @@
+name: mindmap
 services:
   neo4j:
     image: neo4j:5
-    container_name: neo4j
+    container_name: mindmap_db_neo4j
     ports:
       - "${WEB_UI_PORT}:${WEB_UI_PORT}"
       - "${DB_PORT}:${DB_PORT}" #Bolt

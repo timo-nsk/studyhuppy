@@ -1,4 +1,4 @@
-name: studyhub_kartei
+name: kartei
 services:
   kartei-db:
     container_name: kartei_db

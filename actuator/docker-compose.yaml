@@ -1,4 +1,4 @@
-name: studyhub_actuator
+name: actuator
 services:
   actuator-service:
     container_name: actuator_service

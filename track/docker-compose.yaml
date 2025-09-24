@@ -1,4 +1,4 @@
-name: studyhub_module
+name: modul
 services:
   modul-db:
     container_name: modul_db
