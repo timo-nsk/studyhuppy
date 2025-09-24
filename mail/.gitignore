@@ -33,3 +33,4 @@ build/
 .vscode/
 .env
 keystore.p12
+mail-data
