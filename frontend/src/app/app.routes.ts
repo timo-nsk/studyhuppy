@@ -42,6 +42,8 @@ import {GroupSessionComponent} from './session-service/group-session/group-sessi
 import {PlanEditComponent} from './plan-service/edit/edit.component';
 import {LernplanResolver} from './plan-service/edit/lernplan.resolver';
 import {SessionOverviewComponent} from './session-service/overview/overview.component';
+import {LernsessionResolver} from './session-service/edit/lernsession.resolver';
+import {LernsessionEditComponent} from './session-service/edit/edit.component';
 
 export const routes: Routes = [
   {
@@ -150,6 +152,11 @@ export const routes: Routes = [
         {
           path: 'session/delete',
           component: SessionDeleteComponent
+        },
+        {
+          path: 'session/bearbeiten/:lernsessionId',
+          component: LernsessionEditComponent,
+          resolve: { lernsessionToEdit: LernsessionResolver }
         },
         {
         path: 'module',
