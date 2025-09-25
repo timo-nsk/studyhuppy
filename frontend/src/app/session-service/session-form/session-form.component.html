@@ -1,9 +1,9 @@
-<form class="sh-form m-accent-font" [formGroup]="sessionForm" (ngSubmit)="saveSession()">
+<form class="sh-form m-accent-font" [formGroup]="sessionMetaDataForm" (ngSubmit)="saveLernsession()">
   <div class="mb-4">
     <label >Session-Titel</label>
     <input class="form-control" formControlName="sessionTitel" name="session-titel">
     <span class="text-danger"
-          *ngIf="sessionForm.controls['sessionTitel'].errors?.['required'] && sessionForm.controls['sessionTitel'].touched">
+          *ngIf="sessionMetaDataForm.controls['sessionTitel'].errors?.['required'] && sessionMetaDataForm.controls['sessionTitel'].touched">
               Bitte geben Sie einen Sessiontitel ein
         </span>
   </div>
@@ -12,25 +12,21 @@
     <textarea class="form-control" formControlName="sessionBeschreibung" name="session-beschreibung"></textarea>
   </div>
   <div id="lernblock-container" class="mb-4">
-    <div id="lernblock-container-head" class="border">
-      <div class="border">
+    <div id="lernblock-container-head">
+      <div>
         <h3>Lernblöcke</h3>
       </div>
-      <div class="border">
+      <div>
         <button id="pomodoro-btn" type="button" (click)="setPomodoroTimes()">pomo</button>
       </div>
     </div>
     <div>
-      <Lernblock *ngFor="let block of currentBlockList; let i = index"
-                 [index]="i" [block]="block"
+      <Lernblock *ngFor="let blockForm of blockFormManager.blockForms; let i = index"
+                 [index]="i"
+                 [blockForm]="blockForm"
                  [module] = "module"
-                 [blockManager]="blockManager">
+                 [blockFormManager]="blockFormManager">
       </Lernblock>
-    </div>
-    <div id="invalid-block-container" *ngIf="invalidBlocks.length > 0">
-      <div *ngFor="let status of invalidBlocks">
-        <span *ngIf="!status">In einem Block fehlt die Modulangabe</span>
-      </div>
     </div>
     <div id="btn-container">
       <button id="add-block-btn" type="button" (click)="appendBlock()">
@@ -47,8 +43,9 @@
     </div>
   </div>
   <div class="mb-4">
-    <button id="session-save-btn" class="sh-btn" type="submit">
-      Session speichern
+    <button class="sh-btn" type="submit">
+      <span *ngIf="!hasLernsessionToEdit()">Lernsession speichern</span>
+      <span *ngIf="hasLernsessionToEdit()">Änderungen speichern</span>
     </button>
   </div>
 </form>

@@ -16,6 +16,7 @@ export class SessionApiService {
   private log = new LoggingService("SessionApiService", "session-service")
 
   saveSession(session: Session): Observable<any> {
+    console.log("saveSession called with session: ", session)
     const headers = this.headerService.createAuthHeader()
     return this.http.post<any>(this.SESSION_BASE_API + '/create', session, {headers})
 

@@ -1,23 +1,22 @@
 import {Component, effect, Input} from '@angular/core';
 import {NgForOf} from '@angular/common';
-import {Block} from '../session-domain';
 import {Modul} from '../../modul-service/module/domain';
-import {BlockManager} from './block-manager.service';
-import {FormsModule} from '@angular/forms';
+import {FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PomodoroSignalService} from '../create/pomodoro-signal.service';
+import {BlockFormManager} from './blockform-manager.service';
 
 @Component({
   selector: 'Lernblock',
-  imports: [NgForOf, FormsModule],
+  imports: [NgForOf, FormsModule, ReactiveFormsModule],
   templateUrl: './block.component.html',
   standalone: true,
   styleUrl: './block.component.scss'
 })
 export class BlockComponent{
   @Input() index!: number;
-  @Input() block!: Block;
+  @Input() blockForm!: FormGroup;
   @Input() module : Modul[] = []
-  @Input() blockManager : BlockManager | undefined;
+  @Input() blockFormManager : BlockFormManager | undefined;
 
   constructor(private pomodoroSignalService : PomodoroSignalService) {
     // Lauscht auf Signaländerungen
@@ -28,37 +27,20 @@ export class BlockComponent{
     });
   }
 
-  setModulOfBlock(event : Event): void {
+  setModulName(event : Event): void {
     const select = event.target as HTMLSelectElement;
     const modulId = select.value;
-    this.block.setModulId(modulId)
-
-    let modulName = ""
-
-    for (let i = 0; i < this.module.length; i++) {
-      if(this.module[i].fachId == modulId) {
-        modulName = this.module[i].name
-        break
-      }
+    const modul = this.module.find(m => m.fachId == modulId);
+    let modulName = "";
+    if (modul) {
+      modulName = modul.name;
     }
 
-    this.block.setModulName(modulName)
-  }
-
-  setLernzeitOfBlock(event : Event): void {
-    const select = event.target as HTMLSelectElement;
-    const minutes = Number(select.value);
-    this.block.setLernzeitSeconds(minutes * 60);
-  }
-
-  setPauseOfBlock(event : Event): void {
-    const select = event.target as HTMLSelectElement;
-    const minutes = Number(select.value);
-    this.block.setPausezeitSeconds(minutes * 60)
+    this.blockForm.patchValue({modulName: modulName})
   }
 
   removeBlock(index : number) {
-    this.blockManager?.removeBlock(index)
+    this.blockFormManager?.removeBlockForm(index)
   }
 
   /**
