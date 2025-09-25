@@ -34,3 +34,7 @@ build/
 .env
 keystore.p12
 mail-data
+# TODO these folders get created by the application somehow???
+modul-data
+user-data
+kartei-data
