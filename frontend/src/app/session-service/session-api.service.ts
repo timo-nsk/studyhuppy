@@ -15,11 +15,16 @@ export class SessionApiService {
   private http = inject(HttpClient)
   private log = new LoggingService("SessionApiService", "session-service")
 
-  saveSession(session: Session): Observable<any> {
+  postCreatedSessionData(session: Session): Observable<any> {
     console.log("saveSession called with session: ", session)
     const headers = this.headerService.createAuthHeader()
     return this.http.post<any>(this.SESSION_BASE_API + '/create', session, {headers})
+  }
 
+  postEditedSessionData(session: Session) {
+    console.log("saveSession called with edited session: ", session)
+    const headers = this.headerService.createAuthHeader()
+    return this.http.post<any>(this.SESSION_BASE_API + '/edited-session', session, {headers})
   }
 
   getSessions(): Observable<any> {
@@ -67,4 +72,5 @@ export class SessionApiService {
       { headers }
     );
   }
+
 }
