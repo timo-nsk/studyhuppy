@@ -28,6 +28,19 @@
   justify-content: center;
 }
 
+.no-charts-container {
+  width: 300px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+p {
+  margin-bottom: 0;
+  text-align: center;
+  color: gray;
+  font-size: 14px;
+}
+
 ::ng-deep .spinner circle {
   stroke: lightgray !important;
 }

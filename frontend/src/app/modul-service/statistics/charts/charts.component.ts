@@ -41,8 +41,7 @@ export class ChartsComponent implements  OnInit {
     this.service.getChartLastDays().subscribe( {
       next: (value) => {
         this.chartStats = value;
-        this.log.info("Got chart data...")
-        this.printChartData(this.chartStats)
+        console.log(this.chartStats)
         this.isLoading = false
       },
       error: (err) => {
@@ -213,5 +212,9 @@ export class ChartsComponent implements  OnInit {
     let color = this.randomBlueColorVector()
     const { r, g, b, a = 1 } = color;
     return `rgba(${r}, ${g}, ${b}, ${a})`;
+  }
+
+  emptyCharts(): boolean {
+    return Object.keys(this.chartStats).length === 0;
   }
 }
