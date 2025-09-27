@@ -146,7 +146,8 @@ export class SessionFormComponent implements  OnInit, OnDestroy{
   }
 
   private sendEditedSessionData() {
-    const session = this.prepareSession()
+    let session = this.prepareSession()
+    session.fachId = this.lernsessionToEdit.fachId
     this.sessionApiService.postEditedSessionData(session).subscribe({
       next: () => {
         this.snackbarService.openSuccess("Session erfolgreich gespeichert.");
