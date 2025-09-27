@@ -42,6 +42,6 @@ export class SessionOverviewComponent implements OnInit{
   }
 
   hasLernsessions() : boolean {
-    return this.lernsessions !== undefined && this.lernsessions.length > 0
+    return this.lernsessions !== undefined
   }
 }
