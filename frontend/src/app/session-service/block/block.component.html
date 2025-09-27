@@ -13,6 +13,10 @@
                   <option disabled selected value="">---</option>
                   <option *ngFor="let modul of module" [value]="modul.fachId">{{modul.name}}</option>
                 </select>
+                <span class="text-danger"
+                      *ngIf="blockForm.controls['modulId'].errors?.['required'] && blockForm.controls['modulId'].touched">
+                      Wählen Sie ein Modul aus
+                </span>
               </td>
             </tr>
             <tr>
