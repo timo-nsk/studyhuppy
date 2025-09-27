@@ -5,15 +5,16 @@ import {NgForOf, NgIf} from "@angular/common";
 import {SnackbarService} from '../../snackbar.service';
 import {SessionApiService} from '../session-api.service';
 import {PomodoroSignalService} from '../create/pomodoro-signal.service';
-import {Block, Session} from '../session-domain';
+import {Session} from '../session-domain';
 import {Modul} from '../../modul-service/module/domain';
 import {ModuleApiService} from '../../modul-service/module/module-api.service';
 import {BlockFormManager} from '../block/blockform-manager.service';
 
 @Component({
   selector: 'app-session-form',
-    imports: [BlockComponent, FormsModule, NgForOf, NgIf, ReactiveFormsModule],
+  imports: [BlockComponent, FormsModule, NgForOf, NgIf, ReactiveFormsModule],
   templateUrl: './session-form.component.html',
+  standalone: true,
   styleUrls: ['./session-form.component.scss', '../../general.scss', '../../button.scss', '../../color.scss']
 })
 export class SessionFormComponent implements  OnInit, OnDestroy{
