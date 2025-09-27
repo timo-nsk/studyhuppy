@@ -1,5 +1,5 @@
 import {Component, effect, Input} from '@angular/core';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {Modul} from '../../modul-service/module/domain';
 import {FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PomodoroSignalService} from '../create/pomodoro-signal.service';
@@ -7,7 +7,7 @@ import {BlockFormManager} from './blockform-manager.service';
 
 @Component({
   selector: 'Lernblock',
-  imports: [NgForOf, FormsModule, ReactiveFormsModule],
+  imports: [NgForOf, FormsModule, ReactiveFormsModule, NgIf],
   templateUrl: './block.component.html',
   standalone: true,
   styleUrl: './block.component.scss'
