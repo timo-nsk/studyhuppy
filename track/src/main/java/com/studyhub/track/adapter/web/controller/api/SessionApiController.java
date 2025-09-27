@@ -96,4 +96,11 @@ public class SessionApiController {
 			return ResponseEntity.internalServerError().build();
 		}
 	}
+
+	@AngularApi
+	@PostMapping("/edited-session")
+	public ResponseEntity<Void> editedSessison(@RequestBody SessionRequest sessionRequest, HttpServletRequest request) {
+		sessionService.saveEditedSession(sessionRequest);
+		return ResponseEntity.ok().build();
+	}
 }

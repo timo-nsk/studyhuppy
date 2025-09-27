@@ -1,5 +1,6 @@
 package com.studyhub.track.application.service;
 
+import com.studyhub.track.adapter.web.controller.request.dto.SessionRequest;
 import com.studyhub.track.application.service.dto.SessionInfoDto;
 import com.studyhub.track.domain.model.session.Block;
 import com.studyhub.track.domain.model.session.Session;
@@ -54,5 +55,13 @@ public class SessionService {
 			session.setBlocks(filteredBlocks);
 			sessionRepository.save(session);
 		}
+	}
+
+	public void saveEditedSession(SessionRequest sessionRequest) {
+		Session oldSession = sessionRepository.findSessionByFachId(UUID.fromString(sessionRequest.fachId()));
+		oldSession.setTitel(sessionRequest.titel());
+		oldSession.setBeschreibung(sessionRequest.beschreibung());
+		oldSession.setBlocks(sessionRequest.blocks());
+		sessionRepository.save(oldSession);
 	}
 }
