@@ -7,12 +7,12 @@ TO-DO
   - Zum Beispiel ist der Margin-Abstand vom Main-Content mal geringer/höher als bei anderen Services.
   - Es sollten Buttons, die dieselbe Funktion haben, auch gleich aussehen (z. B. Edit-Buttons). -> neues Design überlegen und zentralisieren
   - Auch haben manche Texte andere Schriftgrößen -> einheitliche Schriftgrößen schaffen
-- HTML-Seiten könnten semantischer mit <section> gestaltet werden.
 - Java-Dokumentation erstellen, fehlt an vielen Stellen
+- Im Karteikarten-Service sind die Font-Styles broken
 
 IN PROGRESS
-- Die Anzeige für noch zu ladenden Daten aus dem Backend sollte in eine Component gepackt werden, die ist nciht bei jedem Service einheitlich und wirkt komisch.
-  
+- HTML-Seiten könnten semantischer mit <section> gestaltet werden.
+- HTML mit ARIA versehen
 
 DONE
 - Man soll Sessions, die man abgeschlossen hat, hinsichtlich der subjektiven „Lernleistung“ bewerten können, also im Sinne von „wie gut konntest du dich konzentrieren etc.“
@@ -22,3 +22,4 @@ DONE
 - Sessions müssen nach der Erstellung komplett frei bearbeitbar sein.
 - Die Charts für die Lernstatistiken sollen nur dann angezeigt werden, wenn es zu visualisierende Daten gibt. Sonst ein String "Keine Statistiken verfügbar"
 - Unter Meine Module muss die Info "Keine eingetragenen Module vorhanden." zentriert werden.
+- Die Anzeige für noch zu ladenden Daten aus dem Backend sollte in eine Component gepackt werden, die ist nciht bei jedem Service einheitlich und wirkt komisch.
