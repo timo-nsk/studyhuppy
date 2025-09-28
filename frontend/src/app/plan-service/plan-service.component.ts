@@ -5,6 +5,7 @@ import {SnackbarService} from '../snackbar.service';
 import {PlanApiService} from './plan-api.service';
 import {Lernplan} from './plan-domain';
 import {ModuleApiService} from '../modul-service/module/module-api.service';
+import {LoadingDataComponent} from '../app-layout/loading-data/loading-data.component';
 
 
 @Component({
@@ -12,13 +13,15 @@ import {ModuleApiService} from '../modul-service/module/module-api.service';
   imports: [
     NgIf,
     RouterLink,
-    NgForOf
+    NgForOf,
+    LoadingDataComponent
   ],
   templateUrl: './plan-service.component.html',
   standalone: true,
   styleUrls: ['./plan-service.component.scss', '../general.scss', '../button.scss']
 })
 export class PlanServiceComponent implements OnInit {
+  isLoading : boolean = true;
   snackbarService = inject(SnackbarService)
   planApiService = inject(PlanApiService)
   modulService = inject(ModuleApiService)
@@ -30,7 +33,7 @@ export class PlanServiceComponent implements OnInit {
     this.planApiService.getAllLernplaene().subscribe({
       next: (response) => {
         this.lernplaene = response
-        console.log(this.lernplaene)
+        this.isLoading = false;
       },
       error: (error) => {
         console.error('Error fetching lernplaene:', error);
@@ -41,10 +44,8 @@ export class PlanServiceComponent implements OnInit {
   }
 
   deleteLernplan(fachId : string) {
-    // delete lernplan by id
     this.planApiService.deleteLernplan(fachId).subscribe({
       next: (response) => {
-        console.log(response)
         this.ngOnInit()
         this.snackbarService.openSuccess(`Lernplan "${this.titel}" gelöscht`)
       },
@@ -58,7 +59,6 @@ export class PlanServiceComponent implements OnInit {
   setActiveLernplan(fachId: string) {
     this.planApiService.setActiveLernplan(fachId).subscribe({
       next: (response) => {
-        console.log(response)
         let activatedPlan = this.lernplaene.find(plan => plan.fachId === fachId)?.titel;
         this.snackbarService.openSuccess(`Lernplan "${activatedPlan}" aktiviert`)
         this.ngOnInit()

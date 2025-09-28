@@ -4,6 +4,7 @@ import { Chart,  CategoryScale,  LinearScale,  BarElement, Title, Tooltip, Legen
 import {NgIf} from '@angular/common';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {LoggingService} from '../../../logging.service';
+import {LoadingDataComponent} from '../../../app-layout/loading-data/loading-data.component';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, BarController);
 
@@ -15,7 +16,7 @@ type Dataset = {
 
 @Component({
   selector: 'app-charts',
-  imports: [NgIf, MatProgressSpinner],
+  imports: [NgIf, MatProgressSpinner, LoadingDataComponent],
   templateUrl: './charts.component.html',
   standalone: true,
   styleUrl: './charts.component.scss'

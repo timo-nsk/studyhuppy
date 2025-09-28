@@ -4,14 +4,16 @@ import {SessionApiService} from '../session-api.service';
 import {Session} from '../session-domain';
 import {SnackbarService} from '../../snackbar.service';
 import {RouterLink} from '@angular/router';
+import {LoadingDataComponent} from '../../app-layout/loading-data/loading-data.component';
 
 @Component({
   selector: 'app-overview',
-  imports: [NgForOf, NgIf, RouterLink],
+  imports: [NgForOf, NgIf, RouterLink, LoadingDataComponent],
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss', '../../general.scss', '../../button.scss']
 })
 export class SessionOverviewComponent implements OnInit{
+  isLoading : boolean = true;
   sessionApiService = inject(SessionApiService);
   snackbarService = inject(SnackbarService)
   lernsessions : Session[] | undefined
@@ -20,6 +22,7 @@ export class SessionOverviewComponent implements OnInit{
     this.sessionApiService.getSessions().subscribe({
       next: (data : Session[]) =>{
         this.lernsessions = data
+        this.isLoading = false;
       },
       error: err => {
         console.error("Error fetching sessions", err);

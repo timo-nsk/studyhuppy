@@ -8,12 +8,16 @@
         <button class="sh-btn" [routerLink]="'/lernplan/erstellen'">erstellen</button>
       </div>
     </div>
-    <div id="no-lernplan-container" class="" *ngIf="!hasLernplan()">
-      <p>Keine Lernpläne verfügbar</p>
-    </div>
-    <div id="lernplan-container" class="" *ngIf="hasLernplan()">
-      <table class="table table-sm">
-        <tbody>
+    <ng-container *ngIf="isLoading">
+      <Loading [entityName]="'Lernpläne'"></Loading>
+    </ng-container>
+    <ng-container *ngIf="!isLoading">
+      <div id="no-lernplan-container" class="" *ngIf="!hasLernplan()">
+        <p>Keine Lernpläne verfügbar</p>
+      </div>
+      <div id="lernplan-container" class="" *ngIf="hasLernplan()">
+        <table class="table table-sm">
+          <tbody>
           <tr *ngFor="let lernplan of lernplaene">
             <td class="title-cell"><p>{{lernplan.titel}}</p></td>
             <td class="edit-cell">
@@ -36,8 +40,9 @@
               </div>
             </td>
           </tr>
-        </tbody>
-      </table>
-    </div>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
   </div>
 </div>
