@@ -5,10 +5,11 @@ import {NgIf} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {PlanApiService} from '../plan-service/plan-api.service';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {LoadingDataComponent} from '../app-layout/loading-data/loading-data.component';
 
 @Component({
   selector: 'app-home',
-  imports: [NgIf, RouterLink, MatProgressSpinner],
+  imports: [NgIf, RouterLink, MatProgressSpinner, LoadingDataComponent],
   templateUrl: './home.component.html',
   standalone: true,
   styleUrls: ['./home.component.scss', '../general.scss']
