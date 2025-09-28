@@ -11,9 +11,7 @@
   </div>
 </div>
 <ng-container *ngIf="isLoading">
-  <div id="loading-bar-container">
-    <mat-progress-bar id="loading-bar" mode="buffer"></mat-progress-bar>
-  </div>
+  <Loading [entityName]="'Karteistapel'"></Loading>
 </ng-container>
 
 <ng-container *ngIf="!isLoading">
