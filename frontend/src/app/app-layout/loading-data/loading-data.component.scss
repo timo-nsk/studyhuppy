@@ -1,0 +1,20 @@
+#load-container {
+  height: 150px;
+  padding: 2px;
+  margin: 2px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+::ng-deep mat-spinner circle {
+  stroke: #6c6c6c !important;
+}
+
+#loading-label {
+  color: #6c6c6c;
+  font-size: 14px;
+  margin-bottom: 0;
+}
