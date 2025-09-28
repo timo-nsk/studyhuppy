@@ -5,8 +5,8 @@
     </div>
   </ng-container>
   <ng-container *ngIf="!isLoading">
-    <div *ngIf="Object.keys(module).length === 0">
-      <p class="alert modul-item" role="alert">Keine eingetragenen Module vorhanden.</p>
+    <div id="no-module-container" *ngIf="Object.keys(module).length === 0">
+      <p id="no-module-p">Keine Module vorhanden</p>
     </div>
     <div>
       <div *ngIf="Object.keys(module).length > 0" class="modul-container">
