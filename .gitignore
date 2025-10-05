@@ -2,6 +2,7 @@ ports.txt
 todo.txt
 test.csv
 .idea
+track
 
 backend/track/modul-data
 backend/track/run-tests-modul.bat
