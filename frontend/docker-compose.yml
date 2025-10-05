@@ -1,0 +1,14 @@
+services:
+  studyhuppy-frontend:
+    container_name: studyhuppy-frontend
+    build: .
+    ports:
+      - "8999:80" #siehe angular.json
+    expose:
+      - 80
+    networks:
+      - internalnet
+
+networks:
+  internalnet:
+    driver: bridge
