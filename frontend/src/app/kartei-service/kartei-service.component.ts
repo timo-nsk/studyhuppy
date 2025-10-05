@@ -2,15 +2,13 @@ import {Component, inject, OnInit} from '@angular/core';
 import {NgFor, NgIf} from '@angular/common';
 import {KarteiApiService} from './kartei.api.service';
 import {RouterLink} from '@angular/router';
-import {MatProgressBar} from "@angular/material/progress-bar";
 import { LernzeitFormatPipe } from './lernzeit-format.pipe';
 import {LoggingService} from '../logging.service';
-import {Stapel} from './domain';
 import {LoadingDataComponent} from '../app-layout/loading-data/loading-data.component';
 
 @Component({
   selector: 'app-kartei-service',
-  imports: [NgIf, NgFor, RouterLink, MatProgressBar, LernzeitFormatPipe, LoadingDataComponent],
+  imports: [NgIf, NgFor, RouterLink, LernzeitFormatPipe, LoadingDataComponent],
   templateUrl: './kartei-service.component.html',
   standalone: true,
   styleUrls: ['./kartei-service.component.scss', '../loading.scss', '../color.scss']
