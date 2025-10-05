@@ -1,36 +1,40 @@
-.gitignore
 ports.txt
 todo.txt
 test.csv
 .idea
 
-track/modul-data
-track/run-tests-modul.bat
-track/modul-test.sh
-track/target
+backend/track/modul-data
+backend/track/run-tests-modul.bat
+backend/track/modul-test.sh
+backend/track/target
+backend/track/.env
 
-kartei/kartei-data
-kartei/run-tests-kartei.bat
-kartei/kartei-test.sh
-kartei/target
+backend/kartei/kartei-data
+backend/kartei/run-tests-kartei.bat
+backend/kartei/kartei-test.sh
+backend/kartei/target
+backend/kartei/.env
 
-authentication/user-data
-authentication/auth-test.sh
-authentication/run-tests-auth.bat
-authentication/target
+backend/authentication/user-data
+backend/authentication/auth-test.sh
+backend/authentication/run-tests-auth.bat
+backend/authentication/target
+backend/authentication/.env
 
-mail/mail-data
-mail/run-tests-mail.bat
-mail/mail-test.sh
-mail/target
+backend/mail/mail-data
+backend/mail/run-tests-mail.bat
+backend/mail/mail-test.sh
+backend/mail/target
+backend/mail/.env
 
-mindmap/mindmap-data
-mindmap/.env
-mindmap/target
+backend/mindmap/mindmap-data
+backend/mindmap/.env
+backend/mindmap/target
 
-actuator/actuator-test.sh
-actuator/run-tests-actuator.bat
-actuator/target
+backend/actuator/actuator-test.sh
+backend/actuator/run-tests-actuator.bat
+backend/actuator/target
+backend/actuator/.env
 
 # Ist nur für Windows relevant
 start-kafka.bat
