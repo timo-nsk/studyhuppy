@@ -3,21 +3,23 @@ TO-DO
 - Der User soll Quick-Sessions erstellen können, also: Modul auswählen, Zeit auswählen, Pause auswählen und eine Wiederholungsanzahl festlegen. Nichts muss persistent gespeichert werden.
 - Wenn man eine Lernsession startet, soll auch die Gesamtzeit heruntergezählt und angezeigt werden.
 - Für die Sessionbewertungen sollen Statistiken für die UI entwickelt werden, alles im Backend ist fertig
-- Die Charts für die Lernstatistiken sollen nur dann angezeigt werden, wenn es zu visualisierende Daten gibt. Sonst ein String "Keine Statistiken verfügbar"
-- Unter Meine Module muss die Info "Keine eingetragenen Module vorhanden." zentriert werden.
 - Es gibt noch kein einheitliches Look-and-Feel zwischen den verschiedenen Services.
-  - Die Anzeige für noch zu ladenden Daten aus dem Backend sollte in eine Component gepackt werden, die ist nciht bei jedem Service einheitlich und wirkt komisch.
   - Zum Beispiel ist der Margin-Abstand vom Main-Content mal geringer/höher als bei anderen Services.
   - Es sollten Buttons, die dieselbe Funktion haben, auch gleich aussehen (z. B. Edit-Buttons). -> neues Design überlegen und zentralisieren
   - Auch haben manche Texte andere Schriftgrößen -> einheitliche Schriftgrößen schaffen
-- HTML-Seiten könnten semantischer mit <section> gestaltet werden.
 - Java-Dokumentation erstellen, fehlt an vielen Stellen
+- Im Karteikarten-Service sind die Font-Styles broken
 
 IN PROGRESS
-- Sessions müssen nach der Erstellung komplett frei bearbeitbar sein.
+- HTML-Seiten könnten semantischer mit <section> gestaltet werden.
+- HTML mit ARIA versehen
 
 DONE
 - Man soll Sessions, die man abgeschlossen hat, hinsichtlich der subjektiven „Lernleistung“ bewerten können, also im Sinne von „wie gut konntest du dich konzentrieren etc.“
 - Beim Erstellen von Sessions soll lieber ein +-Button anstatt dieses Select-Menüs mit den x Blöcken erscheinen. Denn bisher ist es so, dass wenn man z. B. 5 Blöcke eingestellt hat und sich während des Erstellungsprozesses umentscheidet, alle Blöcke samt Daten zurückgesetzt werden. Das ist super nervig.
 - Wenn man Sessions erstellt, soll es einen Pomodoro-Auto-Fill geben, der überall für die Blöcke 25 min / 5 min setzt.
 - Lernpläne müssen nach der Erstellung komplett frei bearbeitbar sein.
+- Sessions müssen nach der Erstellung komplett frei bearbeitbar sein.
+- Die Charts für die Lernstatistiken sollen nur dann angezeigt werden, wenn es zu visualisierende Daten gibt. Sonst ein String "Keine Statistiken verfügbar"
+- Unter Meine Module muss die Info "Keine eingetragenen Module vorhanden." zentriert werden.
+- Die Anzeige für noch zu ladenden Daten aus dem Backend sollte in eine Component gepackt werden, die ist nciht bei jedem Service einheitlich und wirkt komisch.

@@ -1,20 +1,38 @@
-<div>
-  <div id="pagination-table" class="bordered-b">
-    <table>
-      <tr>
-        <th>
-          <a class="m-accent-font" [routerLink]="['meine-module']">Meine Module</a>
-        </th>
-        <th>
-          <a class="m-accent-font" [routerLink]="['add-modul']">Modul hinzufügen</a>
-        </th>
-        <th>
-          <a class="m-accent-font" [routerLink]="['statistiken/general']">Statistiken</a>
-        </th>
-      </tr>
-    </table>
-  </div>
-  <div>
-    <router-outlet></router-outlet>
-  </div>
+<!--
+<div id="pagination-table" class="bordered-b">
+  <table>
+    <tr>
+      <th>
+        <a class="m-accent-font" [routerLink]="['meine-module']" aria-label="Link zu deinen Modulen">Meine Module</a>
+      </th>
+      <th>
+        <a class="m-accent-font" [routerLink]="['add-modul']" aria-label="Link zur Seite, um ein Modul hinzuzufügen">Modul hinzufügen</a>
+      </th>
+      <th>
+        <a class="m-accent-font" [routerLink]="['statistiken/general']" aria-label="Link zu Statistiken">Statistiken</a>
+      </th>
+    </tr>
+  </table>
 </div>
+-->
+<section>
+  <nav aria-label="Modulnavigation">
+    <ul>
+      <li id="left-li" class="border-r">
+        <a class="m-accent-font" [routerLink]="['meine-module']" aria-label="Link zu deinen Modulen">Meine Module</a>
+      </li>
+      <li class="border-r">
+        <a class="m-accent-font" [routerLink]="['add-modul']" aria-label="Link zur Seite, um ein Modul hinzuzufügen">Modul hinzufügen</a>
+      </li>
+      <li id="right-li" class="border-r">
+        <a class="m-accent-font" [routerLink]="['statistiken/general']" aria-label="Link zu Statistiken">Statistiken</a>
+      </li>
+    </ul>
+  </nav>
+</section>
+
+
+<div>
+  <router-outlet></router-outlet>
+</div>
+

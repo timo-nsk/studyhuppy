@@ -13,28 +13,30 @@
                   <option disabled selected value="">---</option>
                   <option *ngFor="let modul of module" [value]="modul.fachId">{{modul.name}}</option>
                 </select>
-                <span class="text-danger"
-                      *ngIf="blockForm.controls['modulId'].errors?.['required'] && blockForm.controls['modulId'].touched">
-                      Bitte wählen Sie ein Modul aus
-                </span>
               </td>
             </tr>
             <tr>
               <td class="td-label">Lernzeit:</td>
               <td>
                 <select class="form-select lernzeit-select" formControlName="lernzeitSeconds">
-                  <option [value]="5">5min</option>
-                  <option [value]="10">10min</option>
-                  <option [value]="15">15min</option>
-                  <option [value]="20">20min</option>
-                  <option [value]="25">25min</option>
-                  <option [value]="30">30min</option>
-                  <option [value]="35">35min</option>
-                  <option [value]="40">40min</option>
-                  <option [value]="45">45min</option>
-                  <option [value]="50">50min</option>
-                  <option [value]="55">55min</option>
-                  <option [value]="60">60min</option>
+                  <option [value]="300">5min</option>
+                  <option [value]="600">10min</option>
+                  <option [value]="900">15min</option>
+                  <option [value]="1200">20min</option>
+                  <option [value]="1500">25min</option>
+                  <option [value]="1800">30min</option>
+                  <option [value]="2100">35min</option>
+                  <option [value]="2400">40min</option>
+                  <option [value]="2700">45min</option>
+                  <option [value]="3000">50min</option>
+                  <option [value]="3300">55min</option>
+                  <option [value]="3600">60min</option>
+                  <option [value]="3900">65min</option>
+                  <option [value]="4200">70min</option>
+                  <option [value]="4500">75min</option>
+                  <option [value]="4800">80min</option>
+                  <option [value]="5100">85min</option>
+                  <option [value]="5400">90min</option>
                 </select>
               </td>
             </tr>
@@ -42,18 +44,24 @@
               <td class="td-label">Pause:</td>
               <td>
                 <select class="form-select pausen-select" formControlName="pausezeitSeconds">
-                  <option [value]="5">5min</option>
-                  <option [value]="10">10min</option>
-                  <option [value]="15">15min</option>
-                  <option [value]="20">20min</option>
-                  <option [value]="25">25min</option>
-                  <option [value]="30">30min</option>
-                  <option [value]="35">35min</option>
-                  <option [value]="40">40min</option>
-                  <option [value]="45">45min</option>
-                  <option [value]="50">50min</option>
-                  <option [value]="55">55min</option>
-                  <option [value]="60">60min</option>
+                  <option [value]="300">5min</option>
+                  <option [value]="600">10min</option>
+                  <option [value]="900">15min</option>
+                  <option [value]="1200">20min</option>
+                  <option [value]="1500">25min</option>
+                  <option [value]="1800">30min</option>
+                  <option [value]="2100">35min</option>
+                  <option [value]="2400">40min</option>
+                  <option [value]="2700">45min</option>
+                  <option [value]="3000">50min</option>
+                  <option [value]="3300">55min</option>
+                  <option [value]="3600">60min</option>
+                  <option [value]="3900">65min</option>
+                  <option [value]="4200">70min</option>
+                  <option [value]="4500">75min</option>
+                  <option [value]="4800">80min</option>
+                  <option [value]="5100">85min</option>
+                  <option [value]="5400">90min</option>
                 </select>
               </td>
             </tr>

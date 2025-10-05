@@ -49,21 +49,10 @@ export class SessionFormComponent implements  OnInit, OnDestroy{
   /**
    * Validiert die Formulardaten und speichert die Lernsession über den SessionApiService.
    */
-  saveLernsession(): void {
+  processForm(): void {
     if(this.isValidFormData()) {
-
-      const session = this.prepareSession()
-
-      this.sessionApiService.saveSession(session).subscribe({
-        next: () => {
-          this.snackbarService.openSuccess("Session erfolgreich gespeichert.");
-          this.clearComponent()
-        },
-        error: (error) => {
-          this.snackbarService.openError("Fehler beim Speichern der Session. Bitte versuchen Sie es erneut.");
-          console.error("Error saving session:", error);
-        }
-      })
+      if(this.hasLernsessionToEdit()) this.sendEditedSessionData();
+      else this.sendCreatedSessionData();
     }
   }
 
@@ -140,5 +129,34 @@ export class SessionFormComponent implements  OnInit, OnDestroy{
     session.beschreibung = this.sessionMetaDataForm.get('sessionBeschreibung')?.value;
     session.blocks = this.blockFormManager.toBlockArray()
     return session
+  }
+
+  private sendCreatedSessionData() {
+    const session = this.prepareSession()
+    this.sessionApiService.postCreatedSessionData(session).subscribe({
+      next: () => {
+        this.snackbarService.openSuccess("Session erfolgreich gespeichert.");
+        this.clearComponent()
+      },
+      error: (error) => {
+        this.snackbarService.openError("Fehler beim Speichern der Session. Bitte versuchen Sie es erneut.");
+        console.error("Error saving session:", error);
+      }
+    })
+  }
+
+  private sendEditedSessionData() {
+    let session = this.prepareSession()
+    session.fachId = this.lernsessionToEdit.fachId
+    this.sessionApiService.postEditedSessionData(session).subscribe({
+      next: () => {
+        this.snackbarService.openSuccess("Session erfolgreich gespeichert.");
+        this.clearComponent()
+      },
+      error: (error) => {
+        this.snackbarService.openError("Fehler beim Speichern der Session. Bitte versuchen Sie es erneut.");
+        console.error("Error saving session:", error);
+      }
+    })
   }
 }

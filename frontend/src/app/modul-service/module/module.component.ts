@@ -2,18 +2,18 @@ import {Component, inject, OnInit} from '@angular/core';
 import {Modul} from './domain';
 import {CommonModule} from '@angular/common';
 import {TimeFormatPipe} from './time-format.pipe';
-import {MatProgressBar} from '@angular/material/progress-bar';
 import {RouterLink} from '@angular/router';
 import {LoggingService} from '../../logging.service';
 import {ModuleApiService} from './module-api.service';
 import {TimerService} from '../timer.service';
+import {LoadingDataComponent} from '../../app-layout/loading-data/loading-data.component';
 
 @Component({
   selector: 'app-module',
   templateUrl: './module.component.html',
   styleUrls: ['./module.component.scss', '../../loading.scss', '../../accordion.scss'],
   standalone: true,
-  imports: [ CommonModule, TimeFormatPipe, MatProgressBar, RouterLink ]
+  imports: [CommonModule, TimeFormatPipe, RouterLink, LoadingDataComponent]
 })
 export class ModuleComponent implements OnInit{
   service = inject(ModuleApiService)

@@ -1,12 +1,10 @@
 <div id="modul-ansicht-box" class="bg">
   <ng-container *ngIf="isLoading" >
-    <div id="loading-bar-container">
-      <mat-progress-bar id="loading-bar" mode="buffer"></mat-progress-bar>
-    </div>
+    <Loading [entityName]="'Module'"></Loading>
   </ng-container>
   <ng-container *ngIf="!isLoading">
-    <div *ngIf="Object.keys(module).length === 0">
-      <p class="alert modul-item" role="alert">Keine eingetragenen Module vorhanden.</p>
+    <div id="no-module-container" *ngIf="Object.keys(module).length === 0">
+      <p id="no-module-p">Keine Module vorhanden</p>
     </div>
     <div>
       <div *ngIf="Object.keys(module).length > 0" class="modul-container">
