@@ -2,7 +2,7 @@ spring:
   application:
     name: studyhub-auth-service
   datasource:
-    url: jdbc:postgresql://user-db:5432/${AUTH_DB}
+    url: jdbc:postgresql://user-db:${PG_PORT}/${AUTH_DB}
     username: ${AUTH_DB_USER}
     password: ${AUTH_DB_PASS}
 management:
@@ -12,7 +12,7 @@ management:
       exposure:
         include: "*"
 server:
-  port: ${SERVER_PORT}
+  port: ${PROD_SERVER_PORT}
   address: ${SERVER_ADRESS}
 jwt:
   secret: ${JWT_SECRET}

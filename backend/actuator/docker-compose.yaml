@@ -5,9 +5,9 @@ services:
     build:
       dockerfile: Dockerfile
     ports:
-      - "${SERVER_PORT}:${SERVER_PORT}"
+      - "${PROD_SERVER_PORT}:${PROD_SERVER_PORT}"
     environment:
-      - SERVER_PORT=${SERVER_PORT}
+      - SERVER_PORT=${PROD_SERVER_PORT}
       - SERVER_ADRESS=${SERVER_ADRESS}
       - JWT_SECRET=${JWT_SECRET}
     env_file:

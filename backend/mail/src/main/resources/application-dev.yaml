@@ -3,13 +3,13 @@ spring:
     name: mail
   mail:
     host: localhost
-    port: 1025
+    port: ${SMTP_PORT}
     username: timo
     password: 1234
   datasource:
     password: ${MAIL_DB_PASS}
     username: ${MAIL_DB_USER}
-    url: jdbc:postgresql://localhost:6435/${MAIL_DB}
+    url: jdbc:postgresql://localhost:${MAIL_DB_HOST_PORT}/${MAIL_DB}
 management:
   endpoints:
     web:
@@ -17,11 +17,11 @@ management:
       exposure:
         include: "*"
 server:
-  port: 9083
+  port: ${DEV_SERVER_PORT}
 application:
   mail:
     address: ${MAIL_MAIN_EMAIL}
 kartei:
-  api-url: http://localhost:9081/api/kartei/v1
+  api-url: http://localhost:9503/api/kartei/v1
 auth:
-  api-url: http://localhost:9084/api/auth/v1
+  api-url: http://localhost:9501/api/auth/v1

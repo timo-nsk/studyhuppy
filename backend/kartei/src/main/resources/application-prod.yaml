@@ -10,7 +10,7 @@ spring:
   datasource:
     password: ${KARTEI_DB_PASS}
     username: ${KARTEI_DB_USER}
-    url: jdbc:postgresql://kartei-db:5432/${KARTEI_DB}
+    url: jdbc:postgresql://kartei-db:${PG_PORT}/${KARTEI_DB}
   security:
     user:
       name: none
@@ -28,7 +28,7 @@ management:
     httpexchanges:
       access: read_only
 server:
-  port: ${SERVER_PORT}
+  port: ${PROD_SERVER_PORT}
   address: ${SERVER_ADRESS}
 jwt:
   secret: ${JWT_SECRET}

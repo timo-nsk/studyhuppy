@@ -23,7 +23,7 @@ info:
     description: "Actuator Service"
     version: "1.0.0"
 server:
-  port: ${SERVER_PORT}
+  port: ${PROD_SERVER_PORT}
   address: ${SERVER_ADRESS}
 app:
   metrics:

@@ -3,7 +3,7 @@ services:
     container_name: studyhuppy-frontend
     build: .
     ports:
-      - "8999:80" #siehe angular.json
+      - "9520:80" #siehe angular.json
     expose:
       - 80
     networks:

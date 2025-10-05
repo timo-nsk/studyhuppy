@@ -4,7 +4,7 @@ spring:
   datasource:
     password: ${MODUL_DB_PASS}
     username: ${MODUL_DB_USER}
-    url: jdbc:postgresql://localhost:6433/${MODUL_DB}
+    url: jdbc:postgresql://localhost:${MODUL_DB_HOST_PORT}/${MODUL_DB}
   security:
     user:
       name: none
@@ -24,7 +24,7 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 management:
   server:
-    port: 9080
+    port: ${DEV_SERVER_PORT}
   endpoints:
     web:
       base-path: /actuator
@@ -36,11 +36,11 @@ management:
   security:
     enabled: true
 server:
-  port: ${SERVER_PORT}
+  port: ${DEV_SERVER_PORT}
 jwt:
   secret: ${JWT_SECRET}
 maxModule: 30
 kartei:
-  api_url: http://localhost:9081/api/kartei/v1
+  api_url: http://localhost:9503/api/kartei/v1
 auth:
-  api-url:  http://localhost:9084/api/auth/v1
+  api-url:  http://localhost:9501/api/auth/v1

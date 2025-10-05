@@ -2,7 +2,7 @@ spring:
   application:
     name: studyhub-auth-service
   datasource:
-    url: jdbc:postgresql://localhost:6436/${AUTH_DB}
+    url: jdbc:postgresql://localhost:${AUTH_DB_HOST_PORT}/${AUTH_DB}
     username: ${AUTH_DB_USER}
     password: ${AUTH_DB_PASS}
   kafka:
@@ -24,17 +24,17 @@ management:
       exposure:
         include: "*"
 server:
-  port: ${SERVER_PORT}
+  port: ${DEV_SERVER_PORT}
 jwt:
   secret: ${JWT_SECRET}
   role:
     admin:
       username: ${ADMIN}
 mail:
-  api-url: http://localhost:9083/api/mail/v1
+  api-url: http://localhost:9510/api/mail/v1
 kartei:
-  api-url: http://localhost:9081/api/kartei/v1
+  api-url: http://localhost:9503/api/kartei/v1
 modul:
-  api-url: http://localhost:9080/api/modul/v1
+  api-url: http://localhost:9502/api/modul/v1
 mindmap:
-  api-url: http://localhost:9087/api/mindmap/v1
+  api-url: http://localhost:9504/api/mindmap/v1

@@ -63,9 +63,10 @@ public class SecurityConfig {
 		CorsConfiguration config = new CorsConfiguration();
 
 		config.setAllowedOrigins(List.of(
-				"http://localhost:8999",
-				"http://127.0.0.1:8999",
-				"http://127.0.0.1:8080",
+				"http://localhost:9500",
+				"http://localhost:9520",
+				"http://127.0.0.1:9500",
+				"http://127.0.0.1:9520",
 				"https://studyhuppy.de",
 				"https://www.studyhuppy.de"
 				// hier muss bei Bedarf auch die URI vom Cloud-Server rein

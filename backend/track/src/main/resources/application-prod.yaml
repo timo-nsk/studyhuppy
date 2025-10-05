@@ -4,7 +4,7 @@ spring:
   datasource:
     password: ${MODUL_DB_PASS}
     username: ${MODUL_DB_USER}
-    url: jdbc:postgresql://modul-db:5432/${MODUL_DB}
+    url: jdbc:postgresql://modul-db:${PG_PORT}/${MODUL_DB}
   security:
     user:
       name: none
@@ -17,7 +17,7 @@ management:
       exposure:
         include: "*"
 server:
-  port: ${SERVER_PORT}
+  port: ${PROD_SERVER_PORT}
   address: ${SERVER_ADRESS}
 jwt:
   secret: ${JWT_SECRET}
