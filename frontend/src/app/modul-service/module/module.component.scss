@@ -1,18 +1,16 @@
-p {
-  margin-bottom: 0;
+:host {
+  --modul-card-border-radius: 10px;
+  --modul-name-font-size: 18px;
 }
 
 .modul-container {
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   gap: 10px;
-  padding-left: 5%;
-  padding-right: 5%;
 }
 
-.modul-fachsemester-container {
+#modul-fachsemester-container {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -23,37 +21,35 @@ p {
 .modul-card {
   flex: 0 0 calc(22.5% - 10px);
   min-width: 295px;
-  background-color: rgb(16, 45, 92);
-  height: 125px;
+  background-color: var(--accent-color);
+  min-height: 125px;
   margin: 20px 10px 10px 10px;
-  padding: 8px 8px 8px 8px;
   border-style: none;
-  border-radius: 10px;
+  border-radius: var(--modul-card-border-radius);
 }
 
-#btn-container {
+#modul-card-header {
+  padding: 2.5px;
+  min-height: 35px;
   display: flex;
-  margin-top: 10px;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+  background-color: var(--primary-color);
+  border-style: none;
+  border-top-left-radius: var(--modul-card-border-radius);
+  border-top-right-radius: var(--modul-card-border-radius);
 }
 
-.shd {
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+.modul-name-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-left: 10px;
 }
 
-.fs-20 {
-  font-size: 1.35rem;
-}
-
-.wht-font {
+.modul-name-container a {
   color: white;
-}
-
-.m-accent-font {
-  color: rgb(16, 45, 92);
-}
-
-.std-link {
   text-decoration: none;
 
   display: inline-block;
@@ -64,10 +60,48 @@ p {
   transition: color 0.2s ease;
 }
 
-.std-link:hover {
+.modul-name-container a:hover {
   text-decoration: underline;
   cursor: pointer;
-  font-weight: bold
+}
+
+.modul-name {
+  font-size: var(--modul-name-font-size);
+  display: block;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  width: 100%;
+}
+
+#termine-icon-container {
+  width: 10%;
+  display: flex;
+  justify-content: center;
+}
+
+#termine-icon-link {
+  cursor: pointer;
+}
+
+#termine-icon {
+  justify-content: flex-end;
+}
+
+.modul-card-body {
+  padding: 12px;
+}
+
+.modul-card-content p {
+  color: #f0f0f0;
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.modul-card-footer {
+  display: flex;
+  margin-top: 10px;
+  justify-content: center;
 }
 
 .play-button {
@@ -95,31 +129,6 @@ p {
   background-color: rgb(250, 146, 72);
 }
 
-.modul-card-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  width: 100%;
-}
-
-#modul-name-container {
-  width: 90%;
-}
-
-#termine-icon-container {
-  width: 10%;
-  display: flex;
-  justify-content: center;
-}
-
-#termine-icon-link {
-  cursor: pointer;
-}
-
-#termine-icon {
-  justify-content: flex-end;
-}
-
 #no-module-container {
   margin-top: 60px;
 }
@@ -130,3 +139,10 @@ p {
   color: gray;
 }
 
+.accordion {
+  color: var(--primary-color);
+}
+
+.shd {
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+}
