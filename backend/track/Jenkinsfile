@@ -2,12 +2,12 @@ pipeline {
     agent any
 
     environment {
-        SERVICE='modul-service'
+        SERVICE = 'modul-service'
     }
 
     stages {
-        stage("Führe Tests für $SERVICE aus") {
-            step {
+        stage("Führe Tests für ${SERVICE} aus") {
+            steps {
                 sh 'mvn clean test'
             }
         }
