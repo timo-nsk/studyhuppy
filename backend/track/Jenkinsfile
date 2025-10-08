@@ -6,8 +6,9 @@ pipeline {
     }
 
     stages {
-        stage("Führe Tests für ${SERVICE} aus") {
+        stage('Führe Tests aus') {
             steps {
+                echo "Starte Tests für ${SERVICE}"
                 sh 'mvn clean test'
             }
         }
