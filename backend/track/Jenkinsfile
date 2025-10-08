@@ -5,11 +5,15 @@ pipeline {
         SERVICE = 'modul-service'
     }
 
+    tools {
+            maven "M3"
+        }
+
     stages {
         stage('Führe Tests aus') {
             steps {
                 echo "Starte Tests für ${SERVICE}"
-                sh './mvnw clean test'
+                sh 'mvn clean test'
             }
         }
     }
