@@ -14,7 +14,7 @@ pipeline {
             steps {
                 dir('backend/track') {
                     echo "Starte Tests für ${SERVICE}"
-                    sh 'mvn clean test'
+                    bat 'mvn clean test'
                 }
             }
         }
