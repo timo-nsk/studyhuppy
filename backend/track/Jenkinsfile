@@ -9,7 +9,7 @@ pipeline {
         stage('Führe Tests aus') {
             steps {
                 echo "Starte Tests für ${SERVICE}"
-                sh 'mvn clean test'
+                sh './mvnw clean test'
             }
         }
     }
