@@ -7,13 +7,15 @@ pipeline {
 
     tools {
             maven "M3"
-        }
+    }
 
     stages {
         stage('Führe Tests aus') {
             steps {
-                echo "Starte Tests für ${SERVICE}"
-                sh 'mvn clean test'
+                dir('backend/track') {
+                    echo "Starte Tests für ${SERVICE}"
+                    sh 'mvn clean test'
+                }
             }
         }
     }
