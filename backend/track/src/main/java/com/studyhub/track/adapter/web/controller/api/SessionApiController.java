@@ -5,9 +5,9 @@ import com.studyhub.track.adapter.web.controller.request.dto.SessionBeendetEvent
 import com.studyhub.track.adapter.web.controller.request.dto.SessionDeleteRequest;
 import com.studyhub.track.application.service.SessionEventsService;
 import com.studyhub.track.application.service.dto.SessionInfoDto;
-import com.studyhub.track.adapter.web.controller.request.dto.SessionRequest;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.application.service.SessionService;
+import com.studyhub.track.application.service.dto.SessionRequest;
 import com.studyhub.track.domain.model.session.Session;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
