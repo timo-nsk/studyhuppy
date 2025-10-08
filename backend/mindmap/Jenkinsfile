@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+
+    environment {
+        SERVICE = 'mindmap-service'
+    }
+
+    tools {
+            maven "M3"
+    }
+
+    stages {
+        stage('Führe Tests aus') {
+            steps {
+                dir('backend/mindmap') {
+                    echo "Starte Tests für ${SERVICE}"
+                    bat 'mvn clean test'
+                }
+            }
+        }
+    }
+}
