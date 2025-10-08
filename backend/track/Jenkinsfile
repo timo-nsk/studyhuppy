@@ -1,0 +1,15 @@
+pipeline {
+    agent any
+
+    environment {
+        SERVICE='modul-service'
+    }
+
+    stages {
+        stage("Führe Tests für $SERVICE aus") {
+            step {
+                sh 'mvn clean test'
+            }
+        }
+    }
+}
