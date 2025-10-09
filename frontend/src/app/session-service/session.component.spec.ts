@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SessionComponent } from './session.component';
+import {ActivatedRoute} from '@angular/router';
+import {of} from 'rxjs';
 
 describe('SessionComponent', () => {
   let component: SessionComponent;
@@ -8,7 +10,11 @@ describe('SessionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SessionComponent]
+      imports: [SessionComponent],
+      providers: [{
+        provide: ActivatedRoute,
+        useValue: {},
+      }]
     })
     .compileComponents();
 
