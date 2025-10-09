@@ -6,6 +6,25 @@ pipeline {
     }
 
     stages {
+        stage('Deploy: frontend...') {
+            when {
+                changeset "frontend/**"
+            }
+
+            steps {
+                dir('frontend') {
+                    echo "Testing..."
+                    bat 'npm test'
+                    echo "Building..."
+                    bat 'npm run build'
+                    echo "Deploying..."
+                    bat "docker login --username ${env.DOCKERHUB_CRED_USR} --password ${env.DOCKERHUB_CRED_PSW}"
+                    bat "docker build -t ${env.DOCKERHUB_CRED_USR}/studyhuppy-frontend:latest ."
+                    bat "docker push ${env.DOCKERHUB_CRED_USR}/studyhuppy-frontend:latest"
+                }
+            }
+        }
+
         stage('Deploy: modul-service...') {
             when {
                 changeset "backend/track/**"
