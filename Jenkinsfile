@@ -2,16 +2,13 @@ pipeline {
     agent any
 
     stages {
-        stage('Deploy modul-service...') {
-            when { changeset "backend/track/**" }
-                steps {
-                    build job: 'studyhuppy-modul-test'
+        stage('Versuche Deployment von: modul-service...') {
+            when {
+                changeset "backend/track/**"
             }
-
-            post {
-                skipped {
-                    echo 'Deployment von modul-service übersprungen, da keine Änderungen.'
-                }
+            steps {
+                echo "Änderung in modul-service, starte Deployment..."
+                build job: 'studyhuppy-modul-test'
             }
         }
     }
