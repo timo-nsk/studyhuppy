@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.*;
-
+// TEST ÄNDERUNG
 @AllArgsConstructor
 @NoArgsConstructor
 @AggregateRoot
