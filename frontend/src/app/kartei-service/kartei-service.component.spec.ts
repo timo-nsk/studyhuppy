@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HeaderService } from '../header.service'; // Pfad ggf. anpassen
 import { HttpHeaders } from '@angular/common/http';
+import {KarteiApiService} from './kartei.api.service';
 
 describe('KarteiServiceComponent', () => {
   let component: KarteiServiceComponent;
@@ -36,7 +37,8 @@ describe('KarteiServiceComponent', () => {
               'Content-Type': 'application/json'
             })
           }
-        }
+        },
+        KarteiApiService
       ]
     }).compileComponents();
 
