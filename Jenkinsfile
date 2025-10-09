@@ -97,7 +97,7 @@ pipeline {
             }
 
             steps {
-                dir('backend/mindmap') {
+                dir('backend/actuator') {
                     echo "Deploying..."
                     bat "docker login --username ${env.DOCKERHUB_CRED_USR} --password ${env.DOCKERHUB_CRED_PSW}"
                     bat "docker build -t ${env.DOCKERHUB_CRED_USR}/studyhuppy-actuator-service:latest ."
