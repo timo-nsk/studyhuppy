@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { KarteImportComponent } from './karte-import.component';
+import {provideHttpClient} from '@angular/common/http';
 
 describe('KarteImportComponent', () => {
   let component: KarteImportComponent;
@@ -8,7 +9,8 @@ describe('KarteImportComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [KarteImportComponent]
+      imports: [KarteImportComponent],
+      providers: [provideHttpClient()]
     })
     .compileComponents();
 
