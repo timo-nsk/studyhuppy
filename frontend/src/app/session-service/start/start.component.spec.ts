@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SessionStartComponent } from './start.component';
+import {ActivatedRoute} from '@angular/router';
+import {of} from 'rxjs';
+import {HttpHeaders, provideHttpClient} from '@angular/common/http';
+import {HeaderService} from '../../header.service';
 
 describe('StartComponent', () => {
   let component: SessionStartComponent;
@@ -8,7 +12,28 @@ describe('StartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SessionStartComponent]
+      imports: [SessionStartComponent],
+      providers: [{
+        provide: ActivatedRoute,
+        useValue: {
+          snapshot: {
+            paramMap: {
+              get: (sessionId: string) => 'session_uuid',
+            },
+          },
+          params: of({ id: '123' }),
+        },
+      },
+      {
+        provide: HeaderService,
+        useValue: {
+          createAuthHeader: () => new HttpHeaders({
+            Authorization: 'Bearer MOCK_TOKEN',
+            'Content-Type': 'application/json'
+          })
+        }
+      },
+      provideHttpClient()]
     })
     .compileComponents();
 
