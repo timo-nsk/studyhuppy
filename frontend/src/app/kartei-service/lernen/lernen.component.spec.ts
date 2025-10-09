@@ -18,7 +18,7 @@ describe('LernenComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            paramMap: of({ get: (key: string) => '123' }),  // Beispiel: gibt '123' bei .get('fachId')
+            paramMap: of({ get: (key: string) => '123' }),
           },
         },
         {
