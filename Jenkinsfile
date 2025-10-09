@@ -12,7 +12,7 @@ pipeline {
             }
             steps {
                 dir('backend/track') {
-                    sh 'mvn clean package'
+                    bat 'mvn clean package'
                 }
             }
         }
@@ -20,9 +20,9 @@ pipeline {
         stage('Build Docker Image and Push to Repo: modul-service') {
             steps {
                 dir('backend/track') {
-                    sh "docker login --username ${env.DOCKERHUB_CRED_USR} --password ${env.DOCKERHUB_CRED_PSW}"
-                    sh "docker build -t ${env.DOCKERHUB_CRED_USR}/studyhuppy-modul-service:latest ."
-                    sh "docker push ${env.DOCKERHUB_CRED_USR}/calc:latest"
+                    bat "docker login --username ${env.DOCKERHUB_CRED_USR} --password ${env.DOCKERHUB_CRED_PSW}"
+                    bat "docker build -t ${env.DOCKERHUB_CRED_USR}/studyhuppy-modul-service:latest ."
+                    bat "docker push ${env.DOCKERHUB_CRED_USR}/calc:latest"
                 }
             }
         }
