@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddMindmapComponent } from './add-mindmap.component';
 import {HttpHeaders, provideHttpClient} from '@angular/common/http';
 import {HeaderService} from '../../header.service';
+import {HttpClientTestingModule, provideHttpClientTesting} from '@angular/common/http/testing';
 
 describe('AddMindmapComponent', () => {
   let component: AddMindmapComponent;
@@ -12,6 +13,8 @@ describe('AddMindmapComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AddMindmapComponent],
       providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
         {
           provide: HeaderService,
           useValue: {
@@ -20,9 +23,9 @@ describe('AddMindmapComponent', () => {
               'Content-Type': 'application/json'
             })
           }
-        },provideHttpClient()]
-    })
-    .compileComponents();
+        }
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddMindmapComponent);
     component = fixture.componentInstance;
