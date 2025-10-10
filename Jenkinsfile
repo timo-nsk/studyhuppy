@@ -124,5 +124,11 @@ pipeline {
                 }
             }
         }
+
+        stage('Restact services...') {
+            steps {
+                bat "docker compose up"
+            }
+        }
     }
 }
