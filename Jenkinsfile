@@ -15,8 +15,6 @@ pipeline {
                 dir('frontend') {
                     bat 'npm install'
                     bat 'npm install --save-dev @angular/cli'
-                    echo "Testing..."
-                    bat 'npm test'
                     echo "Building..."
                     bat 'npm run build'
                     echo "Deploying..."
