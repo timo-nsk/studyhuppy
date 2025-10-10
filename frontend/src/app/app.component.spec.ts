@@ -5,6 +5,7 @@ import {of} from 'rxjs';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
+    // test änderung
     await TestBed.configureTestingModule({
       imports: [AppComponent],
       providers: [
