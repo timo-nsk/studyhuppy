@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AgbComponent } from './agb.component';
+import {ActivatedRoute} from '@angular/router';
 
 describe('AgbComponent', () => {
   let component: AgbComponent;
@@ -8,7 +9,11 @@ describe('AgbComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AgbComponent]
+      imports: [AgbComponent],
+      providers: [{
+        provide: ActivatedRoute,
+        useValue: {},
+      }]
     })
     .compileComponents();
 

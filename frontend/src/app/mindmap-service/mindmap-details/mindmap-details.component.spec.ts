@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MindmapDetailsComponent } from './mindmap-details.component';
+import {ActivatedRoute} from '@angular/router';
+import {provideHttpClient} from '@angular/common/http';
+import {of} from 'rxjs';
 
 describe('MindmapDetailsComponent', () => {
   let component: MindmapDetailsComponent;
@@ -8,7 +11,16 @@ describe('MindmapDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MindmapDetailsComponent]
+      imports: [MindmapDetailsComponent],
+      providers: [{
+        provide: ActivatedRoute,
+        useValue: {
+          paramMap: of({
+            get: (key: string) => 'modul123'
+          })
+        },
+      },
+      provideHttpClient()]
     })
     .compileComponents();
 

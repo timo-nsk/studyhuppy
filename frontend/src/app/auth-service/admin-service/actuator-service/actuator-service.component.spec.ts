@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActuatorServiceComponent } from './actuator-service.component';
+import {provideHttpClient} from '@angular/common/http';
 
 describe('ActuatorServiceComponent', () => {
   let component: ActuatorServiceComponent;
@@ -8,7 +9,8 @@ describe('ActuatorServiceComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ActuatorServiceComponent]
+      imports: [ActuatorServiceComponent],
+      providers: [provideHttpClient()]
     })
     .compileComponents();
 

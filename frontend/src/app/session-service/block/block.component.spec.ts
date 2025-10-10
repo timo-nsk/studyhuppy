@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BlockComponent } from './block.component';
+import {FormControl, FormGroup} from '@angular/forms';
 
 describe('LernblockComponent', () => {
   let component: BlockComponent;
@@ -9,11 +10,18 @@ describe('LernblockComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [BlockComponent]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BlockComponent);
     component = fixture.componentInstance;
+
+    // BlockForm als Input mocken
+    component.blockForm = new FormGroup({
+      modulId: new FormControl(''),
+      lernzeitSeconds: new FormControl(25),
+      pausezeitSeconds: new FormControl(5)
+    });
+
     fixture.detectChanges();
   });
 

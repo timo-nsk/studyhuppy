@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserDbServiceComponent } from './user-db-service.component';
+import {provideHttpClient} from '@angular/common/http';
 
 describe('UserDbServiceComponent', () => {
   let component: UserDbServiceComponent;
@@ -8,7 +9,8 @@ describe('UserDbServiceComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserDbServiceComponent]
+      imports: [UserDbServiceComponent],
+      providers: [provideHttpClient()]
     })
     .compileComponents();
 

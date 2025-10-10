@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MindmapServiceComponent } from './mindmap-service.component';
+import {provideHttpClient} from '@angular/common/http';
 
 describe('MindmapServiceComponent', () => {
   let component: MindmapServiceComponent;
@@ -8,7 +9,8 @@ describe('MindmapServiceComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MindmapServiceComponent]
+      imports: [MindmapServiceComponent],
+      providers: [provideHttpClient()]
     })
     .compileComponents();
 

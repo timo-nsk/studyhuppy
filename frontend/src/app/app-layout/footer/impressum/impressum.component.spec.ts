@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ImpressumComponent } from './impressum.component';
+import {ActivatedRoute} from '@angular/router';
+import {of} from 'rxjs';
 
 describe('ImpressumComponent', () => {
   let component: ImpressumComponent;
@@ -8,7 +10,11 @@ describe('ImpressumComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ImpressumComponent]
+      imports: [ImpressumComponent],
+      providers: [{
+        provide: ActivatedRoute,
+        useValue: {},
+      }]
     })
     .compileComponents();
 

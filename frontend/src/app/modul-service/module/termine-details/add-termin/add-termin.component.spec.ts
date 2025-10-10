@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddTerminComponent } from './add-termin.component';
+import {provideHttpClient} from '@angular/common/http';
 
 describe('AddTerminComponent', () => {
   let component: AddTerminComponent;
@@ -8,7 +9,8 @@ describe('AddTerminComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddTerminComponent]
+      imports: [AddTerminComponent],
+      providers: [provideHttpClient()]
     })
     .compileComponents();
 

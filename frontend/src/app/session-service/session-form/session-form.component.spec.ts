@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SessionFormComponent } from './session-form.component';
+import {provideHttpClient} from '@angular/common/http';
 
 describe('SessionFormComponent', () => {
   let component: SessionFormComponent;
@@ -8,7 +9,8 @@ describe('SessionFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SessionFormComponent]
+      imports: [SessionFormComponent],
+      providers: [provideHttpClient()]
     })
     .compileComponents();
 

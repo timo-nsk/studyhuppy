@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DsgvoComponent } from './dsgvo.component';
+import {ActivatedRoute} from '@angular/router';
 
 describe('DsgvoComponent', () => {
   let component: DsgvoComponent;
@@ -8,7 +9,11 @@ describe('DsgvoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DsgvoComponent]
+      imports: [DsgvoComponent],
+      providers: [{
+        provide: ActivatedRoute,
+        useValue: {},
+      }]
     })
     .compileComponents();
 

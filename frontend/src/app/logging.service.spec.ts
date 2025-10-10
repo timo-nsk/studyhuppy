@@ -1,16 +1,19 @@
-import { TestBed } from '@angular/core/testing';
-
 import { LoggingService } from './logging.service';
 
 describe('LoggingService', () => {
   let service: LoggingService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(LoggingService);
+    service = new LoggingService('TestClass', 'TestService');
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
+  });
+
+  it('should log info message', () => {
+    spyOn(console, 'info');
+    service.info('Hello');
+    expect(console.info).toHaveBeenCalled();
   });
 });

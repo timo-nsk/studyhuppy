@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChoiceKartComponent } from './choice-kart.component';
+import {provideHttpClient} from '@angular/common/http';
 
 describe('ChoiceKartComponent', () => {
   let component: ChoiceKartComponent;
@@ -8,7 +9,8 @@ describe('ChoiceKartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChoiceKartComponent]
+      imports: [ChoiceKartComponent],
+      providers: [provideHttpClient()]
     })
     .compileComponents();
 
