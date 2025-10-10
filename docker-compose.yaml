@@ -1,0 +1,132 @@
+version: '3.9'
+
+services:
+  frontend:
+    image: tneskedev/studyhuppy-frontend:latest
+    container_name: studyhuppy-frontend
+    ports:
+      - "9520:80"
+  service-authentication:
+    image: tneskedev/studyhuppy-authentication-service:latest
+    container_name: studyhuppy-authentication-service
+    ports:
+      - "9521:9521"
+    env_file:
+      - backend/authentication/.env
+    depends_on:
+      user-db:
+        condition: service_healthy
+  service-modul:
+    image: tneskedev/studyhuppy-modul-service:latest
+    container_name: studyhuppy-modul-service
+    ports:
+      - "9522:9522"
+    env_file:
+      - backend/track/.env
+    depends_on:
+      modul-db:
+        condition: service_healthy
+  service-kartei:
+    image: tneskedev/studyhuppy-kartei-service:latest
+    container_name: studyhuppy-kartei-service
+    ports:
+      - "9523:9523"
+    env_file:
+      - backend/kartei/.env
+    depends_on:
+      kartei-db:
+        condition: service_healthy
+  service-mindmap:
+    image: tneskedev/studyhuppy-mindmap-service:latest
+    container_name: studyhuppy-mindmap-service
+    ports:
+      - "9524:9524"
+    env_file:
+      - backend/mindmap/.env
+    depends_on:
+      - neo4j
+  service-mail:
+    image: tneskedev/studyhuppy-mail-service:latest
+    container_name: studyhuppy-mail-service
+    ports:
+      - "9530:9530"
+    env_file:
+      - backend/mail/.env
+    depends_on:
+      mail-db:
+        condition: service_healthy
+  service-actuator:
+    image: tneskedev/studyhuppy-actuator-service:latest
+    container_name: studyhuppy-actuator-service
+    ports:
+      - "9531:9531"
+    env_file:
+      - backend/actuator/.env
+
+  # DBs
+  user-db:
+    container_name: user-db
+    image: postgres:latest
+    ports:
+      - "${AUTH_DB_HOST_PORT}:${PG_PORT}"
+    volumes:
+      - ./backend/authentication/user-data:/var/lib/postgresql/data
+    env_file:
+      - backend/authentication/.env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${AUTH_DB_USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  modul-db:
+    container_name: modul-db
+    image: postgres:latest
+    ports:
+      - "${MODUL_DB_HOST_PORT}:${PG_PORT}"
+    volumes:
+      - ./backend/track/modul-data:/var/lib/postgresql/data
+    env_file:
+      - backend/track/.env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${MODUL_DB_USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  kartei-db:
+    container_name: kartei-db
+    image: postgres:latest
+    ports:
+      - "${KARTEI_DB_HOST_PORT}:${PG_PORT}"
+    volumes:
+      - ./backend/kartei/kartei-data:/var/lib/postgresql/data
+    env_file:
+      - backend/kartei/.env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${KARTEI_DB_USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  neo4j:
+    image: neo4j:5
+    container_name: neo4j
+    ports:
+      - "${WEB_UI_PORT}:${WEB_UI_PORT}"
+      - "${DB_PORT}:${DB_PORT}" #Bolt
+    env_file:
+      - backend/mindmap/.env
+    volumes:
+      - ./backend/mindmap/mindmap-data:/neo4j_data:/data
+  mail-db:
+    container_name: mail-db
+    image: postgres:latest
+    ports:
+      - "${MAIL_DB_HOST_PORT}:${PG_PORT}"
+    volumes:
+      - ./backend/mail/mail-data:/var/lib/postgresql/data
+    env_file:
+      - backend/mail/.env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${MAIL_DB_USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
