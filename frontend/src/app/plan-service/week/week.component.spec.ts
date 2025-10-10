@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlanWeekComponent } from './week.component';
-import {provideHttpClient} from '@angular/common/http';
+import {HttpHeaders, provideHttpClient} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import {of} from 'rxjs';
+import {HeaderService} from '../../header.service';
 
 describe('WeekComponent', () => {
   let component: PlanWeekComponent;
@@ -15,6 +16,15 @@ describe('WeekComponent', () => {
       providers: [{
         provide: ActivatedRoute,
         useValue: {},
+      },
+      {
+        provide: HeaderService,
+        useValue: {
+          createAuthHeader: () => new HttpHeaders({
+            Authorization: 'Bearer MOCK_TOKEN',
+            'Content-Type': 'application/json'
+          })
+        }
       },
       provideHttpClient()]
     })

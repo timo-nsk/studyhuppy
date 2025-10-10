@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SessionOverviewComponent } from './overview.component';
-import {provideHttpClient} from '@angular/common/http';
+import {HttpHeaders, provideHttpClient} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import {of} from 'rxjs';
+import {HeaderService} from '../../header.service';
 
 describe('OverviewComponent', () => {
   let component: SessionOverviewComponent;
@@ -15,6 +16,15 @@ describe('OverviewComponent', () => {
       providers: [{
         provide: ActivatedRoute,
         useValue: {}
+      },
+      {
+        provide: HeaderService,
+        useValue: {
+          createAuthHeader: () => new HttpHeaders({
+            Authorization: 'Bearer MOCK_TOKEN',
+            'Content-Type': 'application/json'
+          })
+        }
       },
       provideHttpClient()]
     })

@@ -2,7 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LernsessionEditComponent } from './edit.component';
 import {ActivatedRoute} from '@angular/router';
-import {provideHttpClient} from '@angular/common/http';
+import {HttpHeaders, provideHttpClient} from '@angular/common/http';
+import {HeaderService} from '../../header.service';
 
 describe('EditComponent', () => {
   let component: LernsessionEditComponent;
@@ -28,6 +29,15 @@ describe('EditComponent', () => {
                 }
               }
             }
+          }
+        },
+        {
+          provide: HeaderService,
+          useValue: {
+            createAuthHeader: () => new HttpHeaders({
+              Authorization: 'Bearer MOCK_TOKEN',
+              'Content-Type': 'application/json'
+            })
           }
         },
         provideHttpClient()

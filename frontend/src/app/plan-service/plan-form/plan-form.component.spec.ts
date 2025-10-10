@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlanFormComponent } from './plan-form.component';
-import {provideHttpClient} from '@angular/common/http';
+import {HttpHeaders, provideHttpClient} from '@angular/common/http';
+import {HeaderService} from '../../header.service';
 
 describe('PlanFormComponent', () => {
   let component: PlanFormComponent;
@@ -10,7 +11,16 @@ describe('PlanFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [PlanFormComponent],
-      providers: [provideHttpClient()]
+      providers: [
+      {
+        provide: HeaderService,
+        useValue: {
+          createAuthHeader: () => new HttpHeaders({
+            Authorization: 'Bearer MOCK_TOKEN',
+            'Content-Type': 'application/json'
+          })
+        }
+      },provideHttpClient()]
     })
     .compileComponents();
 

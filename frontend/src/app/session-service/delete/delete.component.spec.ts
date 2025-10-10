@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SessionDeleteComponent } from './delete.component';
-import {provideHttpClient} from '@angular/common/http';
+import {HttpHeaders, provideHttpClient} from '@angular/common/http';
+import {HeaderService} from '../../header.service';
 
 describe('DeleteComponent', () => {
   let component: SessionDeleteComponent;
@@ -10,7 +11,16 @@ describe('DeleteComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SessionDeleteComponent],
-      providers: [provideHttpClient()]
+      providers: [
+      {
+        provide: HeaderService,
+        useValue: {
+          createAuthHeader: () => new HttpHeaders({
+            Authorization: 'Bearer MOCK_TOKEN',
+            'Content-Type': 'application/json'
+          })
+        }
+      },provideHttpClient()]
     })
     .compileComponents();
 

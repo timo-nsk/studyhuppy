@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MindmapServiceComponent } from './mindmap-service.component';
-import {provideHttpClient} from '@angular/common/http';
+import {HttpHeaders, provideHttpClient} from '@angular/common/http';
+import {HeaderService} from '../header.service';
 
 describe('MindmapServiceComponent', () => {
   let component: MindmapServiceComponent;
@@ -10,7 +11,17 @@ describe('MindmapServiceComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MindmapServiceComponent],
-      providers: [provideHttpClient()]
+      providers: [
+      {
+        provide: HeaderService,
+        useValue: {
+          createAuthHeader: () => new HttpHeaders({
+            Authorization: 'Bearer MOCK_TOKEN',
+            'Content-Type': 'application/json'
+          })
+        }
+      },
+      provideHttpClient()]
     })
     .compileComponents();
 
