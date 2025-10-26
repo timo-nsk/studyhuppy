@@ -9,10 +9,13 @@ TO-DO
   - Auch haben manche Texte andere Schriftgrößen -> einheitliche Schriftgrößen schaffen
 - Java-Dokumentation erstellen, fehlt an vielen Stellen
 - Im Karteikarten-Service sind die Font-Styles broken
-
-IN PROGRESS
 - HTML-Seiten könnten semantischer mit <section> gestaltet werden.
 - HTML mit ARIA versehen
+- Bei einer laufenden Lernsession sollen einzelne Blöcke "überspringbar" gemacht werden
+
+IN PROGRESS
+- BUG: bei einem refresh im browser wirft nginx 404
+- BUG: bei einer laufenden lernsession werden die sekunden nach einem abgeschlossenen lernblock nciht ind er DB gespeichert
 
 DONE
 - Man soll Sessions, die man abgeschlossen hat, hinsichtlich der subjektiven „Lernleistung“ bewerten können, also im Sinne von „wie gut konntest du dich konzentrieren etc.“
