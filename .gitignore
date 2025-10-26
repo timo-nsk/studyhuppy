@@ -39,4 +39,5 @@ backend/actuator/.env
 
 # Ist nur für Windows relevant
 start-kafka.bat
+.env
 
