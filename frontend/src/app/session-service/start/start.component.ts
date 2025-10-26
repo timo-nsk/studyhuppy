@@ -99,12 +99,6 @@ export class SessionStartComponent implements OnInit{
 
   abortThisSession() : void {
     this.sessionAbgebrochen = true
-
-    // Die Session wird abgebrochen, aber die bisher gelernte Zeit wird dem Modul gutgeschrieben
-    const modulId = this.sessionStateManager.aktuelleBlockModulId
-    const secondsLearned = this.sessionStateManager.gesamtGelernteSekunden
-    this.modulService.postRawSeconds(modulId!, secondsLearned).subscribe()
-
     this.sessionStateManager.beenden();
     this.sessionSignalService.resetThisSession()
     this.sessionStarted = true;

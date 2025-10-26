@@ -11,8 +11,9 @@ export class SessionStateManager {
 
   currentBlockId : string
   currentBlockIndex : number = 0;
-  gesamtGelernteSekunden : number = 0;
+  currentBlockLernzeit : number = 0;
   nBlocks = 0;
+  notPostedSeconds = true
 
   constructor(modulService: ModuleApiService, session : Session | null, private sessionSignalService : SessionSignalService) {
     this.modulService = modulService
@@ -21,7 +22,7 @@ export class SessionStateManager {
 
     if(this.validZeiten()) {
       this.nBlocks = this.lernzeitenState.arrayLaenge
-      this.currentBlockId = session!.blocks[0].fachId || "";
+      this.currentBlockId = session!.blocks[this.currentBlockIndex].fachId || "";
       this.session = session
     } else {
       throw new Error("Die Anzahl der Lernzeiten stimmt nicht mit der Anzahl der Pausenzeiten überein.")
@@ -47,23 +48,28 @@ export class SessionStateManager {
       // 1. Wenn der Lernzeit-Timer für den aktuellen Block noch nicht beendet wurde, starte ihn
       if(this.lernzeitenState.istNochNichtGestartet) {
         this.lernzeitenState.starteTimer()
+        this.currentBlockLernzeit = this.lernzeitenState.zeitenSekunden[this.currentBlockIndex]
       }
 
       // 2. Wenn der Lernzeit-Timer für den aktuellen Block beendet wurde, starte den Pausen-Timer
       if(this.lernzeitenState.istBeendet) {
+        // 3. Sende die gelernten Sekunden an das Backend
+        if(this.notPostedSeconds) {
+          this._postRawSeconds()
+          this.notPostedSeconds = false
+        }
 
-        // 3. Wenn der Pausen-Timer für den aktuellen Block noch nicht gestartet wurde, starte ihn
+        // 4. Wenn der Pausen-Timer für den aktuellen Block noch nicht gestartet wurde, starte ihn
         if (this.pausenzeitenState.istNochNichtGestartet) this.pausenzeitenState.starteTimer()
 
-        // 4. Wenn der Pausen-Timer für den aktuellen Block beendet wurde, verarbeite den nächsten Block
+        // 5. Wenn der Pausen-Timer für den aktuellen Block beendet wurde, verarbeite den nächsten Block
         if (this.pausenzeitenState.istBeendet) {
+          this.notPostedSeconds = true
           this.processNextBlock()
           this.initialisiereTimerStates()
         }
-      } else {
-        this.gesamtGelernteSekunden++
       }
-      //console.log("gesamte gelernte sekunde: ", this.gesamtGelernteSekunden)
+
       await this.sleep();
     }
 
@@ -99,6 +105,7 @@ export class SessionStateManager {
    * Prüft, ob ein Timer läuft oder pausiert ist und beendet diesen. Es ist logisch nur ein Timer laufend/pausiert.
    */
   beenden() : void {
+    this._postRawSeconds()
     this.lernzeitenState.beendeTimer()
     this.pausenzeitenState.beendeTimer()
     this.forciereSessionEnde()
@@ -140,6 +147,10 @@ export class SessionStateManager {
     this.pausenzeitenState.zeitenSekunden[n-1] = 0
   }
 
+  getGelernteZeitInSekunden() : number {
+    return this.currentBlockLernzeit - this.aktuelleLernzeit
+  }
+
   get aktuelleLernzeit() : number {
     return this.lernzeitenState.zeitAktuell
   }
@@ -158,6 +169,20 @@ export class SessionStateManager {
 
   set aktuelleBlockId(fachId : string | undefined) {
     this.currentBlockId = fachId ?? ""
+  }
+
+  private _postRawSeconds() : void {
+    this.modulService.postRawSeconds(
+      this.aktuelleBlockModulId!,
+      this.getGelernteZeitInSekunden()
+    ).subscribe({
+      next: (response) => {
+        console.log("Erfolgreich Sekunden gepostet:", response);
+      },
+      error: (error) => {
+        console.error("Fehler beim Posten der Sekunden:", error);
+      }
+    })
   }
 
   private sleep() {

@@ -17,7 +17,7 @@ TO-DO
 
 IN PROGRESS
 - BUG: bei einem refresh im browser wirft nginx 404
-- BUG: bei einer laufenden lernsession werden die sekunden nach einem abgeschlossenen lernblock nciht ind er DB gespeichert
+
 
 DONE
 - Man soll Sessions, die man abgeschlossen hat, hinsichtlich der subjektiven „Lernleistung“ bewerten können, also im Sinne von „wie gut konntest du dich konzentrieren etc.“
@@ -28,3 +28,4 @@ DONE
 - Die Charts für die Lernstatistiken sollen nur dann angezeigt werden, wenn es zu visualisierende Daten gibt. Sonst ein String "Keine Statistiken verfügbar"
 - Unter Meine Module muss die Info "Keine eingetragenen Module vorhanden." zentriert werden.
 - Die Anzeige für noch zu ladenden Daten aus dem Backend sollte in eine Component gepackt werden, die ist nciht bei jedem Service einheitlich und wirkt komisch.
+- BUG: bei einer laufenden lernsession werden die sekunden nach einem abgeschlossenen lernblock nciht ind er DB gespeichert
