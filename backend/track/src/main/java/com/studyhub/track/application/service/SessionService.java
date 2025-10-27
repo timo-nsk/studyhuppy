@@ -27,12 +27,6 @@ public class SessionService {
 		return sessionRepository.findAllByUsername(username);
 	}
 
-	@Deprecated
-	public void deleteSession(UUID fachId) {
-		sessionRepository.deleteByFachId(fachId);
-		//TODO: Alle im Lernplan verlinkten Sessions müssen auch gelöscht werden.
-	}
-
 	public List<SessionInfoDto> getLernplanSessionDataOfUser(String username) {
 		List<Session> sessions = sessionRepository.findAllByUsername(username);
 		return sessions.stream()
