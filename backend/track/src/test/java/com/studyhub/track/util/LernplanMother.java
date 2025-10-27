@@ -53,6 +53,29 @@ public class LernplanMother {
 				.build();
 	}
 
+	public static Lernplan initFullLernplanWithRandomSessions(UUID andSpecificSessionId) {
+
+		List<Tag> tage = new ArrayList<>();
+
+		for(int i = 1; i <= 7; i++) {
+			if(i == 2) {
+				Tag t = new Tag(DayOfWeek.of(i), LocalTime.of(10, i, 0), andSpecificSessionId);
+				tage.add(t);
+			} else {
+				Tag t = new Tag(DayOfWeek.of(i), LocalTime.of(10, i, 0), UUID.randomUUID());
+				tage.add(t);
+			}
+		}
+
+		return Lernplan.builder()
+				.fachId(UUID.randomUUID())
+				.username("testuser")
+				.titel("Test Lernplan")
+				.tagesListe(tage)
+				.isActive(true)
+				.build();
+	}
+
 	public static LernplanWochenuebersicht initFullLernplanWochenuebersicht(UUID specificSessionId) {
 		List<LernplanTagesuebersicht> tagesUebersichtList = new ArrayList<>();
 
