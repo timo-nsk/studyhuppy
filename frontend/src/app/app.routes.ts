@@ -44,6 +44,9 @@ import {LernplanResolver} from './plan-service/edit/lernplan.resolver';
 import {SessionOverviewComponent} from './session-service/overview/overview.component';
 import {LernsessionResolver} from './session-service/edit/lernsession.resolver';
 import {LernsessionEditComponent} from './session-service/edit/edit.component';
+import {
+  SessionBewertungStatistikenComponent
+} from './session-service/overview/bewertung-statistiken/bewertung-statistiken.component';
 
 export const routes: Routes = [
   {
@@ -157,6 +160,10 @@ export const routes: Routes = [
           path: 'session/bearbeiten/:lernsessionId',
           component: LernsessionEditComponent,
           resolve: { lernsessionToEdit: LernsessionResolver }
+        },
+        {
+          path: 'session/bewertungen',
+          component: SessionBewertungStatistikenComponent
         },
         {
         path: 'module',
