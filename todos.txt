@@ -1,8 +1,6 @@
 TO-DO
 - Die Blöcke, die bei Sessions erstellt werden, sollen per Drag & Drop anordenbar sein, also man soll die Reihenfolge ändern können (ich glaube, das ist relativ komplex).
 - Der User soll Quick-Sessions erstellen können, also: Modul auswählen, Zeit auswählen, Pause auswählen und eine Wiederholungsanzahl festlegen. Nichts muss persistent gespeichert werden.
-- Wenn man eine Lernsession startet, soll auch die Gesamtzeit heruntergezählt und angezeigt werden.
-- Für die Sessionbewertungen sollen Statistiken für die UI entwickelt werden, alles im Backend ist fertig
 - Es gibt noch kein einheitliches Look-and-Feel zwischen den verschiedenen Services.
   - Zum Beispiel ist der Margin-Abstand vom Main-Content mal geringer/höher als bei anderen Services.
   - Es sollten Buttons, die dieselbe Funktion haben, auch gleich aussehen (z. B. Edit-Buttons). -> neues Design überlegen und zentralisieren
@@ -15,7 +13,7 @@ TO-DO
 - BUG: bei einem refresh im browser wirft nginx 404
 
 IN PROGRESS
-- BUG: wenn eine Lernsession gelöscht wird, die Teil eines Lernplans ist, gibts ne NullPointerException "Cannot invoke "com.studyhub.track.domain.model.session.Session.getFachId()" because "session" is null"
+- Für die Sessionbewertungen sollen Statistiken für die UI entwickelt werden, alles im Backend ist fertig
 
 DONE
 - Man soll Sessions, die man abgeschlossen hat, hinsichtlich der subjektiven „Lernleistung“ bewerten können, also im Sinne von „wie gut konntest du dich konzentrieren etc.“
@@ -28,3 +26,4 @@ DONE
 - Die Anzeige für noch zu ladenden Daten aus dem Backend sollte in eine Component gepackt werden, die ist nciht bei jedem Service einheitlich und wirkt komisch.
 - BUG: bei einer laufenden lernsession werden die sekunden nach einem abgeschlossenen lernblock nciht ind er DB gespeichert
 - Bei einer laufenden Lernsession sollen einzelne Blöcke "überspringbar" gemacht werden
+- BUG: wenn eine Lernsession gelöscht wird, die Teil eines Lernplans ist, gibts ne NullPointerException "Cannot invoke "com.studyhub.track.domain.model.session.Session.getFachId()" because "session" is null"
