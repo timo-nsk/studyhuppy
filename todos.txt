@@ -11,13 +11,11 @@ TO-DO
 - Im Karteikarten-Service sind die Font-Styles broken
 - HTML-Seiten könnten semantischer mit <section> gestaltet werden.
 - HTML mit ARIA versehen
-- Bei einer laufenden Lernsession sollen einzelne Blöcke "überspringbar" gemacht werden
-- BUG: wenn eine Lernsession gelöscht wird, die Teil eines Lernplans ist, gibts ne NullPointerException "Cannot invoke "com.studyhub.track.domain.model.session.Session.getFachId()" because "session" is null"
-
-
-IN PROGRESS
+- Wenn eine Lernsession beendet wird und man das Modal schließt, bleibt der Bildschirm verdunkelt und es ist nichts anklickbar.
 - BUG: bei einem refresh im browser wirft nginx 404
 
+IN PROGRESS
+- BUG: wenn eine Lernsession gelöscht wird, die Teil eines Lernplans ist, gibts ne NullPointerException "Cannot invoke "com.studyhub.track.domain.model.session.Session.getFachId()" because "session" is null"
 
 DONE
 - Man soll Sessions, die man abgeschlossen hat, hinsichtlich der subjektiven „Lernleistung“ bewerten können, also im Sinne von „wie gut konntest du dich konzentrieren etc.“
@@ -29,3 +27,4 @@ DONE
 - Unter Meine Module muss die Info "Keine eingetragenen Module vorhanden." zentriert werden.
 - Die Anzeige für noch zu ladenden Daten aus dem Backend sollte in eine Component gepackt werden, die ist nciht bei jedem Service einheitlich und wirkt komisch.
 - BUG: bei einer laufenden lernsession werden die sekunden nach einem abgeschlossenen lernblock nciht ind er DB gespeichert
+- Bei einer laufenden Lernsession sollen einzelne Blöcke "überspringbar" gemacht werden
