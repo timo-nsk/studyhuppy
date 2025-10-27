@@ -169,4 +169,12 @@ export class SessionStartComponent implements OnInit{
       }
     })
   }
+
+  /**
+   * Überspringt den aktuellen Lernblock und fährt mit dem nächsten fort.
+   * Die bis dahin gelernte Zeit wird gespeichert.
+   */
+  skipLernblock() {
+    this.sessionStateManager.ueberspringen()
+  }
 }

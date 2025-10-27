@@ -66,18 +66,11 @@ td {
   margin: 2px;
 }
 
-#session-pause-btn {
-  background-color: #e19a40;
-}
-#session-pause-btn:hover {
-  background-color: #e78508;
-}
-
-#session-resume-btn {
+#session-resume-btn, #session-pause-btn {
   background-color: #7ed2f1;
 }
 
-#session-resume-btn:hover {
+#session-resume-btn:hover, #session-pause-btn:hover {
   background-color: #30c1f6;
 }
 
@@ -87,6 +80,14 @@ td {
 
 #session-abort-btn:hover {
   background-color: #fa0000;
+}
+
+#session-skip-btn {
+  background-color: #eaad47;
+}
+
+#session-skip-btn:hover {
+  background-color: #e79f28;
 }
 
 p {

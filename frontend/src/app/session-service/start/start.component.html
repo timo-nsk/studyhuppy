@@ -62,6 +62,7 @@
           <button id="session-pause-btn" class="sh-btn" *ngIf="!sessionStarted && !sessionPaused" (click)="pauseSession()">Session pausieren</button>
           <button id="session-resume-btn" class="sh-btn" *ngIf="!sessionStarted && sessionPaused" (click)="resumeSession()">Session fortsetzen</button>
           <button id="session-abort-btn" class="sh-btn" *ngIf="!sessionStarted" (click)="abortThisSession()">Session abbrechen</button>
+          <button id="session-skip-btn" class="sh-btn" *ngIf="!sessionStarted" (click)="skipLernblock()">Block überspringen</button>
         </div>
 
         <!-- Modal -->

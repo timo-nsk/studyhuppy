@@ -111,6 +111,13 @@ export class SessionStateManager {
     this.forciereSessionEnde()
   }
 
+  ueberspringen() : void {
+    this._postRawSeconds()
+    this.processNextBlock()
+    this.initialisiereTimerStates()
+    this.start().then(r => {})
+  }
+
   /**
    * Gibt zurück, ob die Anzahl der Lernzeiten mit der Anzahl der Pausenzeiten übereinstimmt.
    */
