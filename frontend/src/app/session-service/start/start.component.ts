@@ -177,4 +177,8 @@ export class SessionStartComponent implements OnInit{
   skipLernblock() {
     this.sessionStateManager.ueberspringen()
   }
+
+  ueberspringbar() : boolean {
+    return this.sessionStateManager.blockIstUberspringbar()
+  }
 }

@@ -113,9 +113,16 @@ export class SessionStateManager {
 
   ueberspringen() : void {
     this._postRawSeconds()
-    this.processNextBlock()
-    this.initialisiereTimerStates()
-    this.start().then(r => {})
+    let processed = this.processNextBlock()
+
+    if(processed) {
+      this.initialisiereTimerStates()
+      this.start()
+    }
+  }
+
+  blockIstUberspringbar() : boolean {
+    return this.currentBlockIndex + 1 < this.nBlocks
   }
 
   /**
@@ -128,11 +135,13 @@ export class SessionStateManager {
   /**
    * Setzt den nächsten logischen Block der Session, wenn noch nicht der letzte Block erreicht wurde.
    */
-  processNextBlock() : void {
+  processNextBlock() : boolean {
     if(this.currentBlockIndex + 1 < this.nBlocks) {
       this.currentBlockIndex++;
       this.currentBlockId = this.session!.blocks[this.currentBlockIndex].fachId || "";
+      return true
     }
+    return false
   }
 
   /**
