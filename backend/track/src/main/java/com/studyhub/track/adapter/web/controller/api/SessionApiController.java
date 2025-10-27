@@ -9,6 +9,7 @@ import com.studyhub.track.application.JWTService;
 import com.studyhub.track.application.service.SessionService;
 import com.studyhub.track.application.service.dto.SessionRequest;
 import com.studyhub.track.domain.model.session.Session;
+import com.studyhub.track.domain.service.SessionLoeschenService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +21,13 @@ import java.util.UUID;
 public class SessionApiController {
 
 	private final SessionService sessionService;
-	SessionEventsService sessionEventsService;
+	private final SessionLoeschenService sessionLoeschenService;
+	private final SessionEventsService sessionEventsService;
 	private final JWTService jwtService;
 
-	public SessionApiController(SessionService sessionService, SessionEventsService sessionEventsService, JWTService jwtService) {
+	public SessionApiController(SessionService sessionService, SessionLoeschenService sessionLoeschenService, SessionEventsService sessionEventsService, JWTService jwtService) {
 		this.sessionService = sessionService;
+		this.sessionLoeschenService = sessionLoeschenService;
 		this.sessionEventsService = sessionEventsService;
 		this.jwtService = jwtService;
 	}
@@ -72,8 +75,9 @@ public class SessionApiController {
 	}
 
 	@DeleteMapping("/delete-session")
-	public ResponseEntity<Void> deleteSession(@RequestBody SessionDeleteRequest deleteRequest) {
-		sessionService.deleteSession(deleteRequest.fachId());
+	public ResponseEntity<Void> deleteSession(@RequestBody SessionDeleteRequest deleteRequest, HttpServletRequest request) {
+		String username = jwtService.extractUsernameFromHeader(request);
+		sessionLoeschenService.sessionLoeschen(deleteRequest.fachId(), username);
 		return ResponseEntity.ok().build();
 	}
 
