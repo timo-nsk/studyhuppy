@@ -12,10 +12,6 @@ export interface SessionBewertungGeneralStatistik {
   schwierigkeitBewertung: number;
 }
 
-export interface SessionIds {
-  sessionIds: string[];
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -86,10 +82,5 @@ export class SessionApiService {
   getGeneralBewertungStatistiken() : Observable<SessionBewertungGeneralStatistik> {
     const headers = this.headerService.createAuthHeader()
     return this.http.get<SessionBewertungGeneralStatistik>(this.SESSION_BASE_API + '/get-general-session-bewertung-statistik', { headers } )
-  }
-
-  getUserSessionIds() : Observable<SessionIds> {
-    const headers = this.headerService.createAuthHeader()
-    return this.http.get<SessionIds>(this.SESSION_BASE_API + '/get-user-sessionids', { headers } )
   }
 }
