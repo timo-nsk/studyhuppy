@@ -113,7 +113,7 @@ public class SessionApiController {
 	}
 
 	@AngularApi
-	@PostMapping("/get-general-session-bewertung-statistik")
+	@GetMapping("/get-general-session-bewertung-statistik")
 	public ResponseEntity<SessionBewertungGeneralStatistikDto> getGeneralSessionBewertungStatistik(HttpServletRequest request) {
 		String username = jwtService.extractUsernameFromHeader(request);
 		SessionBewertungGeneralStatistikDto generalStatistikDto = sessionBewertungService.getSessionBewertungStatistikByUsername(username);
