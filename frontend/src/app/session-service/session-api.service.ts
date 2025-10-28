@@ -6,6 +6,12 @@ import {environment} from '../../environments/environment';
 import {HeaderService} from '../header.service';
 import {LoggingService} from '../logging.service';
 
+export interface SessionBewertungGeneralStatistik {
+  konzentrationBewertung: number;
+  produktivitaetBewertung: number;
+  schwierigkeitBewertung: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -73,4 +79,8 @@ export class SessionApiService {
     );
   }
 
+  getGeneralBewertungStatistiken() : Observable<SessionBewertungGeneralStatistik> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.get<SessionBewertungGeneralStatistik>(this.SESSION_BASE_API + '/get-general-session-bewertung-statistik', { headers } )
+  }
 }
