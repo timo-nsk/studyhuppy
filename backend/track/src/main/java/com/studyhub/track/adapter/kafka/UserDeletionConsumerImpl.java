@@ -8,6 +8,7 @@ import com.studyhub.track.application.service.SessionService;
 import com.studyhub.track.domain.model.lernplan.Lernplan;
 import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.session.Session;
+import com.studyhub.track.domain.service.SessionLoeschenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
@@ -30,14 +31,16 @@ public class UserDeletionConsumerImpl implements IUserDeletionConsumer {
 	private final ModulService modulService;
 	private final LernplanService lernplanService;
 	private final SessionService sessionService;
+	private final SessionLoeschenService sessionLoeschenService;
 
 	public UserDeletionConsumerImpl(
 			ModulService modulService,
 			LernplanService lernplanService,
-			SessionService sessionService) {
+			SessionService sessionService, SessionLoeschenService sessionLoeschenService) {
 		this.modulService = modulService;
 		this.lernplanService = lernplanService;
 		this.sessionService = sessionService;
+		this.sessionLoeschenService = sessionLoeschenService;
 	}
 
 	@Override
@@ -58,7 +61,7 @@ public class UserDeletionConsumerImpl implements IUserDeletionConsumer {
 
 		for (Modul modul : allModules) modulService.deleteModul(modul.getFachId(), userDto.username());
 		for(Lernplan lernplan : allLernplaene) lernplanService.deleteLernplanByFachId(lernplan.getFachId());
-		for (Session session : allSession) sessionService.deleteSession(session.getFachId());
+		for (Session session : allSession) sessionLoeschenService.sessionLoeschen(session.getFachId(), username);
 
 		LOGGER.info("Deleted all associated user data from service 'modul'");
 	}
