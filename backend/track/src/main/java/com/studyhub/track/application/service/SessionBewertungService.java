@@ -41,8 +41,8 @@ public class SessionBewertungService {
 		return getHistogramByUsername(username, SessionBewertung::getSchwierigkeitBewertung);
 	}
 
-	public SessionBewertungStatistikDto getSessionBewertungStatistikByUsername(String username) {
-		return new SessionBewertungStatistikDto(
+	public SessionBewertungGeneralStatistikDto getSessionBewertungStatistikByUsername(String username) {
+		return new SessionBewertungGeneralStatistikDto(
 			getAverageKonzentrationBewertungByUsername(username),
 			getAverageProduktivitaetBewertungByUsername(username),
 			getAverageSchwierigkeitBewertungByUsername(username)

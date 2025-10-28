@@ -2,7 +2,7 @@ package com.studyhub.track.service;
 
 import com.studyhub.track.application.service.SessionBeendetEventRepository;
 import com.studyhub.track.application.service.SessionBewertungService;
-import com.studyhub.track.application.service.SessionBewertungStatistikDto;
+import com.studyhub.track.application.service.SessionBewertungGeneralStatistikDto;
 import com.studyhub.track.domain.model.session.SessionBeendetEvent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -71,7 +71,7 @@ class SessionBewertungServiceTest {
 		when(sessionBeendetEventRepository.findAllByUsername(USER))
 				.thenReturn(events);
 
-		SessionBewertungStatistikDto statistikDto = sessionBewertungService.getSessionBewertungStatistikByUsername(USER);
+		SessionBewertungGeneralStatistikDto statistikDto = sessionBewertungService.getSessionBewertungStatistikByUsername(USER);
 
 		assertThat(statistikDto.konzentrationBewertung()).isEqualTo(5.0);
 		assertThat(statistikDto.produktivitaetBewertung()).isEqualTo(6.0);
