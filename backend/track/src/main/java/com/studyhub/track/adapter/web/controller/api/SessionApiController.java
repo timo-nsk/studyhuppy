@@ -3,6 +3,8 @@ package com.studyhub.track.adapter.web.controller.api;
 import com.studyhub.track.adapter.web.AngularApi;
 import com.studyhub.track.adapter.web.controller.request.dto.SessionBeendetEventRequest;
 import com.studyhub.track.adapter.web.controller.request.dto.SessionDeleteRequest;
+import com.studyhub.track.application.service.SessionBewertungGeneralStatistikDto;
+import com.studyhub.track.application.service.SessionBewertungService;
 import com.studyhub.track.application.service.SessionEventsService;
 import com.studyhub.track.application.service.dto.SessionInfoDto;
 import com.studyhub.track.application.JWTService;
@@ -23,12 +25,14 @@ public class SessionApiController {
 	private final SessionService sessionService;
 	private final SessionLoeschenService sessionLoeschenService;
 	private final SessionEventsService sessionEventsService;
+	private final SessionBewertungService sessionBewertungService;
 	private final JWTService jwtService;
 
-	public SessionApiController(SessionService sessionService, SessionLoeschenService sessionLoeschenService, SessionEventsService sessionEventsService, JWTService jwtService) {
+	public SessionApiController(SessionService sessionService, SessionLoeschenService sessionLoeschenService, SessionEventsService sessionEventsService, SessionBewertungService sessionBewertungService, JWTService jwtService) {
 		this.sessionService = sessionService;
 		this.sessionLoeschenService = sessionLoeschenService;
 		this.sessionEventsService = sessionEventsService;
+		this.sessionBewertungService = sessionBewertungService;
 		this.jwtService = jwtService;
 	}
 
@@ -106,5 +110,13 @@ public class SessionApiController {
 	public ResponseEntity<Void> editedSessison(@RequestBody SessionRequest sessionRequest, HttpServletRequest request) {
 		sessionService.saveEditedSession(sessionRequest);
 		return ResponseEntity.ok().build();
+	}
+
+	@AngularApi
+	@PostMapping("/get-general-session-bewertung-statistik")
+	public ResponseEntity<SessionBewertungGeneralStatistikDto> getGeneralSessionBewertungStatistik(HttpServletRequest request) {
+		String username = jwtService.extractUsernameFromHeader(request);
+		SessionBewertungGeneralStatistikDto generalStatistikDto = sessionBewertungService.getSessionBewertungStatistikByUsername(username);
+		return ResponseEntity.ok(generalStatistikDto);
 	}
 }
