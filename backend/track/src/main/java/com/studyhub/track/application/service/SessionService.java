@@ -61,13 +61,4 @@ public class SessionService {
 		oldSession.setBlocks(sessionRequest.blocks());
 		sessionRepository.save(oldSession);
 	}
-
-	public List<String> getSessionIdsByUsername(String username) {
-		List<Session> sessions = sessionRepository.findAllByUsername(username);
-
-		return sessions.stream()
-				.map(Session::getFachId)
-				.map(UUID::toString)
-				.toList();
-	}
 }

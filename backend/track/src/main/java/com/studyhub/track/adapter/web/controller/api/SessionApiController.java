@@ -119,12 +119,4 @@ public class SessionApiController {
 		SessionBewertungGeneralStatistikDto generalStatistikDto = sessionBewertungService.getSessionBewertungStatistikByUsername(username);
 		return ResponseEntity.ok(generalStatistikDto);
 	}
-
-	@AngularApi
-	@GetMapping("/get-user-sessionids")
-	public ResponseEntity<List<String>> getUserSessionIds(HttpServletRequest request) {
-		String username = jwtService.extractUsernameFromHeader(request);
-		List<String> sessionIds = sessionService.getSessionIdsByUsername(username);
-		return ResponseEntity.ok(sessionIds);
-	}
 }
