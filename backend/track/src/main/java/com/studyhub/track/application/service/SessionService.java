@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class SessionService {
@@ -59,5 +60,14 @@ public class SessionService {
 		oldSession.setBeschreibung(sessionRequest.beschreibung());
 		oldSession.setBlocks(sessionRequest.blocks());
 		sessionRepository.save(oldSession);
+	}
+
+	public List<String> getSessionIdsByUsername(String username) {
+		List<Session> sessions = sessionRepository.findAllByUsername(username);
+
+		return sessions.stream()
+				.map(Session::getFachId)
+				.map(UUID::toString)
+				.toList();
 	}
 }
