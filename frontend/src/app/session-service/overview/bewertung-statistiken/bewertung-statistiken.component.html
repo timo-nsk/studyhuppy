@@ -4,7 +4,23 @@
     <a [routerLink]="'/session/overview'" >zurück</a>
   </section>
   <section id="general-stats-container" class="content-width border-b">
-    <p>SOME STATS</p>
+    <h3>Allgemeine durchschnittliche Leistung</h3>
+    <table>
+      <tbody>
+        <tr>
+          <td>Konzentration</td>
+          <td>{{generalStatistiken.konzentrationBewertung}}/10</td>
+        </tr>
+        <tr>
+          <td>Produktivität</td>
+          <td>{{generalStatistiken.produktivitaetBewertung}}/10</td>
+        </tr>
+        <tr>
+          <td>Schwierigkeit</td>
+          <td>{{generalStatistiken.schwierigkeitBewertung}}/10</td>
+        </tr>
+      </tbody>
+    </table>
     <!-- TODO: hier eine Line Chart von chart.js-->
   </section>
 </div>
