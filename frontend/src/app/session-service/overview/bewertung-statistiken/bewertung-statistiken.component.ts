@@ -1,6 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {RouterLink} from '@angular/router';
-import {SessionApiService, SessionBewertungGeneralStatistik, SessionIds} from '../../session-api.service';
+import {SessionApiService, SessionBewertungGeneralStatistik} from '../../session-api.service';
+import {SessionInfoDto} from '../../session-domain';
 
 @Component({
   selector: 'app-bewertung-statistiken',
@@ -13,7 +14,7 @@ import {SessionApiService, SessionBewertungGeneralStatistik, SessionIds} from '.
 export class SessionBewertungStatistikenComponent implements OnInit{
   sessionApiService : SessionApiService = inject(SessionApiService);
   generalStatistiken : SessionBewertungGeneralStatistik = {} as SessionBewertungGeneralStatistik
-  userSessionIds : SessionIds = {} as SessionIds;
+  sessionInfo : SessionInfoDto[] = {} as SessionInfoDto[];
 
   ngOnInit(): void {
     this.sessionApiService.getGeneralBewertungStatistiken().subscribe({
@@ -22,11 +23,11 @@ export class SessionBewertungStatistikenComponent implements OnInit{
         console.log("Fetched general statistik: ", this.generalStatistiken);
       }
     });
-    this.sessionApiService.getUserSessionIds().subscribe({
+    this.sessionApiService.getLernplanSessionData().subscribe({
       next: data => {
-        this.userSessionIds = data;
-        console.log("Fetched general statistik: ", this.userSessionIds);
+        this.sessionInfo = data;
+        console.log("Fetched general statistik: ", this.sessionInfo);
       }
-    });
+    })
   }
 }
