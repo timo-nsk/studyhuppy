@@ -26,8 +26,8 @@
     <h3>Individuelle Leistung pro Session</h3>
     <form>
       <label>Session wählen</label>
-      <select>
-        <option>Session X</option>
+      <select [(ngModel)]="selectedSessionId" name="session">
+        <option *ngFor="let s of sessionInfo" [value]="s.fachId">{{s.name}}</option>
       </select>
     </form>
     <!-- TODO: hier eine Line Chart von chart.js-->
