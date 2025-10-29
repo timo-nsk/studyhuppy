@@ -5,8 +5,6 @@ test.csv
 track
 
 backend/track/modul-data
-backend/track/run-tests-modul.bat
-backend/track/modul-test.sh
 backend/track/target
 backend/track/.env
 
