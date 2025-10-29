@@ -1,5 +1,5 @@
 import {Component, inject, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {SessionApiService} from '../../../session-api.service';
+import {MonthlySessionBewertungMap, SessionApiService} from '../../../session-api.service';
 
 @Component({
   selector: 'app-line-chart',
@@ -9,7 +9,7 @@ import {SessionApiService} from '../../../session-api.service';
 })
 export class LineChartComponent implements OnChanges{
   @Input() selectedSessionId!: string;
-  sessionBewertungStatistik: any;
+  sessionBewertungStatistik!: MonthlySessionBewertungMap;
 
   sessionApiService = inject(SessionApiService);
 

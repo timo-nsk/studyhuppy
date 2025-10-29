@@ -12,6 +12,16 @@ export interface SessionBewertungGeneralStatistik {
   schwierigkeitBewertung: number;
 }
 
+export interface SessionBewertungAveragesDto {
+  averageKonzentrationBewertung: number;
+  averageProduktivitaetBewertung: number;
+  averageSchwierigkeitBewertung: number;
+}
+
+export interface MonthlySessionBewertungMap {
+  [date: string]: SessionBewertungAveragesDto;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -85,8 +95,13 @@ export class SessionApiService {
     return this.http.get<SessionBewertungGeneralStatistik>(this.SESSION_BASE_API + '/get-general-session-bewertung-statistik', { headers } )
   }
 
-  getSessionBewertungStatistik(selectedSessionId: string) : Observable<any> {
+  getSessionBewertungStatistik(selectedSessionId: string) : Observable<MonthlySessionBewertungMap> {
     const headers = this.headerService.createAuthHeader()
-    return this.http.get<any>(this.SESSION_BASE_API + '/get-session-bewertung-statistik', {headers})
+    return this.http.get<MonthlySessionBewertungMap>(this.SESSION_BASE_API + '/get-session-bewertung-statistik', {
+      headers,
+      params: {
+        sessionId: selectedSessionId
+      }
+    })
   }
 }
