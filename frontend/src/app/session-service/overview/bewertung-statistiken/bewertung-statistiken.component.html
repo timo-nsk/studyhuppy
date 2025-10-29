@@ -25,8 +25,8 @@
   <section id="individual-stats-container" class="content-width container border-b">
     <h3>Individuelle Leistung pro Session</h3>
     <form>
-      <label>Session wählen</label>
-      <select [(ngModel)]="selectedSessionId" name="session">
+      <label class="form-label">Session wählen</label>
+      <select [(ngModel)]="selectedSessionId" name="session" class="form-select">
         <option *ngFor="let s of sessionInfo" [value]="s.fachId">{{s.name}}</option>
       </select>
     </form>
