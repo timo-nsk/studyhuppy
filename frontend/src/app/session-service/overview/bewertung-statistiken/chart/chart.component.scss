@@ -1,0 +1,21 @@
+.border-r {
+  border: 1px solid red;
+  padding: 1px;
+  margin: 1px;
+}
+.border-g {
+  border: 1px solid green;
+  padding: 1px;
+  margin: 1px;
+}
+.border-b {
+  border: 1px solid blue;
+  padding: 1px;
+  margin: 1px;
+}
+
+#chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
