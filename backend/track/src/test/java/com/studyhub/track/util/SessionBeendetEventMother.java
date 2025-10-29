@@ -73,4 +73,57 @@ public class SessionBeendetEventMother {
 		SessionBewertung b8 = new SessionBewertung(9, 10, 7);
 		return List.of(b1, b2, b3, b4, b5, b6, b7, b8);
 	}
+
+	public static List<SessionBeendetEvent> initSessionBewertungStatistikEvents(UUID sessionId) {
+		LocalDateTime someDate = LocalDateTime.now();
+
+		List<SessionBeendetEvent> events = new ArrayList<>();
+
+		events.add(new SessionBeendetEvent(
+				UUID.randomUUID(),
+				sessionId,
+				"user1",
+				someDate.minusDays(10),
+				new SessionBewertung(5, 6, 7),
+				false
+		));
+
+		events.add(new SessionBeendetEvent(
+				UUID.randomUUID(),
+				sessionId,
+				"user1",
+				someDate.minusDays(10),
+				new SessionBewertung(4, 6, 6),
+				false
+		));
+
+		events.add(new SessionBeendetEvent(
+				UUID.randomUUID(),
+				sessionId,
+				"user1",
+				someDate.minusDays(9),
+				new SessionBewertung(7, 8, 9),
+				false
+		));
+
+		events.add(new SessionBeendetEvent(
+				UUID.randomUUID(),
+				sessionId,
+				"user1",
+				someDate.minusDays(9),
+				new SessionBewertung(5, 5, 8),
+				false
+		));
+
+		events.add(new SessionBeendetEvent(
+				UUID.randomUUID(),
+				sessionId,
+				"user1",
+				someDate.minusDays(8),
+				new SessionBewertung(6, 5, 4),
+				false
+		));
+
+		return events;
+	}
 }

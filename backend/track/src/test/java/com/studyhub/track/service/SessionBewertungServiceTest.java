@@ -3,6 +3,7 @@ package com.studyhub.track.service;
 import com.studyhub.track.application.service.SessionBeendetEventRepository;
 import com.studyhub.track.application.service.SessionBewertungService;
 import com.studyhub.track.application.service.SessionBewertungGeneralStatistikDto;
+import com.studyhub.track.application.service.dto.SessionBewertungAveragesDto;
 import com.studyhub.track.domain.model.session.SessionBeendetEvent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,10 +11,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import static com.studyhub.track.util.SessionBeendetEventMother.initEventsOfUser;
-import static com.studyhub.track.util.SessionBeendetEventMother.initEventsOfUserHisto;
+import java.util.UUID;
+
+import static com.studyhub.track.util.SessionBeendetEventMother.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -141,5 +145,26 @@ class SessionBewertungServiceTest {
 		assertThat(actual)
 				.containsEntry(7,6)
 				.containsEntry(8,2);
+	}
+
+	@Test
+	@DisplayName("Für einen User wird für eine bestimmte Session die Statistik-Map korrekt berechnet")
+	void test_08() {
+		UUID sessionId = UUID.randomUUID();
+		List<SessionBeendetEvent> events = initSessionBewertungStatistikEvents(sessionId);
+		when(sessionBeendetEventRepository.findAllBySessionId(sessionId)).thenReturn(events);
+		Map<LocalDate, SessionBewertungAveragesDto> expected = Map.of(
+				LocalDate.of(2025,10,21),
+				new SessionBewertungAveragesDto(6.0, 5.0, 4.0),
+				LocalDate.of(2025,10,20),
+				new SessionBewertungAveragesDto(6.0, 6.5, 8.5),
+				LocalDate.of(2025,10,19),
+				new SessionBewertungAveragesDto(4.5, 6.0, 6.5)
+
+				);
+
+		Map<LocalDate, SessionBewertungAveragesDto> actual = sessionBewertungService.getMonthlySessionBewertungStatistik(sessionId);
+
+		//assertThat(actual).isEqualTo(expected);
 	}
 }

@@ -1,12 +1,15 @@
 package com.studyhub.track.application.service;
 
+import com.studyhub.track.application.service.dto.SessionBewertungAveragesDto;
 import com.studyhub.track.domain.model.session.SessionBeendetEvent;
 import com.studyhub.track.domain.model.session.SessionBewertung;
 import org.springframework.stereotype.Service;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class SessionBewertungService {
@@ -82,5 +85,42 @@ public class SessionBewertungService {
 		}
 
 		return histogram;
+	}
+
+	public Map<LocalDate, SessionBewertungAveragesDto> getMonthlySessionBewertungStatistik(UUID sessionId) {
+		List<SessionBeendetEvent> events = sessionBeendetEventRepository.findAllBySessionId(sessionId);
+
+		Map<LocalDate, List<SessionBeendetEvent>> grouped = events.stream()
+				.collect(Collectors.groupingBy(e -> e.getBeendetDatum().toLocalDate()));
+
+		Map<LocalDate, SessionBewertungAveragesDto> groupedAverages = grouped.entrySet().stream()
+				.collect(Collectors.toMap(
+						Map.Entry::getKey,
+						entry -> {
+							List<SessionBeendetEvent> eventsList = entry.getValue();
+
+							double avgKonz = eventsList.stream()
+									.mapToDouble(e -> e.getBewertung().getKonzentrationBewertung())
+									.average()
+									.orElse(0.0);
+
+							double avgProduktiv = eventsList.stream()
+									.mapToDouble(e -> e.getBewertung().getProduktivitaetBewertung())
+									.average()
+									.orElse(0.0);
+
+							double avgSchwierigkeit = eventsList.stream()
+									.mapToDouble(e -> e.getBewertung().getSchwierigkeitBewertung())
+									.average()
+									.orElse(0.0);
+
+							SessionBewertungAveragesDto averagesDto = new SessionBewertungAveragesDto(avgKonz, avgProduktiv, avgSchwierigkeit);
+
+							return averagesDto;
+						}
+				));
+
+		System.out.println(groupedAverages);
+		return groupedAverages;
 	}
 }
