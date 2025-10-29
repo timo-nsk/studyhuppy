@@ -1,25 +1,10 @@
-.border-r {
-  border: 1px solid red;
-  padding: 1px;
-  margin: 1px;
-}
-.border-g {
-  border: 1px solid green;
-  padding: 1px;
-  margin: 1px;
-}
-.border-b {
-  border: 1px solid blue;
-  padding: 1px;
-  margin: 1px;
-}
-
 #bewertung-view-container {
   width: 90vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 #header-container {
@@ -29,12 +14,16 @@
   gap: 20px;
 }
 
-#general-stats-container {
-
+.container {
+  background-color: #f8f8f8;
+  border: 2px solid #dddddd;
+  border-radius: 20px;
+  padding: 15px;
+  margin: 15px;
 }
 
 .content-width {
-  width: 50%;
+  width: 75%;
 }
 
 td {
