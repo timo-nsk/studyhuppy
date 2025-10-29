@@ -2,11 +2,14 @@ ports.txt
 todo.txt
 test.csv
 .idea
-track
+track/logs
+backend/track/track.iml
 
 backend/track/modul-data
 backend/track/target
 backend/track/.env
+backend/track/track
+backend/track/logs
 
 backend/kartei/kartei-data
 backend/kartei/run-tests-kartei.bat

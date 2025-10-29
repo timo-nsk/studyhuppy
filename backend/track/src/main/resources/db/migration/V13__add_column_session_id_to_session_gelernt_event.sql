@@ -1,0 +1,1 @@
+ALTER TABLE session_beendet_event ADD COLUMN session_id uuid;
