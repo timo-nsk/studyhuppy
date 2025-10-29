@@ -32,6 +32,12 @@ public class SessionBeendetEventRepositoryImpl implements SessionBeendetEventRep
 	}
 
 	@Override
+	public List<SessionBeendetEvent> findAllBySessionId(UUID sessionId) {
+		List<SessionBeendetEventDto> l = eventDao.findAllBySessionId(sessionId);
+		return l.stream().map(SessionBeendetEventMapper::toDomain).toList();
+	}
+
+	@Override
 	public SessionBeendetEvent findByEventId(UUID eventId) {
 		SessionBeendetEventDto dto = eventDao.findByEventId(eventId);
 		if (dto == null) {

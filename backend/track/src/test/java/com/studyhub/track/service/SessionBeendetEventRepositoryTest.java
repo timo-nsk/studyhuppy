@@ -100,4 +100,14 @@ class SessionBeendetEventRepositoryTest {
 
 		assertThat(allEvents).isEmpty();
 	}
+
+	@Test
+	@DisplayName("Alle Events einer Session werden anhand der SessionId gefunden")
+	void test_3() {
+		UUID sessionId = UUID.fromString("21111111-1111-1111-1111-111111111113");
+
+		List<SessionBeendetEvent> actual = repository.findAllBySessionId(sessionId);
+
+		assertThat(actual).hasSize(3);
+	}
 }

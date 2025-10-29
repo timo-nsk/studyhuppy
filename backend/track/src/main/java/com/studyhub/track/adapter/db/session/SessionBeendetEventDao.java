@@ -9,6 +9,7 @@ import java.util.UUID;
 
 public interface SessionBeendetEventDao extends CrudRepository<SessionBeendetEventDto, UUID> {
 	List<SessionBeendetEventDto> findAllByUsername(String username);
+	List<SessionBeendetEventDto> findAllBySessionId(UUID sessionId);
 	SessionBeendetEventDto findByEventId(UUID eventId);
 
 	@Modifying
