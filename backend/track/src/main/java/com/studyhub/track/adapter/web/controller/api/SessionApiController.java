@@ -2,10 +2,12 @@ package com.studyhub.track.adapter.web.controller.api;
 
 import com.studyhub.track.adapter.web.AngularApi;
 import com.studyhub.track.adapter.web.controller.request.dto.SessionBeendetEventRequest;
+import com.studyhub.track.adapter.web.controller.request.dto.SessionBewertungStatistikRequest;
 import com.studyhub.track.adapter.web.controller.request.dto.SessionDeleteRequest;
 import com.studyhub.track.application.service.SessionBewertungGeneralStatistikDto;
 import com.studyhub.track.application.service.SessionBewertungService;
 import com.studyhub.track.application.service.SessionEventsService;
+import com.studyhub.track.application.service.dto.SessionBewertungAveragesDto;
 import com.studyhub.track.application.service.dto.SessionInfoDto;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.application.service.SessionService;
@@ -15,7 +17,10 @@ import com.studyhub.track.domain.service.SessionLoeschenService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -118,5 +123,16 @@ public class SessionApiController {
 		String username = jwtService.extractUsernameFromHeader(request);
 		SessionBewertungGeneralStatistikDto generalStatistikDto = sessionBewertungService.getSessionBewertungStatistikByUsername(username);
 		return ResponseEntity.ok(generalStatistikDto);
+	}
+
+	@AngularApi
+	@GetMapping("/get-session-bewertung-statistik")
+	public ResponseEntity<Map<LocalDate, SessionBewertungAveragesDto>> getSessionBewertungStatistik(
+			@RequestBody SessionBewertungStatistikRequest sessionBewertungRequest)
+	{
+		Map<LocalDate, SessionBewertungAveragesDto> res = sessionBewertungService.getMonthlySessionBewertungStatistik(
+				sessionBewertungRequest.sessionId()
+		);
+		return ResponseEntity.ok(res);
 	}
 }
