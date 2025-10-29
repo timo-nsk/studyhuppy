@@ -1,11 +1,30 @@
-import { Component } from '@angular/core';
+import {Component, inject, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {SessionApiService} from '../../../session-api.service';
 
 @Component({
-  selector: 'app-chart',
+  selector: 'app-line-chart',
   imports: [],
   templateUrl: './chart.component.html',
   styleUrl: './chart.component.scss'
 })
-export class ChartComponent {
+export class LineChartComponent implements OnChanges{
+  @Input() selectedSessionId!: string;
+  sessionBewertungStatistik: any;
 
+  sessionApiService = inject(SessionApiService);
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selectedSessionId'] && this.selectedSessionId) {
+      this.loadSession();
+    }
+  }
+
+  private loadSession(): void {
+    this.sessionApiService.getSessionBewertungStatistik(this.selectedSessionId).subscribe({
+      next: data => {
+        this.sessionBewertungStatistik = data;
+        console.log("chart sessionBewertungStatistik: ", this.sessionBewertungStatistik);
+      }
+    });
+  }
 }

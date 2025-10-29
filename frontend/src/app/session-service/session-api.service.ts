@@ -52,6 +52,7 @@ export class SessionApiService {
   }
 
   getSession(sessionId : string) : Observable<any>{
+    console.log("trying to get session with id: ", sessionId)
     const headers = this.headerService.createAuthHeader()
     return this.http.get<any>(this.SESSION_BASE_API + '/get-session-by-id', {
       headers,
@@ -82,5 +83,10 @@ export class SessionApiService {
   getGeneralBewertungStatistiken() : Observable<SessionBewertungGeneralStatistik> {
     const headers = this.headerService.createAuthHeader()
     return this.http.get<SessionBewertungGeneralStatistik>(this.SESSION_BASE_API + '/get-general-session-bewertung-statistik', { headers } )
+  }
+
+  getSessionBewertungStatistik(selectedSessionId: string) : Observable<any> {
+    const headers = this.headerService.createAuthHeader()
+    return this.http.get<any>(this.SESSION_BASE_API + '/get-session-bewertung-statistik', {headers})
   }
 }
