@@ -128,7 +128,7 @@ public class SessionApiController {
 	@AngularApi
 	@GetMapping("/get-session-bewertung-statistik")
 	public ResponseEntity<Map<LocalDate, SessionBewertungAveragesDto>> getSessionBewertungStatistik(
-			@RequestBody SessionBewertungStatistikRequest sessionBewertungRequest)
+			SessionBewertungStatistikRequest sessionBewertungRequest)
 	{
 		Map<LocalDate, SessionBewertungAveragesDto> res = sessionBewertungService.getMonthlySessionBewertungStatistik(
 				sessionBewertungRequest.sessionId()
