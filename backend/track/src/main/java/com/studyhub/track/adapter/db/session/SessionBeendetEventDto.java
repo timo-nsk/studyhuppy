@@ -11,6 +11,7 @@ import java.util.UUID;
 public record SessionBeendetEventDto(
 		@Id Long id,
 		UUID eventId,
+		UUID sessionId,
 		String username,
 		LocalDateTime beendetDatum,
 		SessionBewertung bewertung,

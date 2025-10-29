@@ -10,6 +10,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class SessionBeendetEvent {
 	UUID eventId;
+	UUID sessionId;
 	String username;
 	LocalDateTime beendetDatum;
 	SessionBewertung bewertung;

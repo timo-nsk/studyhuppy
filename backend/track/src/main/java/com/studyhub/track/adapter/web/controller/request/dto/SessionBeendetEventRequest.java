@@ -7,12 +7,13 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record SessionBeendetEventRequest(
+		UUID sessionId,
 		SessionBewertung bewertung,
 		Boolean abgebrochen
 ) {
 	public SessionBeendetEvent toEntity(String username) {
 		UUID eventId = UUID.randomUUID();
 		LocalDateTime beendetDatum = LocalDateTime.now();
-		return new SessionBeendetEvent(eventId, username, beendetDatum, bewertung, abgebrochen);
+		return new SessionBeendetEvent(eventId, sessionId, username, beendetDatum, bewertung, abgebrochen);
 	}
 }

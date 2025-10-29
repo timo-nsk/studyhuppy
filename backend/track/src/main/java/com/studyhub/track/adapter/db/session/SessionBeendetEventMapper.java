@@ -11,6 +11,7 @@ public class SessionBeendetEventMapper {
 	public static SessionBeendetEvent toDomain(SessionBeendetEventDto dto) {
 		return new SessionBeendetEvent(
 				dto.eventId(),
+				dto.sessionId(),
 				dto.username(),
 				dto.beendetDatum(),
 				dto.bewertung(),
@@ -22,6 +23,7 @@ public class SessionBeendetEventMapper {
 		return new SessionBeendetEventDto(
 				null,
 				event.getEventId(),
+				event.getSessionId(),
 				event.getUsername(),
 				event.getBeendetDatum(),
 				event.getBewertung(),

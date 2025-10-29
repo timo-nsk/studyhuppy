@@ -19,6 +19,7 @@ public class SessionBeendetEventMother {
 		for (int i = 0; i < bewertungen.size(); i++) {
 			events.add(new SessionBeendetEvent(
 				UUID.randomUUID(),
+				UUID.randomUUID(),
 				username,
 				someDate,
 				bewertungen.get(i),
@@ -37,6 +38,7 @@ public class SessionBeendetEventMother {
 
 		for (int i = 0; i < bewertungen.size(); i++) {
 			events.add(new SessionBeendetEvent(
+					UUID.randomUUID(),
 					UUID.randomUUID(),
 					username,
 					someDate,

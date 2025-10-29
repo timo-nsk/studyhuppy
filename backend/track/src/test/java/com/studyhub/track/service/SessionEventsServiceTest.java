@@ -29,7 +29,7 @@ public class SessionEventsServiceTest {
     @Test
     @DisplayName("Ein neues Event wird erfolgreich gespeichert")
     void test_1() {
-        SessionBeendetEvent event = new SessionBeendetEvent(UUID.randomUUID(), "peter77", LocalDateTime.now(), new SessionBewertung(1,1,1), false);
+        SessionBeendetEvent event = new SessionBeendetEvent(UUID.randomUUID(), UUID.randomUUID(), "peter77", LocalDateTime.now(), new SessionBewertung(1,1,1), false);
         when(eventRepository.save(event)).thenReturn(event);
 
         boolean saved = sessionEventsService.save(event);
@@ -38,9 +38,9 @@ public class SessionEventsServiceTest {
     }
 
     @Test
-    @DisplayName("Wenn ein neues Event nciht in der Datenbank abgespeichert wurde, wird false zurückgegeben")
+    @DisplayName("Wenn ein neues Event nicht in der Datenbank abgespeichert wurde, wird false zurückgegeben")
     void test_2() {
-        SessionBeendetEvent event = new SessionBeendetEvent(UUID.randomUUID(), "peter77", LocalDateTime.now(), new SessionBewertung(1,1,1), false);
+        SessionBeendetEvent event = new SessionBeendetEvent(UUID.randomUUID(), UUID.randomUUID(),"peter77", LocalDateTime.now(), new SessionBewertung(1,1,1), false);
         when(eventRepository.save(event)).thenReturn(null);
 
         boolean saved = sessionEventsService.save(event);
