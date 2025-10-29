@@ -4,13 +4,15 @@ import {SessionApiService, SessionBewertungGeneralStatistik} from '../../session
 import {SessionInfoDto} from '../../session-domain';
 import {NgForOf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {LineChartComponent} from './chart/chart.component';
 
 @Component({
   selector: 'app-bewertung-statistiken',
   imports: [
     RouterLink,
     NgForOf,
-    FormsModule
+    FormsModule,
+    LineChartComponent
   ],
   templateUrl: './bewertung-statistiken.component.html',
   styleUrl: './bewertung-statistiken.component.scss'
@@ -18,7 +20,7 @@ import {FormsModule} from '@angular/forms';
 export class SessionBewertungStatistikenComponent implements OnInit{
   sessionApiService : SessionApiService = inject(SessionApiService);
   generalStatistiken : SessionBewertungGeneralStatistik = {} as SessionBewertungGeneralStatistik
-  sessionInfo : SessionInfoDto[] = {} as SessionInfoDto[];
+  sessionInfo : SessionInfoDto[] = []
   selectedSessionId!: string;
 
   ngOnInit(): void {

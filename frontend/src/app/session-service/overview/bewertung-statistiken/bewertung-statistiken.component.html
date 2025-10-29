@@ -30,6 +30,6 @@
         <option *ngFor="let s of sessionInfo" [value]="s.fachId">{{s.name}}</option>
       </select>
     </form>
-    <!-- TODO: hier eine Line Chart von chart.js-->
+    <app-line-chart [selectedSessionId]="selectedSessionId"></app-line-chart>
   </section>
 </div>
