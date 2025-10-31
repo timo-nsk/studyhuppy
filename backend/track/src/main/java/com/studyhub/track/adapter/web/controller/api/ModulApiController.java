@@ -64,7 +64,6 @@ public class ModulApiController {
 	@AngularApi
 	@PostMapping("/add-seconds")
 	public ResponseEntity<Void> addSeconds(@RequestBody AddSecondsRequest request, HttpServletRequest httpServletRequest) {
-		System.out.println(request);
 		String username = jwtService.extractUsernameFromHeader(httpServletRequest);
 		modulService.addSecondsToModul(request.modulId(), request.time(), username);
 		return ResponseEntity.ok().build();
