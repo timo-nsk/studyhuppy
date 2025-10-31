@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Class deletes a session from database and all the references of it in all Lernplaene created by a user.
+ */
 @Service
 public class SessionLoeschenService {
 
@@ -21,6 +24,11 @@ public class SessionLoeschenService {
 		this.lernplanRepository = lernplanRepository;
 	}
 
+	/**
+	 * Deletes the session from the database and associated Lernplan-Entities.
+	 * @param sessionId The identity of the Session
+	 * @param username The username of the user
+	 */
 	@Transactional
 	public void sessionLoeschen(UUID sessionId, String username) {
 		sessionRepository.deleteByFachId(sessionId);

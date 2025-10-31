@@ -5,7 +5,6 @@ TO-DO
   - Zum Beispiel ist der Margin-Abstand vom Main-Content mal geringer/höher als bei anderen Services.
   - Es sollten Buttons, die dieselbe Funktion haben, auch gleich aussehen (z. B. Edit-Buttons). -> neues Design überlegen und zentralisieren
   - Auch haben manche Texte andere Schriftgrößen -> einheitliche Schriftgrößen schaffen
-- Java-Dokumentation erstellen, fehlt an vielen Stellen
 - Im Karteikarten-Service sind die Font-Styles broken
 - HTML-Seiten könnten semantischer mit <section> gestaltet werden.
 - HTML mit ARIA versehen
@@ -13,7 +12,7 @@ TO-DO
 - BUG: bei einem refresh im browser wirft nginx 404
 
 IN PROGRESS
-- Für die Sessionbewertungen sollen Statistiken für die UI entwickelt werden, alles im Backend ist fertig
+- Java-Dokumentation erstellen, fehlt an vielen Stellen
 
 DONE
 - Man soll Sessions, die man abgeschlossen hat, hinsichtlich der subjektiven „Lernleistung“ bewerten können, also im Sinne von „wie gut konntest du dich konzentrieren etc.“
@@ -27,3 +26,4 @@ DONE
 - BUG: bei einer laufenden lernsession werden die sekunden nach einem abgeschlossenen lernblock nciht ind er DB gespeichert
 - Bei einer laufenden Lernsession sollen einzelne Blöcke "überspringbar" gemacht werden
 - BUG: wenn eine Lernsession gelöscht wird, die Teil eines Lernplans ist, gibts ne NullPointerException "Cannot invoke "com.studyhub.track.domain.model.session.Session.getFachId()" because "session" is null"
+- Für die Sessionbewertungen sollen Statistiken für die UI entwickelt werden, alles im Backend ist fertig
