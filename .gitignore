@@ -38,6 +38,9 @@ backend/actuator/run-tests-actuator.bat
 backend/actuator/target
 backend/actuator/.env
 
+backend/discovery/*
+backend/config/src/main/resources/configurations/discovery-service.yaml
+
 # Ist nur für Windows relevant
 start-kafka.bat
 .env
