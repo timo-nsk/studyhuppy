@@ -37,12 +37,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(ModulApiController.class)
 @Import(SecurityConfig.class)
-@TestPropertySource(properties = "maxModule=30")
-@ActiveProfiles("application-dev.yaml")
+@ActiveProfiles("test")
 class ModulApiControllerTest {
-	@Value("${maxModule}")
-	private int maxModule;
-
 	@Autowired
 	MockMvc mvc;
 
@@ -57,6 +53,9 @@ class ModulApiControllerTest {
 	private ModulService modulService;
 
 	@MockitoBean
+	private ModulUpdateService modulUpdateService;
+
+	@MockitoBean
 	private JWTService jwtService;
 
 	@MockitoBean
@@ -67,9 +66,6 @@ class ModulApiControllerTest {
 
 	@MockitoBean
 	private PrometheusMetrics metrics;
-
-	@MockitoBean
-	private ModulUpdateService modulUpdateService;
 
 	@Autowired
 	private ModulApiController modulApiController;
