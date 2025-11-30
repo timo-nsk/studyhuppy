@@ -1,12 +1,22 @@
 package com.studyhub.track.adapter.web.controller.request.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import java.time.LocalTime;
+import java.util.UUID;
 
-@Deprecated
-@Data
-@AllArgsConstructor
-public class AddTimeRequest {
-	private String fachId;
-	private String time;
+/**
+ * The request dto to add seconds to a module's secondsLearned.
+ * @param modulId The id of the module
+ * @param time The time to add
+ */
+public record AddTimeRequest(
+        UUID modulId,
+        LocalTime time
+) {
+	/**
+	 * Converts the LocalTime to seconds.
+	 * @return The total seconds represented by the LocalTime
+	 */
+	public Integer localTimeToSeconds() {
+		return time.getHour() * 3600 + time.getMinute() * 60;
+	}
 }

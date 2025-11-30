@@ -3,6 +3,7 @@ package com.studyhub.track.adapter.web.controller.api;
 import com.studyhub.track.adapter.authentication.AuthenticationService;
 import com.studyhub.track.adapter.metric.PrometheusMetrics;
 import com.studyhub.track.adapter.web.controller.request.dto.AddSecondsRequest;
+import com.studyhub.track.adapter.web.controller.request.dto.AddTimeRequest;
 import com.studyhub.track.adapter.web.controller.request.dto.TimerRequest;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.adapter.db.modul.ModulDto;
@@ -145,14 +146,28 @@ public class ModulApiController {
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
-	@PostMapping("/add-seconds")
-	public ResponseEntity<Void> addSeconds(@RequestBody AddSecondsRequest request, HttpServletRequest httpServletRequest) {
+	@PostMapping("/add-time")
+	public ResponseEntity<Void> addTime(@RequestBody AddTimeRequest request, HttpServletRequest httpServletRequest) {
 		String username = jwtService.extractUsernameFromHeader(httpServletRequest);
 		UUID modulId = request.modulId();
 		int secondsLearned = request.localTimeToSeconds();
 		if(secondsLearned > 5) {
 			modulUpdateService.updateSeconds(modulId, secondsLearned);
 			modulEventService.saveEvent(secondsLearned, modulId, username);
+			return ResponseEntity.ok().build();
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+	}
+
+	@PostMapping("/add-seconds")
+	public ResponseEntity<Void> addSeconds(@RequestBody AddSecondsRequest request, HttpServletRequest httpServletRequest) {
+		String username = jwtService.extractUsernameFromHeader(httpServletRequest);
+		UUID modulId = request.modulId();
+		int secondsToAdd = request.secondsToAdd();
+		if(secondsToAdd > 5) {
+			modulUpdateService.updateSeconds(modulId, secondsToAdd);
+			modulEventService.saveEvent(secondsToAdd, modulId, username);
 			return ResponseEntity.ok().build();
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

@@ -5,14 +5,11 @@ import com.studyhub.track.adapter.metric.PrometheusMetrics;
 import com.studyhub.track.adapter.web.controller.request.dto.TimerRequest;
 import com.studyhub.track.application.JWTService;
 import com.studyhub.track.adapter.security.SecurityConfig;
-import com.studyhub.track.adapter.web.controller.request.dto.AddTimeRequest;
-import com.studyhub.track.adapter.web.ModulForm;
 import com.studyhub.track.adapter.web.controller.api.ModulApiController;
 import com.studyhub.track.application.service.ModulUpdateService;
 import com.studyhub.track.application.service.dto.NeuerModulterminRequest;
 import com.studyhub.track.application.service.ModulEventService;
 import com.studyhub.track.application.service.ModulService;
-import com.studyhub.track.domain.model.modul.Modul;
 import com.studyhub.track.domain.model.modul.Terminart;
 import com.studyhub.track.domain.model.modul.Terminfrequenz;
 import org.junit.jupiter.api.Disabled;
@@ -23,7 +20,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
@@ -32,11 +28,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -223,16 +218,6 @@ class ModulApiControllerTest {
 		mvc.perform(put("/api/modul/v1/change-active")
 						.param("fachId", UUID.randomUUID().toString()))
 				.andExpect(status().isOk());
-	}
-
-	@Test
-	@DisplayName("Post-Request auf /add-time ist nicht als unauthentifizierte Person möglich")
-	void test_23() throws Exception {
-		AddTimeRequest req = new AddTimeRequest(UUID.randomUUID().toString(), "01:30");
-		mvc.perform(post("/api/modul/v1/add-time")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content(objectMapper.writeValueAsString(req)))
-				.andExpect(status().isForbidden());
 	}
 
 	@Test

@@ -88,9 +88,9 @@ export class ModuleApiService {
       })
   }
 
-  postSecondsToAdd(data: any) : Observable<void> {
+  postTimeToAdd(data: any) : Observable<void> {
     const headers = this.headerService.createAuthHeader()
-    return this.http.post<void>(this.MODUL_BASE_API + '/add-seconds', data, {headers})
+    return this.http.post<void>(this.MODUL_BASE_API + '/add-time', data, {headers})
   }
 
   getModulSelectData() {

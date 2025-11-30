@@ -103,7 +103,7 @@ export class ModulDetailsComponent implements  OnInit{
     if(this.addTimeForm.valid) {
       let data = this.addTimeForm.value
       console.log(data)
-      this.service.postSecondsToAdd(data).subscribe({
+      this.service.postTimeToAdd(data).subscribe({
         next: () => {
           this.log.debug("time data successfully sent")
           this.snackbarService.openSuccess("Zeit erfolgreich hinzugefügt")
