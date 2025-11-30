@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Import(SecurityConfig.class)
 @WebMvcTest(LernplanApiController.class)
-@ActiveProfiles("application-dev.yaml")
+@ActiveProfiles("test")
 public class LernplanApiControllerTest {
 
 	@Autowired

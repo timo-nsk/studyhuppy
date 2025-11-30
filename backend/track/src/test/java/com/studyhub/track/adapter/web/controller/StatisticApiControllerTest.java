@@ -19,9 +19,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+
 @WebMvcTest(StatisticApiController.class)
 @Import(SecurityConfig.class)
-@ActiveProfiles("application-dev.yaml")
+@ActiveProfiles("test")
 class StatisticApiControllerTest {
 
 	@Autowired

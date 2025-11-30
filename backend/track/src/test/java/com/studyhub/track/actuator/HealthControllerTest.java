@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(HealthController.class)
-@ActiveProfiles("application-dev.yaml")
+@ActiveProfiles("test")
 @Import(SecurityConfig.class)
 public class HealthControllerTest {
 
