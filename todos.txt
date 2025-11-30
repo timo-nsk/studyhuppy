@@ -12,6 +12,7 @@ TO-DO
 - Feld Semester von Klasse Modul entfernen
 
 IN PROGRESS
+- H2 als Datenbank für die Tests im Modul-Service benutzen
 - Config der einzelnen Services in den Config Server verlagern
 - Java-Dokumentation erstellen, fehlt an vielen Stellen
 
