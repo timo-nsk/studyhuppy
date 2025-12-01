@@ -25,6 +25,23 @@ pipeline {
             }
         }
 
+        stage('Deploy: config-service...') {
+                    when {
+                        changeset "backend/config/**"
+                    }
+
+                    steps {
+                        dir('backend/config') {
+                            echo "Testing..."
+                            bat 'mvn clean package'
+                            echo "Deploying..."
+                            bat "docker login --username ${env.DOCKERHUB_CRED_USR} --password ${env.DOCKERHUB_CRED_PSW}"
+                            bat "docker build -t ${env.DOCKERHUB_CRED_USR}/studyhuppy-config-service:latest ."
+                            bat "docker push ${env.DOCKERHUB_CRED_USR}/studyhuppy-config-service:latest"
+                        }
+                    }
+                }
+
         stage('Deploy: modul-service...') {
             when {
                 changeset "backend/track/**"
