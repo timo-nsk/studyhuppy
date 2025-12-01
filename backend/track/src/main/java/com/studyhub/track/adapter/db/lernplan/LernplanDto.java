@@ -7,7 +7,7 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.util.List;
 import java.util.UUID;
 
-@Table("lernplan")
+@Table("LERNPLAN")
 public record LernplanDto(
 		@Id Long id,
 		UUID fachId,

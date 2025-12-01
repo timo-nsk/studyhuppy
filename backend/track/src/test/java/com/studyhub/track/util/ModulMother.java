@@ -9,7 +9,7 @@ import java.util.*;
 
 public class ModulMother {
 
-	public static final Semester DEFAULT_SEMESTER = new Semester(null, 1,  SemesterTyp.WINTERSEMESTER, LocalDate.now(), LocalDate.now().plusMonths(2), LocalDate.now(), LocalDate.now().plusMonths(4));
+	public static final Semester DEFAULT_SEMESTER = new Semester(1, 1,  SemesterTyp.WINTERSEMESTER, LocalDate.now(), LocalDate.now().plusMonths(2), LocalDate.now(), LocalDate.now().plusMonths(4));
 	public static final Kreditpunkte DEFAULT_KREDITPUNKTE = new Kreditpunkte(10, 90, 210);
 	public static final List<Modultermin> DEFAULT_MODULTERMINE = List.of(new Modultermin("Klausur", LocalDateTime.now(), null, "Klausur Notiz", Terminart.SONSTIGES, Terminfrequenz.EINMALIG));
 
@@ -26,7 +26,7 @@ public class ModulMother {
 	}
 
 	public static Modul initModulWithName(String name) {
-		return new Modul(UUID.randomUUID(), name, 1000, DEFAULT_KREDITPUNKTE,  "user123",true,1, DEFAULT_SEMESTER, DEFAULT_MODULTERMINE);
+		return new Modul(UUID.randomUUID(), name, 1000, DEFAULT_KREDITPUNKTE,  "user123",true,1, null, DEFAULT_MODULTERMINE);
 	}
 
 	public static Modul initModulWithCp(Kreditpunkte kreditpunkte) {

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestPropertySource;
@@ -24,31 +25,12 @@ import java.util.List;
 import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled("probleme mit H2")
-@Testcontainers
+
 @DataJdbcTest
-@Rollback(false)
 @Sql(scripts = "drop.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "init_modul_db_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@TestPropertySource(properties = {
-		"spring.datasource.url=jdbc:postgresql://localhost:${container.port}/modultest",
-		"spring.datasource.username=timo",
-		"spring.datasource.password=1234"
-})
+@ActiveProfiles("test")
 class ModulRepositoryTest {
-
-	@Container
-	static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15.2")
-			.withDatabaseName("modultest")
-			.withUsername("timo")
-			.withPassword("1234");
-
-	@DynamicPropertySource
-	static void overrideProps(DynamicPropertyRegistry registry) {
-		registry.add("spring.datasource.url", postgres::getJdbcUrl);
-		registry.add("spring.datasource.username", postgres::getUsername);
-		registry.add("spring.datasource.password", postgres::getPassword);
-	}
 
 	@Autowired
 	ModulDao modulRepository;
@@ -78,7 +60,6 @@ class ModulRepositoryTest {
 
 		assertThat(l).hasSize(7);
 	}
-
 
 	@Test
 	@DisplayName("Modul wird erfolgreich gelöscht.")
@@ -171,7 +152,6 @@ class ModulRepositoryTest {
 		repository.saveAll(module);
 
 		assertThat(repository.findAll()).hasSize(resultShouldHaveNine);
-
 	}
 
 	@Test

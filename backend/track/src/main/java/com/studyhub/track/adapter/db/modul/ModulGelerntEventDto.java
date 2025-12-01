@@ -6,7 +6,7 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Table("modul_gelernt_event")
+@Table("MODUL_GELERNT_EVENT")
 public record ModulGelerntEventDto(
 		@Id Integer id,
 		UUID eventId,

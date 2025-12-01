@@ -24,31 +24,10 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled("probleme mit H2")
-@Testcontainers
 @DataJdbcTest
-@Rollback(false)
 @Sql(scripts = "drop_session_table.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @Sql(scripts = "init_session_db_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@TestPropertySource(properties = {
-		"spring.datasource.url=jdbc:postgresql://localhost:${container.port}/sessiontest",
-		"spring.datasource.username=timo",
-		"spring.datasource.password=1234"
-})
 class SessionRepositoryTest {
-	@Container
-	static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15.2")
-			.withDatabaseName("sessiontest")
-			.withUsername("timo")
-			.withPassword("1234");
-
-	@DynamicPropertySource
-	static void overrideProps(DynamicPropertyRegistry registry) {
-		registry.add("spring.datasource.url", postgres::getJdbcUrl);
-		registry.add("spring.datasource.username", postgres::getUsername);
-		registry.add("spring.datasource.password", postgres::getPassword);
-	}
-
 	@Autowired
 	SessionDao sessionRepository;
 

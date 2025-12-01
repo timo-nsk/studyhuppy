@@ -7,7 +7,7 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Table("session_beendet_event")
+@Table("SESSION_BEENDET_EVENT")
 public record SessionBeendetEventDto(
 		@Id Long id,
 		UUID eventId,

@@ -9,7 +9,7 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.util.List;
 import java.util.UUID;
 
-@Table("modul")
+@Table("MODUL")
 public record ModulDto(@Id Integer id,
                        UUID fachId,
                        String name,

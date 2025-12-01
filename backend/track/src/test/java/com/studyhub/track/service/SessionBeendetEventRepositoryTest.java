@@ -25,7 +25,6 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled("probleme mit H2")
 @DataJdbcTest
 @Sql(scripts = "init_session_beendet_events_db_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @ActiveProfiles("test")
