@@ -14,19 +14,14 @@ public record SessionRequest(
 ) {
 
 	public Session toEntity(String username) {
-		UUID newFachId = UUID.randomUUID();
-
-		for(Block block : blocks) {
-			block.setFachId(UUID.randomUUID());
-		}
+		for(Block block : blocks) if(block.getFachId() == null) block.setFachId(UUID.randomUUID());
 
 		return new Session(
-				newFachId,
+				UUID.fromString(fachId),
 				username,
 				titel,
 				beschreibung,
 				blocks
 		);
 	}
-
 }

@@ -84,12 +84,8 @@ public class SessionService {
 	 * Sets the new session atreributes and saves it to the repository.
 	 * @param sessionRequest The request with the new session attributes
 	 */
-	@Transactional
-	public void saveEditedSession(SessionRequest sessionRequest) {
-		Session oldSession = sessionRepository.findSessionByFachId(UUID.fromString(sessionRequest.fachId()));
-		oldSession.setTitel(sessionRequest.titel());
-		oldSession.setBeschreibung(sessionRequest.beschreibung());
-		oldSession.setBlocks(sessionRequest.blocks());
-		sessionRepository.save(oldSession);
+	public void saveEditedSession(SessionRequest sessionRequest, String username) {
+		Session editedSession = sessionRequest.toEntity(username);
+		sessionRepository.save(editedSession);
 	}
 }

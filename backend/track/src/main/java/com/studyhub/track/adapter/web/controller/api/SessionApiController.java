@@ -109,7 +109,7 @@ public class SessionApiController {
 
 	@PostMapping("/edited-session")
 	public ResponseEntity<Void> editedSessison(@RequestBody SessionRequest sessionRequest, HttpServletRequest request) {
-		sessionService.saveEditedSession(sessionRequest);
+		sessionService.saveEditedSession(sessionRequest, jwtService.extractUsernameFromHeader(request));
 		return ResponseEntity.ok().build();
 	}
 
