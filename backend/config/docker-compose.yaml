@@ -1,0 +1,16 @@
+name: modul
+services:
+  config-service:
+    container_name: config_service
+    build:
+      dockerfile: Dockerfile
+    depends_on:
+      modul-db:
+        condition: service_healthy
+    ports:
+      - "${PROD_SERVER_PORT}:${PROD_SERVER_PORT}"
+    environment:
+      - SERVER_PORT=${PROD_SERVER_PORT}
+      - SERVER_ADRESS=${SERVER_ADRESS}
+    env_file:
+      - .env
