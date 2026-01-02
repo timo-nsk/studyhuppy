@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-@Table("users")
+@Table("USERS")
 public class AppUser  {
 	@Id
 	private Integer id;
