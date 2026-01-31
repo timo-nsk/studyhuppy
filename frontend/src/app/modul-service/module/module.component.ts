@@ -32,24 +32,61 @@ export class ModuleComponent implements OnInit{
   openPanels: boolean[] = []
 
   ngOnInit(): void {
-    this.service.getAllModuleByFachsemester().subscribe({
-      next: (data) => {
-        this.allModule = data
-        this.isLoading = false
-        this.initDisabledBtn()
-        this.initOpenPanels()
-        this.setDisplayedModule()
-      },
-      error: (err) => {
-        this.log.error(err)
-      }
-    });
-    if (!localStorage.getItem("deactivatedAreVisible")) {
-      localStorage.setItem("deactivatedAreVisible", "false")
+    this.loadModulDomain()
+    this.checkDeactivatedModuleStatus();
+  }
+
+  isItemInLocalStorage(itemName : string) {
+    return localStorage.getItem(itemName);
+  }
+
+  checkDeactivatedModuleStatus() : void {
+    let itemName = "deactivatedAreVisible"
+    if (!this.isItemInLocalStorage(itemName)) {
+      localStorage.setItem(itemName, "false")
     } else {
-      this.deactivatedAreVisible = localStorage.getItem("deactivatedAreVisible") === "true"
+      this.deactivatedAreVisible = localStorage.getItem(itemName) === "true"
     }
   }
+
+  loadModulDomain(): void {
+    this.setLoading(true);
+
+    this.service.getAllModuleByFachsemester().subscribe({
+      next: (data) => this.onModulesLoaded(data),
+      error: (err) => this.onModulesLoadError(err),
+    });
+  }
+
+  private onModulesLoaded(data: { [key: number]: Modul[] }): void {
+    this.storeModules(data);
+    this.setLoading(false);
+    this.initializeUiFromModules();
+    this.updateDisplayedModules();
+  }
+
+  private onModulesLoadError(err: string): void {
+    this.setLoading(false);
+    this.log.error(err);
+  }
+
+  private storeModules(data: any): void {
+    this.allModule = data;
+  }
+
+  private setLoading(value: boolean): void {
+    this.isLoading = value;
+  }
+
+  private initializeUiFromModules(): void {
+    this.initDisabledBtn();
+    this.initOpenPanels();
+  }
+
+  private updateDisplayedModules(): void {
+    this.setDisplayedModule();
+  }
+
 
   updateSecondsOnModulUI(fachId: string, seconds: number): void {
     const element = document.getElementById(fachId);
