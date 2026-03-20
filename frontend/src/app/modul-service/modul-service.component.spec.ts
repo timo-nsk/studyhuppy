@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModulServiceComponent } from './modul-service.component';
 import {ActivatedRoute} from '@angular/router';
 import {of} from 'rxjs';
+import {By} from '@angular/platform-browser';
 
 describe('ModulServiceComponent', () => {
   let component: ModulServiceComponent;
@@ -33,4 +34,10 @@ describe('ModulServiceComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render three pagination items', () => {
+    let items = fixture.debugElement.queryAll(By.css('[data-testid="page-a"]'));
+    console.log(items);
+    expect(items.length).toEqual(3);
+  })
 });
