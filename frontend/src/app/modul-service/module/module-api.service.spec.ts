@@ -3,6 +3,7 @@ import {ModuleApiService} from './module-api.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {HeaderService} from '../../header.service';
 import {HttpHeaders} from '@angular/common/http';
+import {Modul} from './domain';
 
 describe('ModulApiService', () => {
   let moduleApiService: ModuleApiService;
@@ -36,5 +37,62 @@ describe('ModulApiService', () => {
     request.flush(1000);
 
     expect(seconds).toEqual(1000);
+  })
+
+  it('should get all module by fachsemester of a user', () => {
+    let receivedModules: { [key: number]: Modul[] };
+
+    moduleApiService.getAllModuleByFachsemester().subscribe({
+      next: (res) => { receivedModules = res; }
+    })
+
+    let request = httpTestingController.expectOne('http://localhost:9502/api/modul/v1/get-all-module-by-fachsemester')
+    request.flush(
+      {
+        1: [
+          {
+            id: null,
+            fachId: 'id',
+            name: 'Dummy Modul 1',
+            secondsLearned: 1000,
+            kreditpunkte: {
+              anzahlPunkte: 5,
+              kontaktzeitStunden: 30,
+              selbststudiumStunden: 60
+            },
+            username: 'testuser',
+            active: true,
+            semesterstufe: 1,
+            semester: undefined,
+            klausurDate: new Date(),
+            lerntage: undefined,
+            modultermine: undefined,
+          }
+        ],
+        2: [
+          {
+            id: null,
+            fachId: 'id',
+            name: 'Dummy Modul 2',
+            secondsLearned: 1000,
+            kreditpunkte: {
+              anzahlPunkte: 5,
+              kontaktzeitStunden: 30,
+              selbststudiumStunden: 60
+            },
+            username: 'testuser',
+            active: true,
+            semesterstufe: 1,
+            semester: undefined,
+            klausurDate: new Date(),
+            lerntage: undefined,
+            modultermine: undefined,
+          }
+        ]
+      }
+    )
+
+    expect(receivedModules[1][0].name).toEqual('Dummy Modul 1');
+    expect(receivedModules[2][0].name).toEqual('Dummy Modul 2');
   })
 })
