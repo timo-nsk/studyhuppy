@@ -7,7 +7,7 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.util.List;
 import java.util.UUID;
 
-@Table("SESSION")
+@Table("session")
 public record SessionDto(
 		@Id Long id,
 		UUID fachId,
